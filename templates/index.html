@@ -9,16 +9,34 @@
 
 <div class="container">
   <!-- Indicadores principais -->
-  <section class="section">
+  <section class="section" id="dados">
     <h2 class="section-title">Indicadores de Transparência</h2>
 
-    <div class="filter-bar">
-      <label style="color:var(--text-secondary);font-size:0.85rem;font-weight:600;">De:</label>
-      <select id="mesInicio" onchange="aplicarFiltroPeriodo()"></select>
-      <select id="anoInicio" onchange="aplicarFiltroPeriodo()"></select>
-      <label style="color:var(--text-secondary);font-size:0.85rem;font-weight:600;">Até:</label>
-      <select id="mesFim" onchange="aplicarFiltroPeriodo()"></select>
-      <select id="anoFim" onchange="aplicarFiltroPeriodo()"></select>
+    <div class="filter-panel" aria-label="Filtro de período">
+      <div class="filter-heading">
+        <div>
+          <strong>Filtrar período</strong>
+          <span>Escolha o intervalo para atualizar os indicadores.</span>
+        </div>
+      </div>
+      <div class="filter-controls">
+        <div class="filter-field">
+          <label for="mesInicio">Início</label>
+          <div class="period-selects">
+            <select id="mesInicio" aria-label="Mês inicial" onchange="aplicarFiltroPeriodo()"></select>
+            <select id="anoInicio" aria-label="Ano inicial" onchange="aplicarFiltroPeriodo()"></select>
+          </div>
+        </div>
+        <span class="filter-arrow" aria-hidden="true">→</span>
+        <div class="filter-field">
+          <label for="mesFim">Fim</label>
+          <div class="period-selects">
+            <select id="mesFim" aria-label="Mês final" onchange="aplicarFiltroPeriodo()"></select>
+            <select id="anoFim" aria-label="Ano final" onchange="aplicarFiltroPeriodo()"></select>
+          </div>
+        </div>
+        <button type="button" class="filter-reset" onclick="limparFiltroPeriodo()">Todo o período</button>
+      </div>
     </div>
     <p id="periodoNota" style="display:none;font-size:0.78rem;color:var(--text-muted);margin:-0.5rem 0 1rem;">
       * Economia, créditos, kW recebidos, investimento e cashback são estimados proporcionalmente à geração do período selecionado (não há histórico mensal desses dados).
@@ -28,53 +46,53 @@
     </p>
 
     <div class="stats-grid">
-      <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.economia_kw)">
-        <div class="stat-icon">⚡</div>
+      <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.economia_kw, this.querySelector('.stat-icon'))">
+        <div class="stat-icon icon-bolt">⚡</div>
         <div class="stat-label">Economia Total (kW)</div>
         <div class="stat-value count-up" data-stat="economia_kw" data-target="{{ transparencia.economia_kw }}">0</div>
-        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+        <div class="stat-hint">Ver histórico e detalhes</div>
       </button>
-      <button type="button" class="stat-card green fade-up" onclick="openStatModal(statInfo.creditos)">
+      <button type="button" class="stat-card green fade-up" onclick="openStatModal(statInfo.creditos, this.querySelector('.stat-icon'))">
         <div class="stat-icon">💳</div>
         <div class="stat-label">Créditos dos Usuários</div>
         <div class="stat-value count-up" data-stat="creditos" data-target="{{ transparencia.creditos }}">0</div>
-        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+        <div class="stat-hint">Ver histórico e detalhes</div>
       </button>
-      <button type="button" class="stat-card blue fade-up" onclick="openStatModal(statInfo.kw_recebidos)">
+      <button type="button" class="stat-card blue fade-up" onclick="openStatModal(statInfo.kw_recebidos, this.querySelector('.stat-icon'))">
         <div class="stat-icon">🔋</div>
         <div class="stat-label">kW Recebidos</div>
         <div class="stat-value count-up" data-stat="kw_recebidos" data-target="{{ transparencia.kw_recebidos }}">0</div>
-        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+        <div class="stat-hint">Ver histórico e detalhes</div>
       </button>
-      <button type="button" class="stat-card purple fade-up" onclick="openStatModal(statInfo.investido)">
+      <button type="button" class="stat-card purple fade-up" onclick="openStatModal(statInfo.investido, this.querySelector('.stat-icon'))">
         <div class="stat-icon">💰</div>
         <div class="stat-label">Total Investido (R$)</div>
         <div class="stat-value count-up" data-stat="investido" data-target="{{ transparencia.investido }}" data-prefix="R$ ">0</div>
-        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+        <div class="stat-hint">Ver histórico e detalhes</div>
       </button>
-      <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.cashback_orquideas)">
+      <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.cashback_orquideas, this.querySelector('.stat-icon'))">
         <div class="stat-icon">🌸</div>
         <div class="stat-label">Cashback Orquídeas (R$)</div>
         <div class="stat-value count-up" data-stat="cashback_orquideas" data-target="{{ transparencia.cashback_orquideas }}" data-prefix="R$ ">0</div>
-        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+        <div class="stat-hint">Ver histórico e detalhes</div>
       </button>
-      <button type="button" class="stat-card green fade-up" onclick="openStatModal(statInfo.geracao_total_kwh)">
+      <button type="button" class="stat-card green fade-up" onclick="openStatModal(statInfo.geracao_total_kwh, this.querySelector('.stat-icon'))">
         <div class="stat-icon">🏭</div>
         <div class="stat-label">Geração Total (kWh)</div>
         <div class="stat-value count-up" data-stat="geracao_total_kwh" data-target="{{ transparencia.geracao_total_kwh }}">0</div>
-        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+        <div class="stat-hint">Ver histórico e detalhes</div>
       </button>
-      <button type="button" class="stat-card blue fade-up" onclick="openStatModal(statInfo.co2_evitado_total)">
+      <button type="button" class="stat-card blue fade-up" onclick="openStatModal(statInfo.co2_evitado_total, this.querySelector('.stat-icon'))">
         <div class="stat-icon">🌿</div>
         <div class="stat-label">CO₂ Evitado (kg)</div>
         <div class="stat-value count-up" data-stat="co2_evitado_total" data-target="{{ transparencia.co2_evitado_total }}">0</div>
-        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+        <div class="stat-hint">Ver histórico e detalhes</div>
       </button>
     </div>
   </section>
 
   <!-- Gráficos -->
-  <section class="section">
+  <section class="section" id="dados-graficos">
     <h2 class="section-title">Visão Geral da Geração</h2>
     <div class="charts-grid">
       <div class="chart-card fade-up">
@@ -147,22 +165,22 @@
     </p>
 
     <div class="how-steps">
-      <div class="how-step fade-up">
+      <div class="how-step fade-up" role="button" tabindex="0" aria-pressed="false">
         <div class="how-step-num">1</div>
         <h4>A usina gera energia</h4>
         <p>As placas solares parceiras produzem energia todo mês — no exemplo abaixo, 1.940 kWh.</p>
       </div>
-      <div class="how-step fade-up">
+      <div class="how-step fade-up" role="button" tabindex="0" aria-pressed="false">
         <div class="how-step-num">2</div>
         <h4>Cada morador recebe uma cota</h4>
         <p>Essa energia é repartida entre os associados. No exemplo, cada morador tem direito a 11% do total: 213,4 kWh.</p>
       </div>
-      <div class="how-step fade-up">
+      <div class="how-step fade-up" role="button" tabindex="0" aria-pressed="false">
         <div class="how-step-num">3</div>
         <h4>A cota vira desconto na conta</h4>
         <p>A energia recebida abate o valor da conta de luz, até o limite do que o morador realmente consome naquele mês.</p>
       </div>
-      <div class="how-step fade-up">
+      <div class="how-step fade-up" role="button" tabindex="0" aria-pressed="false">
         <div class="how-step-num">4</div>
         <h4>O que sobra volta como cashback</h4>
         <p>Parte do valor que seria pago à concessionária fica no fundo do banco, e o restante retorna ao morador em Orquídeas.</p>
@@ -398,6 +416,16 @@
     statInfo.kw_recebidos.total = totaisOriginais.kw_recebidos * ratio;
     statInfo.investido.total = totaisOriginais.investido * ratio;
     statInfo.cashback_orquideas.total = totaisOriginais.cashback_orquideas * ratio;
+  }
+
+  function limparFiltroPeriodo() {
+    const [anoIni, mesIni] = primeiroMes.split('-');
+    const [anoUlt, mesUlt] = ultimoMes.split('-');
+    document.getElementById('mesInicio').value = mesIni;
+    document.getElementById('anoInicio').value = anoIni;
+    document.getElementById('mesFim').value = mesUlt;
+    document.getElementById('anoFim').value = anoUlt;
+    aplicarFiltroPeriodo();
   }
 
   // ─── Dados para o modal de cada indicador ───

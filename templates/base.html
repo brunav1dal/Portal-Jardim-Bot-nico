@@ -20,11 +20,20 @@
 
       Banco Comunitário Jardim Botânico
     </a>
+    {% if not session.get('user_id') %}
+      <div class="navbar-menu" aria-label="Navegação principal">
+        <a href="{{ url_for('index') }}#dados">Dados</a>
+        <a href="{{ url_for('index') }}#historia">Nossa história</a>
+        <a href="{{ url_for('index') }}#como-funciona">Como funciona</a>
+      </div>
+    {% endif %}
     <div class="navbar-actions">
       {% if session.get('user_id') %}
-        <span style="color:var(--text-secondary);font-size:0.85rem;">Olá, {{ session.get('user_nome') }}</span>
+        {% if session.get('user_tipo') != 'admin' %}
+          <span style="color:var(--text-secondary);font-size:0.85rem;">Olá, {{ session.get('user_nome') }}</span>
+        {% endif %}
         {% if session.get('user_tipo') == 'admin' %}
-          <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline btn-sm">⚙️ Painel</a>
+          <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline btn-sm">Painel</a>
         {% else %}
           <a href="{{ url_for('cliente_dashboard') }}" class="btn btn-outline btn-sm">📊 Meu Painel</a>
         {% endif %}
@@ -56,6 +65,55 @@
   </div>
 
   <script>
+    const menuLinks = document.querySelectorAll('.navbar-menu a');
+    function atualizarMenuAtivo() {
+      const destino = window.location.hash || '#dados';
+      menuLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href').endsWith(destino)));
+    }
+    menuLinks.forEach(link => link.addEventListener('click', () => {
+      menuLinks.forEach(item => item.classList.remove('active'));
+      link.classList.add('active');
+    }));
+    window.addEventListener('hashchange', atualizarMenuAtivo);
+    atualizarMenuAtivo();
+
+    const secoesNavegacao = ['dados', 'historia', 'como-funciona']
+      .map(id => document.getElementById(id)).filter(Boolean);
+    function atualizarSecaoVisivel() {
+      const linhaAtiva = window.scrollY + window.innerHeight * 0.32;
+      let secaoAtual = secoesNavegacao[0] && secoesNavegacao[0].id;
+      secoesNavegacao.forEach(secao => {
+        if (secao.offsetTop <= linhaAtiva) secaoAtual = secao.id;
+      });
+      menuLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href').endsWith('#' + secaoAtual)));
+    }
+    window.addEventListener('scroll', atualizarSecaoVisivel, { passive: true });
+    atualizarSecaoVisivel();
+
+    document.querySelectorAll('.how-step').forEach(step => {
+      const alternarEtapa = () => {
+        const ativa = step.classList.toggle('active');
+        step.setAttribute('aria-pressed', ativa ? 'true' : 'false');
+      };
+      step.addEventListener('click', alternarEtapa);
+      step.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          alternarEtapa();
+        }
+      });
+    });
+
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.14 });
+    document.querySelectorAll('.fade-up').forEach(element => revealObserver.observe(element));
+
     // ─── PRNG determinístico (mesmo dado sempre gera o mesmo "histórico") ───
     function seedFromString(str) {
       let h = 0;
@@ -84,8 +142,15 @@
     // ─── Modal de estatística ───
     let statModalChart = null;
 
-    function openStatModal(info) {
-      document.getElementById('statModalIcon').textContent = info.icon || '📊';
+    function openStatModal(info, sourceIcon) {
+      const modalIcon = document.getElementById('statModalIcon');
+      modalIcon.className = 'modal-icon';
+      if (sourceIcon) {
+        modalIcon.innerHTML = sourceIcon.innerHTML;
+        modalIcon.classList.toggle('icon-bolt', sourceIcon.classList.contains('icon-bolt'));
+      } else {
+        modalIcon.textContent = info.icon || '📊';
+      }
       document.getElementById('statModalTitle').textContent = info.title || '';
       document.getElementById('statModalDesc').textContent = info.desc || '';
 

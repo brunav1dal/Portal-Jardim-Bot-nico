@@ -10,10 +10,27 @@
     </div>
   </div>
 
+  <section class="solar-overview" aria-label="Resumo do Meu Solar">
+    <div class="solar-summary-card">
+      <div class="solar-summary-title">Meu Solar <span class="solar-summary-mark" aria-hidden="true">✦</span></div>
+      <div class="solar-summary-subtitle">Energia solar comunitária</div>
+      <div class="solar-summary-capacity">{{ '{:,.0f}'.format(dados_unificados.total_capacidade) }} kW</div>
+      <div class="solar-summary-label">Potência instalada agregada</div>
+      <div class="solar-summary-status"><span></span>{{ dados_unificados.num_usinas_ativas }} de {{ usinas|length }} usinas disponíveis</div>
+    </div>
+    <div class="solar-summary-detail">
+      <div class="solar-summary-detail-heading">Resumo consolidado <small>Dados do período disponível</small></div>
+      <div class="solar-summary-metrics">
+        <div><strong>{{ '{:,.0f}'.format(dados_unificados.total_geracao_mensal) }} kWh</strong><span>Geração mensal</span></div>
+        <div><strong>{{ '{:,.1f}'.format(dados_unificados.total_co2) }} kg</strong><span>CO₂ evitado</span></div>
+        <div><strong>{{ dados_unificados.media_eficiencia }}%</strong><span>Eficiência média</span></div>
+      </div>
+    </div>
+  </section>
+
   <!-- Tabs de Navegação -->
   <div class="tabs">
     <button class="tab-btn active" onclick="showTab('usinas')">Usinas</button>
-    <button class="tab-btn" onclick="showTab('unificado')">Dados Unificados</button>
     <button class="tab-btn" onclick="showTab('economia')">Economia</button>
     <button class="tab-btn" onclick="showTab('residencias')">Residências</button>
   </div>
@@ -76,7 +93,7 @@
 
     <div class="stats-grid">
       <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.total_capacidade)">
-        <div class="stat-icon">⚡</div>
+        <div class="stat-icon icon-bolt">⚡</div>
         <div class="stat-label">Capacidade Total (kW)</div>
         <div class="stat-value count-up" data-target="{{ dados_unificados.total_capacidade }}">0</div>
         <div class="stat-hint">🔍 Ver histórico e detalhes</div>
@@ -255,9 +272,9 @@
             <td>{{ r.endereco }}</td>
             <td>{{ r.consumo_mensal_kwh }}</td>
             <td style="color:var(--accent-green-light)">R$ {{ r.economia_mensal_rs }}</td>
-            <td><span class="badge badge-em_dia_banco {{ 'badge-success' if r.em_dia_banco == 'sim' else 'badge-danger' }}">{{ '✅' if r.em_dia_banco == 'sim' else '❌' }}</span></td>
-            <td><span class="badge badge-em_dia_concessionaria {{ 'badge-success' if r.em_dia_concessionaria == 'sim' else 'badge-danger' }}">{{ '✅' if r.em_dia_concessionaria == 'sim' else '❌' }}</span></td>
-            <td><span class="badge badge-cashback_em_dia {{ 'badge-success' if r.cashback_em_dia == 'sim' else 'badge-danger' }}">{{ '✅' if r.cashback_em_dia == 'sim' else '❌' }}</span></td>
+            <td><span class="status-mark {{ 'is-yes' if r.em_dia_banco == 'sim' else 'is-no' }}" aria-label="{{ 'Em dia' if r.em_dia_banco == 'sim' else 'Pendente' }}"></span></td>
+            <td><span class="status-mark {{ 'is-yes' if r.em_dia_concessionaria == 'sim' else 'is-no' }}" aria-label="{{ 'Em dia' if r.em_dia_concessionaria == 'sim' else 'Pendente' }}"></span></td>
+            <td><span class="status-mark {{ 'is-yes' if r.cashback_em_dia == 'sim' else 'is-no' }}" aria-label="{{ 'Em dia' if r.cashback_em_dia == 'sim' else 'Pendente' }}"></span></td>
           </tr>
           {% endfor %}
         </tbody>

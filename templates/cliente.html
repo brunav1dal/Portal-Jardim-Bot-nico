@@ -35,7 +35,7 @@
   <!-- KPIs do Cliente -->
   <div class="stats-grid">
     <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.economia_kw)">
-      <div class="stat-icon">⚡</div>
+      <div class="stat-icon icon-bolt">⚡</div>
       <div class="stat-label">Minha Economia (kW)</div>
       <div class="stat-value count-up" data-target="{{ user.economia_kw }}">0</div>
       <div class="stat-hint">🔍 Ver histórico e detalhes</div>
@@ -81,20 +81,20 @@
     <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:1rem;">{{ residencia.endereco }}</p>
     <div class="status-row">
       <span style="color:var(--text-secondary);">Em dia com o Banco Comunitário Jardim Botânico</span>
-      <span class="badge {{ 'badge-success' if residencia.em_dia_banco == 'sim' else 'badge-danger' }}">
-        {{ '✅ Sim' if residencia.em_dia_banco == 'sim' else '❌ Não' }}
+      <span class="badge badge-status">
+        <span class="status-mark {{ 'is-yes' if residencia.em_dia_banco == 'sim' else 'is-no' }}">{{ 'Sim' if residencia.em_dia_banco == 'sim' else 'Não' }}</span>
       </span>
     </div>
     <div class="status-row">
       <span style="color:var(--text-secondary);">Em dia com a Concessionária</span>
-      <span class="badge {{ 'badge-success' if residencia.em_dia_concessionaria == 'sim' else 'badge-danger' }}">
-        {{ '✅ Sim' if residencia.em_dia_concessionaria == 'sim' else '❌ Não' }}
+      <span class="badge badge-status">
+        <span class="status-mark {{ 'is-yes' if residencia.em_dia_concessionaria == 'sim' else 'is-no' }}">{{ 'Sim' if residencia.em_dia_concessionaria == 'sim' else 'Não' }}</span>
       </span>
     </div>
     <div class="status-row">
       <span style="color:var(--text-secondary);">Cashback Orquídeas em dia</span>
-      <span class="badge {{ 'badge-success' if residencia.cashback_em_dia == 'sim' else 'badge-danger' }}">
-        {{ '✅ Sim' if residencia.cashback_em_dia == 'sim' else '❌ Não' }}
+      <span class="badge badge-status">
+        <span class="status-mark {{ 'is-yes' if residencia.cashback_em_dia == 'sim' else 'is-no' }}">{{ 'Sim' if residencia.cashback_em_dia == 'sim' else 'Não' }}</span>
       </span>
     </div>
     <div class="status-row">

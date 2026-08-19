@@ -39,7 +39,15 @@ Para uma empresa que opera ou estrutura programas de energia compartilhada, a pl
 | Portal público | Indicadores de transparência, dados de geração, impacto ambiental e mapa de unidades parceiras | Comunidade, parceiros e visitantes |
 | Área do cliente | Créditos disponíveis, economia estimada, histórico ilustrativo, fatura e envio de boleto da concessionária | Beneficiários cadastrados |
 | Painel administrativo | Acompanhamento de unidades, geração, tarifas, residências e situação dos beneficiários | Equipe gestora |
+
+O painel administrativo inicia com um resumo visual do **Meu Solar**, reunindo
+potência instalada, usinas disponíveis, geração mensal, CO₂ evitado e eficiência
+média antes das abas detalhadas.
 | API de transparência | Exposição dos indicadores públicos em JSON | Integrações e interfaces futuras |
+
+A home possui navegação por seções no menu superior: **Dados**, **Nossa
+história** e **Como funciona**. Os links levam diretamente à parte
+correspondente da página e também funcionam a partir das telas internas.
 
 ## Fluxo da plataforma
 
