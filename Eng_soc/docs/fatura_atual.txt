@@ -1,0 +1,11 @@
+BANCO COMUNITÁRIO JARDIM BOTÂNICO
+Fatura Atual
+------------------------------------------
+Beneficiário: Maria Silva
+Endereço: Rua das Flores 123 - Ribeirão Preto
+Consumo do mês: 320 kWh
+Valor da fatura: R$ 96.00
+Status: Paga
+------------------------------------------
+Fatura referente à energia solar fornecida pelo
+Banco Comunitário Jardim Botânico.

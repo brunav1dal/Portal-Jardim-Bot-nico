@@ -1,0 +1,12 @@
+id,nome,email,senha,tipo,economia_kw,creditos,kw_recebidos,investido,cashback_orquideas,data_cadastro
+1,Admin Solar,admin@bancosolar.com,admin123,admin,0,0,0,0,0,2024-01-01
+2,Maria Silva,maria@email.com,user123,cliente,1250.5,320.0,1580.0,4500.00,675.00,2024-03-15
+3,João Santos,joao@email.com,user123,cliente,980.3,210.5,1120.0,3200.00,480.00,2024-04-01
+4,Ana Oliveira,ana@email.com,user123,cliente,1520.8,450.0,1890.0,5800.00,870.00,2024-02-20
+5,Carlos Souza,carlos@email.com,user123,cliente,750.2,180.0,890.0,2500.00,375.00,2024-05-10
+6,Beatriz Lima,beatriz@email.com,user123,cliente,1100.0,290.0,1350.0,4000.00,600.00,2024-06-01
+7,Pedro Costa,pedro@email.com,user123,cliente,890.7,230.0,1050.0,3100.00,465.00,2024-03-25
+8,Fernanda Rocha,fernanda@email.com,user123,cliente,1340.1,380.0,1670.0,5100.00,765.00,2024-04-15
+9,Lucas Almeida,lucas@email.com,user123,cliente,670.5,150.0,780.0,2100.00,315.00,2024-07-01
+10,Juliana Ferreira,juliana@email.com,user123,cliente,1450.0,410.0,1790.0,5500.00,825.00,2024-02-10
+11,Rafael Martins,rafael@email.com,user123,cliente,820.4,200.0,960.0,2800.00,420.00,2024-05-20

@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Banco Comunitário Jardim Botânico - Transparência e gestão de energia solar comunitária">
+  <title>Banco Comunitário Jardim Botânico — Transparência</title>
+  <link rel="stylesheet" href="static/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+</head>
+<body>
+  <div class="bg-grid"></div>
+
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">
+      <img class="brand-logo" src="static/img/logo_jb.png" alt="">
+
+      Banco Comunitário Jardim Botânico
+    </a>
+    <div class="navbar-actions">
+      
+        <a href="login.html" class="btn btn-primary">Entrar</a>
+      
+    </div>
+  </nav>
+
+  
+<section class="hero">
+  <h1>Energia Solar Comunitária</h1>
+  <p>Energia solar, crédito acessível e a moeda social Orquídea a serviço da comunidade de São Rafael, em João Pessoa (PB).</p>
+</section>
+
+<div class="container">
+  <!-- Indicadores principais -->
+  <section class="section">
+    <h2 class="section-title">Indicadores de Transparência</h2>
+
+    <div class="filter-bar">
+      <label style="color:var(--text-secondary);font-size:0.85rem;font-weight:600;">De:</label>
+      <select id="mesInicio" onchange="aplicarFiltroPeriodo()"></select>
+      <select id="anoInicio" onchange="aplicarFiltroPeriodo()"></select>
+      <label style="color:var(--text-secondary);font-size:0.85rem;font-weight:600;">Até:</label>
+      <select id="mesFim" onchange="aplicarFiltroPeriodo()"></select>
+      <select id="anoFim" onchange="aplicarFiltroPeriodo()"></select>
+    </div>
+    <p id="periodoNota" style="display:none;font-size:0.78rem;color:var(--text-muted);margin:-0.5rem 0 1rem;">
+      * Economia, créditos, kW recebidos, investimento e cashback são estimados proporcionalmente à geração do período selecionado (não há histórico mensal desses dados).
+    </p>
+    <p id="periodoVazio" style="display:none;font-size:0.85rem;color:var(--accent-red);margin:-0.5rem 0 1rem;">
+      Nenhum mês encontrado nesse intervalo — verifique se "De" vem antes de "Até".
+    </p>
+
+    <div class="stats-grid">
+      <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.economia_kw)">
+        <div class="stat-icon">⚡</div>
+        <div class="stat-label">Economia Total (kW)</div>
+        <div class="stat-value count-up" data-stat="economia_kw" data-target="10773.5">0</div>
+        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+      </button>
+      <button type="button" class="stat-card green fade-up" onclick="openStatModal(statInfo.creditos)">
+        <div class="stat-icon">💳</div>
+        <div class="stat-label">Créditos dos Usuários</div>
+        <div class="stat-value count-up" data-stat="creditos" data-target="2820.5">0</div>
+        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+      </button>
+      <button type="button" class="stat-card blue fade-up" onclick="openStatModal(statInfo.kw_recebidos)">
+        <div class="stat-icon">🔋</div>
+        <div class="stat-label">kW Recebidos</div>
+        <div class="stat-value count-up" data-stat="kw_recebidos" data-target="13080.0">0</div>
+        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+      </button>
+      <button type="button" class="stat-card purple fade-up" onclick="openStatModal(statInfo.investido)">
+        <div class="stat-icon">💰</div>
+        <div class="stat-label">Total Investido (R$)</div>
+        <div class="stat-value count-up" data-stat="investido" data-target="38600.0" data-prefix="R$ ">0</div>
+        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+      </button>
+      <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.cashback_orquideas)">
+        <div class="stat-icon">🌸</div>
+        <div class="stat-label">Cashback Orquídeas (R$)</div>
+        <div class="stat-value count-up" data-stat="cashback_orquideas" data-target="5790.0" data-prefix="R$ ">0</div>
+        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+      </button>
+      <button type="button" class="stat-card green fade-up" onclick="openStatModal(statInfo.geracao_total_kwh)">
+        <div class="stat-icon">🏭</div>
+        <div class="stat-label">Geração Total (kWh)</div>
+        <div class="stat-value count-up" data-stat="geracao_total_kwh" data-target="645000">0</div>
+        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+      </button>
+      <button type="button" class="stat-card blue fade-up" onclick="openStatModal(statInfo.co2_evitado_total)">
+        <div class="stat-icon">🌿</div>
+        <div class="stat-label">CO₂ Evitado (kg)</div>
+        <div class="stat-value count-up" data-stat="co2_evitado_total" data-target="322500">0</div>
+        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+      </button>
+    </div>
+  </section>
+
+  <!-- Gráficos -->
+  <section class="section">
+    <h2 class="section-title">Visão Geral da Geração</h2>
+    <div class="charts-grid">
+      <div class="chart-card fade-up">
+        <h3>Geração Mensal (kWh)</h3>
+        <canvas id="chartGeracaoMensal"></canvas>
+      </div>
+      <div class="chart-card fade-up">
+        <h3>Geração por Usina</h3>
+        <canvas id="chartGeracaoUsina"></canvas>
+      </div>
+      <div class="chart-card fade-up">
+        <h3>CO₂ Evitado por Mês (kg)</h3>
+        <canvas id="chartCO2"></canvas>
+      </div>
+      <div class="chart-card fade-up">
+        <h3>Localização das Usinas</h3>
+        <div id="mapaUsinas" style="height:320px;border-radius:var(--radius-sm);overflow:hidden;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Nossa História -->
+  <section class="section" id="historia">
+    <h2 class="section-title">Nossa História</h2>
+    <div class="history-grid">
+      <div class="history-text fade-up">
+        <p>
+          O Banco Comunitário de Desenvolvimento Jardim Botânico nasceu na comunidade de
+          São Rafael, no bairro Castelo Branco III, em João Pessoa (PB), como uma iniciativa
+          de economia solidária para gerar trabalho e renda em um território historicamente
+          carente de acesso a crédito e serviços financeiros.
+        </p>
+        <p>
+          Em 2012, durante o II Encontro Nordestino de Incubadoras de Empreendimentos
+          Solidários (ENIES) — com a presença do então secretário nacional de Economia
+          Solidária, Paul Singer — a comunidade lançou sua própria moeda social: a
+          <strong>Orquídea</strong>. Circulando lado a lado com o Real, a Orquídea incentiva
+          o consumo no comércio local e mantém a riqueza gerada dentro do próprio bairro.
+        </p>
+        <p>
+          O banco foi oficialmente inaugurado em 27 de abril de 2013, com a participação de
+          moradores, universidades e representantes do poder público estadual e municipal.
+          Desde então, o Jardim Botânico integra a Rede Paraibana de Bancos Comunitários de
+          Desenvolvimento, ajudando a replicar esse modelo de finanças solidárias em outras
+          comunidades da Paraíba — e hoje soma a essa trajetória a geração de energia solar
+          compartilhada como uma nova fonte de economia real para as famílias associadas.
+        </p>
+      </div>
+      <div class="history-coins fade-up">
+        <p class="history-coins-caption">A moeda social Orquídea, em suas cinco denominações</p>
+        <div class="coins-grid">
+          <img src="static/img/moeda05_1.jpg" alt="Nota da moeda social Orquídea de 0,5">
+          <img src="static/img/moeda1_1.jpg" alt="Nota da moeda social Orquídea de 1">
+          <img src="static/img/moeda2_1.jpg" alt="Nota da moeda social Orquídea de 2">
+          <img src="static/img/moeda5_1.jpg" alt="Nota da moeda social Orquídea de 5">
+          <img src="static/img/moeda10_1.jpg" alt="Nota da moeda social Orquídea de 10">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Como Funciona -->
+  <section class="section" id="como-funciona">
+    <h2 class="section-title">Como Funciona o Cashback e a Energia Solar</h2>
+    <p style="color:var(--text-secondary);font-size:0.95rem;line-height:1.75;margin-bottom:2rem;">
+      Entender de onde vem o desconto na conta de luz — e por que ele ainda volta como cashback —
+      é mais simples do que parece. A energia gerada pelas usinas solares parceiras é dividida entre
+      os moradores associados, abate o valor da conta de energia e o que sobra retorna ao bolso do
+      morador em Orquídeas, a moeda social do banco. Veja o passo a passo:
+    </p>
+
+    <div class="how-steps">
+      <div class="how-step fade-up">
+        <div class="how-step-num">1</div>
+        <h4>A usina gera energia</h4>
+        <p>As placas solares parceiras produzem energia todo mês — no exemplo abaixo, 1.940 kWh.</p>
+      </div>
+      <div class="how-step fade-up">
+        <div class="how-step-num">2</div>
+        <h4>Cada morador recebe uma cota</h4>
+        <p>Essa energia é repartida entre os associados. No exemplo, cada morador tem direito a 11% do total: 213,4 kWh.</p>
+      </div>
+      <div class="how-step fade-up">
+        <div class="how-step-num">3</div>
+        <h4>A cota vira desconto na conta</h4>
+        <p>A energia recebida abate o valor da conta de luz, até o limite do que o morador realmente consome naquele mês.</p>
+      </div>
+      <div class="how-step fade-up">
+        <div class="how-step-num">4</div>
+        <h4>O que sobra volta como cashback</h4>
+        <p>Parte do valor que seria pago à concessionária fica no fundo do banco, e o restante retorna ao morador em Orquídeas.</p>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Geist', sans-serif; font-size:1.1rem; font-weight:700; margin:2.5rem 0 1rem;">
+      Veja na prática: 4 perfis de moradores
+    </h3>
+
+    <div class="table-card">
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Morador</th>
+              <th>Consumo médio (kWh)</th>
+              <th>Geração estimada (kWh)</th>
+              <th>% que recebe</th>
+              <th>Energia estimada recebida (kWh)</th>
+              <th>Tarifa social</th>
+              <th>Custo da energia (R$/kWh)</th>
+              <th>Valor da conta sem o banco</th>
+              <th>Benefício solar</th>
+              <th>Valor doado ao banco</th>
+              <th>Cashback recebido</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:600;color:var(--text-primary)">Morador A</td>
+              <td>229</td><td>1.940</td><td>11,00%</td><td>213,4</td><td>Sim</td>
+              <td>R$ 0,56</td><td>R$ 128,24</td>
+              <td style="color:var(--accent-green-light)">R$ 119,50</td>
+              <td>R$ 41,72</td>
+              <td style="color:var(--accent-solar-light);font-weight:600;">R$ 20,86</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;color:var(--text-primary)">Morador B</td>
+              <td>85</td><td>1.940</td><td>11,00%</td><td>213,4</td><td>Não</td>
+              <td>R$ 0,68</td><td>R$ 57,80</td>
+              <td style="color:var(--accent-green-light)">R$ 57,80</td>
+              <td>R$ 28,90</td>
+              <td style="color:var(--accent-solar-light);font-weight:600;">R$ 14,45</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;color:var(--text-primary)">Morador C</td>
+              <td>250</td><td>1.940</td><td>11,00%</td><td>213,4</td><td>Não</td>
+              <td>R$ 0,68</td><td>R$ 170,00</td>
+              <td style="color:var(--accent-green-light)">R$ 145,11</td>
+              <td>R$ 72,56</td>
+              <td style="color:var(--accent-solar-light);font-weight:600;">R$ 36,28</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;color:var(--text-primary)">Morador D</td>
+              <td>70</td><td>1.940</td><td>11,00%</td><td>213,4</td><td>Sim</td>
+              <td>R$ 0,56</td><td>R$ 39,20</td>
+              <td style="color:var(--accent-green-light)">R$ 39,20</td>
+              <td>R$ 0,00</td>
+              <td style="color:var(--accent-solar-light);font-weight:600;">R$ 5,00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:0.78rem;color:var(--text-muted);margin-top:1rem;">
+        * Cenário ilustrativo e didático do modelo de rateio de geração solar e cashback do banco.
+      </p>
+    </div>
+
+    <div class="how-readout">
+      <div class="how-readout-item fade-up">
+        <span class="how-readout-name">Morador A</span>
+        Consome um pouco mais do que sua cota (229 de 213,4 kWh) — por isso ainda paga uma fatia
+        da conta, mas mesmo assim economiza bastante e ganha cashback.
+      </div>
+      <div class="how-readout-item fade-up">
+        <span class="how-readout-name">Morador B</span>
+        Consome bem menos do que recebe (85 de 213,4 kWh) — a energia solar cobre 100% da conta,
+        que fica zerada, e ele ainda ganha cashback.
+      </div>
+      <div class="how-readout-item fade-up">
+        <span class="how-readout-name">Morador C</span>
+        Consome bastante e não tem tarifa social (tarifa cheia, mais cara) — mesmo com o desconto
+        solar, é quem mais paga de conta, mas também é quem mais recebe de cashback.
+      </div>
+      <div class="how-readout-item fade-up">
+        <span class="how-readout-name">Morador D</span>
+        Tem tarifa social (mais barata) e consome pouco — sua conta também fica zerada, mas como
+        já paga menos por kWh, o cashback dele é o menor do grupo.
+      </div>
+    </div>
+  </section>
+</div>
+
+
+  <footer class="footer">
+    <p>© 2026 Banco Comunitário Jardim Botânico — Energia limpa, economia real. 🌱</p>
+  </footer>
+
+  <!-- ═══ STAT MODAL (compartilhado por todas as páginas) ═══ -->
+  <div class="modal-overlay" id="statModalOverlay" onclick="closeStatModal(event)">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <button type="button" class="modal-close" onclick="closeStatModal()" aria-label="Fechar">✕</button>
+      <div class="modal-icon" id="statModalIcon"></div>
+      <h3 id="statModalTitle"></h3>
+      <p class="modal-desc" id="statModalDesc"></p>
+      <div class="modal-chart-wrap" id="statModalChartWrap">
+        <h4>Histórico recente</h4>
+        <canvas id="statModalChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ─── PRNG determinístico (mesmo dado sempre gera o mesmo "histórico") ───
+    function seedFromString(str) {
+      let h = 0;
+      for (let i = 0; i < str.length; i++) { h = Math.imul(31, h) + str.charCodeAt(i) | 0; }
+      return h >>> 0;
+    }
+    function mulberry32(seed) {
+      return function () {
+        seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+        let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+    // Distribui um total acumulado em N meses de forma estável (mesma chave = mesmo gráfico)
+    function distributeHistory(total, seedKey, labels) {
+      const rand = mulberry32(seedFromString(seedKey));
+      const n = labels.length;
+      const weights = Array.from({ length: n }, () => 0.6 + rand() * 0.8);
+      const sumW = weights.reduce((a, b) => a + b, 0);
+      return weights.map(w => Math.round((total / n) * (w / (sumW / n)) * 10) / 10);
+    }
+
+    const DEFAULT_HISTORY_LABELS = ['Nov/25', 'Dez/25', 'Jan/26', 'Fev/26', 'Mar/26', 'Abr/26', 'Mai/26', 'Jun/26'];
+
+    // ─── Modal de estatística ───
+    let statModalChart = null;
+
+    function openStatModal(info) {
+      document.getElementById('statModalIcon').textContent = info.icon || '📊';
+      document.getElementById('statModalTitle').textContent = info.title || '';
+      document.getElementById('statModalDesc').textContent = info.desc || '';
+
+      const overlay = document.getElementById('statModalOverlay');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+
+      if (statModalChart) { statModalChart.destroy(); statModalChart = null; }
+
+      const chartWrap = document.getElementById('statModalChartWrap');
+      let labels = info.history && info.history.labels ? info.history.labels : DEFAULT_HISTORY_LABELS;
+      let values = info.history && info.history.values
+        ? info.history.values
+        : distributeHistory(info.total || 0, info.title || 'stat', labels);
+
+      chartWrap.style.display = 'block';
+      const color = info.color || '#15803d';
+      statModalChart = new Chart(document.getElementById('statModalChart'), {
+        type: info.chartType || 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: info.title,
+            data: values,
+            borderColor: color,
+            backgroundColor: color + '22',
+            fill: true, tension: 0.4,
+            pointBackgroundColor: color, pointRadius: 4, pointHoverRadius: 7
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { beginAtZero: false, grid: { color: 'rgba(15,23,42,0.06)' } },
+            x: { grid: { display: false } }
+          }
+        }
+      });
+    }
+
+    function closeStatModal(e) {
+      if (e && e.target !== e.currentTarget) return;
+      document.getElementById('statModalOverlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeStatModal();
+    });
+  </script>
+
+  
+<script>
+  // ─── Counter Animation ───
+  function animateCounters() {
+    document.querySelectorAll('.count-up').forEach(el => {
+      const target = parseFloat(el.dataset.target);
+      const prefix = el.dataset.prefix || '';
+      const duration = 2000;
+      const start = performance.now();
+
+      function update(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = target * eased;
+        el.textContent = prefix + current.toLocaleString('pt-BR', {
+          minimumFractionDigits: target % 1 !== 0 ? 1 : 0,
+          maximumFractionDigits: target % 1 !== 0 ? 1 : 0
+        });
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    });
+  }
+
+  // ─── Chart.js Global Defaults ───
+  Chart.defaults.color = '#475569';
+  Chart.defaults.borderColor = 'rgba(15,23,42,0.08)';
+  Chart.defaults.font.family = "'Geist', sans-serif";
+
+  const geracaoMes = [{"co2_evitado_kg": 31000, "geracao_kwh": 62000, "mes": "2025-07"}, {"co2_evitado_kg": 32500, "geracao_kwh": 65000, "mes": "2025-08"}, {"co2_evitado_kg": 34000, "geracao_kwh": 68000, "mes": "2025-09"}, {"co2_evitado_kg": 32000, "geracao_kwh": 64000, "mes": "2025-10"}, {"co2_evitado_kg": 30000, "geracao_kwh": 60000, "mes": "2025-11"}, {"co2_evitado_kg": 29000, "geracao_kwh": 58000, "mes": "2025-12"}, {"co2_evitado_kg": 31500, "geracao_kwh": 63000, "mes": "2026-01"}, {"co2_evitado_kg": 33000, "geracao_kwh": 66000, "mes": "2026-02"}, {"co2_evitado_kg": 34500, "geracao_kwh": 69000, "mes": "2026-03"}, {"co2_evitado_kg": 35000, "geracao_kwh": 70000, "mes": "2026-04"}];
+  const geracaoUsina = [{"geracao_kwh": 645000, "nome": "Usina 1"}];
+
+  // ─── Filtro temporal ───
+  const MESES_PT = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+  function formatMes(m) {
+    const [ano, mes] = m.split('-');
+    return MESES_PT[parseInt(mes, 10) - 1] + '/' + ano;
+  }
+
+  const totalGeracaoAll = geracaoMes.reduce((s, d) => s + d.geracao_kwh, 0);
+
+  const totaisOriginais = {
+    economia_kw: 10773.5,
+    creditos: 2820.5,
+    kw_recebidos: 13080.0,
+    investido: 38600.0,
+    cashback_orquideas: 5790.0
+  };
+
+  const anosDisponiveis = [...new Set(geracaoMes.map(d => d.mes.split('-')[0]))].sort();
+  const primeiroMes = geracaoMes[0].mes;
+  const ultimoMes = geracaoMes[geracaoMes.length - 1].mes;
+
+  function popularSelectMes(select) {
+    MESES_PT.forEach((nome, i) => {
+      const opt = document.createElement('option');
+      opt.value = String(i + 1).padStart(2, '0');
+      opt.textContent = nome;
+      select.appendChild(opt);
+    });
+  }
+
+  function popularSelectAno(select) {
+    anosDisponiveis.forEach(ano => {
+      const opt = document.createElement('option');
+      opt.value = ano;
+      opt.textContent = ano;
+      select.appendChild(opt);
+    });
+  }
+
+  function popularFiltroPeriodo() {
+    const mesInicio = document.getElementById('mesInicio');
+    const anoInicio = document.getElementById('anoInicio');
+    const mesFim = document.getElementById('mesFim');
+    const anoFim = document.getElementById('anoFim');
+
+    popularSelectMes(mesInicio);
+    popularSelectMes(mesFim);
+    popularSelectAno(anoInicio);
+    popularSelectAno(anoFim);
+
+    // Padrão: todo o período disponível nos dados
+    const [anoIni, mesIni] = primeiroMes.split('-');
+    const [anoUlt, mesUlt] = ultimoMes.split('-');
+    mesInicio.value = mesIni;
+    anoInicio.value = anoIni;
+    mesFim.value = mesUlt;
+    anoFim.value = anoUlt;
+  }
+
+  function setStatDisplay(key, value, prefix) {
+    const el = document.querySelector('.stat-value[data-stat="' + key + '"]');
+    if (!el) return;
+    el.textContent = (prefix || '') + value.toLocaleString('pt-BR', {
+      minimumFractionDigits: value % 1 !== 0 ? 1 : 0,
+      maximumFractionDigits: value % 1 !== 0 ? 1 : 0
+    });
+  }
+
+  function aplicarFiltroPeriodo() {
+    const inicio = document.getElementById('anoInicio').value + '-' + document.getElementById('mesInicio').value;
+    const fim = document.getElementById('anoFim').value + '-' + document.getElementById('mesFim').value;
+    const ehPeriodoCompleto = inicio === primeiroMes && fim === ultimoMes;
+
+    const meses = geracaoMes.filter(d => d.mes >= inicio && d.mes <= fim);
+
+    document.getElementById('periodoVazio').style.display = meses.length === 0 ? 'block' : 'none';
+    document.getElementById('periodoNota').style.display = (!ehPeriodoCompleto && meses.length > 0) ? 'block' : 'none';
+    if (meses.length === 0) return;
+
+    const labels = meses.map(d => formatMes(d.mes));
+    const geracaoSel = meses.reduce((s, d) => s + d.geracao_kwh, 0);
+    const co2Sel = meses.reduce((s, d) => s + d.co2_evitado_kg, 0);
+    const ratio = totalGeracaoAll > 0 ? geracaoSel / totalGeracaoAll : 0;
+
+    setStatDisplay('geracao_total_kwh', geracaoSel);
+    setStatDisplay('co2_evitado_total', co2Sel);
+    setStatDisplay('economia_kw', totaisOriginais.economia_kw * ratio);
+    setStatDisplay('creditos', totaisOriginais.creditos * ratio);
+    setStatDisplay('kw_recebidos', totaisOriginais.kw_recebidos * ratio);
+    setStatDisplay('investido', totaisOriginais.investido * ratio, 'R$ ');
+    setStatDisplay('cashback_orquideas', totaisOriginais.cashback_orquideas * ratio, 'R$ ');
+
+    chartGeracaoMensal.data.labels = labels;
+    chartGeracaoMensal.data.datasets[0].data = meses.map(d => d.geracao_kwh);
+    chartGeracaoMensal.update();
+
+    chartCO2.data.labels = labels;
+    chartCO2.data.datasets[0].data = meses.map(d => d.co2_evitado_kg);
+    chartCO2.update();
+
+    statInfo.geracao_total_kwh.history = { labels: labels, values: meses.map(d => d.geracao_kwh) };
+    statInfo.co2_evitado_total.history = { labels: labels, values: meses.map(d => d.co2_evitado_kg) };
+    statInfo.economia_kw.total = totaisOriginais.economia_kw * ratio;
+    statInfo.creditos.total = totaisOriginais.creditos * ratio;
+    statInfo.kw_recebidos.total = totaisOriginais.kw_recebidos * ratio;
+    statInfo.investido.total = totaisOriginais.investido * ratio;
+    statInfo.cashback_orquideas.total = totaisOriginais.cashback_orquideas * ratio;
+  }
+
+  // ─── Dados para o modal de cada indicador ───
+  const statInfo = {
+    economia_kw: {
+      title: 'Economia Total (kW)', icon: '⚡', color: '#15803d',
+      desc: 'Soma da energia (em kW) que todos os clientes do banco solar deixaram de consumir da concessionária, graças aos créditos gerados pelas usinas parceiras.',
+      total: 10773.5
+    },
+    creditos: {
+      title: 'Créditos dos Usuários', icon: '💳', color: '#059669',
+      desc: 'Total de créditos de energia acumulados por todos os clientes, ainda disponíveis para abatimento em contas futuras de energia.',
+      total: 2820.5
+    },
+    kw_recebidos: {
+      title: 'kW Recebidos', icon: '🔋', color: '#2563eb',
+      desc: 'Quantidade total de energia (kW) que os clientes já receberam das usinas solares parceiras e utilizaram para compensar seu consumo.',
+      total: 13080.0
+    },
+    investido: {
+      title: 'Total Investido (R$)', icon: '💰', color: '#7c3aed',
+      desc: 'Valor total, em reais, investido pelos clientes para participar do banco solar e ter direito aos créditos de energia limpa.',
+      total: 38600.0
+    },
+    cashback_orquideas: {
+      title: 'Cashback Orquídeas (R$)', icon: '🌸', color: '#15803d',
+      desc: 'Valor em reais devolvido aos clientes através do programa de cashback "Orquídeas", um benefício adicional por manterem sua participação em dia.',
+      total: 5790.0
+    },
+    geracao_total_kwh: {
+      title: 'Geração Total (kWh)', icon: '🏭', color: '#059669',
+      desc: 'Energia total gerada por todas as usinas solares parceiras do banco, medida em quilowatt-hora (kWh), somada mês a mês.',
+      history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(d => d.geracao_kwh) }
+    },
+    co2_evitado_total: {
+      title: 'CO₂ Evitado (kg)', icon: '🌿', color: '#2563eb',
+      desc: 'Estimativa de emissões de CO₂ que deixaram de ser lançadas na atmosfera graças à energia solar gerada, em comparação com fontes convencionais. Cálculo baseado no fator de 0,5 kg CO₂/kWh, referência do Fator Médio de Emissão do Sistema Interligado Nacional (SIN), publicado pelo MCTI.',
+      history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(d => d.co2_evitado_kg) }
+    }
+  };
+
+  // Geração Mensal - Line Chart
+  const chartGeracaoMensal = new Chart(document.getElementById('chartGeracaoMensal'), {
+    type: 'line',
+    data: {
+      labels: geracaoMes.map(d => formatMes(d.mes)),
+      datasets: [{
+        label: 'Geração (kWh)',
+        data: geracaoMes.map(d => d.geracao_kwh),
+        borderColor: '#16a34a',
+        backgroundColor: 'rgba(22,163,74,0.1)',
+        fill: true,
+        tension: 0.4,
+        pointBackgroundColor: '#16a34a',
+        pointBorderColor: '#16a34a',
+        pointRadius: 4,
+        pointHoverRadius: 7
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: false, grid: { color: 'rgba(15,23,42,0.06)' } }, x: { grid: { display: false } } }
+    }
+  });
+
+  // Geração por Usina - Doughnut
+  new Chart(document.getElementById('chartGeracaoUsina'), {
+    type: 'doughnut',
+    data: {
+      labels: geracaoUsina.map(d => d.nome),
+      datasets: [{
+        data: geracaoUsina.map(d => d.geracao_kwh),
+        backgroundColor: ['#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899'],
+        borderWidth: 0,
+        hoverOffset: 8
+      }]
+    },
+    options: {
+      responsive: true,
+      cutout: '60%',
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 16, usePointStyle: true, pointStyle: 'circle' } }
+      }
+    }
+  });
+
+  // CO2 - Bar Chart
+  const chartCO2 = new Chart(document.getElementById('chartCO2'), {
+    type: 'bar',
+    data: {
+      labels: geracaoMes.map(d => formatMes(d.mes)),
+      datasets: [{
+        label: 'CO₂ Evitado (kg)',
+        data: geracaoMes.map(d => d.co2_evitado_kg),
+        backgroundColor: 'rgba(16,185,129,0.6)',
+        borderColor: '#10b981',
+        borderWidth: 1,
+        borderRadius: 6,
+        hoverBackgroundColor: 'rgba(16,185,129,0.8)'
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true, grid: { color: 'rgba(15,23,42,0.06)' } }, x: { grid: { display: false } } }
+    }
+  });
+
+  // Mapa - Localização das Usinas
+  const usinasMapa = [{"capacidade_kw": 500, "lat": -7.1342, "lng": -34.855, "localizacao": "R. Arquivista Jonathas Car\u00e9cas, 74 - Castelo Branco, Jo\u00e3o Pessoa - PB, 58057-034", "nome": "Usina 1", "status": "ativa"}];
+  const mapaEl = document.getElementById('mapaUsinas');
+  const usinasComCoordenadas = usinasMapa.filter(u => u.lat !== null && u.lng !== null);
+
+  if (mapaEl && usinasComCoordenadas.length) {
+    const mapa = L.map('mapaUsinas', { scrollWheelZoom: false });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      maxZoom: 18
+    }).addTo(mapa);
+
+    const bounds = [];
+    usinasComCoordenadas.forEach(u => {
+      const cor = u.status === 'ativa' ? '#059669' : '#d97706';
+      L.circleMarker([u.lat, u.lng], {
+        radius: 10, fillColor: cor, color: '#fff', weight: 2, fillOpacity: 0.9
+      })
+        .addTo(mapa)
+        .bindPopup(
+          '<strong>' + u.nome + '</strong><br>' +
+          u.localizacao + '<br>' +
+          u.capacidade_kw + ' kW instalados<br>' +
+          (u.status === 'ativa' ? 'Ativa' : 'Em manutenção')
+        );
+      bounds.push([u.lat, u.lng]);
+    });
+
+    mapa.setView([usinasComCoordenadas[0].lat, usinasComCoordenadas[0].lng], 12);
+  } else if (mapaEl) {
+    mapaEl.innerHTML = '<p style="padding:1rem;color:var(--text-muted);font-size:0.85rem;">Localização das usinas indisponível no momento.</p>';
+  }
+
+  // Start counter animation
+  setTimeout(animateCounters, 500);
+
+  // Inicializa o filtro de período (padrão: todo o período)
+  popularFiltroPeriodo();
+</script>
+
+</body>
+</html>

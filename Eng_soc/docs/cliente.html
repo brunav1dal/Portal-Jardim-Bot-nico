@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Banco Comunitário Jardim Botânico - Transparência e gestão de energia solar comunitária">
+  <title>Banco Comunitário Jardim Botânico — Meu Painel</title>
+  <link rel="stylesheet" href="static/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+</head>
+<body>
+  <div class="bg-grid"></div>
+
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">
+      <img class="brand-logo" src="static/img/logo_jb.png" alt="">
+
+      Banco Comunitário Jardim Botânico
+    </a>
+    <div class="navbar-actions">
+      
+        <span style="color:var(--text-secondary);font-size:0.85rem;">Olá, Maria Silva <em style="opacity:.7;">(demo)</em></span>
+        
+          <a href="cliente.html" class="btn btn-outline btn-sm">📊 Meu Painel</a>
+        
+        <a href="index.html" class="btn btn-outline btn-sm">Sair</a>
+      
+    </div>
+  </nav>
+
+  
+<div class="container dashboard">
+  <div class="dashboard-header">
+    <div>
+      <h1>Olá, Maria!</h1>
+      <p class="welcome">Confira seus dados de energia solar. Cliente desde 2024-03-15.</p>
+    </div>
+  </div>
+
+  
+    
+  
+
+  <!-- Fatura Atual -->
+  
+  <div class="invoice-card fade-up">
+    <div class="invoice-card-info">
+      <div>
+        <div class="invoice-card-label">Fatura Atual do Banco</div>
+        <div class="invoice-card-value">R$ 96.00</div>
+      </div>
+      <span class="badge badge-success">Paga</span>
+    </div>
+    <a href="fatura_atual.txt" download class="btn btn-primary">Baixar Fatura</a>
+  </div>
+  
+
+  <!-- KPIs do Cliente -->
+  <div class="stats-grid">
+    <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.economia_kw)">
+      <div class="stat-icon">⚡</div>
+      <div class="stat-label">Minha Economia (kW)</div>
+      <div class="stat-value count-up" data-target="1250.5">0</div>
+      <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+    </button>
+    <button type="button" class="stat-card green fade-up" onclick="openStatModal(statInfo.creditos)">
+      <div class="stat-icon">💳</div>
+      <div class="stat-label">Créditos Restantes</div>
+      <div class="stat-value count-up" data-target="320.0">0</div>
+      <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+    </button>
+    <button type="button" class="stat-card blue fade-up" onclick="openStatModal(statInfo.kw_recebidos)">
+      <div class="stat-icon">🔋</div>
+      <div class="stat-label">kW Recebidos</div>
+      <div class="stat-value count-up" data-target="1580.0">0</div>
+      <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+    </button>
+    <button type="button" class="stat-card purple fade-up" onclick="openStatModal(statInfo.investido)">
+      <div class="stat-icon">💰</div>
+      <div class="stat-label">Total Investido (R$)</div>
+      <div class="stat-value count-up" data-target="4500.0" data-prefix="R$ ">0</div>
+      <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+    </button>
+    <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.cashback_orquideas)">
+      <div class="stat-icon">🌸</div>
+      <div class="stat-label">Cashback Orquídeas (R$)</div>
+      <div class="stat-value count-up" data-target="675.0" data-prefix="R$ ">0</div>
+      <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+    </button>
+    
+    <button type="button" class="stat-card green fade-up" onclick="openStatModal(statInfo.economia_mensal_rs)">
+      <div class="stat-icon">🏠</div>
+      <div class="stat-label">Economia Mensal (R$)</div>
+      <div class="stat-value count-up" data-target="185.5" data-prefix="R$ ">0</div>
+      <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+    </button>
+    
+  </div>
+
+  <!-- Status da Residência -->
+  
+  <div class="status-card fade-up">
+    <h3>Status da Minha Residência</h3>
+    <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:1rem;">Rua das Flores 123 - Ribeirão Preto</p>
+    <div class="status-row">
+      <span style="color:var(--text-secondary);">Em dia com o Banco Comunitário Jardim Botânico</span>
+      <span class="badge badge-success">
+        ✅ Sim
+      </span>
+    </div>
+    <div class="status-row">
+      <span style="color:var(--text-secondary);">Em dia com a Concessionária</span>
+      <span class="badge badge-success">
+        ✅ Sim
+      </span>
+    </div>
+    <div class="status-row">
+      <span style="color:var(--text-secondary);">Cashback Orquídeas em dia</span>
+      <span class="badge badge-success">
+        ✅ Sim
+      </span>
+    </div>
+    <div class="status-row">
+      <span style="color:var(--text-secondary);">Consumo Mensal</span>
+      <span style="font-weight:600;color:var(--accent-blue);">320 kWh</span>
+    </div>
+  </div>
+  
+
+  <!-- Gráficos do Cliente -->
+  <div class="charts-grid charts-grid-3">
+    <div class="chart-card fade-up">
+      <h3>Minha Economia ao Longo do Tempo (kW)</h3>
+      <canvas id="chartEconomia"></canvas>
+    </div>
+    <div class="chart-card fade-up">
+      <h3>kW Recebidos por Mês</h3>
+      <canvas id="chartKW"></canvas>
+    </div>
+    <div class="chart-card fade-up">
+      <h3>Evolução dos Créditos</h3>
+      <canvas id="chartCreditos"></canvas>
+    </div>
+  </div>
+
+  <!-- Interpretação dos Dados -->
+  <div class="section" style="padding-top:0.5rem;">
+    <h2 class="section-title">O Que Seus Dados Dizem</h2>
+
+    <p style="color:var(--text-secondary);font-size:0.95rem;line-height:1.75;margin-bottom:1.5rem;">
+      Confira abaixo como os seus números se comparam à média dos demais beneficiários do banco
+      e como a sua própria trajetória evoluiu nos últimos meses.
+    </p>
+
+    <div class="compare-grid">
+      <div class="compare-card fade-up">
+        <div class="compare-card-header">
+          <h4>Economia (kW)</h4>
+          <span class="compare-delta up">
+            +16.1%
+          </span>
+        </div>
+        <div class="compare-row">
+          <div class="compare-row-label"><span>Você</span><strong>1250.5 kW</strong></div>
+          <div class="compare-track"><div class="compare-fill you" style="width:87.0%"></div></div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-row-label"><span>Média dos beneficiários</span><strong>1077.4 kW</strong></div>
+          <div class="compare-track"><div class="compare-fill media" style="width:74.9%"></div></div>
+        </div>
+      </div>
+
+      <div class="compare-card fade-up">
+        <div class="compare-card-header">
+          <h4>Créditos</h4>
+          <span class="compare-delta up">
+            +13.5%
+          </span>
+        </div>
+        <div class="compare-row">
+          <div class="compare-row-label"><span>Você</span><strong>320.0</strong></div>
+          <div class="compare-track"><div class="compare-fill you" style="width:87.0%"></div></div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-row-label"><span>Média dos beneficiários</span><strong>282.0</strong></div>
+          <div class="compare-track"><div class="compare-fill media" style="width:76.6%"></div></div>
+        </div>
+      </div>
+
+      <div class="compare-card fade-up">
+        <div class="compare-card-header">
+          <h4>kW Recebidos</h4>
+          <span class="compare-delta up">
+            +20.8%
+          </span>
+        </div>
+        <div class="compare-row">
+          <div class="compare-row-label"><span>Você</span><strong>1580.0 kW</strong></div>
+          <div class="compare-track"><div class="compare-fill you" style="width:87.0%"></div></div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-row-label"><span>Média dos beneficiários</span><strong>1308.0 kW</strong></div>
+          <div class="compare-track"><div class="compare-fill media" style="width:72.0%"></div></div>
+        </div>
+      </div>
+
+      <div class="compare-card fade-up">
+        <div class="compare-card-header">
+          <h4>Cashback Orquídeas (R$)</h4>
+          <span class="compare-delta up">
+            +16.6%
+          </span>
+        </div>
+        <div class="compare-row">
+          <div class="compare-row-label"><span>Você</span><strong>R$ 675.0</strong></div>
+          <div class="compare-track"><div class="compare-fill you" style="width:87.0%"></div></div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-row-label"><span>Média dos beneficiários</span><strong>R$ 579.0</strong></div>
+          <div class="compare-track"><div class="compare-fill media" style="width:74.6%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight-trend fade-up" id="insightTrend"></div>
+
+    <div class="goal-card fade-up" id="goalCard"></div>
+  </div>
+
+  <!-- Boletos da Concessionária -->
+  <div class="section" style="padding-top:0.5rem;">
+    <h2 class="section-title">Boletos da Concessionária</h2>
+    <p style="color:var(--text-secondary);font-size:0.95rem;line-height:1.75;margin-bottom:1.5rem;">
+      Envie o boleto da concessionária de energia todo mês para manter seu cadastro em dia no banco.
+    </p>
+
+    <div style="background:#fef9c3;border:1px solid #eab308;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;font-size:0.85rem;color:#713f12;">
+      ⚠️ Versão de demonstração: como esta página está hospedada de forma estática (GitHub Pages), não há servidor para receber o arquivo enviado. Em produção, este formulário salva o boleto e o registra na tabela abaixo.
+    </div>
+    <form class="upload-form" onsubmit="alert('Esta é uma demonstração estática: o envio de boletos exige um servidor, que não está disponível nesta versão hospedada no GitHub Pages.'); return false;">
+      <label for="boletoInput" class="upload-icon-btn" title="Selecionar arquivo">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="17 8 12 3 7 8"/>
+          <line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+      </label>
+      <input type="file" id="boletoInput" name="boleto" accept=".pdf,.png,.jpg,.jpeg" class="upload-input-hidden">
+      <span id="boletoFileName" class="upload-filename">Nenhum arquivo selecionado</span>
+      <button type="submit" class="btn btn-primary">Anexar Novo Boleto</button>
+    </form>
+
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th>Arquivo</th>
+            <th>Data de Envio</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <tr>
+            <td style="color:var(--text-primary)">boleto_concessionaria_abr2026.pdf</td>
+            <td>2026-04-06</td>
+            <td>
+              <span class="badge badge-warning">
+                Em Análise
+              </span>
+            </td>
+          </tr>
+          
+          <tr>
+            <td style="color:var(--text-primary)">boleto_concessionaria_mar2026.pdf</td>
+            <td>2026-03-04</td>
+            <td>
+              <span class="badge badge-success">
+                Confirmado
+              </span>
+            </td>
+          </tr>
+          
+          <tr>
+            <td style="color:var(--text-primary)">boleto_concessionaria_fev2026.pdf</td>
+            <td>2026-02-05</td>
+            <td>
+              <span class="badge badge-success">
+                Confirmado
+              </span>
+            </td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+  <footer class="footer">
+    <p>© 2026 Banco Comunitário Jardim Botânico — Energia limpa, economia real. 🌱</p>
+  </footer>
+
+  <!-- ═══ STAT MODAL (compartilhado por todas as páginas) ═══ -->
+  <div class="modal-overlay" id="statModalOverlay" onclick="closeStatModal(event)">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <button type="button" class="modal-close" onclick="closeStatModal()" aria-label="Fechar">✕</button>
+      <div class="modal-icon" id="statModalIcon"></div>
+      <h3 id="statModalTitle"></h3>
+      <p class="modal-desc" id="statModalDesc"></p>
+      <div class="modal-chart-wrap" id="statModalChartWrap">
+        <h4>Histórico recente</h4>
+        <canvas id="statModalChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ─── PRNG determinístico (mesmo dado sempre gera o mesmo "histórico") ───
+    function seedFromString(str) {
+      let h = 0;
+      for (let i = 0; i < str.length; i++) { h = Math.imul(31, h) + str.charCodeAt(i) | 0; }
+      return h >>> 0;
+    }
+    function mulberry32(seed) {
+      return function () {
+        seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+        let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+    // Distribui um total acumulado em N meses de forma estável (mesma chave = mesmo gráfico)
+    function distributeHistory(total, seedKey, labels) {
+      const rand = mulberry32(seedFromString(seedKey));
+      const n = labels.length;
+      const weights = Array.from({ length: n }, () => 0.6 + rand() * 0.8);
+      const sumW = weights.reduce((a, b) => a + b, 0);
+      return weights.map(w => Math.round((total / n) * (w / (sumW / n)) * 10) / 10);
+    }
+
+    const DEFAULT_HISTORY_LABELS = ['Nov/25', 'Dez/25', 'Jan/26', 'Fev/26', 'Mar/26', 'Abr/26', 'Mai/26', 'Jun/26'];
+
+    // ─── Modal de estatística ───
+    let statModalChart = null;
+
+    function openStatModal(info) {
+      document.getElementById('statModalIcon').textContent = info.icon || '📊';
+      document.getElementById('statModalTitle').textContent = info.title || '';
+      document.getElementById('statModalDesc').textContent = info.desc || '';
+
+      const overlay = document.getElementById('statModalOverlay');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+
+      if (statModalChart) { statModalChart.destroy(); statModalChart = null; }
+
+      const chartWrap = document.getElementById('statModalChartWrap');
+      let labels = info.history && info.history.labels ? info.history.labels : DEFAULT_HISTORY_LABELS;
+      let values = info.history && info.history.values
+        ? info.history.values
+        : distributeHistory(info.total || 0, info.title || 'stat', labels);
+
+      chartWrap.style.display = 'block';
+      const color = info.color || '#15803d';
+      statModalChart = new Chart(document.getElementById('statModalChart'), {
+        type: info.chartType || 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: info.title,
+            data: values,
+            borderColor: color,
+            backgroundColor: color + '22',
+            fill: true, tension: 0.4,
+            pointBackgroundColor: color, pointRadius: 4, pointHoverRadius: 7
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { beginAtZero: false, grid: { color: 'rgba(15,23,42,0.06)' } },
+            x: { grid: { display: false } }
+          }
+        }
+      });
+    }
+
+    function closeStatModal(e) {
+      if (e && e.target !== e.currentTarget) return;
+      document.getElementById('statModalOverlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeStatModal();
+    });
+  </script>
+
+  
+<script>
+  // Counter animation
+  function animateCounters() {
+    document.querySelectorAll('.count-up').forEach(el => {
+      const target = parseFloat(el.dataset.target);
+      const prefix = el.dataset.prefix || '';
+      const duration = 2000;
+      const start = performance.now();
+      function update(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = target * eased;
+        el.textContent = prefix + current.toLocaleString('pt-BR', {
+          minimumFractionDigits: target % 1 !== 0 ? 1 : 0,
+          maximumFractionDigits: target % 1 !== 0 ? 1 : 0
+        });
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    });
+  }
+
+  Chart.defaults.color = '#475569';
+  Chart.defaults.borderColor = 'rgba(15,23,42,0.08)';
+  Chart.defaults.font.family = "'Geist', sans-serif";
+
+  const historico = {"creditos": [42.5, 42.6, 41.9, 31.8, 38.3, 37.4, 45.4, 51.9], "economia": [184.8, 184.3, 128.6, 130.4, 177.3, 171.1, 166.9, 144.3], "kw_recebidos": [233.0, 201.0, 193.1, 179.2, 160.8, 160.2, 194.7, 183.2], "meses": ["Set/25", "Out/25", "Nov/25", "Dez/25", "Jan/26", "Fev/26", "Mar/26", "Abr/26"]};
+
+  // ─── Dados para o modal de cada indicador ───
+  const statInfo = {
+    economia_kw: {
+      title: 'Minha Economia (kW)', icon: '⚡', color: '#15803d',
+      desc: 'Quantidade de energia (kW) que você deixou de consumir da concessionária ao longo da sua participação no banco solar, graças aos créditos recebidos.',
+      history: { labels: historico.meses, values: historico.economia }
+    },
+    creditos: {
+      title: 'Créditos Restantes', icon: '💳', color: '#059669',
+      desc: 'Créditos de energia que ainda estão disponíveis na sua conta para abater em contas futuras de luz.',
+      history: { labels: historico.meses, values: historico.creditos }
+    },
+    kw_recebidos: {
+      title: 'kW Recebidos', icon: '🔋', color: '#2563eb',
+      desc: 'Total de energia (kW) que você já recebeu das usinas solares parceiras desde que entrou no banco solar.',
+      history: { labels: historico.meses, values: historico.kw_recebidos }
+    },
+    investido: {
+      title: 'Total Investido (R$)', icon: '💰', color: '#7c3aed',
+      desc: 'Valor total, em reais, que você investiu para participar do banco solar e ter direito aos créditos de energia.',
+      total: 4500.0
+    },
+    cashback_orquideas: {
+      title: 'Cashback Orquídeas (R$)', icon: '🌸', color: '#15803d',
+      desc: 'Valor devolvido a você pelo programa de cashback "Orquídeas", um benefício extra por manter sua participação em dia.',
+      total: 675.0
+    },
+    
+    economia_mensal_rs: {
+      title: 'Economia Mensal (R$)', icon: '🏠', color: '#059669',
+      desc: 'Estimativa de quanto sua residência economiza por mês em reais, comparando a tarifa da concessionária com a tarifa solar do banco.',
+      total: 185.5
+    }
+    
+  };
+
+  // Economia line chart
+  new Chart(document.getElementById('chartEconomia'), {
+    type: 'line',
+    data: {
+      labels: historico.meses,
+      datasets: [{
+        label: 'Economia (kW)',
+        data: historico.economia,
+        borderColor: '#16a34a',
+        backgroundColor: 'rgba(22,163,74,0.1)',
+        fill: true, tension: 0.4,
+        pointBackgroundColor: '#16a34a', pointRadius: 5, pointHoverRadius: 8
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true, grid: { color: 'rgba(15,23,42,0.06)' } }, x: { grid: { display: false } } }
+    }
+  });
+
+  // kW Recebidos bar chart
+  new Chart(document.getElementById('chartKW'), {
+    type: 'bar',
+    data: {
+      labels: historico.meses,
+      datasets: [{
+        label: 'kW Recebidos',
+        data: historico.kw_recebidos,
+        backgroundColor: 'rgba(59,130,246,0.6)',
+        borderColor: '#3b82f6', borderWidth: 1, borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true, grid: { color: 'rgba(15,23,42,0.06)' } }, x: { grid: { display: false } } }
+    }
+  });
+
+  // Créditos area chart
+  new Chart(document.getElementById('chartCreditos'), {
+    type: 'line',
+    data: {
+      labels: historico.meses,
+      datasets: [{
+        label: 'Créditos',
+        data: historico.creditos,
+        borderColor: '#10b981',
+        backgroundColor: 'rgba(16,185,129,0.1)',
+        fill: true, tension: 0.4,
+        pointBackgroundColor: '#10b981', pointRadius: 5
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true, grid: { color: 'rgba(15,23,42,0.06)' } }, x: { grid: { display: false } } }
+    }
+  });
+
+  // ─── Interpretação: tendência e meta ───
+  const comparacao = {"cashback_orquideas": {"diferenca_pct": 16.6, "media": 579.0, "media_pct": 74.6, "valor": 675.0, "valor_pct": 87.0}, "creditos": {"diferenca_pct": 13.5, "media": 282.0, "media_pct": 76.6, "valor": 320.0, "valor_pct": 87.0}, "economia_kw": {"diferenca_pct": 16.1, "media": 1077.4, "media_pct": 74.9, "valor": 1250.5, "valor_pct": 87.0}, "kw_recebidos": {"diferenca_pct": 20.8, "media": 1308.0, "media_pct": 72.0, "valor": 1580.0, "valor_pct": 87.0}};
+
+  function media(arr) { return arr.reduce((a, b) => a + b, 0) / arr.length; }
+
+  const meio = Math.floor(historico.economia.length / 2);
+  const economiaInicio = media(historico.economia.slice(0, meio));
+  const economiaFim = media(historico.economia.slice(meio));
+  const variacaoEconomia = economiaInicio > 0 ? ((economiaFim - economiaInicio) / economiaInicio * 100) : 0;
+
+  const creditosInicio = media(historico.creditos.slice(0, meio));
+  const creditosFim = media(historico.creditos.slice(meio));
+  const variacaoCreditos = creditosInicio > 0 ? ((creditosFim - creditosInicio) / creditosInicio * 100) : 0;
+
+  const tendenciaEconomia = variacaoEconomia >= 0
+    ? 'cresceu ' + variacaoEconomia.toFixed(1) + '%'
+    : 'caiu ' + Math.abs(variacaoEconomia).toFixed(1) + '%';
+  const tendenciaCreditos = variacaoCreditos >= 0
+    ? 'subiram ' + variacaoCreditos.toFixed(1) + '%'
+    : 'caíram ' + Math.abs(variacaoCreditos).toFixed(1) + '%';
+
+  document.getElementById('insightTrend').innerHTML =
+    '<strong>Sua trajetória:</strong> comparando a primeira com a segunda metade do período, ' +
+    'sua economia de energia <strong>' + tendenciaEconomia + '</strong> e seus créditos ' +
+    '<strong>' + tendenciaCreditos + '</strong>.';
+
+  // Meta sugerida com base na própria trajetória do cliente (sem comparação com outros beneficiários)
+  const goalCard = document.getElementById('goalCard');
+  if (variacaoEconomia >= 0) {
+    const alvo = (economiaFim * 1.05).toFixed(1);
+    goalCard.innerHTML =
+      '<h4>Uma meta para os próximos meses</h4>' +
+      '<p>Sua economia de energia está em uma boa trajetória. Uma meta possível é manter uma média ' +
+      'de <strong>' + alvo + ' kW</strong> por mês — cerca de 5% acima do que você tem alcançado ' +
+      'recentemente.</p>';
+  } else {
+    const alvo = economiaInicio.toFixed(1);
+    goalCard.innerHTML =
+      '<h4>Uma meta para os próximos meses</h4>' +
+      '<p>Sua economia teve uma leve queda no período mais recente. Uma meta possível é retomar ' +
+      'uma média de <strong>' + alvo + ' kW</strong> por mês, patamar que você já alcançou antes.</p>';
+  }
+
+  setTimeout(animateCounters, 300);
+
+  // Exibe o nome do arquivo selecionado para anexar o boleto
+  const boletoInput = document.getElementById('boletoInput');
+  if (boletoInput) {
+    boletoInput.addEventListener('change', function () {
+      const nomeArquivo = boletoInput.files.length ? boletoInput.files[0].name : 'Nenhum arquivo selecionado';
+      document.getElementById('boletoFileName').textContent = nomeArquivo;
+    });
+  }
+</script>
+
+</body>
+</html>

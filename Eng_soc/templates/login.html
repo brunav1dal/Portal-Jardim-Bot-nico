@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Banco Comunitário Jardim Botânico — Entrar{% endblock %}
+
+{% block content %}
+<div class="login-page">
+  <div class="login-card">
+    <h2>Bem-vindo de volta</h2>
+    <p class="subtitle">Acesse seu painel do Banco Comunitário Jardim Botânico</p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash-error">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('login') }}">
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+      </div>
+      <div class="form-group">
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" name="senha" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="btn btn-primary login-btn">Entrar</button>
+    </form>
+
+    <div class="login-footer">
+      <a href="{{ url_for('index') }}">← Voltar para a página inicial</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

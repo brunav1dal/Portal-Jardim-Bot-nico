@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Banco Comunitário Jardim Botânico - Transparência e gestão de energia solar comunitária">
+  <title>Banco Comunitário Jardim Botânico — Administração</title>
+  <link rel="stylesheet" href="static/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+</head>
+<body>
+  <div class="bg-grid"></div>
+
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">
+      <img class="brand-logo" src="static/img/logo_jb.png" alt="">
+
+      Banco Comunitário Jardim Botânico
+    </a>
+    <div class="navbar-actions">
+      
+        <span style="color:var(--text-secondary);font-size:0.85rem;">Olá, Admin Solar <em style="opacity:.7;">(demo)</em></span>
+        
+          <a href="admin.html" class="btn btn-outline btn-sm">⚙️ Painel</a>
+        
+        <a href="index.html" class="btn btn-outline btn-sm">Sair</a>
+      
+    </div>
+  </nav>
+
+  
+<div class="container dashboard">
+  <div class="dashboard-header">
+    <div>
+      <h1>Painel Administrativo</h1>
+      <p class="welcome">Gestão completa das usinas e residências beneficiárias.</p>
+    </div>
+  </div>
+
+  <!-- Tabs de Navegação -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('usinas')">Usinas</button>
+    <button class="tab-btn" onclick="showTab('unificado')">Dados Unificados</button>
+    <button class="tab-btn" onclick="showTab('economia')">Economia</button>
+    <button class="tab-btn" onclick="showTab('residencias')">Residências</button>
+  </div>
+
+  <!-- ═══ TAB: USINAS ═══ -->
+  <div class="tab-content active" id="tab-usinas">
+    <h2 class="section-title">Dados Individuais das Usinas</h2>
+
+    <div class="stats-grid">
+      
+      <button type="button" class="stat-card green fade-up" onclick="openUsinaModal('Usina 1')">
+        <div class="stat-icon">🟢</div>
+        <div class="stat-label">Usina 1</div>
+        <div class="stat-value" style="font-size:1.3rem;">68,500 kWh</div>
+        <div style="margin-top:0.75rem;">
+          <div class="progress-bar-container">
+            <div class="progress-label">
+              <span>Eficiência</span>
+              <span style="color:var(--accent-green-light)">92.5%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill green" style="width:92.5%"></div>
+            </div>
+          </div>
+          <p style="font-size:0.78rem;color:var(--text-muted);margin-top:4px;">
+            📍 R. Arquivista Jonathas Carécas, 74 - Castelo Branco, João Pessoa - PB, 58057-034 · 500 kW cap. ·
+            <span class="badge badge-success">ativa</span>
+          </p>
+        </div>
+        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+      </button>
+      
+    </div>
+
+    <!-- Filtro de usina para gráfico individual -->
+    <div class="filter-bar">
+      <label style="color:var(--text-secondary);font-size:0.85rem;font-weight:600;">Selecionar usina:</label>
+      <select id="selectUsina" onchange="updateUsinaChart()">
+        
+        <option value="Usina 1">Usina 1</option>
+        
+      </select>
+    </div>
+
+    <div class="charts-grid">
+      <div class="chart-card">
+        <h3>Geração Individual (kWh/mês)</h3>
+        <canvas id="chartUsinaIndividual"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Receita Individual (R$/mês)</h3>
+        <canvas id="chartUsinaReceita"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: DADOS UNIFICADOS ═══ -->
+  <div class="tab-content" id="tab-unificado">
+    <h2 class="section-title">Dados Unificados</h2>
+
+    <div class="stats-grid">
+      <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.total_capacidade)">
+        <div class="stat-icon">⚡</div>
+        <div class="stat-label">Capacidade Total (kW)</div>
+        <div class="stat-value count-up" data-target="500">0</div>
+        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+      </button>
+      <button type="button" class="stat-card green fade-up" onclick="openStatModal(statInfo.total_geracao_mensal)">
+        <div class="stat-icon">🏭</div>
+        <div class="stat-label">Geração Mensal (kWh)</div>
+        <div class="stat-value count-up" data-target="68500">0</div>
+        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+      </button>
+      <button type="button" class="stat-card blue fade-up" onclick="openStatModal(statInfo.total_co2)">
+        <div class="stat-icon">🌿</div>
+        <div class="stat-label">CO₂ Evitado Total (kg)</div>
+        <div class="stat-value count-up" data-target="322500">0</div>
+        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+      </button>
+      <button type="button" class="stat-card purple fade-up" onclick="openStatModal(statInfo.media_eficiencia)">
+        <div class="stat-icon">📊</div>
+        <div class="stat-label">Eficiência Média</div>
+        <div class="stat-value">92.5%</div>
+        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+      </button>
+      <button type="button" class="stat-card green fade-up" onclick="openStatModal(statInfo.num_usinas_ativas)">
+        <div class="stat-icon">🟢</div>
+        <div class="stat-label">Usinas Ativas</div>
+        <div class="stat-value">1</div>
+        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+      </button>
+      <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.num_usinas_manutencao)">
+        <div class="stat-icon">🔧</div>
+        <div class="stat-label">Em Manutenção</div>
+        <div class="stat-value">0</div>
+        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+      </button>
+    </div>
+
+    <div class="charts-grid">
+      <div class="chart-card">
+        <h3>Geração Total Mensal (kWh)</h3>
+        <canvas id="chartGeracaoTotal"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Receita Total Mensal (R$)</h3>
+        <canvas id="chartReceitaTotal"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>CO₂ Evitado Mensal (kg)</h3>
+        <canvas id="chartCO2Total"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Comparativo por Usina (kWh acumulado)</h3>
+        <canvas id="chartComparativo"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: ECONOMIA ═══ -->
+  <div class="tab-content" id="tab-economia">
+    <h2 class="section-title">Economia em Relação à Concessionária</h2>
+
+    <div class="stats-grid">
+      <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.tarifa_concessionaria)">
+        <div class="stat-icon">🏷️</div>
+        <div class="stat-label">Tarifa Concessionária (R$/kWh)</div>
+        <div class="stat-value">R$ 0.75</div>
+        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+      </button>
+      <button type="button" class="stat-card green fade-up" onclick="openStatModal(statInfo.tarifa_solar)">
+        <div class="stat-icon">☀️</div>
+        <div class="stat-label">Tarifa Solar (R$/kWh)</div>
+        <div class="stat-value">R$ 0.3</div>
+        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+      </button>
+      <button type="button" class="stat-card blue fade-up" onclick="openStatModal(statInfo.economia_percentual)">
+        <div class="stat-icon">📉</div>
+        <div class="stat-label">Economia Percentual</div>
+        <div class="stat-value">60.0%</div>
+        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+      </button>
+      <button type="button" class="stat-card purple fade-up" onclick="openStatModal(statInfo.economia_mensal_rs)">
+        <div class="stat-icon">💰</div>
+        <div class="stat-label">Economia Mensal (R$)</div>
+        <div class="stat-value count-up" data-target="30825.0" data-prefix="R$ ">0</div>
+        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+      </button>
+    </div>
+
+    <div class="charts-grid">
+      <div class="chart-card">
+        <h3>Comparativo de Tarifas</h3>
+        <div class="tarifa-compare">
+          <div class="tarifa-box">
+            <div class="tarifa-box-label">Concessionária</div>
+            <div class="tarifa-box-value">R$ 0.75</div>
+            <div class="tarifa-box-unit">por kWh</div>
+          </div>
+          <div class="tarifa-box tarifa-box-solar">
+            <div class="tarifa-box-label">Banco Comunitário (solar)</div>
+            <div class="tarifa-box-value">R$ 0.3</div>
+            <div class="tarifa-box-unit">por kWh</div>
+          </div>
+        </div>
+        <p style="font-size:0.78rem;color:var(--text-muted);margin-top:1rem;text-align:center;">
+          A tarifa solar do banco é 60.0% mais barata que a da concessionária.
+        </p>
+      </div>
+      <div class="chart-card">
+        <h3>Economia Acumulada por Mês (R$)</h3>
+        <canvas id="chartEconomiaAcum"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: RESIDÊNCIAS ═══ -->
+  <div class="tab-content" id="tab-residencias">
+    <h2 class="section-title">Gestão de Residências</h2>
+
+    <!-- Status resumo -->
+    <div class="stats-grid">
+      <button type="button" class="stat-card green fade-up" onclick="openStatModal(statInfo.total_residencias)">
+        <div class="stat-icon">🏠</div>
+        <div class="stat-label">Total de Residências</div>
+        <div class="stat-value">10</div>
+        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+      </button>
+      <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.em_dia_banco)">
+        <div class="stat-icon">🏦</div>
+        <div class="stat-label">Em dia com Banco</div>
+        <div class="stat-value">9 <span style="font-size:0.8rem;color:var(--text-muted)">(90.0%)</span></div>
+        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+      </button>
+      <button type="button" class="stat-card blue fade-up" onclick="openStatModal(statInfo.em_dia_concessionaria)">
+        <div class="stat-icon">🔌</div>
+        <div class="stat-label">Em dia Concessionária</div>
+        <div class="stat-value">7 <span style="font-size:0.8rem;color:var(--text-muted)">(70.0%)</span></div>
+        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+      </button>
+      <button type="button" class="stat-card purple fade-up" onclick="openStatModal(statInfo.cashback_em_dia)">
+        <div class="stat-icon">🌸</div>
+        <div class="stat-label">Cashback em dia</div>
+        <div class="stat-value">7 <span style="font-size:0.8rem;color:var(--text-muted)">(70.0%)</span></div>
+        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
+      </button>
+    </div>
+
+    <!-- Filtro -->
+    <div class="filter-bar">
+      <label style="color:var(--text-secondary);font-size:0.85rem;font-weight:600;">Filtrar:</label>
+      <select id="filterStatus" onchange="filterResidencias()">
+        <option value="todos">Todos</option>
+        <option value="ok">Tudo em dia</option>
+        <option value="pendente">Com pendências</option>
+      </select>
+      <input type="text" id="filterSearch" placeholder="Buscar por nome ou endereço..." oninput="filterResidencias()" style="min-width:260px;">
+    </div>
+
+    <!-- Tabela de Residências -->
+    <div class="table-card">
+      <table id="tabelaResidencias">
+        <thead>
+          <tr>
+            <th>Beneficiário</th>
+            <th>Endereço</th>
+            <th>Consumo (kWh)</th>
+            <th>Economia (R$)</th>
+            <th>Banco</th>
+            <th>Concessionária</th>
+            <th>Cashback</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <tr data-id="1" data-nome="maria silva" data-endereco="rua das flores 123 - ribeirão preto"
+              data-status="ok">
+            <td style="font-weight:600;color:var(--text-primary)">Maria Silva</td>
+            <td>Rua das Flores 123 - Ribeirão Preto</td>
+            <td>320</td>
+            <td style="color:var(--accent-green-light)">R$ 185.5</td>
+            <td><span class="badge badge-em_dia_banco badge-success">✅</span></td>
+            <td><span class="badge badge-em_dia_concessionaria badge-success">✅</span></td>
+            <td><span class="badge badge-cashback_em_dia badge-success">✅</span></td>
+          </tr>
+          
+          <tr data-id="2" data-nome="joão santos" data-endereco="av. brasil 456 - campinas"
+              data-status="pendente">
+            <td style="font-weight:600;color:var(--text-primary)">João Santos</td>
+            <td>Av. Brasil 456 - Campinas</td>
+            <td>280</td>
+            <td style="color:var(--accent-green-light)">R$ 162.0</td>
+            <td><span class="badge badge-em_dia_banco badge-success">✅</span></td>
+            <td><span class="badge badge-em_dia_concessionaria badge-danger">❌</span></td>
+            <td><span class="badge badge-cashback_em_dia badge-success">✅</span></td>
+          </tr>
+          
+          <tr data-id="3" data-nome="ana oliveira" data-endereco="rua ipê 789 - são carlos"
+              data-status="ok">
+            <td style="font-weight:600;color:var(--text-primary)">Ana Oliveira</td>
+            <td>Rua Ipê 789 - São Carlos</td>
+            <td>410</td>
+            <td style="color:var(--accent-green-light)">R$ 237.8</td>
+            <td><span class="badge badge-em_dia_banco badge-success">✅</span></td>
+            <td><span class="badge badge-em_dia_concessionaria badge-success">✅</span></td>
+            <td><span class="badge badge-cashback_em_dia badge-success">✅</span></td>
+          </tr>
+          
+          <tr data-id="4" data-nome="carlos souza" data-endereco="rua jacarandá 321 - araraquara"
+              data-status="pendente">
+            <td style="font-weight:600;color:var(--text-primary)">Carlos Souza</td>
+            <td>Rua Jacarandá 321 - Araraquara</td>
+            <td>250</td>
+            <td style="color:var(--accent-green-light)">R$ 145.0</td>
+            <td><span class="badge badge-em_dia_banco badge-danger">❌</span></td>
+            <td><span class="badge badge-em_dia_concessionaria badge-success">✅</span></td>
+            <td><span class="badge badge-cashback_em_dia badge-danger">❌</span></td>
+          </tr>
+          
+          <tr data-id="5" data-nome="beatriz lima" data-endereco="av. paulista 654 - bauru"
+              data-status="ok">
+            <td style="font-weight:600;color:var(--text-primary)">Beatriz Lima</td>
+            <td>Av. Paulista 654 - Bauru</td>
+            <td>350</td>
+            <td style="color:var(--accent-green-light)">R$ 203.0</td>
+            <td><span class="badge badge-em_dia_banco badge-success">✅</span></td>
+            <td><span class="badge badge-em_dia_concessionaria badge-success">✅</span></td>
+            <td><span class="badge badge-cashback_em_dia badge-success">✅</span></td>
+          </tr>
+          
+          <tr data-id="6" data-nome="pedro costa" data-endereco="rua dos pinheiros 987 - ribeirão preto"
+              data-status="pendente">
+            <td style="font-weight:600;color:var(--text-primary)">Pedro Costa</td>
+            <td>Rua dos Pinheiros 987 - Ribeirão Preto</td>
+            <td>290</td>
+            <td style="color:var(--accent-green-light)">R$ 168.2</td>
+            <td><span class="badge badge-em_dia_banco badge-success">✅</span></td>
+            <td><span class="badge badge-em_dia_concessionaria badge-danger">❌</span></td>
+            <td><span class="badge badge-cashback_em_dia badge-success">✅</span></td>
+          </tr>
+          
+          <tr data-id="7" data-nome="fernanda rocha" data-endereco="rua primavera 147 - campinas"
+              data-status="ok">
+            <td style="font-weight:600;color:var(--text-primary)">Fernanda Rocha</td>
+            <td>Rua Primavera 147 - Campinas</td>
+            <td>380</td>
+            <td style="color:var(--accent-green-light)">R$ 220.4</td>
+            <td><span class="badge badge-em_dia_banco badge-success">✅</span></td>
+            <td><span class="badge badge-em_dia_concessionaria badge-success">✅</span></td>
+            <td><span class="badge badge-cashback_em_dia badge-success">✅</span></td>
+          </tr>
+          
+          <tr data-id="8" data-nome="lucas almeida" data-endereco="av. central 258 - são carlos"
+              data-status="pendente">
+            <td style="font-weight:600;color:var(--text-primary)">Lucas Almeida</td>
+            <td>Av. Central 258 - São Carlos</td>
+            <td>200</td>
+            <td style="color:var(--accent-green-light)">R$ 116.0</td>
+            <td><span class="badge badge-em_dia_banco badge-success">✅</span></td>
+            <td><span class="badge badge-em_dia_concessionaria badge-danger">❌</span></td>
+            <td><span class="badge badge-cashback_em_dia badge-danger">❌</span></td>
+          </tr>
+          
+          <tr data-id="9" data-nome="juliana ferreira" data-endereco="rua horizonte 369 - araraquara"
+              data-status="ok">
+            <td style="font-weight:600;color:var(--text-primary)">Juliana Ferreira</td>
+            <td>Rua Horizonte 369 - Araraquara</td>
+            <td>420</td>
+            <td style="color:var(--accent-green-light)">R$ 243.6</td>
+            <td><span class="badge badge-em_dia_banco badge-success">✅</span></td>
+            <td><span class="badge badge-em_dia_concessionaria badge-success">✅</span></td>
+            <td><span class="badge badge-cashback_em_dia badge-success">✅</span></td>
+          </tr>
+          
+          <tr data-id="10" data-nome="rafael martins" data-endereco="rua do sol 741 - bauru"
+              data-status="pendente">
+            <td style="font-weight:600;color:var(--text-primary)">Rafael Martins</td>
+            <td>Rua do Sol 741 - Bauru</td>
+            <td>310</td>
+            <td style="color:var(--accent-green-light)">R$ 179.8</td>
+            <td><span class="badge badge-em_dia_banco badge-success">✅</span></td>
+            <td><span class="badge badge-em_dia_concessionaria badge-success">✅</span></td>
+            <td><span class="badge badge-cashback_em_dia badge-danger">❌</span></td>
+          </tr>
+          
+        </tbody>
+      </table>
+
+      <!-- Botão único que expande o card com o Painel de Controle -->
+      <div class="control-panel-toggle-wrap">
+        <button type="button" class="btn btn-outline" id="botaoPainelControle" onclick="togglePainelControle()">Painel de Controle</button>
+      </div>
+
+      <!-- Painel de Controle (expande dentro do mesmo card) -->
+      <div class="control-panel" id="painelControle" style="display:none;">
+        <div class="control-panel-header">
+          <h3>Painel de Controle</h3>
+        </div>
+        <div class="control-row">
+          <span>Residência</span>
+          <select id="painelSelectResidencia" onchange="carregarResidenciaNoPainel()">
+            
+            <option value="1">Maria Silva</option>
+            
+            <option value="2">João Santos</option>
+            
+            <option value="3">Ana Oliveira</option>
+            
+            <option value="4">Carlos Souza</option>
+            
+            <option value="5">Beatriz Lima</option>
+            
+            <option value="6">Pedro Costa</option>
+            
+            <option value="7">Fernanda Rocha</option>
+            
+            <option value="8">Lucas Almeida</option>
+            
+            <option value="9">Juliana Ferreira</option>
+            
+            <option value="10">Rafael Martins</option>
+            
+          </select>
+        </div>
+        <div class="control-panel-body">
+          <div class="control-row">
+            <span>Em dia com o Banco</span>
+            <div class="control-toggle-group">
+              <button type="button" class="toggle-btn" data-campo="em_dia_banco" data-valor="sim" onclick="alterarStatus(this)">Sim</button>
+              <button type="button" class="toggle-btn" data-campo="em_dia_banco" data-valor="nao" onclick="alterarStatus(this)">Não</button>
+            </div>
+          </div>
+          <div class="control-row">
+            <span>Em dia com a Concessionária</span>
+            <div class="control-toggle-group">
+              <button type="button" class="toggle-btn" data-campo="em_dia_concessionaria" data-valor="sim" onclick="alterarStatus(this)">Sim</button>
+              <button type="button" class="toggle-btn" data-campo="em_dia_concessionaria" data-valor="nao" onclick="alterarStatus(this)">Não</button>
+            </div>
+          </div>
+          <div class="control-row">
+            <span>Cashback em Dia</span>
+            <div class="control-toggle-group">
+              <button type="button" class="toggle-btn" data-campo="cashback_em_dia" data-valor="sim" onclick="alterarStatus(this)">Sim</button>
+              <button type="button" class="toggle-btn" data-campo="cashback_em_dia" data-valor="nao" onclick="alterarStatus(this)">Não</button>
+            </div>
+          </div>
+        </div>
+        <div class="control-panel-actions">
+          <button type="button" class="btn btn-outline" onclick="cancelarPainelControle()">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="salvarPainelControle()">Salvar Alterações</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Beneficiários Dentro da Cota -->
+    <div class="table-card">
+      <h3>Beneficiários Dentro da Cota de Energia</h3>
+      <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.5rem;">
+        Residências que, em pelo menos um dos últimos 6
+        meses, mantiveram o consumo dentro da cota de energia solar recebida.
+      </p>
+      <div class="rank-grid">
+        
+        <div class="rank-card">
+          <div class="rank-card-body">
+            <div class="rank-card-name">Maria Silva</div>
+            <div class="rank-card-months">
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot "></span>
+              
+              <span class="month-dot "></span>
+              
+              <span class="month-dot "></span>
+              
+              <span class="month-dot "></span>
+              
+            </div>
+            <div class="rank-card-caption">2 de 6 meses dentro da cota</div>
+          </div>
+        </div>
+        
+        <div class="rank-card">
+          <div class="rank-card-body">
+            <div class="rank-card-name">João Santos</div>
+            <div class="rank-card-months">
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot "></span>
+              
+              <span class="month-dot "></span>
+              
+            </div>
+            <div class="rank-card-caption">4 de 6 meses dentro da cota</div>
+          </div>
+        </div>
+        
+        <div class="rank-card">
+          <div class="rank-card-body">
+            <div class="rank-card-name">Ana Oliveira</div>
+            <div class="rank-card-months">
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot "></span>
+              
+            </div>
+            <div class="rank-card-caption">5 de 6 meses dentro da cota</div>
+          </div>
+        </div>
+        
+        <div class="rank-card">
+          <div class="rank-card-body">
+            <div class="rank-card-name">Carlos Souza</div>
+            <div class="rank-card-months">
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot "></span>
+              
+              <span class="month-dot "></span>
+              
+              <span class="month-dot "></span>
+              
+              <span class="month-dot "></span>
+              
+              <span class="month-dot "></span>
+              
+            </div>
+            <div class="rank-card-caption">1 de 6 meses dentro da cota</div>
+          </div>
+        </div>
+        
+        <div class="rank-card">
+          <div class="rank-card-body">
+            <div class="rank-card-name">Beatriz Lima</div>
+            <div class="rank-card-months">
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot "></span>
+              
+              <span class="month-dot "></span>
+              
+              <span class="month-dot "></span>
+              
+              <span class="month-dot "></span>
+              
+              <span class="month-dot "></span>
+              
+            </div>
+            <div class="rank-card-caption">1 de 6 meses dentro da cota</div>
+          </div>
+        </div>
+        
+        <div class="rank-card">
+          <div class="rank-card-body">
+            <div class="rank-card-name">Pedro Costa</div>
+            <div class="rank-card-months">
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot "></span>
+              
+            </div>
+            <div class="rank-card-caption">5 de 6 meses dentro da cota</div>
+          </div>
+        </div>
+        
+        <div class="rank-card">
+          <div class="rank-card-body">
+            <div class="rank-card-name">Fernanda Rocha</div>
+            <div class="rank-card-months">
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot "></span>
+              
+              <span class="month-dot "></span>
+              
+              <span class="month-dot "></span>
+              
+            </div>
+            <div class="rank-card-caption">3 de 6 meses dentro da cota</div>
+          </div>
+        </div>
+        
+        <div class="rank-card">
+          <div class="rank-card-body">
+            <div class="rank-card-name">Lucas Almeida</div>
+            <div class="rank-card-months">
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot "></span>
+              
+              <span class="month-dot "></span>
+              
+              <span class="month-dot "></span>
+              
+              <span class="month-dot "></span>
+              
+            </div>
+            <div class="rank-card-caption">2 de 6 meses dentro da cota</div>
+          </div>
+        </div>
+        
+        <div class="rank-card">
+          <div class="rank-card-body">
+            <div class="rank-card-name">Juliana Ferreira</div>
+            <div class="rank-card-months">
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot "></span>
+              
+              <span class="month-dot "></span>
+              
+              <span class="month-dot "></span>
+              
+              <span class="month-dot "></span>
+              
+              <span class="month-dot "></span>
+              
+            </div>
+            <div class="rank-card-caption">1 de 6 meses dentro da cota</div>
+          </div>
+        </div>
+        
+        <div class="rank-card">
+          <div class="rank-card-body">
+            <div class="rank-card-name">Rafael Martins</div>
+            <div class="rank-card-months">
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot filled"></span>
+              
+              <span class="month-dot "></span>
+              
+            </div>
+            <div class="rank-card-caption">5 de 6 meses dentro da cota</div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+    <div class="charts-grid">
+      <div class="chart-card">
+        <h3>Status das Residências</h3>
+        <canvas id="chartStatusResidencias"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Consumo por Residência (kWh)</h3>
+        <canvas id="chartConsumoResidencias"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <footer class="footer">
+    <p>© 2026 Banco Comunitário Jardim Botânico — Energia limpa, economia real. 🌱</p>
+  </footer>
+
+  <!-- ═══ STAT MODAL (compartilhado por todas as páginas) ═══ -->
+  <div class="modal-overlay" id="statModalOverlay" onclick="closeStatModal(event)">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <button type="button" class="modal-close" onclick="closeStatModal()" aria-label="Fechar">✕</button>
+      <div class="modal-icon" id="statModalIcon"></div>
+      <h3 id="statModalTitle"></h3>
+      <p class="modal-desc" id="statModalDesc"></p>
+      <div class="modal-chart-wrap" id="statModalChartWrap">
+        <h4>Histórico recente</h4>
+        <canvas id="statModalChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ─── PRNG determinístico (mesmo dado sempre gera o mesmo "histórico") ───
+    function seedFromString(str) {
+      let h = 0;
+      for (let i = 0; i < str.length; i++) { h = Math.imul(31, h) + str.charCodeAt(i) | 0; }
+      return h >>> 0;
+    }
+    function mulberry32(seed) {
+      return function () {
+        seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+        let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+    // Distribui um total acumulado em N meses de forma estável (mesma chave = mesmo gráfico)
+    function distributeHistory(total, seedKey, labels) {
+      const rand = mulberry32(seedFromString(seedKey));
+      const n = labels.length;
+      const weights = Array.from({ length: n }, () => 0.6 + rand() * 0.8);
+      const sumW = weights.reduce((a, b) => a + b, 0);
+      return weights.map(w => Math.round((total / n) * (w / (sumW / n)) * 10) / 10);
+    }
+
+    const DEFAULT_HISTORY_LABELS = ['Nov/25', 'Dez/25', 'Jan/26', 'Fev/26', 'Mar/26', 'Abr/26', 'Mai/26', 'Jun/26'];
+
+    // ─── Modal de estatística ───
+    let statModalChart = null;
+
+    function openStatModal(info) {
+      document.getElementById('statModalIcon').textContent = info.icon || '📊';
+      document.getElementById('statModalTitle').textContent = info.title || '';
+      document.getElementById('statModalDesc').textContent = info.desc || '';
+
+      const overlay = document.getElementById('statModalOverlay');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+
+      if (statModalChart) { statModalChart.destroy(); statModalChart = null; }
+
+      const chartWrap = document.getElementById('statModalChartWrap');
+      let labels = info.history && info.history.labels ? info.history.labels : DEFAULT_HISTORY_LABELS;
+      let values = info.history && info.history.values
+        ? info.history.values
+        : distributeHistory(info.total || 0, info.title || 'stat', labels);
+
+      chartWrap.style.display = 'block';
+      const color = info.color || '#15803d';
+      statModalChart = new Chart(document.getElementById('statModalChart'), {
+        type: info.chartType || 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: info.title,
+            data: values,
+            borderColor: color,
+            backgroundColor: color + '22',
+            fill: true, tension: 0.4,
+            pointBackgroundColor: color, pointRadius: 4, pointHoverRadius: 7
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { beginAtZero: false, grid: { color: 'rgba(15,23,42,0.06)' } },
+            x: { grid: { display: false } }
+          }
+        }
+      });
+    }
+
+    function closeStatModal(e) {
+      if (e && e.target !== e.currentTarget) return;
+      document.getElementById('statModalOverlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeStatModal();
+    });
+  </script>
+
+  
+<script>
+  // ─── Tab Navigation ───
+  function showTab(tabName) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + tabName).classList.add('active');
+    event.target.classList.add('active');
+    animateCounters();
+  }
+
+  // ─── Filter Residências ───
+  function filterResidencias() {
+    const status = document.getElementById('filterStatus').value;
+    const search = document.getElementById('filterSearch').value.toLowerCase();
+    document.querySelectorAll('#tabelaResidencias tbody tr').forEach(row => {
+      const matchStatus = status === 'todos' || row.dataset.status === status;
+      const matchSearch = !search || row.dataset.nome.includes(search) || row.dataset.endereco.includes(search);
+      row.style.display = matchStatus && matchSearch ? '' : 'none';
+    });
+  }
+
+  // ─── Counter Animation ───
+  function animateCounters() {
+    document.querySelectorAll('.count-up').forEach(el => {
+      const target = parseFloat(el.dataset.target);
+      const prefix = el.dataset.prefix || '';
+      const duration = 2000;
+      const start = performance.now();
+      function update(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = target * eased;
+        el.textContent = prefix + current.toLocaleString('pt-BR', {
+          minimumFractionDigits: target % 1 !== 0 ? 1 : 0,
+          maximumFractionDigits: target % 1 !== 0 ? 1 : 0
+        });
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    });
+  }
+
+  Chart.defaults.color = '#475569';
+  Chart.defaults.borderColor = 'rgba(15,23,42,0.08)';
+  Chart.defaults.font.family = "'Geist', sans-serif";
+
+  const geracaoMes = [{"co2_evitado_kg": 31000, "geracao_kwh": 62000, "mes": "2025-07", "receita_rs": 18600}, {"co2_evitado_kg": 32500, "geracao_kwh": 65000, "mes": "2025-08", "receita_rs": 19500}, {"co2_evitado_kg": 34000, "geracao_kwh": 68000, "mes": "2025-09", "receita_rs": 20400}, {"co2_evitado_kg": 32000, "geracao_kwh": 64000, "mes": "2025-10", "receita_rs": 19200}, {"co2_evitado_kg": 30000, "geracao_kwh": 60000, "mes": "2025-11", "receita_rs": 18000}, {"co2_evitado_kg": 29000, "geracao_kwh": 58000, "mes": "2025-12", "receita_rs": 17400}, {"co2_evitado_kg": 31500, "geracao_kwh": 63000, "mes": "2026-01", "receita_rs": 18900}, {"co2_evitado_kg": 33000, "geracao_kwh": 66000, "mes": "2026-02", "receita_rs": 19800}, {"co2_evitado_kg": 34500, "geracao_kwh": 69000, "mes": "2026-03", "receita_rs": 20700}, {"co2_evitado_kg": 35000, "geracao_kwh": 70000, "mes": "2026-04", "receita_rs": 21000}];
+  const geracaoInd = {"Usina 1": {"co2": [31000, 32500, 34000, 32000, 30000, 29000, 31500, 33000, 34500, 35000], "geracao": [62000, 65000, 68000, 64000, 60000, 58000, 63000, 66000, 69000, 70000], "meses": ["2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04"], "receita": [18600, 19500, 20400, 19200, 18000, 17400, 18900, 19800, 20700, 21000]}};
+  const residencias = [{"cashback_em_dia": "sim", "consumo_mensal_kwh": 320, "economia_mensal_rs": 185.5, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "Rua das Flores 123 - Ribeir\u00e3o Preto", "id": 1, "meses_dentro_cota": 2, "meses_totais": 6, "nome": "Maria Silva", "ultima_atualizacao": "2026-07-06", "usuario_id": 2}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 280, "economia_mensal_rs": 162.0, "em_dia_banco": "sim", "em_dia_concessionaria": "nao", "endereco": "Av. Brasil 456 - Campinas", "id": 2, "meses_dentro_cota": 4, "meses_totais": 6, "nome": "Jo\u00e3o Santos", "ultima_atualizacao": "2026-04-01", "usuario_id": 3}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 410, "economia_mensal_rs": 237.8, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "Rua Ip\u00ea 789 - S\u00e3o Carlos", "id": 3, "meses_dentro_cota": 5, "meses_totais": 6, "nome": "Ana Oliveira", "ultima_atualizacao": "2026-04-01", "usuario_id": 4}, {"cashback_em_dia": "nao", "consumo_mensal_kwh": 250, "economia_mensal_rs": 145.0, "em_dia_banco": "nao", "em_dia_concessionaria": "sim", "endereco": "Rua Jacarand\u00e1 321 - Araraquara", "id": 4, "meses_dentro_cota": 1, "meses_totais": 6, "nome": "Carlos Souza", "ultima_atualizacao": "2026-03-15", "usuario_id": 5}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 350, "economia_mensal_rs": 203.0, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "Av. Paulista 654 - Bauru", "id": 5, "meses_dentro_cota": 1, "meses_totais": 6, "nome": "Beatriz Lima", "ultima_atualizacao": "2026-04-01", "usuario_id": 6}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 290, "economia_mensal_rs": 168.2, "em_dia_banco": "sim", "em_dia_concessionaria": "nao", "endereco": "Rua dos Pinheiros 987 - Ribeir\u00e3o Preto", "id": 6, "meses_dentro_cota": 5, "meses_totais": 6, "nome": "Pedro Costa", "ultima_atualizacao": "2026-04-01", "usuario_id": 7}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 380, "economia_mensal_rs": 220.4, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "Rua Primavera 147 - Campinas", "id": 7, "meses_dentro_cota": 3, "meses_totais": 6, "nome": "Fernanda Rocha", "ultima_atualizacao": "2026-04-01", "usuario_id": 8}, {"cashback_em_dia": "nao", "consumo_mensal_kwh": 200, "economia_mensal_rs": 116.0, "em_dia_banco": "sim", "em_dia_concessionaria": "nao", "endereco": "Av. Central 258 - S\u00e3o Carlos", "id": 8, "meses_dentro_cota": 2, "meses_totais": 6, "nome": "Lucas Almeida", "ultima_atualizacao": "2026-07-06", "usuario_id": 9}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 420, "economia_mensal_rs": 243.6, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "Rua Horizonte 369 - Araraquara", "id": 9, "meses_dentro_cota": 1, "meses_totais": 6, "nome": "Juliana Ferreira", "ultima_atualizacao": "2026-04-01", "usuario_id": 10}, {"cashback_em_dia": "nao", "consumo_mensal_kwh": 310, "economia_mensal_rs": 179.8, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "Rua do Sol 741 - Bauru", "id": 10, "meses_dentro_cota": 5, "meses_totais": 6, "nome": "Rafael Martins", "ultima_atualizacao": "2026-04-01", "usuario_id": 11}];
+
+  // ─── Modal de uma usina específica (usa o histórico real dela) ───
+  function openUsinaModal(nome) {
+    const data = geracaoInd[nome];
+    openStatModal({
+      title: nome, icon: '🏭', color: '#059669',
+      desc: 'Geração de energia (kWh) da usina "' + nome + '" ao longo dos últimos meses, medida diretamente pelos equipamentos instalados na unidade.',
+      history: { labels: data.meses, values: data.geracao }
+    });
+  }
+
+  // ─── Dados para o modal de cada indicador administrativo ───
+  const statInfo = {
+    total_capacidade: {
+      title: 'Capacidade Total (kW)', icon: '⚡', color: '#15803d',
+      desc: 'Soma da capacidade instalada (em kW) de todas as usinas solares parceiras do banco, ativas ou em manutenção.',
+      total: 500
+    },
+    total_geracao_mensal: {
+      title: 'Geração Mensal (kWh)', icon: '🏭', color: '#059669',
+      desc: 'Energia total gerada por todas as usinas no último mês registrado, medida em quilowatt-hora (kWh).',
+      history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(d => d.geracao_kwh) }
+    },
+    total_co2: {
+      title: 'CO₂ Evitado Total (kg)', icon: '🌿', color: '#2563eb',
+      desc: 'Estimativa acumulada de CO₂ que deixou de ser emitido na atmosfera graças à geração solar do banco. Cálculo baseado no fator de 0,5 kg CO₂/kWh, referência do Fator Médio de Emissão do Sistema Interligado Nacional (SIN), publicado pelo MCTI.',
+      history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(d => d.co2_evitado_kg) }
+    },
+    media_eficiencia: {
+      title: 'Eficiência Média', icon: '📊', color: '#7c3aed',
+      desc: 'Média percentual de eficiência de conversão de energia solar em eletricidade entre todas as usinas parceiras.',
+      total: 92.5,
+      history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(() => 92.5) }
+    },
+    num_usinas_ativas: {
+      title: 'Usinas Ativas', icon: '🟢', color: '#059669',
+      desc: 'Número de usinas solares parceiras que estão atualmente em operação normal, gerando energia para o banco.',
+      total: 1,
+      history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(() => 1) }
+    },
+    num_usinas_manutencao: {
+      title: 'Em Manutenção', icon: '🔧', color: '#15803d',
+      desc: 'Número de usinas parceiras que estão temporariamente fora de operação para manutenção preventiva ou corretiva.',
+      total: 0,
+      history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(() => 0) }
+    },
+    tarifa_concessionaria: {
+      title: 'Tarifa Concessionária (R$/kWh)', icon: '🏷️', color: '#dc2626',
+      desc: 'Valor médio cobrado pela concessionária de energia elétrica tradicional por kWh, usado como referência de comparação.',
+      total: 75.0,
+      history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(() => 75.0) }
+    },
+    tarifa_solar: {
+      title: 'Tarifa Solar (R$/kWh)', icon: '☀️', color: '#059669',
+      desc: 'Valor cobrado pela energia solar fornecida através do banco, mais barata que a tarifa da concessionária tradicional.',
+      total: 30.0,
+      history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(() => 30.0) }
+    },
+    economia_percentual: {
+      title: 'Economia Percentual', icon: '📉', color: '#2563eb',
+      desc: 'Percentual de economia obtido ao usar a tarifa solar do banco em vez da tarifa da concessionária tradicional.',
+      total: 60.0,
+      history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(() => 60.0) }
+    },
+    economia_mensal_rs: {
+      title: 'Economia Mensal (R$)', icon: '💰', color: '#7c3aed',
+      desc: 'Valor total, em reais, economizado no último mês por todos os beneficiários, comparando a tarifa solar com a da concessionária.',
+      history: {
+        labels: geracaoMes.map(d => d.mes),
+        values: geracaoMes.map(d => Math.round(d.geracao_kwh * (0.75 - 0.3) * 100) / 100)
+      }
+    },
+    total_residencias: {
+      title: 'Total de Residências', icon: '🏠', color: '#059669',
+      desc: 'Número total de residências beneficiárias cadastradas no banco solar, recebendo créditos de energia.',
+      total: 10
+    },
+    em_dia_banco: {
+      title: 'Em dia com Banco', icon: '🏦', color: '#15803d',
+      desc: 'Número de residências com os pagamentos referentes à participação no banco solar em dia (' + 90.0 + '% do total).',
+      total: 9
+    },
+    em_dia_concessionaria: {
+      title: 'Em dia Concessionária', icon: '🔌', color: '#2563eb',
+      desc: 'Número de residências com a conta de luz da concessionária tradicional em dia (' + 70.0 + '% do total).',
+      total: 7
+    },
+    cashback_em_dia: {
+      title: 'Cashback em dia', icon: '🌸', color: '#7c3aed',
+      desc: 'Número de residências com o programa de cashback "Orquídeas" em dia (' + 70.0 + '% do total).',
+      total: 7
+    }
+  };
+
+  // ═══ USINAS TAB CHARTS ═══
+  let chartUsinaInd = null;
+  let chartUsinaRec = null;
+
+  function updateUsinaChart() {
+    const nome = document.getElementById('selectUsina').value;
+    const data = geracaoInd[nome];
+
+    if (chartUsinaInd) chartUsinaInd.destroy();
+    if (chartUsinaRec) chartUsinaRec.destroy();
+
+    chartUsinaInd = new Chart(document.getElementById('chartUsinaIndividual'), {
+      type: 'line',
+      data: {
+        labels: data.meses,
+        datasets: [{
+          label: 'Geração (kWh)',
+          data: data.geracao,
+          borderColor: '#16a34a', backgroundColor: 'rgba(22,163,74,0.1)',
+          fill: true, tension: 0.4, pointRadius: 4, pointHoverRadius: 7
+        }]
+      },
+      options: { responsive: true, plugins: { legend: { display: false } },
+        scales: { y: { grid: { color: 'rgba(15,23,42,0.06)' } }, x: { grid: { display: false } } }
+      }
+    });
+
+    chartUsinaRec = new Chart(document.getElementById('chartUsinaReceita'), {
+      type: 'bar',
+      data: {
+        labels: data.meses,
+        datasets: [{
+          label: 'Receita (R$)',
+          data: data.receita,
+          backgroundColor: 'rgba(16,185,129,0.6)', borderColor: '#10b981',
+          borderWidth: 1, borderRadius: 6
+        }]
+      },
+      options: { responsive: true, plugins: { legend: { display: false } },
+        scales: { y: { grid: { color: 'rgba(15,23,42,0.06)' } }, x: { grid: { display: false } } }
+      }
+    });
+  }
+  updateUsinaChart();
+
+  // ═══ UNIFIED TAB CHARTS ═══
+  new Chart(document.getElementById('chartGeracaoTotal'), {
+    type: 'line',
+    data: {
+      labels: geracaoMes.map(d => d.mes),
+      datasets: [{
+        label: 'Geração Total (kWh)', data: geracaoMes.map(d => d.geracao_kwh),
+        borderColor: '#16a34a', backgroundColor: 'rgba(22,163,74,0.1)',
+        fill: true, tension: 0.4, pointRadius: 4
+      }]
+    },
+    options: { responsive: true, plugins: { legend: { display: false } },
+      scales: { y: { grid: { color: 'rgba(15,23,42,0.06)' } }, x: { grid: { display: false } } }
+    }
+  });
+
+  new Chart(document.getElementById('chartReceitaTotal'), {
+    type: 'bar',
+    data: {
+      labels: geracaoMes.map(d => d.mes),
+      datasets: [{
+        label: 'Receita (R$)', data: geracaoMes.map(d => d.receita_rs),
+        backgroundColor: 'rgba(139,92,246,0.6)', borderColor: '#8b5cf6',
+        borderWidth: 1, borderRadius: 6
+      }]
+    },
+    options: { responsive: true, plugins: { legend: { display: false } },
+      scales: { y: { grid: { color: 'rgba(15,23,42,0.06)' } }, x: { grid: { display: false } } }
+    }
+  });
+
+  new Chart(document.getElementById('chartCO2Total'), {
+    type: 'line',
+    data: {
+      labels: geracaoMes.map(d => d.mes),
+      datasets: [{
+        label: 'CO₂ Evitado (kg)', data: geracaoMes.map(d => d.co2_evitado_kg),
+        borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,0.1)',
+        fill: true, tension: 0.4, pointRadius: 4
+      }]
+    },
+    options: { responsive: true, plugins: { legend: { display: false } },
+      scales: { y: { grid: { color: 'rgba(15,23,42,0.06)' } }, x: { grid: { display: false } } }
+    }
+  });
+
+  // Comparativo horizontal bar
+  const usinaNames = Object.keys(geracaoInd);
+  const usinaTotals = usinaNames.map(n => geracaoInd[n].geracao.reduce((a, b) => a + b, 0));
+  new Chart(document.getElementById('chartComparativo'), {
+    type: 'bar',
+    data: {
+      labels: usinaNames,
+      datasets: [{
+        label: 'kWh Total', data: usinaTotals,
+        backgroundColor: ['rgba(245,158,11,0.6)', 'rgba(16,185,129,0.6)', 'rgba(59,130,246,0.6)', 'rgba(139,92,246,0.6)', 'rgba(236,72,153,0.6)'],
+        borderWidth: 0, borderRadius: 6
+      }]
+    },
+    options: {
+      indexAxis: 'y', responsive: true,
+      plugins: { legend: { display: false } },
+      scales: { x: { grid: { color: 'rgba(15,23,42,0.06)' } }, y: { grid: { display: false } } }
+    }
+  });
+
+  // ═══ ECONOMY TAB CHARTS ═══
+  const tarConc = 0.75;
+  const tarSolar = 0.3;
+
+  // Economia acumulada
+  let acum = 0;
+  const econAcum = geracaoMes.map(d => {
+    acum += d.geracao_kwh * (tarConc - tarSolar);
+    return acum;
+  });
+  new Chart(document.getElementById('chartEconomiaAcum'), {
+    type: 'line',
+    data: {
+      labels: geracaoMes.map(d => d.mes),
+      datasets: [{
+        label: 'Economia Acumulada (R$)', data: econAcum,
+        borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,0.1)',
+        fill: true, tension: 0.4, pointRadius: 4
+      }]
+    },
+    options: { responsive: true, plugins: { legend: { display: false } },
+      scales: { y: { grid: { color: 'rgba(15,23,42,0.06)' } }, x: { grid: { display: false } } }
+    }
+  });
+
+  // ═══ RESIDÊNCIAS TAB CHARTS ═══
+  const emDiaBanco = 9;
+  const totalRes = 10;
+  const emDiaConc = 7;
+  const cashOk = 7;
+
+  new Chart(document.getElementById('chartStatusResidencias'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Em dia (Banco)', 'Pendente (Banco)', 'Em dia (Conc.)', 'Pendente (Conc.)', 'Cashback OK', 'Cashback Pendente'],
+      datasets: [{
+        data: [emDiaBanco, totalRes - emDiaBanco, emDiaConc, totalRes - emDiaConc, cashOk, totalRes - cashOk],
+        backgroundColor: [
+          'rgba(16,185,129,0.7)', 'rgba(239,68,68,0.5)',
+          'rgba(59,130,246,0.7)', 'rgba(245,158,11,0.5)',
+          'rgba(139,92,246,0.7)', 'rgba(236,72,153,0.5)'
+        ],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true, cutout: '55%',
+      plugins: { legend: { position: 'bottom', labels: { padding: 10, usePointStyle: true, font: { size: 11 } } } }
+    }
+  });
+
+  new Chart(document.getElementById('chartConsumoResidencias'), {
+    type: 'bar',
+    data: {
+      labels: residencias.map(r => r.nome.split(' ')[0]),
+      datasets: [{
+        label: 'Consumo (kWh)', data: residencias.map(r => r.consumo_mensal_kwh),
+        backgroundColor: 'rgba(59,130,246,0.6)', borderRadius: 6, borderWidth: 0
+      }]
+    },
+    options: { responsive: true, plugins: { legend: { display: false } },
+      scales: { y: { grid: { color: 'rgba(15,23,42,0.06)' } }, x: { grid: { display: false } } }
+    }
+  });
+
+  setTimeout(animateCounters, 300);
+
+  // ─── Painel de Controle da Residência ───
+  const NOMES_CAMPOS = {
+    em_dia_banco: 'Em dia com o Banco',
+    em_dia_concessionaria: 'Em dia com a Concessionária',
+    cashback_em_dia: 'Cashback em Dia'
+  };
+
+  const residenciasMap = {};
+  
+  residenciasMap[1] = {
+    em_dia_banco: "sim",
+    em_dia_concessionaria: "sim",
+    cashback_em_dia: "sim"
+  };
+  
+  residenciasMap[2] = {
+    em_dia_banco: "sim",
+    em_dia_concessionaria: "nao",
+    cashback_em_dia: "sim"
+  };
+  
+  residenciasMap[3] = {
+    em_dia_banco: "sim",
+    em_dia_concessionaria: "sim",
+    cashback_em_dia: "sim"
+  };
+  
+  residenciasMap[4] = {
+    em_dia_banco: "nao",
+    em_dia_concessionaria: "sim",
+    cashback_em_dia: "nao"
+  };
+  
+  residenciasMap[5] = {
+    em_dia_banco: "sim",
+    em_dia_concessionaria: "sim",
+    cashback_em_dia: "sim"
+  };
+  
+  residenciasMap[6] = {
+    em_dia_banco: "sim",
+    em_dia_concessionaria: "nao",
+    cashback_em_dia: "sim"
+  };
+  
+  residenciasMap[7] = {
+    em_dia_banco: "sim",
+    em_dia_concessionaria: "sim",
+    cashback_em_dia: "sim"
+  };
+  
+  residenciasMap[8] = {
+    em_dia_banco: "sim",
+    em_dia_concessionaria: "nao",
+    cashback_em_dia: "nao"
+  };
+  
+  residenciasMap[9] = {
+    em_dia_banco: "sim",
+    em_dia_concessionaria: "sim",
+    cashback_em_dia: "sim"
+  };
+  
+  residenciasMap[10] = {
+    em_dia_banco: "sim",
+    em_dia_concessionaria: "sim",
+    cashback_em_dia: "nao"
+  };
+  
+
+  let painelResidenciaId = null;
+  let painelValoresAtuais = {};
+
+  function togglePainelControle() {
+    const painel = document.getElementById('painelControle');
+    const expandido = painel.style.display === 'block';
+
+    if (expandido) {
+      cancelarPainelControle();
+      return;
+    }
+
+    painel.style.display = 'block';
+    document.getElementById('botaoPainelControle').textContent = 'Fechar Painel de Controle';
+    carregarResidenciaNoPainel();
+    painel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function carregarResidenciaNoPainel() {
+    const select = document.getElementById('painelSelectResidencia');
+    painelResidenciaId = parseInt(select.value, 10);
+    painelValoresAtuais = { ...residenciasMap[painelResidenciaId] };
+    atualizarBotoesToggle();
+  }
+
+  function atualizarBotoesToggle() {
+    document.querySelectorAll('#painelControle .toggle-btn').forEach(btn => {
+      const campo = btn.dataset.campo;
+      const valor = btn.dataset.valor;
+      btn.classList.toggle('active', painelValoresAtuais[campo] === valor);
+    });
+  }
+
+  function alterarStatus(btn) {
+    const campo = btn.dataset.campo;
+    const novoValor = btn.dataset.valor;
+    if (painelValoresAtuais[campo] === novoValor) return;
+
+    const label = novoValor === 'sim' ? 'Sim' : 'Não';
+    const confirmar = confirm('Confirma a alteração de "' + NOMES_CAMPOS[campo] + '" para "' + label + '"?');
+    if (!confirmar) return;
+
+    painelValoresAtuais[campo] = novoValor;
+    atualizarBotoesToggle();
+  }
+
+  function cancelarPainelControle() {
+    document.getElementById('painelControle').style.display = 'none';
+    document.getElementById('botaoPainelControle').textContent = 'Painel de Controle';
+    painelResidenciaId = null;
+  }
+
+  function salvarPainelControle() {
+    if (!painelResidenciaId) return;
+
+    // Versão de demonstração (GitHub Pages): não há servidor para persistir a
+    // alteração. A atualização é aplicada apenas nesta sessão do navegador.
+    residenciasMap[painelResidenciaId] = { ...painelValoresAtuais };
+    atualizarLinhaTabela(painelResidenciaId, painelValoresAtuais);
+    cancelarPainelControle();
+    alert('⚠️ Demonstração: a alteração foi aplicada apenas nesta tela e será perdida ao recarregar a página. Em produção, ela seria salva pelo servidor.');
+  }
+
+  function atualizarLinhaTabela(id, valores) {
+    const row = document.querySelector('#tabelaResidencias tbody tr[data-id="' + id + '"]');
+    if (!row) return;
+
+    Object.keys(valores).forEach(campo => {
+      const badge = row.querySelector('.badge-' + campo);
+      if (!badge) return;
+      const emDia = valores[campo] === 'sim';
+      badge.className = 'badge badge-' + campo + ' ' + (emDia ? 'badge-success' : 'badge-danger');
+      badge.textContent = emDia ? '✅' : '❌';
+    });
+
+    const tudoEmDia = valores.em_dia_banco === 'sim' && valores.em_dia_concessionaria === 'sim' && valores.cashback_em_dia === 'sim';
+    row.dataset.status = tudoEmDia ? 'ok' : 'pendente';
+  }
+</script>
+
+</body>
+</html>

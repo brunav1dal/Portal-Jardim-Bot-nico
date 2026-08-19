@@ -1,0 +1,11 @@
+id,usuario_id,endereco,em_dia_banco,em_dia_concessionaria,cashback_em_dia,consumo_mensal_kwh,economia_mensal_rs,ultima_atualizacao
+1,2,Rua das Flores 123 - Ribeirão Preto,sim,sim,sim,320,185.50,2026-07-06
+2,3,Av. Brasil 456 - Campinas,sim,nao,sim,280,162.00,2026-04-01
+3,4,Rua Ipê 789 - São Carlos,sim,sim,sim,410,237.80,2026-04-01
+4,5,Rua Jacarandá 321 - Araraquara,nao,sim,nao,250,145.00,2026-03-15
+5,6,Av. Paulista 654 - Bauru,sim,sim,sim,350,203.00,2026-04-01
+6,7,Rua dos Pinheiros 987 - Ribeirão Preto,sim,nao,sim,290,168.20,2026-04-01
+7,8,Rua Primavera 147 - Campinas,sim,sim,sim,380,220.40,2026-04-01
+8,9,Av. Central 258 - São Carlos,sim,nao,nao,200,116.00,2026-07-06
+9,10,Rua Horizonte 369 - Araraquara,sim,sim,sim,420,243.60,2026-04-01
+10,11,Rua do Sol 741 - Bauru,sim,sim,nao,310,179.80,2026-04-01
