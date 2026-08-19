@@ -1,6 +1,12 @@
 # Banco Solar — Plataforma de Gestão de Energia Compartilhada
 
 <p align="center">
+  <a href="https://mariavictoriaf.github.io/Eng_soc/" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/badge/▶_Acessar_demonstração_online-007A33?style=for-the-badge" alt="Acessar demonstração online do Banco Solar">
+  </a>
+</p>
+
+<p align="center">
   <img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white" alt="Python 3.10 ou superior">
   <img src="https://img.shields.io/badge/Flask-3.1.1-000000?logo=flask&logoColor=white" alt="Flask 3.1.1">
   <img src="https://img.shields.io/badge/Pandas-2.2.3-150458?logo=pandas&logoColor=white" alt="Pandas 2.2.3">
