@@ -30,7 +30,7 @@ jobs:
       - name: Empacotar site estático
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./Eng_soc/docs
+          path: ./docs
 
       - name: Publicar site
         id: deployment
