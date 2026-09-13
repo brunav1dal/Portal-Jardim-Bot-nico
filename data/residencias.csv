@@ -1,5 +1,5 @@
 id,usuario_id,endereco,em_dia_banco,em_dia_concessionaria,cashback_em_dia,consumo_mensal_kwh,economia_mensal_rs,ultima_atualizacao
-1,2,Rua das Flores 123 - Ribeirão Preto,sim,sim,sim,320,185.50,2026-07-06
+1,2,Rua das Flores 123 - Ribeirão Preto,sim,sim,sim,320,185.50,2026-08-20
 2,3,Av. Brasil 456 - Campinas,sim,nao,sim,280,162.00,2026-04-01
 3,4,Rua Ipê 789 - São Carlos,sim,sim,sim,410,237.80,2026-04-01
 4,5,Rua Jacarandá 321 - Araraquara,nao,sim,nao,250,145.00,2026-03-15

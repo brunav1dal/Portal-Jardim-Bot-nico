@@ -1,2 +1,2 @@
-id,nome,localizacao,capacidade_kw,geracao_mensal_kwh,status,data_instalacao,co2_evitado_kg,eficiencia_percent
-1,Usina 1,"R. Arquivista Jonathas Carécas, 74 - Castelo Branco, João Pessoa - PB, 58057-034",500,68500,ativa,2023-06-15,34250,92.5
+id,nome,localizacao,capacidade_kw,geracao_mensal_kwh,status,data_instalacao,eficiencia_percent
+1,Usina 1,"R. Arquivista Jonathas Carécas, 74 - Castelo Branco, João Pessoa - PB, 58057-034",500,68500,ativa,2023-06-15,92.5

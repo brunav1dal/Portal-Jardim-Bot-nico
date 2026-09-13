@@ -322,12 +322,11 @@ def admin_dashboard():
 
     # Economia em relação à concessionária (tarifa média R$ 0,75/kWh)
     tarifa_concessionaria = 0.75
-    tarifa_solar = 0.30
     economia_concessionaria = {
         'tarifa_concessionaria': tarifa_concessionaria,
-        'tarifa_solar': tarifa_solar,
-        'economia_percentual': round((1 - tarifa_solar / tarifa_concessionaria) * 100, 1),
-        'economia_mensal_rs': round(total_geracao_mensal * (tarifa_concessionaria - tarifa_solar), 2),
+        'tarifa_solar': TARIFA_SOLAR_CLIENTE,
+        'economia_percentual': round((1 - TARIFA_SOLAR_CLIENTE / tarifa_concessionaria) * 100, 1),
+        'economia_mensal_rs': round(total_geracao_mensal * (tarifa_concessionaria - TARIFA_SOLAR_CLIENTE), 2),
     }
 
     # Residências beneficiárias
