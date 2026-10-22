@@ -44,6 +44,11 @@
     </div>
   </nav>
 
+  {% if modo_demonstracao %}
+  <div class="container" style="padding-top:1rem;">
+    <p class="flash-success">Demonstra&ccedil;&atilde;o com pessoas e valores fict&iacute;cios. Altera&ccedil;&otilde;es nos pain&eacute;is s&atilde;o tempor&aacute;rias.</p>
+  </div>
+  {% endif %}
   {% block content %}{% endblock %}
 
   <footer class="footer">

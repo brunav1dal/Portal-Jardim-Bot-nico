@@ -7,6 +7,7 @@ import os
 import datetime
 from decimal import Decimal, ROUND_HALF_UP
 import pandas as pd
+from scripts.demo_data import demo_data
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash, Response
 from werkzeug.utils import secure_filename
 
@@ -15,6 +16,15 @@ app.secret_key = 'banco-solar-secret-key-2026'
 app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024  # 5 MB por upload
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), 'data')
+MODO_DEMONSTRACAO = not os.path.exists(os.path.join(DATA_DIR, 'beneficios_mensais.csv'))
+DADOS_DEMONSTRACAO = demo_data() if MODO_DEMONSTRACAO else None
+
+
+@app.context_processor
+def contexto_demonstracao():
+    return {'modo_demonstracao': MODO_DEMONSTRACAO}
+
+
 BOLETOS_DIR = os.path.join(os.path.dirname(__file__), 'static', 'uploads', 'boletos')
 EXTENSOES_PERMITIDAS = {'pdf', 'png', 'jpg', 'jpeg'}
 
@@ -29,14 +39,8 @@ COORDENADAS_CIDADES = {
 def load_csv(filename):
     """Carrega um arquivo CSV do diretório de dados."""
     filepath = os.path.join(DATA_DIR, filename)
-    if filename == 'beneficios_mensais.csv' and not os.path.exists(filepath):
-        # Older demo datasets do not include individual monthly statements.
-        return pd.DataFrame(columns=[
-            'mes', 'usuario_id', 'nome', 'percentual_cota', 'cota_kwh',
-            'consumo_total_kwh', 'tarifa_social', 'energia_recebida_kwh',
-            'valor_beneficio_rs', 'valor_projeto_rs', 'creditos_acumulados',
-            'vencimento', 'valor_energisa_rs', 'excedeu_cota_kwh', 'cashback_rs',
-        ])
+    if MODO_DEMONSTRACAO and filename in DADOS_DEMONSTRACAO and filename != 'usuarios.csv':
+        return DADOS_DEMONSTRACAO[filename].copy()
     dados = pd.read_csv(filepath)
     if filename == 'geracao_mensal.csv':
         for coluna in ('energia_beneficiarios_kwh',):
@@ -433,7 +437,10 @@ def anexar_boleto():
         'status': 'Enviado',
     }])
     boletos = pd.concat([boletos, novo_boleto], ignore_index=True)
-    boletos.to_csv(os.path.join(DATA_DIR, 'boletos.csv'), index=False)
+    if MODO_DEMONSTRACAO:
+        DADOS_DEMONSTRACAO['boletos.csv'] = boletos.copy()
+    else:
+        boletos.to_csv(os.path.join(DATA_DIR, 'boletos.csv'), index=False)
 
     flash('Boleto anexado com sucesso! Ele será analisado pela equipe do banco.', 'success')
     return redirect(url_for('cliente_dashboard'))
@@ -752,7 +759,7 @@ def atualizar_residencia(residencia_id):
         return jsonify({'success': False, 'error': 'dados inválidos'}), 400
 
     residencias_path = os.path.join(DATA_DIR, 'residencias.csv')
-    residencias = pd.read_csv(residencias_path)
+    residencias = load_csv('residencias.csv')
 
     if residencia_id not in residencias['id'].values:
         return jsonify({'success': False, 'error': 'residência não encontrada'}), 404
@@ -761,7 +768,10 @@ def atualizar_residencia(residencia_id):
         residencias.loc[residencias['id'] == residencia_id, campo] = valor
     residencias.loc[residencias['id'] == residencia_id, 'ultima_atualizacao'] = datetime.date.today().isoformat()
 
-    residencias.to_csv(residencias_path, index=False, float_format='%.2f')
+    if MODO_DEMONSTRACAO:
+        DADOS_DEMONSTRACAO['residencias.csv'] = residencias.copy()
+    else:
+        residencias.to_csv(residencias_path, index=False, float_format='%.2f')
 
     return jsonify({'success': True})
 

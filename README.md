@@ -163,8 +163,10 @@ Flask e a demonstracao estatica em `docs/` compartilham o mesmo visual.
 
 Os CSVs publicados continuam sendo os exemplos ficticios do repositorio.
 Nenhuma planilha privada e necessaria para iniciar a demonstracao. Na ausencia
-de `beneficios_mensais.csv`, os detalhes mensais individuais ficam sem dados;
-a aplicacao nao inventa historicos para preencher esses campos.
+de `beneficios_mensais.csv`, a aplicacao ativa um modo de demonstracao
+identificado na tela, com pessoas e valores inteiramente ficticios definidos
+em `scripts/demo_data.py`. Os logins publicados continuam disponiveis.
+Alteracoes nesse modo ficam apenas na memoria e podem ser perdidas ao reiniciar.
 
 Nao inclua CSVs locais, credenciais, faturas ou exportacoes com dados pessoais
 em commits. As paginas estaticas usam pessoas e valores inteiramente ficticios gerados
