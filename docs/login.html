@@ -20,31 +20,35 @@
 
       Banco Comunitário Jardim Botânico
     </a>
+
+      <div class="navbar-menu" aria-label="Navegação principal">
+        <a href="index.html#dados">Dados</a>
+        <a href="index.html#historia">Nossa história</a>
+        <a href="index.html#como-funciona">Como funciona</a>
+      </div>
+
     <div class="navbar-actions">
-      
+
         <a href="login.html" class="btn btn-primary">Entrar</a>
-      
+
     </div>
   </nav>
 
-  
+
 <div class="login-page">
   <div class="login-card">
     <h2>Bem-vindo de volta</h2>
     <p class="subtitle">Acesse seu painel do Banco Comunitário Jardim Botânico</p>
 
-    
-      
-    
 
-    <div style="background:#fef9c3;border:1px solid #eab308;border-radius:8px;padding:0.9rem 1rem;margin-bottom:1.2rem;font-size:0.9rem;color:#713f12;">
-      ⚠️ Esta é uma versão estática de demonstração, hospedada no GitHub Pages. Não há servidor por trás desta página, então o login com e-mail e senha não funciona de verdade — use os botões abaixo para visualizar os painéis com dados de exemplo.
-    </div>
 
-    <div class="form-group">
-      <a href="admin.html" class="btn btn-primary login-btn" style="display:block;text-align:center;text-decoration:none;margin-bottom:0.75rem;">⚙️ Ver Painel do Administrador (demo)</a>
-      <a href="cliente.html" class="btn btn-outline login-btn" style="display:block;text-align:center;text-decoration:none;">📊 Ver Painel do Cliente (demo — Maria Silva)</a>
-    </div>
+
+
+    <p class="subtitle">Demonstracao com dados inteiramente ficticios.</p>
+<div class="form-group">
+<a href="admin.html" class="btn btn-primary login-btn" style="display:block;text-align:center;margin-bottom:1rem;">Ver painel administrativo</a>
+<a href="cliente.html" class="btn btn-outline login-btn" style="display:block;text-align:center;">Ver painel do cliente</a>
+</div>
 
     <div class="login-footer">
       <a href="index.html">← Voltar para a página inicial</a>
@@ -72,6 +76,55 @@
   </div>
 
   <script>
+    const menuLinks = document.querySelectorAll('.navbar-menu a');
+    function atualizarMenuAtivo() {
+      const destino = window.location.hash || '#dados';
+      menuLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href').endsWith(destino)));
+    }
+    menuLinks.forEach(link => link.addEventListener('click', () => {
+      menuLinks.forEach(item => item.classList.remove('active'));
+      link.classList.add('active');
+    }));
+    window.addEventListener('hashchange', atualizarMenuAtivo);
+    atualizarMenuAtivo();
+
+    const secoesNavegacao = ['dados', 'historia', 'como-funciona']
+      .map(id => document.getElementById(id)).filter(Boolean);
+    function atualizarSecaoVisivel() {
+      const linhaAtiva = window.scrollY + window.innerHeight * 0.32;
+      let secaoAtual = secoesNavegacao[0] && secoesNavegacao[0].id;
+      secoesNavegacao.forEach(secao => {
+        if (secao.offsetTop <= linhaAtiva) secaoAtual = secao.id;
+      });
+      menuLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href').endsWith('#' + secaoAtual)));
+    }
+    window.addEventListener('scroll', atualizarSecaoVisivel, { passive: true });
+    atualizarSecaoVisivel();
+
+    document.querySelectorAll('.how-step').forEach(step => {
+      const alternarEtapa = () => {
+        const ativa = step.classList.toggle('active');
+        step.setAttribute('aria-pressed', ativa ? 'true' : 'false');
+      };
+      step.addEventListener('click', alternarEtapa);
+      step.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          alternarEtapa();
+        }
+      });
+    });
+
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.14 });
+    document.querySelectorAll('.fade-up').forEach(element => revealObserver.observe(element));
+
     // ─── PRNG determinístico (mesmo dado sempre gera o mesmo "histórico") ───
     function seedFromString(str) {
       let h = 0;
@@ -100,8 +153,15 @@
     // ─── Modal de estatística ───
     let statModalChart = null;
 
-    function openStatModal(info) {
-      document.getElementById('statModalIcon').textContent = info.icon || '📊';
+    function openStatModal(info, sourceIcon) {
+      const modalIcon = document.getElementById('statModalIcon');
+      modalIcon.className = 'modal-icon';
+      if (sourceIcon) {
+        modalIcon.innerHTML = sourceIcon.innerHTML;
+        modalIcon.classList.toggle('icon-bolt', sourceIcon.classList.contains('icon-bolt'));
+      } else {
+        modalIcon.textContent = info.icon || '📊';
+      }
       document.getElementById('statModalTitle').textContent = info.title || '';
       document.getElementById('statModalDesc').textContent = info.desc || '';
 
@@ -154,6 +214,6 @@
     });
   </script>
 
-  
+
 </body>
 </html>

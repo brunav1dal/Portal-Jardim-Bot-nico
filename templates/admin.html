@@ -14,16 +14,16 @@
     <div class="solar-summary-card">
       <div class="solar-summary-title">Meu Solar <span class="solar-summary-mark" aria-hidden="true">✦</span></div>
       <div class="solar-summary-subtitle">Energia solar comunitária</div>
-      <div class="solar-summary-capacity">{{ '{:,.0f}'.format(dados_unificados.total_capacidade) }} kW</div>
+      <div class="solar-summary-capacity">{% if dados_unificados.total_capacidade is not none %}{{ '{:,.0f}'.format(dados_unificados.total_capacidade) }} kW{% else %}Não informado{% endif %}</div>
       <div class="solar-summary-label">Potência instalada agregada</div>
-      <div class="solar-summary-status"><span></span>{{ dados_unificados.num_usinas_ativas }} de {{ usinas|length }} usinas disponíveis</div>
+      <div class="solar-summary-status"><span></span>{% if dados_unificados.num_usinas_ativas is not none %}{{ dados_unificados.num_usinas_ativas }} de {{ usinas|length }} usinas disponíveis{% else %}Situação das usinas não informada{% endif %}</div>
     </div>
     <div class="solar-summary-detail">
       <div class="solar-summary-detail-heading">Resumo consolidado <small>Dados do período disponível</small></div>
       <div class="solar-summary-metrics">
         <div><strong>{{ '{:,.0f}'.format(dados_unificados.total_geracao_mensal) }} kWh</strong><span>Geração mensal</span></div>
         <div><strong>{{ '{:,.1f}'.format(dados_unificados.total_co2) }} kg</strong><span>CO₂ evitado</span></div>
-        <div><strong>{{ dados_unificados.media_eficiencia }}%</strong><span>Eficiência média</span></div>
+        <div><strong>{% if dados_unificados.media_eficiencia is not none %}{{ dados_unificados.media_eficiencia }}%{% else %}Não informado{% endif %}</strong><span>Eficiência média</span></div>
       </div>
     </div>
   </section>
@@ -41,23 +41,24 @@
 
     <div class="stats-grid">
       {% for u in usinas %}
-      <button type="button" class="stat-card {{ 'green' if u.status == 'ativa' else 'warning' }} fade-up" onclick="openUsinaModal('{{ u.nome }}')">
-        <div class="stat-icon">{{ '🟢' if u.status == 'ativa' else '🟡' }}</div>
-        <div class="stat-label">{{ u.nome }}</div>
-        <div class="stat-value" style="font-size:1.3rem;">{{ '{:,.0f}'.format(u.geracao_mensal_kwh) }} kWh</div>
+      <button type="button" class="stat-card {{ 'green' if u.status == 'ativa' else 'solar' }} fade-up" onclick="openUsinaModal('{{ u.nome_exibicao }}')">
+        <div class="stat-icon">☀️</div>
+        <div class="stat-label">{{ u.nome_exibicao }}</div>
+        <div class="stat-value" style="font-size:1.3rem;">{% if u.geracao_mensal_kwh is not none %}{{ '{:,.0f}'.format(u.geracao_mensal_kwh) }} kWh{% else %}Não informado{% endif %}</div>
+        <div style="font-size:0.78rem;color:var(--text-muted);">Geração de {{ u.mes_geracao_label or 'mês sem dados' }}</div>
         <div style="margin-top:0.75rem;">
           <div class="progress-bar-container">
             <div class="progress-label">
               <span>Eficiência</span>
-              <span style="color:{{ 'var(--accent-green-light)' if u.status == 'ativa' else 'var(--accent-warning-light)' }}">{{ u.eficiencia_percent }}%</span>
+              <span>{% if u.eficiencia_percent is not none %}{{ u.eficiencia_percent }}%{% else %}Não informado{% endif %}</span>
             </div>
             <div class="progress-track">
-              <div class="progress-fill {{ 'green' if u.status == 'ativa' else 'warning' }}" style="width:{{ u.eficiencia_percent }}%"></div>
+              <div class="progress-fill {{ 'green' if u.status == 'ativa' else 'warning' }}" style="width:{{ u.eficiencia_percent or 0 }}%"></div>
             </div>
           </div>
           <p style="font-size:0.78rem;color:var(--text-muted);margin-top:4px;">
-            📍 {{ u.localizacao }} · {{ u.capacidade_kw }} kW cap. ·
-            <span class="badge {{ 'badge-success' if u.status == 'ativa' else 'badge-warning' }}">{{ u.status }}</span>
+            {% if u.localizacao %}📍 {{ u.localizacao }} · {% endif %}{% if u.capacidade_kw is not none %}{{ u.capacidade_kw }} kW cap. · {% endif %}
+            <span>{% if u.status %}{{ u.status }}{% else %}Cadastro da usina não informado{% endif %}</span>
           </p>
         </div>
         <div class="stat-hint">🔍 Ver histórico e detalhes</div>
@@ -81,8 +82,9 @@
         <canvas id="chartUsinaIndividual"></canvas>
       </div>
       <div class="chart-card">
-        <h3>Receita Individual (R$/mês)</h3>
+      <h3>Pagamento ao projeto por mes (R$)</h3>
         <canvas id="chartUsinaReceita"></canvas>
+        <p style="font-size:0.78rem;color:var(--text-muted);margin-top:0.75rem;">As barras mostram metade do valor do beneficio em cada mes. Receita da usina nao informada.</p>
       </div>
     </div>
   </div>
@@ -95,7 +97,7 @@
       <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.total_capacidade)">
         <div class="stat-icon icon-bolt">⚡</div>
         <div class="stat-label">Capacidade Total (kW)</div>
-        <div class="stat-value count-up" data-target="{{ dados_unificados.total_capacidade }}">0</div>
+        <div class="stat-value">{% if dados_unificados.total_capacidade is not none %}<span class="count-up" data-target="{{ dados_unificados.total_capacidade }}">0</span>{% else %}Não informado{% endif %}</div>
         <div class="stat-hint">🔍 Ver histórico e detalhes</div>
       </button>
       <button type="button" class="stat-card green fade-up" onclick="openStatModal(statInfo.total_geracao_mensal)">
@@ -113,19 +115,19 @@
       <button type="button" class="stat-card purple fade-up" onclick="openStatModal(statInfo.media_eficiencia)">
         <div class="stat-icon">📊</div>
         <div class="stat-label">Eficiência Média</div>
-        <div class="stat-value">{{ dados_unificados.media_eficiencia }}%</div>
+        <div class="stat-value">{% if dados_unificados.media_eficiencia is not none %}{{ dados_unificados.media_eficiencia }}%{% else %}Não informado{% endif %}</div>
         <div class="stat-hint">🔍 Ver histórico e detalhes</div>
       </button>
       <button type="button" class="stat-card green fade-up" onclick="openStatModal(statInfo.num_usinas_ativas)">
         <div class="stat-icon">🟢</div>
         <div class="stat-label">Usinas Ativas</div>
-        <div class="stat-value">{{ dados_unificados.num_usinas_ativas }}</div>
+        <div class="stat-value">{% if dados_unificados.num_usinas_ativas is not none %}{{ dados_unificados.num_usinas_ativas }}{% else %}Não informado{% endif %}</div>
         <div class="stat-hint">🔍 Ver histórico e detalhes</div>
       </button>
       <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.num_usinas_manutencao)">
         <div class="stat-icon">🔧</div>
         <div class="stat-label">Em Manutenção</div>
-        <div class="stat-value">{{ dados_unificados.num_usinas_manutencao }}</div>
+        <div class="stat-value">{% if dados_unificados.num_usinas_manutencao is not none %}{{ dados_unificados.num_usinas_manutencao }}{% else %}Não informado{% endif %}</div>
         <div class="stat-hint">🔍 Ver histórico e detalhes</div>
       </button>
     </div>
@@ -152,64 +154,113 @@
 
   <!-- ═══ TAB: ECONOMIA ═══ -->
   <div class="tab-content" id="tab-economia">
-    <h2 class="section-title">Economia em Relação à Concessionária</h2>
-
-    <div class="stats-grid">
-      <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.tarifa_concessionaria)">
-        <div class="stat-icon">🏷️</div>
-        <div class="stat-label">Tarifa Concessionária (R$/kWh)</div>
-        <div class="stat-value">R$ {{ economia_concessionaria.tarifa_concessionaria }}</div>
-        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
-      </button>
-      <button type="button" class="stat-card green fade-up" onclick="openStatModal(statInfo.tarifa_solar)">
-        <div class="stat-icon">☀️</div>
-        <div class="stat-label">Tarifa Solar (R$/kWh)</div>
-        <div class="stat-value">R$ {{ economia_concessionaria.tarifa_solar }}</div>
-        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
-      </button>
-      <button type="button" class="stat-card blue fade-up" onclick="openStatModal(statInfo.economia_percentual)">
-        <div class="stat-icon">📉</div>
-        <div class="stat-label">Economia Percentual</div>
-        <div class="stat-value">{{ economia_concessionaria.economia_percentual }}%</div>
-        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
-      </button>
-      <button type="button" class="stat-card purple fade-up" onclick="openStatModal(statInfo.economia_mensal_rs)">
-        <div class="stat-icon">💰</div>
-        <div class="stat-label">Economia Mensal (R$)</div>
-        <div class="stat-value count-up" data-target="{{ economia_concessionaria.economia_mensal_rs }}" data-prefix="R$ ">0</div>
-        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
-      </button>
+    <h2 class="section-title">Demonstrativo da Economia</h2>
+    <div class="filter-bar">
+      <label for="selectMesEconomia" style="color:var(--text-secondary);font-size:0.85rem;font-weight:600;">Mês de referência:</label>
+      <select id="selectMesEconomia" onchange="filtrarDemonstrativoEconomia()">
+        <option value="todos">Todo o período</option>
+        {% for mes in meses_economia %}
+        <option value="{{ mes.valor }}" {{ 'selected' if loop.last else '' }}>{{ mes.label }}</option>
+        {% endfor %}
+      </select>
     </div>
-
-    <div class="charts-grid">
-      <div class="chart-card">
-        <h3>Comparativo de Tarifas</h3>
-        <div class="tarifa-compare">
-          <div class="tarifa-box">
-            <div class="tarifa-box-label">Concessionária</div>
-            <div class="tarifa-box-value">R$ {{ economia_concessionaria.tarifa_concessionaria }}</div>
-            <div class="tarifa-box-unit">por kWh</div>
-          </div>
-          <div class="tarifa-box tarifa-box-solar">
-            <div class="tarifa-box-label">Banco Comunitário (solar)</div>
-            <div class="tarifa-box-value">R$ {{ economia_concessionaria.tarifa_solar }}</div>
-            <div class="tarifa-box-unit">por kWh</div>
-          </div>
+    <p class="admin-economia-intro">
+      Economia real = valor que seria pago sem a economia menos (valor pago à Energisa + doação ao banco - cashback). A doação corresponde a 50% do benefício e o cashback a 25%. Meses e totais usam somente os dados disponíveis na planilha.
+    </p>
+    <div class="table-card admin-economia-card">
+      <div class="admin-economia-scroll">
+      <table class="admin-economia-table" aria-label="Demonstrativo mensal da economia dos beneficiários">
+        <thead>
+          <tr>
+            <th>Mês</th>
+            <th>Beneficiário</th>
+            <th>Pago à Energisa (R$)</th>
+            <th>Beneficio correspondente (R$)</th>
+            <th>Doado ao banco (R$)</th>
+            <th>Sem economia (R$)</th>
+            <th>Com economia, sem cashback (R$)</th>
+            <th>Com economia e cashback (R$)</th>
+            <th class="col-economia-real">Economia real (R$)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for linha in demonstrativo_economia_todos %}
+          <tr class="linha-economia" data-mes="{{ linha.mes }}">
+            <td>{{ linha.mes[5:7] }}/{{ linha.mes[:4] }}</td>
+            <td>{{ linha.nome }}</td>
+            <td>{{ linha.valor_energisa_rs }}</td>
+            <td>{{ linha.valor_beneficio_rs }}</td>
+            <td>{{ linha.valor_doado_banco_rs }}</td>
+            <td>{{ linha.sem_economia_rs }}</td>
+            <td>{{ linha.com_economia_sem_cashback_rs }}</td>
+            <td>{{ linha.com_economia_com_cashback_rs }}</td>
+            <td class="col-economia-real">{{ linha.economia_real_rs }}</td>
+          </tr>
+          {% else %}
+          <tr><td colspan="9" style="text-align:center;color:var(--text-muted);">Ainda não há demonstrativos mensais.</td></tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr class="total-economia" data-mes="todos">
+            <th colspan="2">Total do período</th>
+            {% for campo in ['valor_energisa_rs','valor_beneficio_rs','valor_doado_banco_rs','sem_economia_rs','com_economia_sem_cashback_rs','com_economia_com_cashback_rs','economia_real_rs'] %}<th>{{ totais_economia_todos[campo] }}</th>{% endfor %}
+          </tr>
+          {% for total in totais_economia %}
+          <tr class="total-economia" data-mes="{{ total.mes }}">
+            <th colspan="2">Total {{ total.mes_label }}</th>
+            <th>{{ total.valor_energisa_rs }}</th>
+            <th>{{ total.valor_beneficio_rs }}</th>
+            <th>{{ total.valor_doado_banco_rs }}</th>
+            <th>{{ total.sem_economia_rs }}</th>
+            <th>{{ total.com_economia_sem_cashback_rs }}</th>
+            <th>{{ total.com_economia_com_cashback_rs }}</th>
+            <th class="col-economia-real">{{ total.economia_real_rs }}</th>
+          </tr>
+          {% endfor %}
+        </tfoot>
+      </table>
+      </div>
+    </div>
+    <section class="economia-guia" aria-label="Exemplo ilustrativo de economia">
+      <div class="economia-exemplo">
+        <div class="economia-exemplo-heading"><strong>Exemplo ilustrativo</strong><span>Valores arredondados; n&atilde;o s&atilde;o dados reais de um benefici&aacute;rio.</span></div>
+        <div class="economia-fluxo">
+          <article><h4>Sem o projeto</h4><p>R$ 40 da Energisa + R$ 100 de benef&iacute;cio</p><strong>R$ 140</strong></article>
+          <article><h4>Com o projeto</h4><p>R$ 40 da Energisa + R$ 50 ao Banco - R$ 25 de cashback</p><strong>R$ 65</strong></article>
+          <article class="economia-resultado"><h4>Economia real</h4><p>R$ 140 - R$ 65</p><strong>R$ 75</strong></article>
         </div>
-        <p style="font-size:0.78rem;color:var(--text-muted);margin-top:1rem;text-align:center;">
-          A tarifa solar do banco é {{ economia_concessionaria.economia_percentual }}% mais barata que a da concessionária.
-        </p>
       </div>
-      <div class="chart-card">
-        <h3>Economia Acumulada por Mês (R$)</h3>
-        <canvas id="chartEconomiaAcum"></canvas>
-      </div>
-    </div>
+    </section>
   </div>
-
   <!-- ═══ TAB: RESIDÊNCIAS ═══ -->
   <div class="tab-content" id="tab-residencias">
     <h2 class="section-title">Gestão de Residências</h2>
+
+    <div class="filter-bar" aria-label="Filtros dos indicadores mensais de beneficiários">
+      <button type="button" class="btn btn-outline" onclick="selecionarProjetoBeneficiarios('todos')">Todos os projetos</button>
+      <button type="button" class="btn btn-outline" onclick="selecionarPeriodoBeneficiarios('todos')">Todo o período</button>
+      <label for="selectProjetoBeneficiarios" style="color:var(--text-secondary);font-size:0.85rem;font-weight:600;">Projeto:</label>
+      <select id="selectProjetoBeneficiarios" onchange="atualizarCardsBeneficiarios()">
+        {% for projeto in projetos_beneficiarios %}
+        <option value="{{ projeto.id }}">{{ projeto.nome }}</option>
+        {% endfor %}
+      </select>
+      <label for="selectMesBeneficiarios" style="color:var(--text-secondary);font-size:0.85rem;font-weight:600;">Mês ou período:</label>
+      <select id="selectMesBeneficiarios" onchange="atualizarCardsBeneficiarios()">
+        <option value="todos" selected>Todo o período</option>
+        {% for mes in meses_economia %}
+        <option value="{{ mes.valor }}">{{ mes.label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <p style="font-size:0.82rem;color:var(--text-muted);margin:-0.4rem 0 1rem;">Selecione um mes ou Todo o periodo. Cards e lista usam o filtro.</p>
+    <div class="stats-grid" id="cardsBeneficiariosMensais">
+      <div class="stat-card green"><div class="stat-label">Beneficiários no mês</div><div class="stat-value" id="cardBeneficiariosMes">—</div></div>
+      <div class="stat-card blue"><div class="stat-label">Energia solar solidária recebida</div><div class="stat-value" id="cardEnergiaBeneficiarios">—</div></div>
+      <div class="stat-card purple"><div class="stat-label">Economia real total</div><div class="stat-value" id="cardEconomiaBeneficiarios">—</div></div>
+      <div class="stat-card solar"><div class="stat-label">Total doado ao banco</div><div class="stat-value" id="cardDoacaoBeneficiarios">—</div></div>
+      <div class="stat-card green"><div class="stat-label">Cashback total</div><div class="stat-value" id="cardCashbackBeneficiarios">—</div></div>
+    </div>
 
     <!-- Status resumo -->
     <div class="stats-grid">
@@ -222,19 +273,19 @@
       <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.em_dia_banco)">
         <div class="stat-icon">🏦</div>
         <div class="stat-label">Em dia com Banco</div>
-        <div class="stat-value">{{ stats_residencias.em_dia_banco }} <span style="font-size:0.8rem;color:var(--text-muted)">({{ stats_residencias.em_dia_banco_pct }}%)</span></div>
+        <div class="stat-value">{{ stats_residencias.em_dia_banco }} <span style="font-size:0.8rem;color:var(--text-muted)">({{ stats_residencias.em_dia_banco_pct }}%; {{ stats_residencias.em_dia_banco_nao_informado }} sem informação)</span></div>
         <div class="stat-hint">🔍 Ver histórico e detalhes</div>
       </button>
       <button type="button" class="stat-card blue fade-up" onclick="openStatModal(statInfo.em_dia_concessionaria)">
         <div class="stat-icon">🔌</div>
         <div class="stat-label">Em dia Concessionária</div>
-        <div class="stat-value">{{ stats_residencias.em_dia_concessionaria }} <span style="font-size:0.8rem;color:var(--text-muted)">({{ stats_residencias.em_dia_concessionaria_pct }}%)</span></div>
+        <div class="stat-value">{{ stats_residencias.em_dia_concessionaria }} <span style="font-size:0.8rem;color:var(--text-muted)">({{ stats_residencias.em_dia_concessionaria_pct }}%; {{ stats_residencias.em_dia_concessionaria_nao_informado }} sem informação)</span></div>
         <div class="stat-hint">🔍 Ver histórico e detalhes</div>
       </button>
       <button type="button" class="stat-card purple fade-up" onclick="openStatModal(statInfo.cashback_em_dia)">
         <div class="stat-icon">🌸</div>
         <div class="stat-label">Cashback em dia</div>
-        <div class="stat-value">{{ stats_residencias.cashback_em_dia }} <span style="font-size:0.8rem;color:var(--text-muted)">({{ stats_residencias.cashback_em_dia_pct }}%)</span></div>
+        <div class="stat-value">{{ stats_residencias.cashback_em_dia }} <span style="font-size:0.8rem;color:var(--text-muted)">({{ stats_residencias.cashback_em_dia_pct }}%; {{ stats_residencias.cashback_nao_informado }} sem informação)</span></div>
         <div class="stat-hint">🔍 Ver histórico e detalhes</div>
       </button>
     </div>
@@ -247,7 +298,7 @@
         <option value="ok">Tudo em dia</option>
         <option value="pendente">Com pendências</option>
       </select>
-      <input type="text" id="filterSearch" placeholder="Buscar por nome ou endereço..." oninput="filterResidencias()" style="min-width:260px;">
+      <input type="text" id="filterSearch" placeholder="Buscar por nome ou UC..." oninput="filterResidencias()" style="min-width:260px;">
     </div>
 
     <!-- Tabela de Residências -->
@@ -256,9 +307,9 @@
         <thead>
           <tr>
             <th>Beneficiário</th>
-            <th>Endereço</th>
-            <th>Consumo (kWh)</th>
-            <th>Economia (R$)</th>
+            <th>UC de fornecimento</th>
+            <th id="thConsumoResidencias">Consumo acumulado (kWh)</th>
+            <th id="thEconomiaResidencias">Economia acumulada (R$)</th>
             <th>Banco</th>
             <th>Concessionária</th>
             <th>Cashback</th>
@@ -266,15 +317,15 @@
         </thead>
         <tbody>
           {% for r in residencias %}
-          <tr data-id="{{ r.id }}" data-nome="{{ r.nome|lower }}" data-endereco="{{ r.endereco|lower }}"
+          <tr data-id="{{ r.id }}" data-usuario-id="{{ r.usuario_id }}" data-nome="{{ r.nome|lower }}" data-endereco="{{ r.endereco|lower }}"
               data-status="{{ 'ok' if r.em_dia_banco == 'sim' and r.em_dia_concessionaria == 'sim' and r.cashback_em_dia == 'sim' else 'pendente' }}">
             <td style="font-weight:600;color:var(--text-primary)">{{ r.nome }}</td>
-            <td>{{ r.endereco }}</td>
-            <td>{{ r.consumo_mensal_kwh }}</td>
-            <td style="color:var(--accent-green-light)">R$ {{ r.economia_mensal_rs }}</td>
-            <td><span class="status-mark {{ 'is-yes' if r.em_dia_banco == 'sim' else 'is-no' }}" aria-label="{{ 'Em dia' if r.em_dia_banco == 'sim' else 'Pendente' }}"></span></td>
-            <td><span class="status-mark {{ 'is-yes' if r.em_dia_concessionaria == 'sim' else 'is-no' }}" aria-label="{{ 'Em dia' if r.em_dia_concessionaria == 'sim' else 'Pendente' }}"></span></td>
-            <td><span class="status-mark {{ 'is-yes' if r.cashback_em_dia == 'sim' else 'is-no' }}" aria-label="{{ 'Em dia' if r.cashback_em_dia == 'sim' else 'Pendente' }}"></span></td>
+            <td>{{ r.endereco or 'Não informado' }}</td>
+            <td class="residencia-consumo">{{ r.consumo_mensal_kwh }}</td>
+            <td class="residencia-economia" style="color:var(--accent-green-light)">{{ 'R$ %.2f' | format(r.economia_mensal_rs) if r.economia_mensal_rs is not none else 'Não informado' }}</td>
+            <td>{{ 'Sim' if r.em_dia_banco == 'sim' else ('Não' if r.em_dia_banco == 'nao' else 'Não informado') }}</td>
+            <td>{{ 'Sim' if r.em_dia_concessionaria == 'sim' else ('Não' if r.em_dia_concessionaria == 'nao' else 'Não informado') }}</td>
+            <td>{{ 'Sim' if r.cashback_em_dia == 'sim' else ('Não' if r.cashback_em_dia == 'nao' else 'Não informado') }}</td>
           </tr>
           {% endfor %}
         </tbody>
@@ -330,10 +381,30 @@
 
     <!-- Beneficiários Dentro da Cota -->
     <div class="table-card">
-      <h3>Beneficiários Dentro da Cota de Energia</h3>
+      <h3>Beneficiários dentro da cota de energia</h3>
+      <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:1rem;">
+        Para classificar um mês como dentro da cota, o consumo elegível deve ser igual ou menor que a cota e não pode haver excedente informado para a Energisa. Para tarifa social, os primeiros 80 kWh não entram no consumo elegível. A conta da Energisa também inclui impostos e encargos, por isso o valor total da fatura não é usado para inferir excedente.
+      </p>
+      {% if historico_cotas %}
+      <div class="filter-bar">
+        <label for="selectBeneficiarioCota" style="color:var(--text-secondary);font-size:0.85rem;font-weight:600;">Beneficiário:</label>
+        <select id="selectBeneficiarioCota" onchange="atualizarGraficoCotas()">
+          {% for beneficiario in historico_cotas %}
+          <option value="{{ beneficiario.usuario_id }}">{{ beneficiario.nome }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="chart-card" style="margin-bottom:1.5rem;">
+        <h3>Histórico mensal: cota e energia recebida (kWh)</h3>
+        <canvas id="chartHistoricoCotas"></canvas>
+      </div>
+      {% else %}
+      <p style="font-size:0.85rem;color:var(--text-muted);">Ainda não há meses reais de cotas para exibir.</p>
+      {% endif %}
+
+      <h3 style="margin-top:1rem;">Quem ficou dentro da cota</h3>
       <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.5rem;">
-        Residências que, em pelo menos um dos últimos {{ residencias_dentro_cota[0].meses_totais if residencias_dentro_cota else 6 }}
-        meses, mantiveram o consumo dentro da cota de energia solar recebida.
+        Cada ponto representa um mês importado. Verde indica consumo elegível dentro da cota e nenhum excedente informado à Energisa; cinza indica dados insuficientes.
       </p>
       <div class="rank-grid">
         {% for r in residencias_dentro_cota %}
@@ -341,13 +412,15 @@
           <div class="rank-card-body">
             <div class="rank-card-name">{{ r.nome }}</div>
             <div class="rank-card-months">
-              {% for i in range(r.meses_totais) %}
-              <span class="month-dot {{ 'filled' if i < r.meses_dentro_cota else '' }}"></span>
+              {% for item in r.historico_meses %}
+              <span class="month-dot {{ 'filled' if item.dentro_cota else '' }}" title="{{ item.mes_label }}: {% if item.dentro_cota is none %}sem dados{% elif item.dentro_cota %}dentro da cota{% else %}acima da cota{% endif %}"></span>
               {% endfor %}
             </div>
-            <div class="rank-card-caption">{{ r.meses_dentro_cota }} de {{ r.meses_totais }} meses dentro da cota</div>
+            <div class="rank-card-caption">{{ r.meses_dentro_cota }} de {{ r.meses_totais }} meses comparáveis dentro da cota</div>
           </div>
         </div>
+        {% else %}
+        <p style="font-size:0.85rem;color:var(--text-muted);">Nenhum beneficiário tem comparação de cota disponível nos meses importados.</p>
         {% endfor %}
       </div>
     </div>
@@ -375,16 +448,68 @@
     document.getElementById('tab-' + tabName).classList.add('active');
     event.target.classList.add('active');
     animateCounters();
+    setTimeout(() => Object.values(Chart.instances).forEach(chart => chart.resize()), 50);
   }
+
+  function filtrarDemonstrativoEconomia() {
+    const seletor = document.getElementById('selectMesEconomia');
+    if (!seletor) return;
+    const mesSelecionado = seletor.value;
+    document.querySelectorAll('.linha-economia, .total-economia').forEach(linha => {
+      linha.style.display = mesSelecionado === 'todos' ? (linha.dataset.mes === 'todos' || linha.classList.contains('linha-economia') ? '' : 'none') : (linha.dataset.mes === mesSelecionado ? '' : 'none');
+    });
+  }
+  filtrarDemonstrativoEconomia();
+
+  const beneficiosPorMesCards = {{ beneficios_por_mes_cards | tojson }};
+  function selecionarProjetoBeneficiarios(projetoId) {
+    const seletor = document.getElementById('selectProjetoBeneficiarios');
+    if (seletor) seletor.value = projetoId;
+    atualizarCardsBeneficiarios();
+  }
+  function selecionarPeriodoBeneficiarios(periodo) {
+    const seletor = document.getElementById('selectMesBeneficiarios');
+    if (seletor) seletor.value = periodo;
+    atualizarCardsBeneficiarios();
+  }
+  function atualizarCardsBeneficiarios() {
+    const mes = document.getElementById('selectMesBeneficiarios')?.value;
+    const dados = beneficiosPorMesCards[mes];
+    const projeto = document.getElementById('selectProjetoBeneficiarios')?.value;
+    const indisponivel = !dados || (projeto !== 'todos' && !document.querySelector(`#selectProjetoBeneficiarios option[value="${projeto}"]`));
+    const texto = valor => valor == null ? 'Não informado' : valor.toLocaleString('pt-BR', { maximumFractionDigits: 2 });
+    document.getElementById('cardBeneficiariosMes').textContent = indisponivel ? 'Não informado' : texto(dados.beneficiarios);
+    document.getElementById('cardEnergiaBeneficiarios').textContent = indisponivel ? 'Não informado' : `${texto(dados.energia_kwh)} kWh`;
+    document.getElementById('cardEconomiaBeneficiarios').textContent = indisponivel || dados.economia_real_rs == null ? 'Não informado' : `R$ ${texto(dados.economia_real_rs)}`;
+    document.getElementById('cardDoacaoBeneficiarios').textContent = indisponivel || dados.doado_banco_rs == null ? 'Não informado' : `R$ ${texto(dados.doado_banco_rs)}`;
+    document.getElementById('cardCashbackBeneficiarios').textContent = indisponivel || dados.cashback_rs == null ? 'Não informado' : `R$ ${texto(dados.cashback_rs)}`;
+    filterResidencias();
+  }
+  atualizarCardsBeneficiarios();
 
   // ─── Filter Residências ───
   function filterResidencias() {
     const status = document.getElementById('filterStatus').value;
     const search = document.getElementById('filterSearch').value.toLowerCase();
+    const periodo = document.getElementById('selectMesBeneficiarios').value;
+    const historico = {{ historico_residencias | tojson }};
+    document.getElementById('thConsumoResidencias').textContent = periodo === 'todos' ? 'Consumo acumulado (kWh)' : 'Consumo no mês (kWh)';
+    document.getElementById('thEconomiaResidencias').textContent = periodo === 'todos' ? 'Economia acumulada (R$)' : 'Economia no mês (R$)';
     document.querySelectorAll('#tabelaResidencias tbody tr').forEach(row => {
+      const dadosUsuario = historico[row.dataset.usuarioId] || {};
+      const mesesUsuario = periodo === 'todos' ? Object.values(dadosUsuario) : [dadosUsuario[periodo]].filter(Boolean);
+      const somarCampo = campo => {
+        const valores = mesesUsuario.map(item => item[campo]).filter(valor => valor !== null && valor !== undefined && Number.isFinite(Number(valor))).map(Number);
+        return valores.length ? valores.reduce((total, valor) => total + valor, 0) : null;
+      };
+      const consumo = somarCampo('consumo_kwh');
+      const economia = somarCampo('economia_rs');
+      row.querySelector('.residencia-consumo').textContent = consumo == null ? 'Não informado' : `${consumo.toLocaleString('pt-BR', { maximumFractionDigits: 2 })} kWh`;
+      row.querySelector('.residencia-economia').textContent = economia == null ? 'Não informado' : `R$ ${economia.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      const matchPeriodo = periodo === 'todos' || mesesUsuario.length > 0;
       const matchStatus = status === 'todos' || row.dataset.status === status;
       const matchSearch = !search || row.dataset.nome.includes(search) || row.dataset.endereco.includes(search);
-      row.style.display = matchStatus && matchSearch ? '' : 'none';
+      row.style.display = matchPeriodo && matchStatus && matchSearch ? '' : 'none';
     });
   }
 
@@ -433,7 +558,7 @@
     total_capacidade: {
       title: 'Capacidade Total (kW)', icon: '⚡', color: '#15803d',
       desc: 'Soma da capacidade instalada (em kW) de todas as usinas solares parceiras do banco, ativas ou em manutenção.',
-      total: {{ dados_unificados.total_capacidade }}
+      total: {{ dados_unificados.total_capacidade | tojson }}
     },
     total_geracao_mensal: {
       title: 'Geração Mensal (kWh)', icon: '🏭', color: '#059669',
@@ -448,46 +573,20 @@
     media_eficiencia: {
       title: 'Eficiência Média', icon: '📊', color: '#7c3aed',
       desc: 'Média percentual de eficiência de conversão de energia solar em eletricidade entre todas as usinas parceiras.',
-      total: {{ dados_unificados.media_eficiencia }},
-      history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(() => {{ dados_unificados.media_eficiencia }}) }
+      total: {{ dados_unificados.media_eficiencia | tojson }},
+      history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(() => {{ dados_unificados.media_eficiencia | tojson }}) }
     },
     num_usinas_ativas: {
       title: 'Usinas Ativas', icon: '🟢', color: '#059669',
       desc: 'Número de usinas solares parceiras que estão atualmente em operação normal, gerando energia para o banco.',
-      total: {{ dados_unificados.num_usinas_ativas }},
-      history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(() => {{ dados_unificados.num_usinas_ativas }}) }
+      total: {{ dados_unificados.num_usinas_ativas | tojson }},
+      history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(() => {{ dados_unificados.num_usinas_ativas | tojson }}) }
     },
     num_usinas_manutencao: {
       title: 'Em Manutenção', icon: '🔧', color: '#15803d',
       desc: 'Número de usinas parceiras que estão temporariamente fora de operação para manutenção preventiva ou corretiva.',
-      total: {{ dados_unificados.num_usinas_manutencao }},
-      history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(() => {{ dados_unificados.num_usinas_manutencao }}) }
-    },
-    tarifa_concessionaria: {
-      title: 'Tarifa Concessionária (R$/kWh)', icon: '🏷️', color: '#dc2626',
-      desc: 'Valor médio cobrado pela concessionária de energia elétrica tradicional por kWh, usado como referência de comparação.',
-      total: {{ economia_concessionaria.tarifa_concessionaria * 100 }},
-      history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(() => {{ economia_concessionaria.tarifa_concessionaria * 100 }}) }
-    },
-    tarifa_solar: {
-      title: 'Tarifa Solar (R$/kWh)', icon: '☀️', color: '#059669',
-      desc: 'Valor cobrado pela energia solar fornecida através do banco, mais barata que a tarifa da concessionária tradicional.',
-      total: {{ economia_concessionaria.tarifa_solar * 100 }},
-      history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(() => {{ economia_concessionaria.tarifa_solar * 100 }}) }
-    },
-    economia_percentual: {
-      title: 'Economia Percentual', icon: '📉', color: '#2563eb',
-      desc: 'Percentual de economia obtido ao usar a tarifa solar do banco em vez da tarifa da concessionária tradicional.',
-      total: {{ economia_concessionaria.economia_percentual }},
-      history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(() => {{ economia_concessionaria.economia_percentual }}) }
-    },
-    economia_mensal_rs: {
-      title: 'Economia Mensal (R$)', icon: '💰', color: '#7c3aed',
-      desc: 'Valor total, em reais, economizado no último mês por todos os beneficiários, comparando a tarifa solar com a da concessionária.',
-      history: {
-        labels: geracaoMes.map(d => d.mes),
-        values: geracaoMes.map(d => Math.round(d.geracao_kwh * ({{ economia_concessionaria.tarifa_concessionaria }} - {{ economia_concessionaria.tarifa_solar }}) * 100) / 100)
-      }
+      total: {{ dados_unificados.num_usinas_manutencao | tojson }},
+      history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(() => {{ dados_unificados.num_usinas_manutencao | tojson }}) }
     },
     total_residencias: {
       title: 'Total de Residências', icon: '🏠', color: '#059669',
@@ -543,13 +642,13 @@
       data: {
         labels: data.meses,
         datasets: [{
-          label: 'Receita (R$)',
-          data: data.receita,
-          backgroundColor: 'rgba(16,185,129,0.6)', borderColor: '#10b981',
+          label: 'Pago ao projeto (50% do benefício)',
+          data: data.doado_banco,
+          backgroundColor: 'rgba(245,158,11,0.68)', borderColor: '#d97706',
           borderWidth: 1, borderRadius: 6
         }]
       },
-      options: { responsive: true, plugins: { legend: { display: false } },
+      options: { responsive: true, plugins: { legend: { display: true, position: 'bottom' } },
         scales: { y: { grid: { color: 'rgba(15,23,42,0.06)' } }, x: { grid: { display: false } } }
       }
     });
@@ -622,32 +721,6 @@
     }
   });
 
-  // ═══ ECONOMY TAB CHARTS ═══
-  const tarConc = {{ economia_concessionaria.tarifa_concessionaria }};
-  const tarSolar = {{ economia_concessionaria.tarifa_solar }};
-
-  // Economia acumulada
-  let acum = 0;
-  const econAcum = geracaoMes.map(d => {
-    acum += d.geracao_kwh * (tarConc - tarSolar);
-    return acum;
-  });
-  new Chart(document.getElementById('chartEconomiaAcum'), {
-    type: 'line',
-    data: {
-      labels: geracaoMes.map(d => d.mes),
-      datasets: [{
-        label: 'Economia Acumulada (R$)', data: econAcum,
-        borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,0.1)',
-        fill: true, tension: 0.4, pointRadius: 4
-      }]
-    },
-    options: { responsive: true, plugins: { legend: { display: false } },
-      scales: { y: { grid: { color: 'rgba(15,23,42,0.06)' } }, x: { grid: { display: false } } }
-    }
-  });
-
-  // ═══ RESIDÊNCIAS TAB CHARTS ═══
   const emDiaBanco = {{ stats_residencias.em_dia_banco }};
   const totalRes = {{ stats_residencias.total }};
   const emDiaConc = {{ stats_residencias.em_dia_concessionaria }};
@@ -686,6 +759,54 @@
       scales: { y: { grid: { color: 'rgba(15,23,42,0.06)' } }, x: { grid: { display: false } } }
     }
   });
+
+  const historicoCotas = {{ historico_cotas | tojson }};
+  let gráficoHistoricoCotas = null;
+  function atualizarGraficoCotas() {
+    const seletor = document.getElementById('selectBeneficiarioCota');
+    if (!seletor) return;
+    const beneficiario = historicoCotas.find(item => item.usuario_id === seletor.value);
+    if (!beneficiario) return;
+    const dados = {
+      labels: beneficiario.meses,
+      datasets: [
+        {
+          label: 'Limite da cota (kWh)',
+          data: beneficiario.cotas_kwh,
+          backgroundColor: 'rgba(59,130,246,0.55)',
+          borderColor: '#3b82f6',
+          borderWidth: 1,
+          borderRadius: 5
+        },
+        {
+          label: 'Energia recebida (kWh)',
+          data: beneficiario.energia_recebida_kwh,
+          backgroundColor: 'rgba(16,185,129,0.65)',
+          borderColor: '#10b981',
+          borderWidth: 1,
+          borderRadius: 5
+        }
+      ]
+    };
+    if (gráficoHistoricoCotas) {
+      gráficoHistoricoCotas.data = dados;
+      gráficoHistoricoCotas.update();
+      return;
+    }
+    gráficoHistoricoCotas = new Chart(document.getElementById('chartHistoricoCotas'), {
+      type: 'bar',
+      data: dados,
+      options: {
+        responsive: true,
+        plugins: { legend: { position: 'bottom' } },
+        scales: {
+          y: { beginAtZero: true, title: { display: true, text: 'Energia (kWh)' }, grid: { color: 'rgba(15,23,42,0.06)' } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+  }
+  atualizarGraficoCotas();
 
   setTimeout(animateCounters, 300);
 

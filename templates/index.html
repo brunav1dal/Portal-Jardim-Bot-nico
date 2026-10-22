@@ -15,31 +15,36 @@
     <div class="filter-panel" aria-label="Filtro de período">
       <div class="filter-heading">
         <div>
-          <strong>Filtrar período</strong>
-          <span>Escolha o intervalo para atualizar os indicadores.</span>
+          <strong>Período dos indicadores</strong>
+          <span>Todo o histórico ou um intervalo escolhido.</span>
         </div>
       </div>
       <div class="filter-controls">
-        <div class="filter-field">
-          <label for="mesInicio">Início</label>
-          <div class="period-selects">
-            <select id="mesInicio" aria-label="Mês inicial" onchange="aplicarFiltroPeriodo()"></select>
-            <select id="anoInicio" aria-label="Ano inicial" onchange="aplicarFiltroPeriodo()"></select>
+        <div class="filter-mode-buttons" role="group" aria-label="Período dos indicadores">
+          <button type="button" id="filtroTodoPeriodo" class="filter-reset is-active" aria-pressed="true" onclick="definirModoPeriodo('todos')">Todo o período</button>
+          <button type="button" id="filtroSelecionarPeriodo" class="filter-reset" aria-pressed="false" onclick="definirModoPeriodo('selecionar')">Selecionar período</button>
+        </div>
+        <div id="camposPeriodoSelecionado" class="period-range-fields" style="display:none;">
+          <div class="filter-field">
+            <label for="mesInicio">Início</label>
+            <div class="period-selects">
+              <select id="mesInicio" aria-label="Mês inicial" onchange="aplicarFiltroPeriodo()"></select>
+              <select id="anoInicio" aria-label="Ano inicial" onchange="aplicarFiltroPeriodo()"></select>
+            </div>
+          </div>
+          <span class="filter-arrow" aria-hidden="true">&rarr;</span>
+          <div class="filter-field">
+            <label for="mesFim">Fim</label>
+            <div class="period-selects">
+              <select id="mesFim" aria-label="Mês final" onchange="aplicarFiltroPeriodo()"></select>
+              <select id="anoFim" aria-label="Ano final" onchange="aplicarFiltroPeriodo()"></select>
+            </div>
           </div>
         </div>
-        <span class="filter-arrow" aria-hidden="true">→</span>
-        <div class="filter-field">
-          <label for="mesFim">Fim</label>
-          <div class="period-selects">
-            <select id="mesFim" aria-label="Mês final" onchange="aplicarFiltroPeriodo()"></select>
-            <select id="anoFim" aria-label="Ano final" onchange="aplicarFiltroPeriodo()"></select>
-          </div>
-        </div>
-        <button type="button" class="filter-reset" onclick="limparFiltroPeriodo()">Todo o período</button>
       </div>
     </div>
     <p id="periodoNota" style="display:none;font-size:0.78rem;color:var(--text-muted);margin:-0.5rem 0 1rem;">
-      * Economia, créditos, kW recebidos, investimento e cashback são estimados proporcionalmente à geração do período selecionado (não há histórico mensal desses dados).
+      * Consumo, energia solar solidária, créditos, investimento e cashback mostram apenas meses com planilha de beneficiários. Geração e CO₂ mostram apenas meses existentes na planilha da usina.
     </p>
     <p id="periodoVazio" style="display:none;font-size:0.85rem;color:var(--accent-red);margin:-0.5rem 0 1rem;">
       Nenhum mês encontrado nesse intervalo — verifique se "De" vem antes de "Até".
@@ -53,30 +58,26 @@
         <div class="stat-hint">Ver detalhes</div>
       </button>
 
-      <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.economia_kw, this.querySelector('.stat-icon'))">
+      <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.economia_rs, this.querySelector('.stat-icon'))">
         <div class="stat-icon icon-bolt">⚡</div>
-        <div class="stat-label">Economia Total (kW)</div>
-        <div class="stat-value count-up" data-stat="economia_kw" data-target="{{ transparencia.economia_kw }}">0</div>
+        <div class="stat-label">Economia Total (R$)</div>
+        <div class="stat-value count-up" data-stat="economia_rs" data-target="{{ transparencia.economia_total_rs }}" data-prefix="R$ ">0</div>
         <div class="stat-hint">Ver histórico e detalhes</div>
       </button>
-      <button type="button" class="stat-card green fade-up" onclick="openStatModal(statInfo.creditos, this.querySelector('.stat-icon'))">
-        <div class="stat-icon">💳</div>
-        <div class="stat-label">Créditos dos Usuários</div>
-        <div class="stat-value count-up" data-stat="creditos" data-target="{{ transparencia.creditos }}">0</div>
-        <div class="stat-hint">Ver histórico e detalhes</div>
-      </button>
+
       <button type="button" class="stat-card blue fade-up" onclick="openStatModal(statInfo.kw_recebidos, this.querySelector('.stat-icon'))">
         <div class="stat-icon">🔋</div>
-        <div class="stat-label">kW Recebidos</div>
+        <div class="stat-label">kWh Recebidos</div>
         <div class="stat-value count-up" data-stat="kw_recebidos" data-target="{{ transparencia.kw_recebidos }}">0</div>
         <div class="stat-hint">Ver histórico e detalhes</div>
       </button>
       <button type="button" class="stat-card purple fade-up" onclick="openStatModal(statInfo.investido, this.querySelector('.stat-icon'))">
         <div class="stat-icon">💰</div>
-        <div class="stat-label">Total Investido (R$)</div>
+        <div class="stat-label">Doa&ccedil;&atilde;o ao Banco (R$)</div>
         <div class="stat-value count-up" data-stat="investido" data-target="{{ transparencia.investido }}" data-prefix="R$ ">0</div>
         <div class="stat-hint">Ver histórico e detalhes</div>
       </button>
+
       <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.cashback_orquideas, this.querySelector('.stat-icon'))">
         <div class="stat-icon">🌸</div>
         <div class="stat-label">Cashback Orquídeas (R$)</div>
@@ -95,6 +96,7 @@
         <div class="stat-value count-up" data-stat="co2_evitado_total" data-target="{{ transparencia.co2_evitado_total }}">0</div>
         <div class="stat-hint">Ver histórico e detalhes</div>
       </button>
+
     </div>
   </section>
 
@@ -163,121 +165,88 @@
 
   <!-- Como Funciona -->
   <section class="section" id="como-funciona">
-    <h2 class="section-title">Como Funciona o Cashback e a Energia Solar</h2>
+    <h2 class="section-title">Como funciona a energia solar solidária e a economia</h2>
     <p style="color:var(--text-secondary);font-size:0.95rem;line-height:1.75;margin-bottom:2rem;">
-      Entender de onde vem o desconto na conta de luz — e por que ele ainda volta como cashback —
-      é mais simples do que parece. A energia gerada pelas usinas solares parceiras é dividida entre
-      os moradores associados, abate o valor da conta de energia e o que sobra retorna ao bolso do
-      morador em Orquídeas, a moeda social do banco. Veja o passo a passo:
+      A usina gera energia e cada beneficiário recebe uma cota mensal. A energia solar solidária usada não ultrapassa essa cota nem o consumo elegível.
+      O benefício em reais é repartido entre o valor destinado ao projeto e o cashback em Orquídeas.
+      A conta da Energisa continua sendo paga, incluindo impostos e eventual consumo acima da cota.
+      Se parte da cota não for usada, essa quantidade em kWh entra como crédito acumulado para uso futuro; crédito de energia não é valor em reais.
+      Os exemplos em kWh e reais a seguir s&atilde;o hipot&eacute;ticos e did&aacute;ticos; nenhum representa benefici&aacute;rios, faturas ou meses reais.
     </p>
 
+    <p style="padding:0.9rem 1rem;border-left:4px solid var(--accent-solar-light);background:rgba(245,158,11,0.10);border-radius:0.5rem;color:var(--text-primary);font-size:0.9rem;line-height:1.6;margin-bottom:1.5rem;">
+      <strong>CEN&Aacute;RIO DEMONSTRATIVO:</strong> Os quatro exemplos abaixo usam uma gera&ccedil;&atilde;o hipot&eacute;tica de 1.000 kWh e uma cota de 12% (120 kWh). S&atilde;o simula&ccedil;&otilde;es para explicar as regras, n&atilde;o representam dados reais de benefici&aacute;rios, faturas ou da usina.
+    </p>
+
+    <h3 style="font-family:'Geist', sans-serif;font-size:1.1rem;font-weight:700;margin:0 0 1rem;">Quatro situa&ccedil;&otilde;es poss&iacute;veis</h3>
     <div class="how-steps">
-      <div class="how-step fade-up" role="button" tabindex="0" aria-pressed="false">
+      <div class="how-step fade-up">
         <div class="how-step-num">1</div>
-        <h4>A usina gera energia</h4>
-        <p>As placas solares parceiras produzem energia todo mês — no exemplo abaixo, 1.940 kWh.</p>
+        <h4>Tarifa social, consumo menor que 80 kWh</h4>
+        <p>Exemplo: consumo de 70 kWh. Ele fica na faixa isenta da tarifa social e n&atilde;o usa energia solar solid&aacute;ria. Os 120 kWh da cota ficam como cr&eacute;dito acumulado, e a pessoa ainda recebe 5 Orqu&iacute;deas. A Energisa pode cobrar impostos e outros encargos.</p>
       </div>
-      <div class="how-step fade-up" role="button" tabindex="0" aria-pressed="false">
+      <div class="how-step fade-up">
         <div class="how-step-num">2</div>
-        <h4>Cada morador recebe uma cota</h4>
-        <p>Essa energia é repartida entre os associados. No exemplo, cada morador tem direito a 11% do total: 213,4 kWh.</p>
+        <h4>Tarifa social, consumo acima da cota</h4>
+        <p>Exemplo: consumo de 250 kWh. Os primeiros 80 kWh ficam isentos. Dos 170 kWh restantes, até 120 kWh podem ser atendidos pela energia solar solidária; os outros 50 kWh ficam na fatura da Energisa.</p>
       </div>
-      <div class="how-step fade-up" role="button" tabindex="0" aria-pressed="false">
+      <div class="how-step fade-up">
         <div class="how-step-num">3</div>
-        <h4>A cota vira desconto na conta</h4>
-        <p>A energia recebida abate o valor da conta de luz, até o limite do que o morador realmente consome naquele mês.</p>
+        <h4>Sem tarifa social, consumo dentro da cota</h4>
+        <p>Exemplo: consumo de 100 kWh e cota de 120 kWh. A energia solar solidária atende os 100 kWh consumidos; os 20 kWh não usados da cota viram crédito para os meses seguintes. A fatura da Energisa ainda pode incluir impostos e demais cobran&ccedil;as.</p>
       </div>
-      <div class="how-step fade-up" role="button" tabindex="0" aria-pressed="false">
+      <div class="how-step fade-up">
         <div class="how-step-num">4</div>
-        <h4>O que sobra volta como cashback</h4>
-        <p>Parte do valor que seria pago à concessionária fica no fundo do banco, e o restante retorna ao morador em Orquídeas.</p>
+        <h4>Consumo acima da cota</h4>
+        <p>Exemplo: consumo de 180 kWh sem tarifa social. A energia solar solidária fica limitada a 120 kWh; os 60 kWh restantes seguem na fatura da Energisa, junto dos impostos e encargos.</p>
       </div>
     </div>
 
-    <h3 style="font-family:'Geist', sans-serif; font-size:1.1rem; font-weight:700; margin:2.5rem 0 1rem;">
-      Veja na prática: 4 perfis de moradores
-    </h3>
-
-    <div class="table-card">
+    <div class="table-card" style="margin-top:1.5rem;">
       <div style="overflow-x:auto;">
         <table>
           <thead>
             <tr>
-              <th>Morador</th>
-              <th>Consumo médio (kWh)</th>
-              <th>Geração estimada (kWh)</th>
-              <th>% que recebe</th>
-              <th>Energia estimada recebida (kWh)</th>
+              <th>Simula&ccedil;&atilde;o</th>
               <th>Tarifa social</th>
-              <th>Custo da energia (R$/kWh)</th>
-              <th>Valor da conta sem o banco</th>
-              <th>Benefício solar</th>
-              <th>Valor doado ao banco</th>
-              <th>Cashback recebido</th>
+              <th>Consumo</th>
+              <th>Cota m&aacute;xima</th>
+              <th>Faixa isenta</th>
+              <th>Consumo eleg&iacute;vel</th>
+              <th>Energia solar solid&aacute;ria</th>
+              <th>Cr&eacute;dito da cota n&atilde;o usada</th>
+              <th>Excedente na Energisa</th>
+              <th>Recompensa</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td style="font-weight:600;color:var(--text-primary)">Morador A</td>
-              <td>229</td><td>1.940</td><td>11,00%</td><td>213,4</td><td>Sim</td>
-              <td>R$ 0,56</td><td>R$ 128,24</td>
-              <td style="color:var(--accent-green-light)">R$ 119,50</td>
-              <td>R$ 41,72</td>
-              <td style="color:var(--accent-solar-light);font-weight:600;">R$ 20,86</td>
-            </tr>
-            <tr>
-              <td style="font-weight:600;color:var(--text-primary)">Morador B</td>
-              <td>85</td><td>1.940</td><td>11,00%</td><td>213,4</td><td>Não</td>
-              <td>R$ 0,68</td><td>R$ 57,80</td>
-              <td style="color:var(--accent-green-light)">R$ 57,80</td>
-              <td>R$ 28,90</td>
-              <td style="color:var(--accent-solar-light);font-weight:600;">R$ 14,45</td>
-            </tr>
-            <tr>
-              <td style="font-weight:600;color:var(--text-primary)">Morador C</td>
-              <td>250</td><td>1.940</td><td>11,00%</td><td>213,4</td><td>Não</td>
-              <td>R$ 0,68</td><td>R$ 170,00</td>
-              <td style="color:var(--accent-green-light)">R$ 145,11</td>
-              <td>R$ 72,56</td>
-              <td style="color:var(--accent-solar-light);font-weight:600;">R$ 36,28</td>
-            </tr>
-            <tr>
-              <td style="font-weight:600;color:var(--text-primary)">Morador D</td>
-              <td>70</td><td>1.940</td><td>11,00%</td><td>213,4</td><td>Sim</td>
-              <td>R$ 0,56</td><td>R$ 39,20</td>
-              <td style="color:var(--accent-green-light)">R$ 39,20</td>
-              <td>R$ 0,00</td>
-              <td style="color:var(--accent-solar-light);font-weight:600;">R$ 5,00</td>
-            </tr>
+            <tr><td>1</td><td>Sim</td><td>70 kWh</td><td>120 kWh</td><td>80 kWh</td><td>0 kWh</td><td>0 kWh</td><td>120 kWh</td><td>0 kWh</td><td>5 Orqu&iacute;deas</td></tr>
+            <tr><td>2</td><td>Sim</td><td>250 kWh</td><td>120 kWh</td><td>80 kWh</td><td>170 kWh</td><td>120 kWh</td><td>0 kWh</td><td>50 kWh</td><td>&mdash;</td></tr>
+            <tr><td>3</td><td>N&atilde;o</td><td>100 kWh</td><td>120 kWh</td><td>N&atilde;o se aplica</td><td>100 kWh</td><td>100 kWh</td><td>20 kWh</td><td>0 kWh</td><td>&mdash;</td></tr>
+            <tr><td>4</td><td>N&atilde;o</td><td>180 kWh</td><td>120 kWh</td><td>N&atilde;o se aplica</td><td>180 kWh</td><td>120 kWh</td><td>0 kWh</td><td>60 kWh</td><td>&mdash;</td></tr>
           </tbody>
         </table>
       </div>
       <p style="font-size:0.78rem;color:var(--text-muted);margin-top:1rem;">
-        * Cenário ilustrativo e didático do modelo de rateio de geração solar e cashback do banco.
+        * Cen&aacute;rio demonstrativo; n&atilde;o s&atilde;o dados reais. Cr&eacute;dito ilustrado = cota m&aacute;xima menos energia solar solid&aacute;ria usada. Excedente = consumo eleg&iacute;vel acima da cota. A Energisa pode cobrar impostos e encargos em todos os cen&aacute;rios.
       </p>
     </div>
 
     <div class="how-readout">
       <div class="how-readout-item fade-up">
-        <span class="how-readout-name">Morador A</span>
-        Consome um pouco mais do que sua cota (229 de 213,4 kWh) — por isso ainda paga uma fatia
-        da conta, mas mesmo assim economiza bastante e ganha cashback.
+        <span class="how-readout-name">Tarifa social</span>
+        Os primeiros 80 kWh são isentos pela concessionária. O consumo acima disso pode ser atendido pela energia solar solidária, respeitando a cota individual.
       </div>
       <div class="how-readout-item fade-up">
-        <span class="how-readout-name">Morador B</span>
-        Consome bem menos do que recebe (85 de 213,4 kWh) — a energia solar cobre 100% da conta,
-        que fica zerada, e ele ainda ganha cashback.
+        <span class="how-readout-name">Sem tarifa social</span>
+        Também recebe o benefício calculado; metade é destinada ao projeto e um quarto retorna como cashback.
       </div>
       <div class="how-readout-item fade-up">
-        <span class="how-readout-name">Morador C</span>
-        Consome bastante e não tem tarifa social (tarifa cheia, mais cara) — mesmo com o desconto
-        solar, é quem mais paga de conta, mas também é quem mais recebe de cashback.
+        <span class="how-readout-name">Acima da cota</span>
+        O excedente não é atendido pela energia solar solidária e permanece na fatura da Energisa, junto dos impostos e demais cobranças.
       </div>
-      <div class="how-readout-item fade-up">
-        <span class="how-readout-name">Morador D</span>
-        Tem tarifa social (mais barata) e consome pouco — sua conta também fica zerada, mas como
-        já paga menos por kWh, o cashback dele é o menor do grupo.
-      </div>
+
+
     </div>
   </section>
 </div>
@@ -315,6 +284,7 @@
 
   const geracaoMes = {{ geracao_por_mes | tojson }};
   const geracaoUsina = {{ geracao_por_usina | tojson }};
+  const beneficiosMes = {{ beneficios_por_mes | tojson }};
 
   // ─── Filtro temporal ───
   const MESES_PT = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
@@ -323,19 +293,12 @@
     return MESES_PT[parseInt(mes, 10) - 1] + '/' + ano;
   }
 
-  const totalGeracaoAll = geracaoMes.reduce((s, d) => s + d.geracao_kwh, 0);
 
-  const totaisOriginais = {
-    economia_kw: {{ transparencia.economia_kw }},
-    creditos: {{ transparencia.creditos }},
-    kw_recebidos: {{ transparencia.kw_recebidos }},
-    investido: {{ transparencia.investido }},
-    cashback_orquideas: {{ transparencia.cashback_orquideas }}
-  };
-
-  const anosDisponiveis = [...new Set(geracaoMes.map(d => d.mes.split('-')[0]))].sort();
-  const primeiroMes = geracaoMes[0].mes;
-  const ultimoMes = geracaoMes[geracaoMes.length - 1].mes;
+  const mesesDisponiveis = [...new Set([...geracaoMes.map(d => d.mes), ...beneficiosMes.map(d => d.mes)])].sort();
+  const anosDisponiveis = [...new Set(mesesDisponiveis.map(m => m.split('-')[0]))].sort();
+  const primeiroMes = mesesDisponiveis[0] || '';
+  const ultimoMes = mesesDisponiveis[mesesDisponiveis.length - 1] || '';
+  let periodoTodos = true;
 
   function popularSelectMes(select) {
     MESES_PT.forEach((nome, i) => {
@@ -360,53 +323,88 @@
     const anoInicio = document.getElementById('anoInicio');
     const mesFim = document.getElementById('mesFim');
     const anoFim = document.getElementById('anoFim');
-
     popularSelectMes(mesInicio);
     popularSelectMes(mesFim);
     popularSelectAno(anoInicio);
     popularSelectAno(anoFim);
-
-    // Padrão: todo o período disponível nos dados
+    if (!primeiroMes || !ultimoMes) return;
     const [anoIni, mesIni] = primeiroMes.split('-');
-    const [anoUlt, mesUlt] = ultimoMes.split('-');
+    const [anoUltimo, mesUltimo] = ultimoMes.split('-');
     mesInicio.value = mesIni;
     anoInicio.value = anoIni;
-    mesFim.value = mesUlt;
-    anoFim.value = anoUlt;
+    mesFim.value = mesUltimo;
+    anoFim.value = anoUltimo;
+  }
+
+  function definirModoPeriodo(modo) {
+    periodoTodos = modo === 'todos';
+    const botaoTodos = document.getElementById('filtroTodoPeriodo');
+    const botaoSelecionar = document.getElementById('filtroSelecionarPeriodo');
+    const campos = document.getElementById('camposPeriodoSelecionado');
+    botaoTodos.classList.toggle('is-active', periodoTodos);
+    botaoSelecionar.classList.toggle('is-active', !periodoTodos);
+    botaoTodos.setAttribute('aria-pressed', String(periodoTodos));
+    botaoSelecionar.setAttribute('aria-pressed', String(!periodoTodos));
+    campos.style.display = periodoTodos ? 'none' : 'flex';
+    aplicarFiltroPeriodo();
   }
 
   function setStatDisplay(key, value, prefix) {
     const el = document.querySelector('.stat-value[data-stat="' + key + '"]');
     if (!el) return;
-    el.textContent = (prefix || '') + value.toLocaleString('pt-BR', {
+    if (value === null || value === undefined || !Number.isFinite(Number(value))) {
+      el.textContent = 'Nao informado';
+      return;
+    }
+    el.dataset.target = String(Number(value));
+    el.textContent = (prefix || '') + Number(value).toLocaleString('pt-BR', {
       minimumFractionDigits: value % 1 !== 0 ? 1 : 0,
       maximumFractionDigits: value % 1 !== 0 ? 1 : 0
     });
   }
 
   function aplicarFiltroPeriodo() {
-    const inicio = document.getElementById('anoInicio').value + '-' + document.getElementById('mesInicio').value;
-    const fim = document.getElementById('anoFim').value + '-' + document.getElementById('mesFim').value;
-    const ehPeriodoCompleto = inicio === primeiroMes && fim === ultimoMes;
+    const inicio = periodoTodos ? primeiroMes : document.getElementById('anoInicio').value + '-' + document.getElementById('mesInicio').value;
+    const fim = periodoTodos ? ultimoMes : document.getElementById('anoFim').value + '-' + document.getElementById('mesFim').value;
 
     const meses = geracaoMes.filter(d => d.mes >= inicio && d.mes <= fim);
+    const benefMeses = beneficiosMes.filter(d => d.mes >= inicio && d.mes <= fim && d.tem_beneficios);
+    const mesesBeneficio = benefMeses.map(d => formatMes(d.mes));
+    const mesesBeneficiarios = benefMeses.filter(d => d.energia_rateio_kwh !== null && d.energia_rateio_kwh !== undefined);
+    statInfo.economia_rs.history = { labels: mesesBeneficio, values: benefMeses.map(d => d.economia_efetiva_rs) };
+    statInfo.investido.history = { labels: mesesBeneficio, values: benefMeses.map(d => d.investido) };
+    statInfo.cashback_orquideas.history = { labels: mesesBeneficio, values: benefMeses.map(d => d.cashback) };
+    statInfo.kw_recebidos.history = { labels: mesesBeneficiarios.map(d => formatMes(d.mes)), values: mesesBeneficiarios.map(d => d.energia_rateio_kwh) };
+    statInfo.geracao_total_kwh.history = { labels: meses.map(d => formatMes(d.mes)), values: meses.map(d => d.geracao_kwh) };
+    statInfo.co2_evitado_total.history = { labels: meses.map(d => formatMes(d.mes)), values: meses.map(d => d.co2_evitado_kg) };
 
-    document.getElementById('periodoVazio').style.display = meses.length === 0 ? 'block' : 'none';
-    document.getElementById('periodoNota').style.display = (!ehPeriodoCompleto && meses.length > 0) ? 'block' : 'none';
-    if (meses.length === 0) return;
+    document.getElementById('periodoVazio').style.display = meses.length === 0 && benefMeses.length === 0 ? 'block' : 'none';
+    if (meses.length === 0 && benefMeses.length === 0) {
+      ['geracao_total_kwh','co2_evitado_total','economia_rs','kw_recebidos','investido','cashback_orquideas'].forEach(k => setStatDisplay(k, null));
+      return;
+    }
 
     const labels = meses.map(d => formatMes(d.mes));
-    const geracaoSel = meses.reduce((s, d) => s + d.geracao_kwh, 0);
-    const co2Sel = meses.reduce((s, d) => s + d.co2_evitado_kg, 0);
-    const ratio = totalGeracaoAll > 0 ? geracaoSel / totalGeracaoAll : 0;
+    const somaCampo = (lista, campo) => {
+      const valores = lista.map(d => d[campo]).filter(v => v !== null && v !== undefined && Number.isFinite(Number(v))).map(Number);
+      return valores.length ? valores.reduce((total, v) => total + v, 0) : null;
+    };
+    const geracaoSel = somaCampo(meses, 'geracao_kwh');
+    const co2Sel = somaCampo(meses, 'co2_evitado_kg');
+    const temMesSemBeneficio = meses.some(d => !beneficiosMes.some(b => b.mes === d.mes && b.tem_beneficios));
+    document.getElementById('periodoNota').style.display = temMesSemBeneficio ? 'block' : 'none';
+    const economiaEfetiva = somaCampo(benefMeses, 'economia_efetiva_rs');
+    const investimento = somaCampo(benefMeses, 'investido');
+    const cashback = somaCampo(benefMeses, 'cashback');
+    const energiaBeneficiarios = mesesBeneficiarios.length
+      ? mesesBeneficiarios.reduce((total, d) => total + (Number(d.energia_rateio_kwh) || 0), 0) : null;
 
     setStatDisplay('geracao_total_kwh', geracaoSel);
     setStatDisplay('co2_evitado_total', co2Sel);
-    setStatDisplay('economia_kw', totaisOriginais.economia_kw * ratio);
-    setStatDisplay('creditos', totaisOriginais.creditos * ratio);
-    setStatDisplay('kw_recebidos', totaisOriginais.kw_recebidos * ratio);
-    setStatDisplay('investido', totaisOriginais.investido * ratio, 'R$ ');
-    setStatDisplay('cashback_orquideas', totaisOriginais.cashback_orquideas * ratio, 'R$ ');
+    setStatDisplay('economia_rs', economiaEfetiva, 'R$ ');
+    setStatDisplay('kw_recebidos', energiaBeneficiarios);
+    setStatDisplay('investido', investimento, 'R$ ');
+    setStatDisplay('cashback_orquideas', cashback, 'R$ ');
 
     chartGeracaoMensal.data.labels = labels;
     chartGeracaoMensal.data.datasets[0].data = meses.map(d => d.geracao_kwh);
@@ -416,23 +414,14 @@
     chartCO2.data.datasets[0].data = meses.map(d => d.co2_evitado_kg);
     chartCO2.update();
 
-    statInfo.geracao_total_kwh.history = { labels: labels, values: meses.map(d => d.geracao_kwh) };
-    statInfo.co2_evitado_total.history = { labels: labels, values: meses.map(d => d.co2_evitado_kg) };
-    statInfo.economia_kw.total = totaisOriginais.economia_kw * ratio;
-    statInfo.creditos.total = totaisOriginais.creditos * ratio;
-    statInfo.kw_recebidos.total = totaisOriginais.kw_recebidos * ratio;
-    statInfo.investido.total = totaisOriginais.investido * ratio;
-    statInfo.cashback_orquideas.total = totaisOriginais.cashback_orquideas * ratio;
+    statInfo.economia_rs.total = economiaEfetiva;
+    statInfo.kw_recebidos.total = energiaBeneficiarios;
+    statInfo.investido.total = investimento;
+    statInfo.cashback_orquideas.total = cashback;
   }
 
   function limparFiltroPeriodo() {
-    const [anoIni, mesIni] = primeiroMes.split('-');
-    const [anoUlt, mesUlt] = ultimoMes.split('-');
-    document.getElementById('mesInicio').value = mesIni;
-    document.getElementById('anoInicio').value = anoIni;
-    document.getElementById('mesFim').value = mesUlt;
-    document.getElementById('anoFim').value = anoUlt;
-    aplicarFiltroPeriodo();
+    definirModoPeriodo('todos');
   }
 
   // ─── Dados para o modal de cada indicador ───
@@ -444,40 +433,38 @@
       history: { labels: ['Total cadastrado'], values: [{{ transparencia.familias_beneficiadas }}] },
       chartType: 'bar'
     },
-
-    economia_kw: {
-      title: 'Economia Total (kW)', icon: '⚡', color: '#15803d',
-      desc: 'Soma da energia (em kW) que todos os clientes do banco solar deixaram de consumir da concessionária, graças aos créditos gerados pelas usinas parceiras.',
-      total: {{ transparencia.economia_kw }}
-    },
-    creditos: {
-      title: 'Créditos dos Usuários', icon: '💳', color: '#059669',
-      desc: 'Total de créditos de energia acumulados por todos os clientes, ainda disponíveis para abatimento em contas futuras de energia.',
-      total: {{ transparencia.creditos }}
+    economia_rs: {
+      title: 'Economia Total (R$)', icon: '⚡', color: '#15803d',
+      desc: 'Este valor representa a economia total da comunidade no per\u00edodo. Para cada benefici\u00e1rio, corresponde a 75% do benef\u00edcio: metade \u00e9 destinada ao Banco Social e 25% retornam como cashback. O total soma os benefici\u00e1rios dos meses selecionados.',
+      total: {{ transparencia.economia_total_rs }},
+      history: { labels: beneficiosMes.filter(d => d.tem_beneficios).map(d => formatMes(d.mes)), values: beneficiosMes.filter(d => d.tem_beneficios).map(d => d.economia_efetiva_rs) }
     },
     kw_recebidos: {
-      title: 'kW Recebidos', icon: '🔋', color: '#2563eb',
-      desc: 'Quantidade total de energia (kW) que os clientes já receberam das usinas solares parceiras e utilizaram para compensar seu consumo.',
-      total: {{ transparencia.kw_recebidos }}
+      title: 'kWh Recebidos', icon: '🔋', color: '#2563eb',
+      desc: 'Mostra quantos kWh de energia solar solid\u00e1ria foram recebidos pelos benefici\u00e1rios no per\u00edodo. O total vem dos registros de consumo e rateio das planilhas.',
+      total: {{ transparencia.kw_recebidos }},
+      history: { labels: beneficiosMes.filter(d => d.energia_rateio_kwh !== null && d.energia_rateio_kwh !== undefined).map(d => formatMes(d.mes)), values: beneficiosMes.filter(d => d.energia_rateio_kwh !== null && d.energia_rateio_kwh !== undefined).map(d => d.energia_rateio_kwh) }
     },
     investido: {
-      title: 'Total Investido (R$)', icon: '💰', color: '#7c3aed',
-      desc: 'Valor total, em reais, investido pelos clientes para participar do banco solar e ter direito aos créditos de energia limpa.',
-      total: {{ transparencia.investido }}
+      title: 'Doa\u00e7\u00e3o ao Banco (R$)', icon: '💰', color: '#7c3aed',
+      desc: 'Este valor \u00e9 destinado ao Banco Social. Para cada benefici\u00e1rio, corresponde a metade do valor do benef\u00edcio calculado a partir do consumo. O total soma as contribui\u00e7\u00f5es dos meses selecionados.',
+      total: {{ transparencia.investido }},
+      history: { labels: beneficiosMes.filter(d => d.tem_beneficios).map(d => formatMes(d.mes)), values: beneficiosMes.filter(d => d.tem_beneficios).map(d => d.investido) }
     },
     cashback_orquideas: {
       title: 'Cashback Orquídeas (R$)', icon: '🌸', color: '#15803d',
-      desc: 'Valor em reais devolvido aos clientes através do programa de cashback "Orquídeas", um benefício adicional por manterem sua participação em dia.',
-      total: {{ transparencia.cashback_orquideas }}
+      desc: 'Este \u00e9 o valor em reais correspondente ao cashback do per\u00edodo. Para cada benefici\u00e1rio, equivale a 25% do benef\u00edcio e retorna em Orqu\u00eddeas conforme as regras do programa.',
+      total: {{ transparencia.cashback_orquideas }},
+      history: { labels: beneficiosMes.filter(d => d.tem_beneficios).map(d => formatMes(d.mes)), values: beneficiosMes.filter(d => d.tem_beneficios).map(d => d.cashback) }
     },
     geracao_total_kwh: {
       title: 'Geração Total (kWh)', icon: '🏭', color: '#059669',
-      desc: 'Energia total gerada por todas as usinas solares parceiras do banco, medida em quilowatt-hora (kWh), somada mês a mês.',
+      desc: 'Este \u00e9 o total de energia produzido pela usina nos meses selecionados, em kWh. Os valores s\u00e3o os registros informados na planilha mensal de gera\u00e7\u00e3o.',
       history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(d => d.geracao_kwh) }
     },
     co2_evitado_total: {
       title: 'CO₂ Evitado (kg)', icon: '🌿', color: '#2563eb',
-      desc: 'Estimativa de emissões de CO₂ que deixaram de ser lançadas na atmosfera graças à energia solar gerada, em comparação com fontes convencionais. Cálculo baseado no fator de 0,5 kg CO₂/kWh, referência do Fator Médio de Emissão do Sistema Interligado Nacional (SIN), publicado pelo MCTI.',
+      desc: 'Esta \u00e9 uma estimativa de quanto CO2 deixou de ser emitido gra\u00e7as \u00e0 gera\u00e7\u00e3o solar. O c\u00e1lculo usa 0,5 kg de CO2 evitado por kWh gerado, com base no Fator M\u00e9dio de Emiss\u00e3o de CO2 da gera\u00e7\u00e3o el\u00e9trica do Sistema Interligado Nacional (SIN), publicado pelo Minist\u00e9rio da Ci\u00eancia, Tecnologia e Inova\u00e7\u00e3o (MCTI). N\u00e3o \u00e9 uma medi\u00e7\u00e3o direta.',
       history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(d => d.co2_evitado_kg) }
     }
   };
@@ -572,8 +559,8 @@
         .bindPopup(
           '<strong>' + u.nome + '</strong><br>' +
           u.localizacao + '<br>' +
-          u.capacidade_kw + ' kW instalados<br>' +
-          (u.status === 'ativa' ? 'Ativa' : 'Em manutenção')
+          (u.capacidade_kw !== null ? u.capacidade_kw + ' kW instalados<br>' : '') +
+          (u.status === 'ativa' ? 'Ativa' : (u.status === 'manutencao' ? 'Em manutenção' : 'Status não informado'))
         );
       bounds.push([u.lat, u.lng]);
     });
@@ -588,5 +575,6 @@
 
   // Inicializa o filtro de período (padrão: todo o período)
   popularFiltroPeriodo();
+  definirModoPeriodo('todos');
 </script>
 {% endblock %}

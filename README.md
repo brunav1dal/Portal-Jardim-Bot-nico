@@ -153,3 +153,21 @@ O repositório entrega uma prova de conceito funcional. Para uma contratação v
 ## Licença
 
 Não há licença declarada. Antes de reutilizar, publicar ou comercializar o código, defina a licença aplicável e realize a revisão jurídica, técnica e de proteção de dados necessária.
+
+
+## Interface e dados locais
+
+A interface inclui filtros por periodo, demonstrativo de economia em reais,
+acompanhamento de cotas e indicadores de familias beneficiadas. Os templates
+Flask e a demonstracao estatica em `docs/` compartilham o mesmo visual.
+
+Os CSVs publicados continuam sendo os exemplos ficticios do repositorio.
+Nenhuma planilha privada e necessaria para iniciar a demonstracao. Na ausencia
+de `beneficios_mensais.csv`, os detalhes mensais individuais ficam sem dados;
+a aplicacao nao inventa historicos para preencher esses campos.
+
+Nao inclua CSVs locais, credenciais, faturas ou exportacoes com dados pessoais
+em commits. As paginas estaticas usam pessoas e valores inteiramente ficticios gerados
+em memoria. Para atualizar a interface em `docs/`, execute
+`python scripts/export_demo.py`. O exportador bloqueia a leitura de CSVs e
+nao utiliza a pasta de dados privados.

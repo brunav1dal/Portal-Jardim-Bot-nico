@@ -20,19 +20,20 @@
 
       Banco Comunitário Jardim Botânico
     </a>
+
     <div class="navbar-actions">
-      
-        <span style="color:var(--text-secondary);font-size:0.85rem;">Olá, Admin Solar <em style="opacity:.7;">(demo)</em></span>
-        
-          <a href="admin.html" class="btn btn-outline btn-sm">⚙️ Painel</a>
-        
+
+
+
+          <a href="admin.html" class="btn btn-outline btn-sm">Painel</a>
+
         <a href="index.html" class="btn btn-outline btn-sm">Sair</a>
-      
+
     </div>
   </nav>
 
-  
-<div class="container dashboard">
+
+<div class="container dashboard"><p class="flash-success">Demonstracao estatica: pessoas e valores ficticios. Alteracoes nao sao gravadas no servidor.</p>
   <div class="dashboard-header">
     <div>
       <h1>Painel Administrativo</h1>
@@ -40,10 +41,27 @@
     </div>
   </div>
 
+  <section class="solar-overview" aria-label="Resumo do Meu Solar">
+    <div class="solar-summary-card">
+      <div class="solar-summary-title">Meu Solar <span class="solar-summary-mark" aria-hidden="true">✦</span></div>
+      <div class="solar-summary-subtitle">Energia solar comunitária</div>
+      <div class="solar-summary-capacity">10 kW</div>
+      <div class="solar-summary-label">Potência instalada agregada</div>
+      <div class="solar-summary-status"><span></span>1 de 1 usinas disponíveis</div>
+    </div>
+    <div class="solar-summary-detail">
+      <div class="solar-summary-detail-heading">Resumo consolidado <small>Dados do período disponível</small></div>
+      <div class="solar-summary-metrics">
+        <div><strong>1,000 kWh</strong><span>Geração mensal</span></div>
+        <div><strong>200.0 kg</strong><span>CO₂ evitado</span></div>
+        <div><strong>90.0%</strong><span>Eficiência média</span></div>
+      </div>
+    </div>
+  </section>
+
   <!-- Tabs de Navegação -->
   <div class="tabs">
     <button class="tab-btn active" onclick="showTab('usinas')">Usinas</button>
-    <button class="tab-btn" onclick="showTab('unificado')">Dados Unificados</button>
     <button class="tab-btn" onclick="showTab('economia')">Economia</button>
     <button class="tab-btn" onclick="showTab('residencias')">Residências</button>
   </div>
@@ -53,38 +71,39 @@
     <h2 class="section-title">Dados Individuais das Usinas</h2>
 
     <div class="stats-grid">
-      
-      <button type="button" class="stat-card green fade-up" onclick="openUsinaModal('Usina 1')">
-        <div class="stat-icon">🟢</div>
-        <div class="stat-label">Usina 1</div>
-        <div class="stat-value" style="font-size:1.3rem;">68,500 kWh</div>
+
+      <button type="button" class="stat-card green fade-up" onclick="openUsinaModal('Usina demonstrativa')">
+        <div class="stat-icon">☀️</div>
+        <div class="stat-label">Usina demonstrativa</div>
+        <div class="stat-value" style="font-size:1.3rem;">1,000 kWh</div>
+        <div style="font-size:0.78rem;color:var(--text-muted);">Geração de 02/2025</div>
         <div style="margin-top:0.75rem;">
           <div class="progress-bar-container">
             <div class="progress-label">
               <span>Eficiência</span>
-              <span style="color:var(--accent-green-light)">92.5%</span>
+              <span>90%</span>
             </div>
             <div class="progress-track">
-              <div class="progress-fill green" style="width:92.5%"></div>
+              <div class="progress-fill green" style="width:90%"></div>
             </div>
           </div>
           <p style="font-size:0.78rem;color:var(--text-muted);margin-top:4px;">
-            📍 R. Arquivista Jonathas Carécas, 74 - Castelo Branco, João Pessoa - PB, 58057-034 · 500 kW cap. ·
-            <span class="badge badge-success">ativa</span>
+            📍 Local ficticio · 10 kW cap. ·
+            <span>ativa</span>
           </p>
         </div>
         <div class="stat-hint">🔍 Ver histórico e detalhes</div>
       </button>
-      
+
     </div>
 
     <!-- Filtro de usina para gráfico individual -->
     <div class="filter-bar">
       <label style="color:var(--text-secondary);font-size:0.85rem;font-weight:600;">Selecionar usina:</label>
       <select id="selectUsina" onchange="updateUsinaChart()">
-        
-        <option value="Usina 1">Usina 1</option>
-        
+
+        <option value="Usina demonstrativa">Usina demonstrativa</option>
+
       </select>
     </div>
 
@@ -94,8 +113,9 @@
         <canvas id="chartUsinaIndividual"></canvas>
       </div>
       <div class="chart-card">
-        <h3>Receita Individual (R$/mês)</h3>
+      <h3>Pagamento ao projeto por mes (R$)</h3>
         <canvas id="chartUsinaReceita"></canvas>
+        <p style="font-size:0.78rem;color:var(--text-muted);margin-top:0.75rem;">As barras mostram metade do valor do beneficio em cada mes. Receita da usina nao informada.</p>
       </div>
     </div>
   </div>
@@ -106,27 +126,27 @@
 
     <div class="stats-grid">
       <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.total_capacidade)">
-        <div class="stat-icon">⚡</div>
+        <div class="stat-icon icon-bolt">⚡</div>
         <div class="stat-label">Capacidade Total (kW)</div>
-        <div class="stat-value count-up" data-target="500">0</div>
+        <div class="stat-value"><span class="count-up" data-target="10.0">0</span></div>
         <div class="stat-hint">🔍 Ver histórico e detalhes</div>
       </button>
       <button type="button" class="stat-card green fade-up" onclick="openStatModal(statInfo.total_geracao_mensal)">
         <div class="stat-icon">🏭</div>
         <div class="stat-label">Geração Mensal (kWh)</div>
-        <div class="stat-value count-up" data-target="68500">0</div>
+        <div class="stat-value count-up" data-target="1000">0</div>
         <div class="stat-hint">🔍 Ver histórico e detalhes</div>
       </button>
       <button type="button" class="stat-card blue fade-up" onclick="openStatModal(statInfo.total_co2)">
         <div class="stat-icon">🌿</div>
         <div class="stat-label">CO₂ Evitado Total (kg)</div>
-        <div class="stat-value count-up" data-target="322500">0</div>
+        <div class="stat-value count-up" data-target="200">0</div>
         <div class="stat-hint">🔍 Ver histórico e detalhes</div>
       </button>
       <button type="button" class="stat-card purple fade-up" onclick="openStatModal(statInfo.media_eficiencia)">
         <div class="stat-icon">📊</div>
         <div class="stat-label">Eficiência Média</div>
-        <div class="stat-value">92.5%</div>
+        <div class="stat-value">90.0%</div>
         <div class="stat-hint">🔍 Ver histórico e detalhes</div>
       </button>
       <button type="button" class="stat-card green fade-up" onclick="openStatModal(statInfo.num_usinas_ativas)">
@@ -165,64 +185,356 @@
 
   <!-- ═══ TAB: ECONOMIA ═══ -->
   <div class="tab-content" id="tab-economia">
-    <h2 class="section-title">Economia em Relação à Concessionária</h2>
+    <h2 class="section-title">Demonstrativo da Economia</h2>
+    <div class="filter-bar">
+      <label for="selectMesEconomia" style="color:var(--text-secondary);font-size:0.85rem;font-weight:600;">Mês de referência:</label>
+      <select id="selectMesEconomia" onchange="filtrarDemonstrativoEconomia()">
+        <option value="todos">Todo o período</option>
 
-    <div class="stats-grid">
-      <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.tarifa_concessionaria)">
-        <div class="stat-icon">🏷️</div>
-        <div class="stat-label">Tarifa Concessionária (R$/kWh)</div>
-        <div class="stat-value">R$ 0.75</div>
-        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
-      </button>
-      <button type="button" class="stat-card green fade-up" onclick="openStatModal(statInfo.tarifa_solar)">
-        <div class="stat-icon">☀️</div>
-        <div class="stat-label">Tarifa Solar (R$/kWh)</div>
-        <div class="stat-value">R$ 0.3</div>
-        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
-      </button>
-      <button type="button" class="stat-card blue fade-up" onclick="openStatModal(statInfo.economia_percentual)">
-        <div class="stat-icon">📉</div>
-        <div class="stat-label">Economia Percentual</div>
-        <div class="stat-value">60.0%</div>
-        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
-      </button>
-      <button type="button" class="stat-card purple fade-up" onclick="openStatModal(statInfo.economia_mensal_rs)">
-        <div class="stat-icon">💰</div>
-        <div class="stat-label">Economia Mensal (R$)</div>
-        <div class="stat-value count-up" data-target="30825.0" data-prefix="R$ ">0</div>
-        <div class="stat-hint">🔍 Ver histórico e detalhes</div>
-      </button>
+        <option value="2025-01" >01/2025</option>
+
+        <option value="2025-02" selected>02/2025</option>
+
+      </select>
     </div>
+    <p class="admin-economia-intro">
+      Economia real = valor que seria pago sem a economia menos (valor pago à Energisa + doação ao banco - cashback). A doação corresponde a 50% do benefício e o cashback a 25%. Meses e totais usam somente os dados disponíveis na planilha.
+    </p>
+    <div class="table-card admin-economia-card">
+      <div class="admin-economia-scroll">
+      <table class="admin-economia-table" aria-label="Demonstrativo mensal da economia dos beneficiários">
+        <thead>
+          <tr>
+            <th>Mês</th>
+            <th>Beneficiário</th>
+            <th>Pago à Energisa (R$)</th>
+            <th>Beneficio correspondente (R$)</th>
+            <th>Doado ao banco (R$)</th>
+            <th>Sem economia (R$)</th>
+            <th>Com economia, sem cashback (R$)</th>
+            <th>Com economia e cashback (R$)</th>
+            <th class="col-economia-real">Economia real (R$)</th>
+          </tr>
+        </thead>
+        <tbody>
 
-    <div class="charts-grid">
-      <div class="chart-card">
-        <h3>Comparativo de Tarifas</h3>
-        <div class="tarifa-compare">
-          <div class="tarifa-box">
-            <div class="tarifa-box-label">Concessionária</div>
-            <div class="tarifa-box-value">R$ 0.75</div>
-            <div class="tarifa-box-unit">por kWh</div>
-          </div>
-          <div class="tarifa-box tarifa-box-solar">
-            <div class="tarifa-box-label">Banco Comunitário (solar)</div>
-            <div class="tarifa-box-value">R$ 0.3</div>
-            <div class="tarifa-box-unit">por kWh</div>
-          </div>
+          <tr class="linha-economia" data-mes="2025-01">
+            <td>01/2025</td>
+            <td>Pessoa exemplo 01</td>
+            <td>30,00</td>
+            <td>40,00</td>
+            <td>20,00</td>
+            <td>70,00</td>
+            <td>50,00</td>
+            <td>40,00</td>
+            <td class="col-economia-real">30,00</td>
+          </tr>
+
+          <tr class="linha-economia" data-mes="2025-01">
+            <td>01/2025</td>
+            <td>Pessoa exemplo 02</td>
+            <td>30,00</td>
+            <td>40,00</td>
+            <td>20,00</td>
+            <td>70,00</td>
+            <td>50,00</td>
+            <td>40,00</td>
+            <td class="col-economia-real">30,00</td>
+          </tr>
+
+          <tr class="linha-economia" data-mes="2025-01">
+            <td>01/2025</td>
+            <td>Pessoa exemplo 03</td>
+            <td>30,00</td>
+            <td>40,00</td>
+            <td>20,00</td>
+            <td>70,00</td>
+            <td>50,00</td>
+            <td>40,00</td>
+            <td class="col-economia-real">30,00</td>
+          </tr>
+
+          <tr class="linha-economia" data-mes="2025-01">
+            <td>01/2025</td>
+            <td>Pessoa exemplo 04</td>
+            <td>30,00</td>
+            <td>40,00</td>
+            <td>20,00</td>
+            <td>70,00</td>
+            <td>50,00</td>
+            <td>40,00</td>
+            <td class="col-economia-real">30,00</td>
+          </tr>
+
+          <tr class="linha-economia" data-mes="2025-01">
+            <td>01/2025</td>
+            <td>Pessoa exemplo 05</td>
+            <td>30,00</td>
+            <td>40,00</td>
+            <td>20,00</td>
+            <td>70,00</td>
+            <td>50,00</td>
+            <td>40,00</td>
+            <td class="col-economia-real">30,00</td>
+          </tr>
+
+          <tr class="linha-economia" data-mes="2025-01">
+            <td>01/2025</td>
+            <td>Pessoa exemplo 06</td>
+            <td>30,00</td>
+            <td>40,00</td>
+            <td>20,00</td>
+            <td>70,00</td>
+            <td>50,00</td>
+            <td>40,00</td>
+            <td class="col-economia-real">30,00</td>
+          </tr>
+
+          <tr class="linha-economia" data-mes="2025-01">
+            <td>01/2025</td>
+            <td>Pessoa exemplo 07</td>
+            <td>30,00</td>
+            <td>40,00</td>
+            <td>20,00</td>
+            <td>70,00</td>
+            <td>50,00</td>
+            <td>40,00</td>
+            <td class="col-economia-real">30,00</td>
+          </tr>
+
+          <tr class="linha-economia" data-mes="2025-01">
+            <td>01/2025</td>
+            <td>Pessoa exemplo 08</td>
+            <td>30,00</td>
+            <td>40,00</td>
+            <td>20,00</td>
+            <td>70,00</td>
+            <td>50,00</td>
+            <td>40,00</td>
+            <td class="col-economia-real">30,00</td>
+          </tr>
+
+          <tr class="linha-economia" data-mes="2025-01">
+            <td>01/2025</td>
+            <td>Pessoa exemplo 09</td>
+            <td>30,00</td>
+            <td>40,00</td>
+            <td>20,00</td>
+            <td>70,00</td>
+            <td>50,00</td>
+            <td>40,00</td>
+            <td class="col-economia-real">30,00</td>
+          </tr>
+
+          <tr class="linha-economia" data-mes="2025-01">
+            <td>01/2025</td>
+            <td>Pessoa exemplo 10</td>
+            <td>30,00</td>
+            <td>40,00</td>
+            <td>20,00</td>
+            <td>70,00</td>
+            <td>50,00</td>
+            <td>40,00</td>
+            <td class="col-economia-real">30,00</td>
+          </tr>
+
+          <tr class="linha-economia" data-mes="2025-02">
+            <td>02/2025</td>
+            <td>Pessoa exemplo 01</td>
+            <td>30,00</td>
+            <td>40,00</td>
+            <td>20,00</td>
+            <td>70,00</td>
+            <td>50,00</td>
+            <td>40,00</td>
+            <td class="col-economia-real">30,00</td>
+          </tr>
+
+          <tr class="linha-economia" data-mes="2025-02">
+            <td>02/2025</td>
+            <td>Pessoa exemplo 02</td>
+            <td>30,00</td>
+            <td>40,00</td>
+            <td>20,00</td>
+            <td>70,00</td>
+            <td>50,00</td>
+            <td>40,00</td>
+            <td class="col-economia-real">30,00</td>
+          </tr>
+
+          <tr class="linha-economia" data-mes="2025-02">
+            <td>02/2025</td>
+            <td>Pessoa exemplo 03</td>
+            <td>30,00</td>
+            <td>40,00</td>
+            <td>20,00</td>
+            <td>70,00</td>
+            <td>50,00</td>
+            <td>40,00</td>
+            <td class="col-economia-real">30,00</td>
+          </tr>
+
+          <tr class="linha-economia" data-mes="2025-02">
+            <td>02/2025</td>
+            <td>Pessoa exemplo 04</td>
+            <td>30,00</td>
+            <td>40,00</td>
+            <td>20,00</td>
+            <td>70,00</td>
+            <td>50,00</td>
+            <td>40,00</td>
+            <td class="col-economia-real">30,00</td>
+          </tr>
+
+          <tr class="linha-economia" data-mes="2025-02">
+            <td>02/2025</td>
+            <td>Pessoa exemplo 05</td>
+            <td>30,00</td>
+            <td>40,00</td>
+            <td>20,00</td>
+            <td>70,00</td>
+            <td>50,00</td>
+            <td>40,00</td>
+            <td class="col-economia-real">30,00</td>
+          </tr>
+
+          <tr class="linha-economia" data-mes="2025-02">
+            <td>02/2025</td>
+            <td>Pessoa exemplo 06</td>
+            <td>30,00</td>
+            <td>40,00</td>
+            <td>20,00</td>
+            <td>70,00</td>
+            <td>50,00</td>
+            <td>40,00</td>
+            <td class="col-economia-real">30,00</td>
+          </tr>
+
+          <tr class="linha-economia" data-mes="2025-02">
+            <td>02/2025</td>
+            <td>Pessoa exemplo 07</td>
+            <td>30,00</td>
+            <td>40,00</td>
+            <td>20,00</td>
+            <td>70,00</td>
+            <td>50,00</td>
+            <td>40,00</td>
+            <td class="col-economia-real">30,00</td>
+          </tr>
+
+          <tr class="linha-economia" data-mes="2025-02">
+            <td>02/2025</td>
+            <td>Pessoa exemplo 08</td>
+            <td>30,00</td>
+            <td>40,00</td>
+            <td>20,00</td>
+            <td>70,00</td>
+            <td>50,00</td>
+            <td>40,00</td>
+            <td class="col-economia-real">30,00</td>
+          </tr>
+
+          <tr class="linha-economia" data-mes="2025-02">
+            <td>02/2025</td>
+            <td>Pessoa exemplo 09</td>
+            <td>30,00</td>
+            <td>40,00</td>
+            <td>20,00</td>
+            <td>70,00</td>
+            <td>50,00</td>
+            <td>40,00</td>
+            <td class="col-economia-real">30,00</td>
+          </tr>
+
+          <tr class="linha-economia" data-mes="2025-02">
+            <td>02/2025</td>
+            <td>Pessoa exemplo 10</td>
+            <td>30,00</td>
+            <td>40,00</td>
+            <td>20,00</td>
+            <td>70,00</td>
+            <td>50,00</td>
+            <td>40,00</td>
+            <td class="col-economia-real">30,00</td>
+          </tr>
+
+        </tbody>
+        <tfoot>
+          <tr class="total-economia" data-mes="todos">
+            <th colspan="2">Total do período</th>
+            <th>600,00</th><th>800,00</th><th>400,00</th><th>1400,00</th><th>1000,00</th><th>800,00</th><th>600,00</th>
+          </tr>
+
+          <tr class="total-economia" data-mes="2025-01">
+            <th colspan="2">Total 01/2025</th>
+            <th>300,00</th>
+            <th>400,00</th>
+            <th>200,00</th>
+            <th>700,00</th>
+            <th>500,00</th>
+            <th>400,00</th>
+            <th class="col-economia-real">300,00</th>
+          </tr>
+
+          <tr class="total-economia" data-mes="2025-02">
+            <th colspan="2">Total 02/2025</th>
+            <th>300,00</th>
+            <th>400,00</th>
+            <th>200,00</th>
+            <th>700,00</th>
+            <th>500,00</th>
+            <th>400,00</th>
+            <th class="col-economia-real">300,00</th>
+          </tr>
+
+        </tfoot>
+      </table>
+      </div>
+    </div>
+    <section class="economia-guia" aria-label="Exemplo ilustrativo de economia">
+      <div class="economia-exemplo">
+        <div class="economia-exemplo-heading"><strong>Exemplo ilustrativo</strong><span>Valores arredondados; n&atilde;o s&atilde;o dados reais de um benefici&aacute;rio.</span></div>
+        <div class="economia-fluxo">
+          <article><h4>Sem o projeto</h4><p>R$ 40 da Energisa + R$ 100 de benef&iacute;cio</p><strong>R$ 140</strong></article>
+          <article><h4>Com o projeto</h4><p>R$ 40 da Energisa + R$ 50 ao Banco - R$ 25 de cashback</p><strong>R$ 65</strong></article>
+          <article class="economia-resultado"><h4>Economia real</h4><p>R$ 140 - R$ 65</p><strong>R$ 75</strong></article>
         </div>
-        <p style="font-size:0.78rem;color:var(--text-muted);margin-top:1rem;text-align:center;">
-          A tarifa solar do banco é 60.0% mais barata que a da concessionária.
-        </p>
       </div>
-      <div class="chart-card">
-        <h3>Economia Acumulada por Mês (R$)</h3>
-        <canvas id="chartEconomiaAcum"></canvas>
-      </div>
-    </div>
+    </section>
   </div>
-
   <!-- ═══ TAB: RESIDÊNCIAS ═══ -->
   <div class="tab-content" id="tab-residencias">
     <h2 class="section-title">Gestão de Residências</h2>
+
+    <div class="filter-bar" aria-label="Filtros dos indicadores mensais de beneficiários">
+      <button type="button" class="btn btn-outline" onclick="selecionarProjetoBeneficiarios('todos')">Todos os projetos</button>
+      <button type="button" class="btn btn-outline" onclick="selecionarPeriodoBeneficiarios('todos')">Todo o período</button>
+      <label for="selectProjetoBeneficiarios" style="color:var(--text-secondary);font-size:0.85rem;font-weight:600;">Projeto:</label>
+      <select id="selectProjetoBeneficiarios" onchange="atualizarCardsBeneficiarios()">
+
+        <option value="todos">Todos os projetos</option>
+
+        <option value="1">Usina demonstrativa</option>
+
+      </select>
+      <label for="selectMesBeneficiarios" style="color:var(--text-secondary);font-size:0.85rem;font-weight:600;">Mês ou período:</label>
+      <select id="selectMesBeneficiarios" onchange="atualizarCardsBeneficiarios()">
+        <option value="todos" selected>Todo o período</option>
+
+        <option value="2025-01">01/2025</option>
+
+        <option value="2025-02">02/2025</option>
+
+      </select>
+    </div>
+    <p style="font-size:0.82rem;color:var(--text-muted);margin:-0.4rem 0 1rem;">Selecione um mes ou Todo o periodo. Cards e lista usam o filtro.</p>
+    <div class="stats-grid" id="cardsBeneficiariosMensais">
+      <div class="stat-card green"><div class="stat-label">Beneficiários no mês</div><div class="stat-value" id="cardBeneficiariosMes">—</div></div>
+      <div class="stat-card blue"><div class="stat-label">Energia solar solidária recebida</div><div class="stat-value" id="cardEnergiaBeneficiarios">—</div></div>
+      <div class="stat-card purple"><div class="stat-label">Economia real total</div><div class="stat-value" id="cardEconomiaBeneficiarios">—</div></div>
+      <div class="stat-card solar"><div class="stat-label">Total doado ao banco</div><div class="stat-value" id="cardDoacaoBeneficiarios">—</div></div>
+      <div class="stat-card green"><div class="stat-label">Cashback total</div><div class="stat-value" id="cardCashbackBeneficiarios">—</div></div>
+    </div>
 
     <!-- Status resumo -->
     <div class="stats-grid">
@@ -235,19 +547,19 @@
       <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.em_dia_banco)">
         <div class="stat-icon">🏦</div>
         <div class="stat-label">Em dia com Banco</div>
-        <div class="stat-value">9 <span style="font-size:0.8rem;color:var(--text-muted)">(90.0%)</span></div>
+        <div class="stat-value">10 <span style="font-size:0.8rem;color:var(--text-muted)">(100.0%; 0 sem informação)</span></div>
         <div class="stat-hint">🔍 Ver histórico e detalhes</div>
       </button>
       <button type="button" class="stat-card blue fade-up" onclick="openStatModal(statInfo.em_dia_concessionaria)">
         <div class="stat-icon">🔌</div>
         <div class="stat-label">Em dia Concessionária</div>
-        <div class="stat-value">7 <span style="font-size:0.8rem;color:var(--text-muted)">(70.0%)</span></div>
+        <div class="stat-value">10 <span style="font-size:0.8rem;color:var(--text-muted)">(100.0%; 0 sem informação)</span></div>
         <div class="stat-hint">🔍 Ver histórico e detalhes</div>
       </button>
       <button type="button" class="stat-card purple fade-up" onclick="openStatModal(statInfo.cashback_em_dia)">
         <div class="stat-icon">🌸</div>
         <div class="stat-label">Cashback em dia</div>
-        <div class="stat-value">7 <span style="font-size:0.8rem;color:var(--text-muted)">(70.0%)</span></div>
+        <div class="stat-value">10 <span style="font-size:0.8rem;color:var(--text-muted)">(100.0%; 0 sem informação)</span></div>
         <div class="stat-hint">🔍 Ver histórico e detalhes</div>
       </button>
     </div>
@@ -260,7 +572,7 @@
         <option value="ok">Tudo em dia</option>
         <option value="pendente">Com pendências</option>
       </select>
-      <input type="text" id="filterSearch" placeholder="Buscar por nome ou endereço..." oninput="filterResidencias()" style="min-width:260px;">
+      <input type="text" id="filterSearch" placeholder="Buscar por nome ou UC..." oninput="filterResidencias()" style="min-width:260px;">
     </div>
 
     <!-- Tabela de Residências -->
@@ -269,126 +581,126 @@
         <thead>
           <tr>
             <th>Beneficiário</th>
-            <th>Endereço</th>
-            <th>Consumo (kWh)</th>
-            <th>Economia (R$)</th>
+            <th>UC de fornecimento</th>
+            <th id="thConsumoResidencias">Consumo acumulado (kWh)</th>
+            <th id="thEconomiaResidencias">Economia acumulada (R$)</th>
             <th>Banco</th>
             <th>Concessionária</th>
             <th>Cashback</th>
           </tr>
         </thead>
         <tbody>
-          
-          <tr data-id="1" data-nome="maria silva" data-endereco="rua das flores 123 - ribeirão preto"
+
+          <tr data-id="1" data-usuario-id="2" data-nome="pessoa exemplo 01" data-endereco="uc ficticia 01"
               data-status="ok">
-            <td style="font-weight:600;color:var(--text-primary)">Maria Silva</td>
-            <td>Rua das Flores 123 - Ribeirão Preto</td>
-            <td>320</td>
-            <td style="color:var(--accent-green-light)">R$ 185.5</td>
-            <td><span class="badge badge-em_dia_banco badge-success">✅</span></td>
-            <td><span class="badge badge-em_dia_concessionaria badge-success">✅</span></td>
-            <td><span class="badge badge-cashback_em_dia badge-success">✅</span></td>
+            <td style="font-weight:600;color:var(--text-primary)">Pessoa exemplo 01</td>
+            <td>UC ficticia 01</td>
+            <td class="residencia-consumo">100</td>
+            <td class="residencia-economia" style="color:var(--accent-green-light)">R$ 30.00</td>
+            <td>Sim</td>
+            <td>Sim</td>
+            <td>Sim</td>
           </tr>
-          
-          <tr data-id="2" data-nome="joão santos" data-endereco="av. brasil 456 - campinas"
-              data-status="pendente">
-            <td style="font-weight:600;color:var(--text-primary)">João Santos</td>
-            <td>Av. Brasil 456 - Campinas</td>
-            <td>280</td>
-            <td style="color:var(--accent-green-light)">R$ 162.0</td>
-            <td><span class="badge badge-em_dia_banco badge-success">✅</span></td>
-            <td><span class="badge badge-em_dia_concessionaria badge-danger">❌</span></td>
-            <td><span class="badge badge-cashback_em_dia badge-success">✅</span></td>
-          </tr>
-          
-          <tr data-id="3" data-nome="ana oliveira" data-endereco="rua ipê 789 - são carlos"
+
+          <tr data-id="2" data-usuario-id="3" data-nome="pessoa exemplo 02" data-endereco="uc ficticia 02"
               data-status="ok">
-            <td style="font-weight:600;color:var(--text-primary)">Ana Oliveira</td>
-            <td>Rua Ipê 789 - São Carlos</td>
-            <td>410</td>
-            <td style="color:var(--accent-green-light)">R$ 237.8</td>
-            <td><span class="badge badge-em_dia_banco badge-success">✅</span></td>
-            <td><span class="badge badge-em_dia_concessionaria badge-success">✅</span></td>
-            <td><span class="badge badge-cashback_em_dia badge-success">✅</span></td>
+            <td style="font-weight:600;color:var(--text-primary)">Pessoa exemplo 02</td>
+            <td>UC ficticia 02</td>
+            <td class="residencia-consumo">100</td>
+            <td class="residencia-economia" style="color:var(--accent-green-light)">R$ 30.00</td>
+            <td>Sim</td>
+            <td>Sim</td>
+            <td>Sim</td>
           </tr>
-          
-          <tr data-id="4" data-nome="carlos souza" data-endereco="rua jacarandá 321 - araraquara"
-              data-status="pendente">
-            <td style="font-weight:600;color:var(--text-primary)">Carlos Souza</td>
-            <td>Rua Jacarandá 321 - Araraquara</td>
-            <td>250</td>
-            <td style="color:var(--accent-green-light)">R$ 145.0</td>
-            <td><span class="badge badge-em_dia_banco badge-danger">❌</span></td>
-            <td><span class="badge badge-em_dia_concessionaria badge-success">✅</span></td>
-            <td><span class="badge badge-cashback_em_dia badge-danger">❌</span></td>
-          </tr>
-          
-          <tr data-id="5" data-nome="beatriz lima" data-endereco="av. paulista 654 - bauru"
+
+          <tr data-id="3" data-usuario-id="4" data-nome="pessoa exemplo 03" data-endereco="uc ficticia 03"
               data-status="ok">
-            <td style="font-weight:600;color:var(--text-primary)">Beatriz Lima</td>
-            <td>Av. Paulista 654 - Bauru</td>
-            <td>350</td>
-            <td style="color:var(--accent-green-light)">R$ 203.0</td>
-            <td><span class="badge badge-em_dia_banco badge-success">✅</span></td>
-            <td><span class="badge badge-em_dia_concessionaria badge-success">✅</span></td>
-            <td><span class="badge badge-cashback_em_dia badge-success">✅</span></td>
+            <td style="font-weight:600;color:var(--text-primary)">Pessoa exemplo 03</td>
+            <td>UC ficticia 03</td>
+            <td class="residencia-consumo">100</td>
+            <td class="residencia-economia" style="color:var(--accent-green-light)">R$ 30.00</td>
+            <td>Sim</td>
+            <td>Sim</td>
+            <td>Sim</td>
           </tr>
-          
-          <tr data-id="6" data-nome="pedro costa" data-endereco="rua dos pinheiros 987 - ribeirão preto"
-              data-status="pendente">
-            <td style="font-weight:600;color:var(--text-primary)">Pedro Costa</td>
-            <td>Rua dos Pinheiros 987 - Ribeirão Preto</td>
-            <td>290</td>
-            <td style="color:var(--accent-green-light)">R$ 168.2</td>
-            <td><span class="badge badge-em_dia_banco badge-success">✅</span></td>
-            <td><span class="badge badge-em_dia_concessionaria badge-danger">❌</span></td>
-            <td><span class="badge badge-cashback_em_dia badge-success">✅</span></td>
-          </tr>
-          
-          <tr data-id="7" data-nome="fernanda rocha" data-endereco="rua primavera 147 - campinas"
+
+          <tr data-id="4" data-usuario-id="5" data-nome="pessoa exemplo 04" data-endereco="uc ficticia 04"
               data-status="ok">
-            <td style="font-weight:600;color:var(--text-primary)">Fernanda Rocha</td>
-            <td>Rua Primavera 147 - Campinas</td>
-            <td>380</td>
-            <td style="color:var(--accent-green-light)">R$ 220.4</td>
-            <td><span class="badge badge-em_dia_banco badge-success">✅</span></td>
-            <td><span class="badge badge-em_dia_concessionaria badge-success">✅</span></td>
-            <td><span class="badge badge-cashback_em_dia badge-success">✅</span></td>
+            <td style="font-weight:600;color:var(--text-primary)">Pessoa exemplo 04</td>
+            <td>UC ficticia 04</td>
+            <td class="residencia-consumo">100</td>
+            <td class="residencia-economia" style="color:var(--accent-green-light)">R$ 30.00</td>
+            <td>Sim</td>
+            <td>Sim</td>
+            <td>Sim</td>
           </tr>
-          
-          <tr data-id="8" data-nome="lucas almeida" data-endereco="av. central 258 - são carlos"
-              data-status="pendente">
-            <td style="font-weight:600;color:var(--text-primary)">Lucas Almeida</td>
-            <td>Av. Central 258 - São Carlos</td>
-            <td>200</td>
-            <td style="color:var(--accent-green-light)">R$ 116.0</td>
-            <td><span class="badge badge-em_dia_banco badge-success">✅</span></td>
-            <td><span class="badge badge-em_dia_concessionaria badge-danger">❌</span></td>
-            <td><span class="badge badge-cashback_em_dia badge-danger">❌</span></td>
-          </tr>
-          
-          <tr data-id="9" data-nome="juliana ferreira" data-endereco="rua horizonte 369 - araraquara"
+
+          <tr data-id="5" data-usuario-id="6" data-nome="pessoa exemplo 05" data-endereco="uc ficticia 05"
               data-status="ok">
-            <td style="font-weight:600;color:var(--text-primary)">Juliana Ferreira</td>
-            <td>Rua Horizonte 369 - Araraquara</td>
-            <td>420</td>
-            <td style="color:var(--accent-green-light)">R$ 243.6</td>
-            <td><span class="badge badge-em_dia_banco badge-success">✅</span></td>
-            <td><span class="badge badge-em_dia_concessionaria badge-success">✅</span></td>
-            <td><span class="badge badge-cashback_em_dia badge-success">✅</span></td>
+            <td style="font-weight:600;color:var(--text-primary)">Pessoa exemplo 05</td>
+            <td>UC ficticia 05</td>
+            <td class="residencia-consumo">100</td>
+            <td class="residencia-economia" style="color:var(--accent-green-light)">R$ 30.00</td>
+            <td>Sim</td>
+            <td>Sim</td>
+            <td>Sim</td>
           </tr>
-          
-          <tr data-id="10" data-nome="rafael martins" data-endereco="rua do sol 741 - bauru"
-              data-status="pendente">
-            <td style="font-weight:600;color:var(--text-primary)">Rafael Martins</td>
-            <td>Rua do Sol 741 - Bauru</td>
-            <td>310</td>
-            <td style="color:var(--accent-green-light)">R$ 179.8</td>
-            <td><span class="badge badge-em_dia_banco badge-success">✅</span></td>
-            <td><span class="badge badge-em_dia_concessionaria badge-success">✅</span></td>
-            <td><span class="badge badge-cashback_em_dia badge-danger">❌</span></td>
+
+          <tr data-id="6" data-usuario-id="7" data-nome="pessoa exemplo 06" data-endereco="uc ficticia 06"
+              data-status="ok">
+            <td style="font-weight:600;color:var(--text-primary)">Pessoa exemplo 06</td>
+            <td>UC ficticia 06</td>
+            <td class="residencia-consumo">100</td>
+            <td class="residencia-economia" style="color:var(--accent-green-light)">R$ 30.00</td>
+            <td>Sim</td>
+            <td>Sim</td>
+            <td>Sim</td>
           </tr>
-          
+
+          <tr data-id="7" data-usuario-id="8" data-nome="pessoa exemplo 07" data-endereco="uc ficticia 07"
+              data-status="ok">
+            <td style="font-weight:600;color:var(--text-primary)">Pessoa exemplo 07</td>
+            <td>UC ficticia 07</td>
+            <td class="residencia-consumo">100</td>
+            <td class="residencia-economia" style="color:var(--accent-green-light)">R$ 30.00</td>
+            <td>Sim</td>
+            <td>Sim</td>
+            <td>Sim</td>
+          </tr>
+
+          <tr data-id="8" data-usuario-id="9" data-nome="pessoa exemplo 08" data-endereco="uc ficticia 08"
+              data-status="ok">
+            <td style="font-weight:600;color:var(--text-primary)">Pessoa exemplo 08</td>
+            <td>UC ficticia 08</td>
+            <td class="residencia-consumo">100</td>
+            <td class="residencia-economia" style="color:var(--accent-green-light)">R$ 30.00</td>
+            <td>Sim</td>
+            <td>Sim</td>
+            <td>Sim</td>
+          </tr>
+
+          <tr data-id="9" data-usuario-id="10" data-nome="pessoa exemplo 09" data-endereco="uc ficticia 09"
+              data-status="ok">
+            <td style="font-weight:600;color:var(--text-primary)">Pessoa exemplo 09</td>
+            <td>UC ficticia 09</td>
+            <td class="residencia-consumo">100</td>
+            <td class="residencia-economia" style="color:var(--accent-green-light)">R$ 30.00</td>
+            <td>Sim</td>
+            <td>Sim</td>
+            <td>Sim</td>
+          </tr>
+
+          <tr data-id="10" data-usuario-id="11" data-nome="pessoa exemplo 10" data-endereco="uc ficticia 10"
+              data-status="ok">
+            <td style="font-weight:600;color:var(--text-primary)">Pessoa exemplo 10</td>
+            <td>UC ficticia 10</td>
+            <td class="residencia-consumo">100</td>
+            <td class="residencia-economia" style="color:var(--accent-green-light)">R$ 30.00</td>
+            <td>Sim</td>
+            <td>Sim</td>
+            <td>Sim</td>
+          </tr>
+
         </tbody>
       </table>
 
@@ -405,27 +717,27 @@
         <div class="control-row">
           <span>Residência</span>
           <select id="painelSelectResidencia" onchange="carregarResidenciaNoPainel()">
-            
-            <option value="1">Maria Silva</option>
-            
-            <option value="2">João Santos</option>
-            
-            <option value="3">Ana Oliveira</option>
-            
-            <option value="4">Carlos Souza</option>
-            
-            <option value="5">Beatriz Lima</option>
-            
-            <option value="6">Pedro Costa</option>
-            
-            <option value="7">Fernanda Rocha</option>
-            
-            <option value="8">Lucas Almeida</option>
-            
-            <option value="9">Juliana Ferreira</option>
-            
-            <option value="10">Rafael Martins</option>
-            
+
+            <option value="1">Pessoa exemplo 01</option>
+
+            <option value="2">Pessoa exemplo 02</option>
+
+            <option value="3">Pessoa exemplo 03</option>
+
+            <option value="4">Pessoa exemplo 04</option>
+
+            <option value="5">Pessoa exemplo 05</option>
+
+            <option value="6">Pessoa exemplo 06</option>
+
+            <option value="7">Pessoa exemplo 07</option>
+
+            <option value="8">Pessoa exemplo 08</option>
+
+            <option value="9">Pessoa exemplo 09</option>
+
+            <option value="10">Pessoa exemplo 10</option>
+
           </select>
         </div>
         <div class="control-panel-body">
@@ -460,233 +772,189 @@
 
     <!-- Beneficiários Dentro da Cota -->
     <div class="table-card">
-      <h3>Beneficiários Dentro da Cota de Energia</h3>
+      <h3>Beneficiários dentro da cota de energia</h3>
+      <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:1rem;">
+        Para classificar um mês como dentro da cota, o consumo elegível deve ser igual ou menor que a cota e não pode haver excedente informado para a Energisa. Para tarifa social, os primeiros 80 kWh não entram no consumo elegível. A conta da Energisa também inclui impostos e encargos, por isso o valor total da fatura não é usado para inferir excedente.
+      </p>
+
+      <div class="filter-bar">
+        <label for="selectBeneficiarioCota" style="color:var(--text-secondary);font-size:0.85rem;font-weight:600;">Beneficiário:</label>
+        <select id="selectBeneficiarioCota" onchange="atualizarGraficoCotas()">
+
+          <option value="10">Pessoa exemplo 09</option>
+
+          <option value="11">Pessoa exemplo 10</option>
+
+          <option value="2">Pessoa exemplo 01</option>
+
+          <option value="3">Pessoa exemplo 02</option>
+
+          <option value="4">Pessoa exemplo 03</option>
+
+          <option value="5">Pessoa exemplo 04</option>
+
+          <option value="6">Pessoa exemplo 05</option>
+
+          <option value="7">Pessoa exemplo 06</option>
+
+          <option value="8">Pessoa exemplo 07</option>
+
+          <option value="9">Pessoa exemplo 08</option>
+
+        </select>
+      </div>
+      <div class="chart-card" style="margin-bottom:1.5rem;">
+        <h3>Histórico mensal: cota e energia recebida (kWh)</h3>
+        <canvas id="chartHistoricoCotas"></canvas>
+      </div>
+
+
+      <h3 style="margin-top:1rem;">Quem ficou dentro da cota</h3>
       <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.5rem;">
-        Residências que, em pelo menos um dos últimos 6
-        meses, mantiveram o consumo dentro da cota de energia solar recebida.
+        Cada ponto representa um mês importado. Verde indica consumo elegível dentro da cota e nenhum excedente informado à Energisa; cinza indica dados insuficientes.
       </p>
       <div class="rank-grid">
-        
+
         <div class="rank-card">
           <div class="rank-card-body">
-            <div class="rank-card-name">Maria Silva</div>
+            <div class="rank-card-name">Pessoa exemplo 09</div>
             <div class="rank-card-months">
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot "></span>
-              
-              <span class="month-dot "></span>
-              
-              <span class="month-dot "></span>
-              
-              <span class="month-dot "></span>
-              
+
+              <span class="month-dot filled" title="01/2025: dentro da cota"></span>
+
+              <span class="month-dot filled" title="02/2025: dentro da cota"></span>
+
             </div>
-            <div class="rank-card-caption">2 de 6 meses dentro da cota</div>
+            <div class="rank-card-caption">2 de 2 meses comparáveis dentro da cota</div>
           </div>
         </div>
-        
+
         <div class="rank-card">
           <div class="rank-card-body">
-            <div class="rank-card-name">João Santos</div>
+            <div class="rank-card-name">Pessoa exemplo 10</div>
             <div class="rank-card-months">
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot "></span>
-              
-              <span class="month-dot "></span>
-              
+
+              <span class="month-dot filled" title="01/2025: dentro da cota"></span>
+
+              <span class="month-dot filled" title="02/2025: dentro da cota"></span>
+
             </div>
-            <div class="rank-card-caption">4 de 6 meses dentro da cota</div>
+            <div class="rank-card-caption">2 de 2 meses comparáveis dentro da cota</div>
           </div>
         </div>
-        
+
         <div class="rank-card">
           <div class="rank-card-body">
-            <div class="rank-card-name">Ana Oliveira</div>
+            <div class="rank-card-name">Pessoa exemplo 01</div>
             <div class="rank-card-months">
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot "></span>
-              
+
+              <span class="month-dot filled" title="01/2025: dentro da cota"></span>
+
+              <span class="month-dot filled" title="02/2025: dentro da cota"></span>
+
             </div>
-            <div class="rank-card-caption">5 de 6 meses dentro da cota</div>
+            <div class="rank-card-caption">2 de 2 meses comparáveis dentro da cota</div>
           </div>
         </div>
-        
+
         <div class="rank-card">
           <div class="rank-card-body">
-            <div class="rank-card-name">Carlos Souza</div>
+            <div class="rank-card-name">Pessoa exemplo 02</div>
             <div class="rank-card-months">
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot "></span>
-              
-              <span class="month-dot "></span>
-              
-              <span class="month-dot "></span>
-              
-              <span class="month-dot "></span>
-              
-              <span class="month-dot "></span>
-              
+
+              <span class="month-dot filled" title="01/2025: dentro da cota"></span>
+
+              <span class="month-dot filled" title="02/2025: dentro da cota"></span>
+
             </div>
-            <div class="rank-card-caption">1 de 6 meses dentro da cota</div>
+            <div class="rank-card-caption">2 de 2 meses comparáveis dentro da cota</div>
           </div>
         </div>
-        
+
         <div class="rank-card">
           <div class="rank-card-body">
-            <div class="rank-card-name">Beatriz Lima</div>
+            <div class="rank-card-name">Pessoa exemplo 03</div>
             <div class="rank-card-months">
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot "></span>
-              
-              <span class="month-dot "></span>
-              
-              <span class="month-dot "></span>
-              
-              <span class="month-dot "></span>
-              
-              <span class="month-dot "></span>
-              
+
+              <span class="month-dot filled" title="01/2025: dentro da cota"></span>
+
+              <span class="month-dot filled" title="02/2025: dentro da cota"></span>
+
             </div>
-            <div class="rank-card-caption">1 de 6 meses dentro da cota</div>
+            <div class="rank-card-caption">2 de 2 meses comparáveis dentro da cota</div>
           </div>
         </div>
-        
+
         <div class="rank-card">
           <div class="rank-card-body">
-            <div class="rank-card-name">Pedro Costa</div>
+            <div class="rank-card-name">Pessoa exemplo 04</div>
             <div class="rank-card-months">
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot "></span>
-              
+
+              <span class="month-dot filled" title="01/2025: dentro da cota"></span>
+
+              <span class="month-dot filled" title="02/2025: dentro da cota"></span>
+
             </div>
-            <div class="rank-card-caption">5 de 6 meses dentro da cota</div>
+            <div class="rank-card-caption">2 de 2 meses comparáveis dentro da cota</div>
           </div>
         </div>
-        
+
         <div class="rank-card">
           <div class="rank-card-body">
-            <div class="rank-card-name">Fernanda Rocha</div>
+            <div class="rank-card-name">Pessoa exemplo 05</div>
             <div class="rank-card-months">
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot "></span>
-              
-              <span class="month-dot "></span>
-              
-              <span class="month-dot "></span>
-              
+
+              <span class="month-dot filled" title="01/2025: dentro da cota"></span>
+
+              <span class="month-dot filled" title="02/2025: dentro da cota"></span>
+
             </div>
-            <div class="rank-card-caption">3 de 6 meses dentro da cota</div>
+            <div class="rank-card-caption">2 de 2 meses comparáveis dentro da cota</div>
           </div>
         </div>
-        
+
         <div class="rank-card">
           <div class="rank-card-body">
-            <div class="rank-card-name">Lucas Almeida</div>
+            <div class="rank-card-name">Pessoa exemplo 06</div>
             <div class="rank-card-months">
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot "></span>
-              
-              <span class="month-dot "></span>
-              
-              <span class="month-dot "></span>
-              
-              <span class="month-dot "></span>
-              
+
+              <span class="month-dot filled" title="01/2025: dentro da cota"></span>
+
+              <span class="month-dot filled" title="02/2025: dentro da cota"></span>
+
             </div>
-            <div class="rank-card-caption">2 de 6 meses dentro da cota</div>
+            <div class="rank-card-caption">2 de 2 meses comparáveis dentro da cota</div>
           </div>
         </div>
-        
+
         <div class="rank-card">
           <div class="rank-card-body">
-            <div class="rank-card-name">Juliana Ferreira</div>
+            <div class="rank-card-name">Pessoa exemplo 07</div>
             <div class="rank-card-months">
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot "></span>
-              
-              <span class="month-dot "></span>
-              
-              <span class="month-dot "></span>
-              
-              <span class="month-dot "></span>
-              
-              <span class="month-dot "></span>
-              
+
+              <span class="month-dot filled" title="01/2025: dentro da cota"></span>
+
+              <span class="month-dot filled" title="02/2025: dentro da cota"></span>
+
             </div>
-            <div class="rank-card-caption">1 de 6 meses dentro da cota</div>
+            <div class="rank-card-caption">2 de 2 meses comparáveis dentro da cota</div>
           </div>
         </div>
-        
+
         <div class="rank-card">
           <div class="rank-card-body">
-            <div class="rank-card-name">Rafael Martins</div>
+            <div class="rank-card-name">Pessoa exemplo 08</div>
             <div class="rank-card-months">
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot filled"></span>
-              
-              <span class="month-dot "></span>
-              
+
+              <span class="month-dot filled" title="01/2025: dentro da cota"></span>
+
+              <span class="month-dot filled" title="02/2025: dentro da cota"></span>
+
             </div>
-            <div class="rank-card-caption">5 de 6 meses dentro da cota</div>
+            <div class="rank-card-caption">2 de 2 meses comparáveis dentro da cota</div>
           </div>
         </div>
-        
+
       </div>
     </div>
 
@@ -723,6 +991,55 @@
   </div>
 
   <script>
+    const menuLinks = document.querySelectorAll('.navbar-menu a');
+    function atualizarMenuAtivo() {
+      const destino = window.location.hash || '#dados';
+      menuLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href').endsWith(destino)));
+    }
+    menuLinks.forEach(link => link.addEventListener('click', () => {
+      menuLinks.forEach(item => item.classList.remove('active'));
+      link.classList.add('active');
+    }));
+    window.addEventListener('hashchange', atualizarMenuAtivo);
+    atualizarMenuAtivo();
+
+    const secoesNavegacao = ['dados', 'historia', 'como-funciona']
+      .map(id => document.getElementById(id)).filter(Boolean);
+    function atualizarSecaoVisivel() {
+      const linhaAtiva = window.scrollY + window.innerHeight * 0.32;
+      let secaoAtual = secoesNavegacao[0] && secoesNavegacao[0].id;
+      secoesNavegacao.forEach(secao => {
+        if (secao.offsetTop <= linhaAtiva) secaoAtual = secao.id;
+      });
+      menuLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href').endsWith('#' + secaoAtual)));
+    }
+    window.addEventListener('scroll', atualizarSecaoVisivel, { passive: true });
+    atualizarSecaoVisivel();
+
+    document.querySelectorAll('.how-step').forEach(step => {
+      const alternarEtapa = () => {
+        const ativa = step.classList.toggle('active');
+        step.setAttribute('aria-pressed', ativa ? 'true' : 'false');
+      };
+      step.addEventListener('click', alternarEtapa);
+      step.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          alternarEtapa();
+        }
+      });
+    });
+
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.14 });
+    document.querySelectorAll('.fade-up').forEach(element => revealObserver.observe(element));
+
     // ─── PRNG determinístico (mesmo dado sempre gera o mesmo "histórico") ───
     function seedFromString(str) {
       let h = 0;
@@ -751,8 +1068,15 @@
     // ─── Modal de estatística ───
     let statModalChart = null;
 
-    function openStatModal(info) {
-      document.getElementById('statModalIcon').textContent = info.icon || '📊';
+    function openStatModal(info, sourceIcon) {
+      const modalIcon = document.getElementById('statModalIcon');
+      modalIcon.className = 'modal-icon';
+      if (sourceIcon) {
+        modalIcon.innerHTML = sourceIcon.innerHTML;
+        modalIcon.classList.toggle('icon-bolt', sourceIcon.classList.contains('icon-bolt'));
+      } else {
+        modalIcon.textContent = info.icon || '📊';
+      }
       document.getElementById('statModalTitle').textContent = info.title || '';
       document.getElementById('statModalDesc').textContent = info.desc || '';
 
@@ -805,7 +1129,7 @@
     });
   </script>
 
-  
+
 <script>
   // ─── Tab Navigation ───
   function showTab(tabName) {
@@ -814,16 +1138,68 @@
     document.getElementById('tab-' + tabName).classList.add('active');
     event.target.classList.add('active');
     animateCounters();
+    setTimeout(() => Object.values(Chart.instances).forEach(chart => chart.resize()), 50);
   }
+
+  function filtrarDemonstrativoEconomia() {
+    const seletor = document.getElementById('selectMesEconomia');
+    if (!seletor) return;
+    const mesSelecionado = seletor.value;
+    document.querySelectorAll('.linha-economia, .total-economia').forEach(linha => {
+      linha.style.display = mesSelecionado === 'todos' ? (linha.dataset.mes === 'todos' || linha.classList.contains('linha-economia') ? '' : 'none') : (linha.dataset.mes === mesSelecionado ? '' : 'none');
+    });
+  }
+  filtrarDemonstrativoEconomia();
+
+  const beneficiosPorMesCards = {"2025-01": {"beneficiarios": 10, "cashback_rs": 100.0, "doado_banco_rs": 200.0, "economia_real_rs": 300.0, "energia_kwh": 1000.0}, "2025-02": {"beneficiarios": 10, "cashback_rs": 100.0, "doado_banco_rs": 200.0, "economia_real_rs": 300.0, "energia_kwh": 1000.0}, "todos": {"beneficiarios": 10, "cashback_rs": 200.0, "doado_banco_rs": 400.0, "economia_real_rs": 600.0, "energia_kwh": 2000.0}};
+  function selecionarProjetoBeneficiarios(projetoId) {
+    const seletor = document.getElementById('selectProjetoBeneficiarios');
+    if (seletor) seletor.value = projetoId;
+    atualizarCardsBeneficiarios();
+  }
+  function selecionarPeriodoBeneficiarios(periodo) {
+    const seletor = document.getElementById('selectMesBeneficiarios');
+    if (seletor) seletor.value = periodo;
+    atualizarCardsBeneficiarios();
+  }
+  function atualizarCardsBeneficiarios() {
+    const mes = document.getElementById('selectMesBeneficiarios')?.value;
+    const dados = beneficiosPorMesCards[mes];
+    const projeto = document.getElementById('selectProjetoBeneficiarios')?.value;
+    const indisponivel = !dados || (projeto !== 'todos' && !document.querySelector(`#selectProjetoBeneficiarios option[value="${projeto}"]`));
+    const texto = valor => valor == null ? 'Não informado' : valor.toLocaleString('pt-BR', { maximumFractionDigits: 2 });
+    document.getElementById('cardBeneficiariosMes').textContent = indisponivel ? 'Não informado' : texto(dados.beneficiarios);
+    document.getElementById('cardEnergiaBeneficiarios').textContent = indisponivel ? 'Não informado' : `${texto(dados.energia_kwh)} kWh`;
+    document.getElementById('cardEconomiaBeneficiarios').textContent = indisponivel || dados.economia_real_rs == null ? 'Não informado' : `R$ ${texto(dados.economia_real_rs)}`;
+    document.getElementById('cardDoacaoBeneficiarios').textContent = indisponivel || dados.doado_banco_rs == null ? 'Não informado' : `R$ ${texto(dados.doado_banco_rs)}`;
+    document.getElementById('cardCashbackBeneficiarios').textContent = indisponivel || dados.cashback_rs == null ? 'Não informado' : `R$ ${texto(dados.cashback_rs)}`;
+    filterResidencias();
+  }
+  atualizarCardsBeneficiarios();
 
   // ─── Filter Residências ───
   function filterResidencias() {
     const status = document.getElementById('filterStatus').value;
     const search = document.getElementById('filterSearch').value.toLowerCase();
+    const periodo = document.getElementById('selectMesBeneficiarios').value;
+    const historico = {"10": {"2025-01": {"consumo_kwh": 100.0, "economia_rs": 30.0}, "2025-02": {"consumo_kwh": 100.0, "economia_rs": 30.0}}, "11": {"2025-01": {"consumo_kwh": 100.0, "economia_rs": 30.0}, "2025-02": {"consumo_kwh": 100.0, "economia_rs": 30.0}}, "2": {"2025-01": {"consumo_kwh": 100.0, "economia_rs": 30.0}, "2025-02": {"consumo_kwh": 100.0, "economia_rs": 30.0}}, "3": {"2025-01": {"consumo_kwh": 100.0, "economia_rs": 30.0}, "2025-02": {"consumo_kwh": 100.0, "economia_rs": 30.0}}, "4": {"2025-01": {"consumo_kwh": 100.0, "economia_rs": 30.0}, "2025-02": {"consumo_kwh": 100.0, "economia_rs": 30.0}}, "5": {"2025-01": {"consumo_kwh": 100.0, "economia_rs": 30.0}, "2025-02": {"consumo_kwh": 100.0, "economia_rs": 30.0}}, "6": {"2025-01": {"consumo_kwh": 100.0, "economia_rs": 30.0}, "2025-02": {"consumo_kwh": 100.0, "economia_rs": 30.0}}, "7": {"2025-01": {"consumo_kwh": 100.0, "economia_rs": 30.0}, "2025-02": {"consumo_kwh": 100.0, "economia_rs": 30.0}}, "8": {"2025-01": {"consumo_kwh": 100.0, "economia_rs": 30.0}, "2025-02": {"consumo_kwh": 100.0, "economia_rs": 30.0}}, "9": {"2025-01": {"consumo_kwh": 100.0, "economia_rs": 30.0}, "2025-02": {"consumo_kwh": 100.0, "economia_rs": 30.0}}};
+    document.getElementById('thConsumoResidencias').textContent = periodo === 'todos' ? 'Consumo acumulado (kWh)' : 'Consumo no mês (kWh)';
+    document.getElementById('thEconomiaResidencias').textContent = periodo === 'todos' ? 'Economia acumulada (R$)' : 'Economia no mês (R$)';
     document.querySelectorAll('#tabelaResidencias tbody tr').forEach(row => {
+      const dadosUsuario = historico[row.dataset.usuarioId] || {};
+      const mesesUsuario = periodo === 'todos' ? Object.values(dadosUsuario) : [dadosUsuario[periodo]].filter(Boolean);
+      const somarCampo = campo => {
+        const valores = mesesUsuario.map(item => item[campo]).filter(valor => valor !== null && valor !== undefined && Number.isFinite(Number(valor))).map(Number);
+        return valores.length ? valores.reduce((total, valor) => total + valor, 0) : null;
+      };
+      const consumo = somarCampo('consumo_kwh');
+      const economia = somarCampo('economia_rs');
+      row.querySelector('.residencia-consumo').textContent = consumo == null ? 'Não informado' : `${consumo.toLocaleString('pt-BR', { maximumFractionDigits: 2 })} kWh`;
+      row.querySelector('.residencia-economia').textContent = economia == null ? 'Não informado' : `R$ ${economia.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      const matchPeriodo = periodo === 'todos' || mesesUsuario.length > 0;
       const matchStatus = status === 'todos' || row.dataset.status === status;
       const matchSearch = !search || row.dataset.nome.includes(search) || row.dataset.endereco.includes(search);
-      row.style.display = matchStatus && matchSearch ? '' : 'none';
+      row.style.display = matchPeriodo && matchStatus && matchSearch ? '' : 'none';
     });
   }
 
@@ -853,9 +1229,9 @@
   Chart.defaults.borderColor = 'rgba(15,23,42,0.08)';
   Chart.defaults.font.family = "'Geist', sans-serif";
 
-  const geracaoMes = [{"co2_evitado_kg": 31000, "geracao_kwh": 62000, "mes": "2025-07", "receita_rs": 18600}, {"co2_evitado_kg": 32500, "geracao_kwh": 65000, "mes": "2025-08", "receita_rs": 19500}, {"co2_evitado_kg": 34000, "geracao_kwh": 68000, "mes": "2025-09", "receita_rs": 20400}, {"co2_evitado_kg": 32000, "geracao_kwh": 64000, "mes": "2025-10", "receita_rs": 19200}, {"co2_evitado_kg": 30000, "geracao_kwh": 60000, "mes": "2025-11", "receita_rs": 18000}, {"co2_evitado_kg": 29000, "geracao_kwh": 58000, "mes": "2025-12", "receita_rs": 17400}, {"co2_evitado_kg": 31500, "geracao_kwh": 63000, "mes": "2026-01", "receita_rs": 18900}, {"co2_evitado_kg": 33000, "geracao_kwh": 66000, "mes": "2026-02", "receita_rs": 19800}, {"co2_evitado_kg": 34500, "geracao_kwh": 69000, "mes": "2026-03", "receita_rs": 20700}, {"co2_evitado_kg": 35000, "geracao_kwh": 70000, "mes": "2026-04", "receita_rs": 21000}];
-  const geracaoInd = {"Usina 1": {"co2": [31000, 32500, 34000, 32000, 30000, 29000, 31500, 33000, 34500, 35000], "geracao": [62000, 65000, 68000, 64000, 60000, 58000, 63000, 66000, 69000, 70000], "meses": ["2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04"], "receita": [18600, 19500, 20400, 19200, 18000, 17400, 18900, 19800, 20700, 21000]}};
-  const residencias = [{"cashback_em_dia": "sim", "consumo_mensal_kwh": 320, "economia_mensal_rs": 185.5, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "Rua das Flores 123 - Ribeir\u00e3o Preto", "id": 1, "meses_dentro_cota": 2, "meses_totais": 6, "nome": "Maria Silva", "ultima_atualizacao": "2026-07-06", "usuario_id": 2}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 280, "economia_mensal_rs": 162.0, "em_dia_banco": "sim", "em_dia_concessionaria": "nao", "endereco": "Av. Brasil 456 - Campinas", "id": 2, "meses_dentro_cota": 4, "meses_totais": 6, "nome": "Jo\u00e3o Santos", "ultima_atualizacao": "2026-04-01", "usuario_id": 3}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 410, "economia_mensal_rs": 237.8, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "Rua Ip\u00ea 789 - S\u00e3o Carlos", "id": 3, "meses_dentro_cota": 5, "meses_totais": 6, "nome": "Ana Oliveira", "ultima_atualizacao": "2026-04-01", "usuario_id": 4}, {"cashback_em_dia": "nao", "consumo_mensal_kwh": 250, "economia_mensal_rs": 145.0, "em_dia_banco": "nao", "em_dia_concessionaria": "sim", "endereco": "Rua Jacarand\u00e1 321 - Araraquara", "id": 4, "meses_dentro_cota": 1, "meses_totais": 6, "nome": "Carlos Souza", "ultima_atualizacao": "2026-03-15", "usuario_id": 5}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 350, "economia_mensal_rs": 203.0, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "Av. Paulista 654 - Bauru", "id": 5, "meses_dentro_cota": 1, "meses_totais": 6, "nome": "Beatriz Lima", "ultima_atualizacao": "2026-04-01", "usuario_id": 6}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 290, "economia_mensal_rs": 168.2, "em_dia_banco": "sim", "em_dia_concessionaria": "nao", "endereco": "Rua dos Pinheiros 987 - Ribeir\u00e3o Preto", "id": 6, "meses_dentro_cota": 5, "meses_totais": 6, "nome": "Pedro Costa", "ultima_atualizacao": "2026-04-01", "usuario_id": 7}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 380, "economia_mensal_rs": 220.4, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "Rua Primavera 147 - Campinas", "id": 7, "meses_dentro_cota": 3, "meses_totais": 6, "nome": "Fernanda Rocha", "ultima_atualizacao": "2026-04-01", "usuario_id": 8}, {"cashback_em_dia": "nao", "consumo_mensal_kwh": 200, "economia_mensal_rs": 116.0, "em_dia_banco": "sim", "em_dia_concessionaria": "nao", "endereco": "Av. Central 258 - S\u00e3o Carlos", "id": 8, "meses_dentro_cota": 2, "meses_totais": 6, "nome": "Lucas Almeida", "ultima_atualizacao": "2026-07-06", "usuario_id": 9}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 420, "economia_mensal_rs": 243.6, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "Rua Horizonte 369 - Araraquara", "id": 9, "meses_dentro_cota": 1, "meses_totais": 6, "nome": "Juliana Ferreira", "ultima_atualizacao": "2026-04-01", "usuario_id": 10}, {"cashback_em_dia": "nao", "consumo_mensal_kwh": 310, "economia_mensal_rs": 179.8, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "Rua do Sol 741 - Bauru", "id": 10, "meses_dentro_cota": 5, "meses_totais": 6, "nome": "Rafael Martins", "ultima_atualizacao": "2026-04-01", "usuario_id": 11}];
+  const geracaoMes = [{"co2_evitado_kg": 100, "geracao_kwh": 1000, "mes": "2025-01", "receita_rs": 200}, {"co2_evitado_kg": 100, "geracao_kwh": 1000, "mes": "2025-02", "receita_rs": 200}];
+  const geracaoInd = {"Usina demonstrativa": {"co2": [100, 100], "doado_banco": [200.0, 200.0], "geracao": [1000, 1000], "meses": ["2025-01", "2025-02"], "receita": [200, 200]}};
+  const residencias = [{"cashback_em_dia": "sim", "consumo_mensal_kwh": 100, "economia_mensal_rs": 30, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "UC ficticia 01", "id": 1, "nome": "Pessoa exemplo 01", "ultima_atualizacao": "2025-02-01", "usuario_id": "2"}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 100, "economia_mensal_rs": 30, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "UC ficticia 02", "id": 2, "nome": "Pessoa exemplo 02", "ultima_atualizacao": "2025-02-01", "usuario_id": "3"}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 100, "economia_mensal_rs": 30, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "UC ficticia 03", "id": 3, "nome": "Pessoa exemplo 03", "ultima_atualizacao": "2025-02-01", "usuario_id": "4"}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 100, "economia_mensal_rs": 30, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "UC ficticia 04", "id": 4, "nome": "Pessoa exemplo 04", "ultima_atualizacao": "2025-02-01", "usuario_id": "5"}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 100, "economia_mensal_rs": 30, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "UC ficticia 05", "id": 5, "nome": "Pessoa exemplo 05", "ultima_atualizacao": "2025-02-01", "usuario_id": "6"}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 100, "economia_mensal_rs": 30, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "UC ficticia 06", "id": 6, "nome": "Pessoa exemplo 06", "ultima_atualizacao": "2025-02-01", "usuario_id": "7"}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 100, "economia_mensal_rs": 30, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "UC ficticia 07", "id": 7, "nome": "Pessoa exemplo 07", "ultima_atualizacao": "2025-02-01", "usuario_id": "8"}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 100, "economia_mensal_rs": 30, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "UC ficticia 08", "id": 8, "nome": "Pessoa exemplo 08", "ultima_atualizacao": "2025-02-01", "usuario_id": "9"}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 100, "economia_mensal_rs": 30, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "UC ficticia 09", "id": 9, "nome": "Pessoa exemplo 09", "ultima_atualizacao": "2025-02-01", "usuario_id": "10"}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 100, "economia_mensal_rs": 30, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "UC ficticia 10", "id": 10, "nome": "Pessoa exemplo 10", "ultima_atualizacao": "2025-02-01", "usuario_id": "11"}];
 
   // ─── Modal de uma usina específica (usa o histórico real dela) ───
   function openUsinaModal(nome) {
@@ -872,7 +1248,7 @@
     total_capacidade: {
       title: 'Capacidade Total (kW)', icon: '⚡', color: '#15803d',
       desc: 'Soma da capacidade instalada (em kW) de todas as usinas solares parceiras do banco, ativas ou em manutenção.',
-      total: 500
+      total: 10.0
     },
     total_geracao_mensal: {
       title: 'Geração Mensal (kWh)', icon: '🏭', color: '#059669',
@@ -887,8 +1263,8 @@
     media_eficiencia: {
       title: 'Eficiência Média', icon: '📊', color: '#7c3aed',
       desc: 'Média percentual de eficiência de conversão de energia solar em eletricidade entre todas as usinas parceiras.',
-      total: 92.5,
-      history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(() => 92.5) }
+      total: 90.0,
+      history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(() => 90.0) }
     },
     num_usinas_ativas: {
       title: 'Usinas Ativas', icon: '🟢', color: '#059669',
@@ -902,32 +1278,6 @@
       total: 0,
       history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(() => 0) }
     },
-    tarifa_concessionaria: {
-      title: 'Tarifa Concessionária (R$/kWh)', icon: '🏷️', color: '#dc2626',
-      desc: 'Valor médio cobrado pela concessionária de energia elétrica tradicional por kWh, usado como referência de comparação.',
-      total: 75.0,
-      history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(() => 75.0) }
-    },
-    tarifa_solar: {
-      title: 'Tarifa Solar (R$/kWh)', icon: '☀️', color: '#059669',
-      desc: 'Valor cobrado pela energia solar fornecida através do banco, mais barata que a tarifa da concessionária tradicional.',
-      total: 30.0,
-      history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(() => 30.0) }
-    },
-    economia_percentual: {
-      title: 'Economia Percentual', icon: '📉', color: '#2563eb',
-      desc: 'Percentual de economia obtido ao usar a tarifa solar do banco em vez da tarifa da concessionária tradicional.',
-      total: 60.0,
-      history: { labels: geracaoMes.map(d => d.mes), values: geracaoMes.map(() => 60.0) }
-    },
-    economia_mensal_rs: {
-      title: 'Economia Mensal (R$)', icon: '💰', color: '#7c3aed',
-      desc: 'Valor total, em reais, economizado no último mês por todos os beneficiários, comparando a tarifa solar com a da concessionária.',
-      history: {
-        labels: geracaoMes.map(d => d.mes),
-        values: geracaoMes.map(d => Math.round(d.geracao_kwh * (0.75 - 0.3) * 100) / 100)
-      }
-    },
     total_residencias: {
       title: 'Total de Residências', icon: '🏠', color: '#059669',
       desc: 'Número total de residências beneficiárias cadastradas no banco solar, recebendo créditos de energia.',
@@ -935,18 +1285,18 @@
     },
     em_dia_banco: {
       title: 'Em dia com Banco', icon: '🏦', color: '#15803d',
-      desc: 'Número de residências com os pagamentos referentes à participação no banco solar em dia (' + 90.0 + '% do total).',
-      total: 9
+      desc: 'Número de residências com os pagamentos referentes à participação no banco solar em dia (' + 100.0 + '% do total).',
+      total: 10
     },
     em_dia_concessionaria: {
       title: 'Em dia Concessionária', icon: '🔌', color: '#2563eb',
-      desc: 'Número de residências com a conta de luz da concessionária tradicional em dia (' + 70.0 + '% do total).',
-      total: 7
+      desc: 'Número de residências com a conta de luz da concessionária tradicional em dia (' + 100.0 + '% do total).',
+      total: 10
     },
     cashback_em_dia: {
       title: 'Cashback em dia', icon: '🌸', color: '#7c3aed',
-      desc: 'Número de residências com o programa de cashback "Orquídeas" em dia (' + 70.0 + '% do total).',
-      total: 7
+      desc: 'Número de residências com o programa de cashback "Orquídeas" em dia (' + 100.0 + '% do total).',
+      total: 10
     }
   };
 
@@ -982,13 +1332,13 @@
       data: {
         labels: data.meses,
         datasets: [{
-          label: 'Receita (R$)',
-          data: data.receita,
-          backgroundColor: 'rgba(16,185,129,0.6)', borderColor: '#10b981',
+          label: 'Pago ao projeto (50% do benefício)',
+          data: data.doado_banco,
+          backgroundColor: 'rgba(245,158,11,0.68)', borderColor: '#d97706',
           borderWidth: 1, borderRadius: 6
         }]
       },
-      options: { responsive: true, plugins: { legend: { display: false } },
+      options: { responsive: true, plugins: { legend: { display: true, position: 'bottom' } },
         scales: { y: { grid: { color: 'rgba(15,23,42,0.06)' } }, x: { grid: { display: false } } }
       }
     });
@@ -1061,36 +1411,10 @@
     }
   });
 
-  // ═══ ECONOMY TAB CHARTS ═══
-  const tarConc = 0.75;
-  const tarSolar = 0.3;
-
-  // Economia acumulada
-  let acum = 0;
-  const econAcum = geracaoMes.map(d => {
-    acum += d.geracao_kwh * (tarConc - tarSolar);
-    return acum;
-  });
-  new Chart(document.getElementById('chartEconomiaAcum'), {
-    type: 'line',
-    data: {
-      labels: geracaoMes.map(d => d.mes),
-      datasets: [{
-        label: 'Economia Acumulada (R$)', data: econAcum,
-        borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,0.1)',
-        fill: true, tension: 0.4, pointRadius: 4
-      }]
-    },
-    options: { responsive: true, plugins: { legend: { display: false } },
-      scales: { y: { grid: { color: 'rgba(15,23,42,0.06)' } }, x: { grid: { display: false } } }
-    }
-  });
-
-  // ═══ RESIDÊNCIAS TAB CHARTS ═══
-  const emDiaBanco = 9;
+  const emDiaBanco = 10;
   const totalRes = 10;
-  const emDiaConc = 7;
-  const cashOk = 7;
+  const emDiaConc = 10;
+  const cashOk = 10;
 
   new Chart(document.getElementById('chartStatusResidencias'), {
     type: 'doughnut',
@@ -1126,6 +1450,54 @@
     }
   });
 
+  const historicoCotas = [{"consumo_elegivel_kwh": [100.0, 100.0], "cotas_kwh": [100.0, 100.0], "energia_recebida_kwh": [100.0, 100.0], "meses": ["01/2025", "02/2025"], "nome": "Pessoa exemplo 09", "usuario_id": "10"}, {"consumo_elegivel_kwh": [100.0, 100.0], "cotas_kwh": [100.0, 100.0], "energia_recebida_kwh": [100.0, 100.0], "meses": ["01/2025", "02/2025"], "nome": "Pessoa exemplo 10", "usuario_id": "11"}, {"consumo_elegivel_kwh": [100.0, 100.0], "cotas_kwh": [100.0, 100.0], "energia_recebida_kwh": [100.0, 100.0], "meses": ["01/2025", "02/2025"], "nome": "Pessoa exemplo 01", "usuario_id": "2"}, {"consumo_elegivel_kwh": [100.0, 100.0], "cotas_kwh": [100.0, 100.0], "energia_recebida_kwh": [100.0, 100.0], "meses": ["01/2025", "02/2025"], "nome": "Pessoa exemplo 02", "usuario_id": "3"}, {"consumo_elegivel_kwh": [100.0, 100.0], "cotas_kwh": [100.0, 100.0], "energia_recebida_kwh": [100.0, 100.0], "meses": ["01/2025", "02/2025"], "nome": "Pessoa exemplo 03", "usuario_id": "4"}, {"consumo_elegivel_kwh": [100.0, 100.0], "cotas_kwh": [100.0, 100.0], "energia_recebida_kwh": [100.0, 100.0], "meses": ["01/2025", "02/2025"], "nome": "Pessoa exemplo 04", "usuario_id": "5"}, {"consumo_elegivel_kwh": [100.0, 100.0], "cotas_kwh": [100.0, 100.0], "energia_recebida_kwh": [100.0, 100.0], "meses": ["01/2025", "02/2025"], "nome": "Pessoa exemplo 05", "usuario_id": "6"}, {"consumo_elegivel_kwh": [100.0, 100.0], "cotas_kwh": [100.0, 100.0], "energia_recebida_kwh": [100.0, 100.0], "meses": ["01/2025", "02/2025"], "nome": "Pessoa exemplo 06", "usuario_id": "7"}, {"consumo_elegivel_kwh": [100.0, 100.0], "cotas_kwh": [100.0, 100.0], "energia_recebida_kwh": [100.0, 100.0], "meses": ["01/2025", "02/2025"], "nome": "Pessoa exemplo 07", "usuario_id": "8"}, {"consumo_elegivel_kwh": [100.0, 100.0], "cotas_kwh": [100.0, 100.0], "energia_recebida_kwh": [100.0, 100.0], "meses": ["01/2025", "02/2025"], "nome": "Pessoa exemplo 08", "usuario_id": "9"}];
+  let gráficoHistoricoCotas = null;
+  function atualizarGraficoCotas() {
+    const seletor = document.getElementById('selectBeneficiarioCota');
+    if (!seletor) return;
+    const beneficiario = historicoCotas.find(item => item.usuario_id === seletor.value);
+    if (!beneficiario) return;
+    const dados = {
+      labels: beneficiario.meses,
+      datasets: [
+        {
+          label: 'Limite da cota (kWh)',
+          data: beneficiario.cotas_kwh,
+          backgroundColor: 'rgba(59,130,246,0.55)',
+          borderColor: '#3b82f6',
+          borderWidth: 1,
+          borderRadius: 5
+        },
+        {
+          label: 'Energia recebida (kWh)',
+          data: beneficiario.energia_recebida_kwh,
+          backgroundColor: 'rgba(16,185,129,0.65)',
+          borderColor: '#10b981',
+          borderWidth: 1,
+          borderRadius: 5
+        }
+      ]
+    };
+    if (gráficoHistoricoCotas) {
+      gráficoHistoricoCotas.data = dados;
+      gráficoHistoricoCotas.update();
+      return;
+    }
+    gráficoHistoricoCotas = new Chart(document.getElementById('chartHistoricoCotas'), {
+      type: 'bar',
+      data: dados,
+      options: {
+        responsive: true,
+        plugins: { legend: { position: 'bottom' } },
+        scales: {
+          y: { beginAtZero: true, title: { display: true, text: 'Energia (kWh)' }, grid: { color: 'rgba(15,23,42,0.06)' } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+  }
+  atualizarGraficoCotas();
+
   setTimeout(animateCounters, 300);
 
   // ─── Painel de Controle da Residência ───
@@ -1136,67 +1508,67 @@
   };
 
   const residenciasMap = {};
-  
+
   residenciasMap[1] = {
     em_dia_banco: "sim",
     em_dia_concessionaria: "sim",
     cashback_em_dia: "sim"
   };
-  
+
   residenciasMap[2] = {
     em_dia_banco: "sim",
-    em_dia_concessionaria: "nao",
+    em_dia_concessionaria: "sim",
     cashback_em_dia: "sim"
   };
-  
+
   residenciasMap[3] = {
     em_dia_banco: "sim",
     em_dia_concessionaria: "sim",
     cashback_em_dia: "sim"
   };
-  
+
   residenciasMap[4] = {
-    em_dia_banco: "nao",
+    em_dia_banco: "sim",
     em_dia_concessionaria: "sim",
-    cashback_em_dia: "nao"
+    cashback_em_dia: "sim"
   };
-  
+
   residenciasMap[5] = {
     em_dia_banco: "sim",
     em_dia_concessionaria: "sim",
     cashback_em_dia: "sim"
   };
-  
+
   residenciasMap[6] = {
     em_dia_banco: "sim",
-    em_dia_concessionaria: "nao",
+    em_dia_concessionaria: "sim",
     cashback_em_dia: "sim"
   };
-  
+
   residenciasMap[7] = {
     em_dia_banco: "sim",
     em_dia_concessionaria: "sim",
     cashback_em_dia: "sim"
   };
-  
+
   residenciasMap[8] = {
     em_dia_banco: "sim",
-    em_dia_concessionaria: "nao",
-    cashback_em_dia: "nao"
+    em_dia_concessionaria: "sim",
+    cashback_em_dia: "sim"
   };
-  
+
   residenciasMap[9] = {
     em_dia_banco: "sim",
     em_dia_concessionaria: "sim",
     cashback_em_dia: "sim"
   };
-  
+
   residenciasMap[10] = {
     em_dia_banco: "sim",
     em_dia_concessionaria: "sim",
-    cashback_em_dia: "nao"
+    cashback_em_dia: "sim"
   };
-  
+
 
   let painelResidenciaId = null;
   let painelValoresAtuais = {};
@@ -1253,12 +1625,18 @@
   function salvarPainelControle() {
     if (!painelResidenciaId) return;
 
-    // Versão de demonstração (GitHub Pages): não há servidor para persistir a
-    // alteração. A atualização é aplicada apenas nesta sessão do navegador.
-    residenciasMap[painelResidenciaId] = { ...painelValoresAtuais };
-    atualizarLinhaTabela(painelResidenciaId, painelValoresAtuais);
-    cancelarPainelControle();
-    alert('⚠️ Demonstração: a alteração foi aplicada apenas nesta tela e será perdida ao recarregar a página. Em produção, ela seria salva pelo servidor.');
+    Promise.resolve({ json: () => Promise.resolve({ success: true }) })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          residenciasMap[painelResidenciaId] = { ...painelValoresAtuais };
+          atualizarLinhaTabela(painelResidenciaId, painelValoresAtuais);
+          cancelarPainelControle();
+        } else {
+          alert('Não foi possível salvar as alterações.');
+        }
+      })
+      .catch(() => alert('Não foi possível salvar as alterações.'));
   }
 
   function atualizarLinhaTabela(id, valores) {

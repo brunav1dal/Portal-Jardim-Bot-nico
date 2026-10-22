@@ -6,7 +6,7 @@
   <div class="dashboard-header">
     <div>
       <h1>Olá, {{ user.nome.split()[0] }}!</h1>
-      <p class="welcome">Confira seus dados de energia solar. Cliente desde {{ user.data_cadastro }}.</p>
+      <p class="welcome">Confira seus dados de energia solar.{% if user.data_cadastro %} Cliente desde {{ user.data_cadastro }}.{% else %} Data de cadastro não informada.{% endif %}</p>
     </div>
   </div>
 
@@ -33,68 +33,65 @@
   {% endif %}
 
   <!-- KPIs do Cliente -->
+  <div class="filter-bar" aria-label="Filtro dos indicadores pessoais">
+    <label for="selectPeriodoCliente" style="color:var(--text-secondary);font-size:0.9rem;font-weight:600;">Ver dados de:</label>
+    <select id="selectPeriodoCliente" onchange="atualizarCardsCliente()">
+      <option value="todos" selected>Todo o período</option>
+      {% for mes in historico.meses %}
+      <option value="{{ mes }}">{{ mes[5:7] }}/{{ mes[:4] }}</option>
+      {% endfor %}
+    </select>
+    <span id="periodoClienteTexto" style="color:var(--text-muted);font-size:0.85rem;">Os valores somam todos os meses enviados.</span>
+  </div>
   <div class="stats-grid">
-    <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.economia_kw)">
+    <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.economia_real_rs)">
       <div class="stat-icon icon-bolt">⚡</div>
-      <div class="stat-label">Minha Economia (kW)</div>
-      <div class="stat-value count-up" data-target="{{ user.economia_kw }}">0</div>
+      <div class="stat-label">Minha Economia (R$)</div>
+      <div class="stat-value" id="kpiEconomiaCliente">—</div>
       <div class="stat-hint">🔍 Ver histórico e detalhes</div>
     </button>
-    <button type="button" class="stat-card green fade-up" onclick="openStatModal(statInfo.creditos)">
-      <div class="stat-icon">💳</div>
-      <div class="stat-label">Créditos Restantes</div>
-      <div class="stat-value count-up" data-target="{{ user.creditos }}">0</div>
-      <div class="stat-hint">🔍 Ver histórico e detalhes</div>
-    </button>
+
     <button type="button" class="stat-card blue fade-up" onclick="openStatModal(statInfo.kw_recebidos)">
       <div class="stat-icon">🔋</div>
-      <div class="stat-label">kW Recebidos</div>
-      <div class="stat-value count-up" data-target="{{ user.kw_recebidos }}">0</div>
+      <div class="stat-label">Energia Recebida (kWh)</div>
+      <div class="stat-value" id="kpiEnergiaCliente">—</div>
       <div class="stat-hint">🔍 Ver histórico e detalhes</div>
     </button>
     <button type="button" class="stat-card purple fade-up" onclick="openStatModal(statInfo.investido)">
       <div class="stat-icon">💰</div>
-      <div class="stat-label">Total Investido (R$)</div>
-      <div class="stat-value count-up" data-target="{{ user.investido }}" data-prefix="R$ ">0</div>
+      <div class="stat-label">Pago ao Projeto (R$)</div>
+      <div class="stat-value" id="kpiProjetoCliente">—</div>
       <div class="stat-hint">🔍 Ver histórico e detalhes</div>
     </button>
     <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.cashback_orquideas)">
       <div class="stat-icon">🌸</div>
       <div class="stat-label">Cashback Orquídeas (R$)</div>
-      <div class="stat-value count-up" data-target="{{ user.cashback_orquideas }}" data-prefix="R$ ">0</div>
+      <div class="stat-value" id="kpiCashbackCliente">—</div>
       <div class="stat-hint">🔍 Ver histórico e detalhes</div>
     </button>
-    {% if residencia %}
-    <button type="button" class="stat-card green fade-up" onclick="openStatModal(statInfo.economia_mensal_rs)">
-      <div class="stat-icon">🏠</div>
-      <div class="stat-label">Economia Mensal (R$)</div>
-      <div class="stat-value count-up" data-target="{{ residencia.economia_mensal_rs }}" data-prefix="R$ ">0</div>
-      <div class="stat-hint">🔍 Ver histórico e detalhes</div>
-    </button>
-    {% endif %}
   </div>
 
   <!-- Status da Residência -->
   {% if residencia %}
   <div class="status-card fade-up">
     <h3>Status da Minha Residência</h3>
-    <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:1rem;">{{ residencia.endereco }}</p>
+    <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:1rem;">{{ residencia.endereco or 'UC não informada' }}</p>
     <div class="status-row">
       <span style="color:var(--text-secondary);">Em dia com o Banco Comunitário Jardim Botânico</span>
       <span class="badge badge-status">
-        <span class="status-mark {{ 'is-yes' if residencia.em_dia_banco == 'sim' else 'is-no' }}">{{ 'Sim' if residencia.em_dia_banco == 'sim' else 'Não' }}</span>
+        <span class="status-mark {{ 'is-yes' if residencia.em_dia_banco == 'sim' else ('is-no' if residencia.em_dia_banco == 'nao' else '') }}">{{ 'Sim' if residencia.em_dia_banco == 'sim' else ('Não' if residencia.em_dia_banco == 'nao' else 'Não informado') }}</span>
       </span>
     </div>
     <div class="status-row">
       <span style="color:var(--text-secondary);">Em dia com a Concessionária</span>
       <span class="badge badge-status">
-        <span class="status-mark {{ 'is-yes' if residencia.em_dia_concessionaria == 'sim' else 'is-no' }}">{{ 'Sim' if residencia.em_dia_concessionaria == 'sim' else 'Não' }}</span>
+        <span class="status-mark {{ 'is-yes' if residencia.em_dia_concessionaria == 'sim' else ('is-no' if residencia.em_dia_concessionaria == 'nao' else '') }}">{{ 'Sim' if residencia.em_dia_concessionaria == 'sim' else ('Não' if residencia.em_dia_concessionaria == 'nao' else 'Não informado') }}</span>
       </span>
     </div>
     <div class="status-row">
       <span style="color:var(--text-secondary);">Cashback Orquídeas em dia</span>
       <span class="badge badge-status">
-        <span class="status-mark {{ 'is-yes' if residencia.cashback_em_dia == 'sim' else 'is-no' }}">{{ 'Sim' if residencia.cashback_em_dia == 'sim' else 'Não' }}</span>
+        <span class="status-mark {{ 'is-yes' if residencia.cashback_em_dia == 'sim' else ('is-no' if residencia.cashback_em_dia == 'nao' else '') }}">{{ 'Sim' if residencia.cashback_em_dia == 'sim' else ('Não' if residencia.cashback_em_dia == 'nao' else 'Não informado') }}</span>
       </span>
     </div>
     <div class="status-row">
@@ -107,11 +104,11 @@
   <!-- Gráficos do Cliente -->
   <div class="charts-grid charts-grid-3">
     <div class="chart-card fade-up">
-      <h3>Minha Economia ao Longo do Tempo (kW)</h3>
+      <h3>Minha Economia ao Longo do Tempo (R$)</h3>
       <canvas id="chartEconomia"></canvas>
     </div>
     <div class="chart-card fade-up">
-      <h3>kW Recebidos por Mês</h3>
+      <h3>Energia Recebida (kWh) por Mês</h3>
       <canvas id="chartKW"></canvas>
     </div>
     <div class="chart-card fade-up">
@@ -125,79 +122,9 @@
     <h2 class="section-title">O Que Seus Dados Dizem</h2>
 
     <p style="color:var(--text-secondary);font-size:0.95rem;line-height:1.75;margin-bottom:1.5rem;">
-      Confira abaixo como os seus números se comparam à média dos demais beneficiários do banco
-      e como a sua própria trajetória evoluiu nos últimos meses.
+      Os cards mostram seus valores no período selecionado. Os gráficos mostram o histórico mensal.
     </p>
 
-    <div class="compare-grid">
-      <div class="compare-card fade-up">
-        <div class="compare-card-header">
-          <h4>Economia (kW)</h4>
-          <span class="compare-delta {{ 'up' if comparacao.economia_kw.diferenca_pct >= 0 else 'down' }}">
-            {{ '+' if comparacao.economia_kw.diferenca_pct >= 0 else '' }}{{ comparacao.economia_kw.diferenca_pct }}%
-          </span>
-        </div>
-        <div class="compare-row">
-          <div class="compare-row-label"><span>Você</span><strong>{{ comparacao.economia_kw.valor }} kW</strong></div>
-          <div class="compare-track"><div class="compare-fill you" style="width:{{ comparacao.economia_kw.valor_pct }}%"></div></div>
-        </div>
-        <div class="compare-row">
-          <div class="compare-row-label"><span>Média dos beneficiários</span><strong>{{ comparacao.economia_kw.media }} kW</strong></div>
-          <div class="compare-track"><div class="compare-fill media" style="width:{{ comparacao.economia_kw.media_pct }}%"></div></div>
-        </div>
-      </div>
-
-      <div class="compare-card fade-up">
-        <div class="compare-card-header">
-          <h4>Créditos</h4>
-          <span class="compare-delta {{ 'up' if comparacao.creditos.diferenca_pct >= 0 else 'down' }}">
-            {{ '+' if comparacao.creditos.diferenca_pct >= 0 else '' }}{{ comparacao.creditos.diferenca_pct }}%
-          </span>
-        </div>
-        <div class="compare-row">
-          <div class="compare-row-label"><span>Você</span><strong>{{ comparacao.creditos.valor }}</strong></div>
-          <div class="compare-track"><div class="compare-fill you" style="width:{{ comparacao.creditos.valor_pct }}%"></div></div>
-        </div>
-        <div class="compare-row">
-          <div class="compare-row-label"><span>Média dos beneficiários</span><strong>{{ comparacao.creditos.media }}</strong></div>
-          <div class="compare-track"><div class="compare-fill media" style="width:{{ comparacao.creditos.media_pct }}%"></div></div>
-        </div>
-      </div>
-
-      <div class="compare-card fade-up">
-        <div class="compare-card-header">
-          <h4>kW Recebidos</h4>
-          <span class="compare-delta {{ 'up' if comparacao.kw_recebidos.diferenca_pct >= 0 else 'down' }}">
-            {{ '+' if comparacao.kw_recebidos.diferenca_pct >= 0 else '' }}{{ comparacao.kw_recebidos.diferenca_pct }}%
-          </span>
-        </div>
-        <div class="compare-row">
-          <div class="compare-row-label"><span>Você</span><strong>{{ comparacao.kw_recebidos.valor }} kW</strong></div>
-          <div class="compare-track"><div class="compare-fill you" style="width:{{ comparacao.kw_recebidos.valor_pct }}%"></div></div>
-        </div>
-        <div class="compare-row">
-          <div class="compare-row-label"><span>Média dos beneficiários</span><strong>{{ comparacao.kw_recebidos.media }} kW</strong></div>
-          <div class="compare-track"><div class="compare-fill media" style="width:{{ comparacao.kw_recebidos.media_pct }}%"></div></div>
-        </div>
-      </div>
-
-      <div class="compare-card fade-up">
-        <div class="compare-card-header">
-          <h4>Cashback Orquídeas (R$)</h4>
-          <span class="compare-delta {{ 'up' if comparacao.cashback_orquideas.diferenca_pct >= 0 else 'down' }}">
-            {{ '+' if comparacao.cashback_orquideas.diferenca_pct >= 0 else '' }}{{ comparacao.cashback_orquideas.diferenca_pct }}%
-          </span>
-        </div>
-        <div class="compare-row">
-          <div class="compare-row-label"><span>Você</span><strong>R$ {{ comparacao.cashback_orquideas.valor }}</strong></div>
-          <div class="compare-track"><div class="compare-fill you" style="width:{{ comparacao.cashback_orquideas.valor_pct }}%"></div></div>
-        </div>
-        <div class="compare-row">
-          <div class="compare-row-label"><span>Média dos beneficiários</span><strong>R$ {{ comparacao.cashback_orquideas.media }}</strong></div>
-          <div class="compare-track"><div class="compare-fill media" style="width:{{ comparacao.cashback_orquideas.media_pct }}%"></div></div>
-        </div>
-      </div>
-    </div>
 
     <div class="insight-trend fade-up" id="insightTrend"></div>
 
@@ -263,6 +190,7 @@
     document.querySelectorAll('.count-up').forEach(el => {
       const target = parseFloat(el.dataset.target);
       const prefix = el.dataset.prefix || '';
+      const isCurrency = prefix.trim() === 'R$';
       const duration = 2000;
       const start = performance.now();
       function update(now) {
@@ -271,8 +199,8 @@
         const eased = 1 - Math.pow(1 - progress, 3);
         const current = target * eased;
         el.textContent = prefix + current.toLocaleString('pt-BR', {
-          minimumFractionDigits: target % 1 !== 0 ? 1 : 0,
-          maximumFractionDigits: target % 1 !== 0 ? 1 : 0
+          minimumFractionDigits: isCurrency ? 2 : (target % 1 !== 0 ? 1 : 0),
+          maximumFractionDigits: isCurrency ? 2 : (target % 1 !== 0 ? 1 : 0)
         });
         if (progress < 1) requestAnimationFrame(update);
       }
@@ -285,42 +213,56 @@
   Chart.defaults.font.family = "'Geist', sans-serif";
 
   const historico = {{ historico | tojson }};
+  const kpisPorPeriodoCliente = {{ kpis_por_periodo | tojson }};
+  function atualizarCardsCliente() {
+    const periodo = document.getElementById('selectPeriodoCliente').value;
+    const dados = kpisPorPeriodoCliente[periodo];
+    const formatar = (valor, moeda = false) => {
+      if (valor === null || valor === undefined || Number.isNaN(Number(valor))) return 'Não informado';
+      const texto = Number(valor).toLocaleString('pt-BR', { maximumFractionDigits: 2 });
+      return moeda ? `R$ ${texto}` : texto;
+    };
+    document.getElementById('kpiEconomiaCliente').textContent = formatar(dados.economia_real_rs, true);
+    document.getElementById('kpiEnergiaCliente').textContent = formatar(dados.kw_recebidos);
+    document.getElementById('kpiProjetoCliente').textContent = formatar(dados.investido, true);
+    document.getElementById('kpiCashbackCliente').textContent = formatar(dados.cashback_orquideas, true);
+    document.getElementById('periodoClienteTexto').textContent = periodo === 'todos'
+      ? 'Os valores somam todos os meses enviados.'
+      : `Valores de ${periodo.slice(5, 7)}/${periodo.slice(0, 4)}.`;
+    Object.entries(dados).forEach(([chave, valor]) => {
+      if (statInfo[chave]) statInfo[chave].total = valor;
+    });
+  }
 
   // ─── Dados para o modal de cada indicador ───
   const statInfo = {
-    economia_kw: {
-      title: 'Minha Economia (kW)', icon: '⚡', color: '#15803d',
-      desc: 'Quantidade de energia (kW) que você deixou de consumir da concessionária ao longo da sua participação no banco solar, graças aos créditos recebidos.',
+    economia_real_rs: {
+      title: 'Minha Economia (R$)', icon: '⚡', color: '#15803d',
+      desc: 'Economia real individual: 75% do benefício, após a contribuição ao projeto e o cashback.',
+      total: kpisPorPeriodoCliente.todos.economia_real_rs,
       history: { labels: historico.meses, values: historico.economia }
     },
-    creditos: {
-      title: 'Créditos Restantes', icon: '💳', color: '#059669',
-      desc: 'Créditos de energia que ainda estão disponíveis na sua conta para abater em contas futuras de luz.',
-      history: { labels: historico.meses, values: historico.creditos }
-    },
     kw_recebidos: {
-      title: 'kW Recebidos', icon: '🔋', color: '#2563eb',
-      desc: 'Total de energia (kW) que você já recebeu das usinas solares parceiras desde que entrou no banco solar.',
+      title: 'Energia Recebida (kWh)', icon: '🔋', color: '#2563eb',
+      desc: 'Energia solar solidária recebida no período escolhido.',
+      total: kpisPorPeriodoCliente.todos.kw_recebidos,
       history: { labels: historico.meses, values: historico.kw_recebidos }
     },
     investido: {
-      title: 'Total Investido (R$)', icon: '💰', color: '#7c3aed',
-      desc: 'Valor total, em reais, que você investiu para participar do banco solar e ter direito aos créditos de energia.',
-      total: {{ user.investido }}
+      title: 'Pago ao Projeto (R$)', icon: '💰', color: '#7c3aed',
+      desc: 'Valor destinado ao projeto neste mês: metade do benefício correspondente.',
+      total: kpisPorPeriodoCliente.todos.investido,
+      history: { labels: historico.meses, values: historico.investido }
     },
     cashback_orquideas: {
       title: 'Cashback Orquídeas (R$)', icon: '🌸', color: '#15803d',
-      desc: 'Valor devolvido a você pelo programa de cashback "Orquídeas", um benefício extra por manter sua participação em dia.',
-      total: {{ user.cashback_orquideas }}
+      desc: 'Cashback deste mês, calculado como 25% do benefício individual.',
+      total: kpisPorPeriodoCliente.todos.cashback_orquideas,
+      history: { labels: historico.meses, values: historico.cashback }
     },
-    {% if residencia %}
-    economia_mensal_rs: {
-      title: 'Economia Mensal (R$)', icon: '🏠', color: '#059669',
-      desc: 'Estimativa de quanto sua residência economiza por mês em reais, comparando a tarifa da concessionária com a tarifa solar do banco.',
-      total: {{ residencia.economia_mensal_rs }}
-    }
-    {% endif %}
   };
+
+  atualizarCardsCliente();
 
   // Economia line chart
   new Chart(document.getElementById('chartEconomia'), {
@@ -328,7 +270,7 @@
     data: {
       labels: historico.meses,
       datasets: [{
-        label: 'Economia (kW)',
+        label: 'Economia (R$)',
         data: historico.economia,
         borderColor: '#16a34a',
         backgroundColor: 'rgba(22,163,74,0.1)',
@@ -343,13 +285,13 @@
     }
   });
 
-  // kW Recebidos bar chart
+  // Energia Recebida bar chart
   new Chart(document.getElementById('chartKW'), {
     type: 'bar',
     data: {
       labels: historico.meses,
       datasets: [{
-        label: 'kW Recebidos',
+        label: 'Energia Recebida (kWh)',
         data: historico.kw_recebidos,
         backgroundColor: 'rgba(59,130,246,0.6)',
         borderColor: '#3b82f6', borderWidth: 1, borderRadius: 6
@@ -384,48 +326,26 @@
   });
 
   // ─── Interpretação: tendência e meta ───
-  const comparacao = {{ comparacao | tojson }};
-
-  function media(arr) { return arr.reduce((a, b) => a + b, 0) / arr.length; }
-
-  const meio = Math.floor(historico.economia.length / 2);
-  const economiaInicio = media(historico.economia.slice(0, meio));
-  const economiaFim = media(historico.economia.slice(meio));
-  const variacaoEconomia = economiaInicio > 0 ? ((economiaFim - economiaInicio) / economiaInicio * 100) : 0;
-
-  const creditosInicio = media(historico.creditos.slice(0, meio));
-  const creditosFim = media(historico.creditos.slice(meio));
-  const variacaoCreditos = creditosInicio > 0 ? ((creditosFim - creditosInicio) / creditosInicio * 100) : 0;
-
-  const tendenciaEconomia = variacaoEconomia >= 0
-    ? 'cresceu ' + variacaoEconomia.toFixed(1) + '%'
-    : 'caiu ' + Math.abs(variacaoEconomia).toFixed(1) + '%';
-  const tendenciaCreditos = variacaoCreditos >= 0
-    ? 'subiram ' + variacaoCreditos.toFixed(1) + '%'
-    : 'caíram ' + Math.abs(variacaoCreditos).toFixed(1) + '%';
-
-  document.getElementById('insightTrend').innerHTML =
-    '<strong>Sua trajetória:</strong> comparando a primeira com a segunda metade do período, ' +
-    'sua economia de energia <strong>' + tendenciaEconomia + '</strong> e seus créditos ' +
-    '<strong>' + tendenciaCreditos + '</strong>.';
-
-  // Meta sugerida com base na própria trajetória do cliente (sem comparação com outros beneficiários)
+  const media = arr => {
+    const validos = arr.filter(v => v !== null && v !== undefined && Number.isFinite(Number(v))).map(Number);
+    return validos.length ? validos.reduce((a, b) => a + b, 0) / validos.length : null;
+  };
+  const metade = Math.floor(historico.meses.length / 2);
+  const economiaInicio = media(historico.economia.slice(0, metade));
+  const economiaFim = media(historico.economia.slice(metade));
+  const insightTrend = document.getElementById('insightTrend');
   const goalCard = document.getElementById('goalCard');
-  if (variacaoEconomia >= 0) {
-    const alvo = (economiaFim * 1.05).toFixed(1);
-    goalCard.innerHTML =
-      '<h4>Uma meta para os próximos meses</h4>' +
-      '<p>Sua economia de energia está em uma boa trajetória. Uma meta possível é manter uma média ' +
-      'de <strong>' + alvo + ' kW</strong> por mês — cerca de 5% acima do que você tem alcançado ' +
-      'recentemente.</p>';
-  } else {
-    const alvo = economiaInicio.toFixed(1);
-    goalCard.innerHTML =
-      '<h4>Uma meta para os próximos meses</h4>' +
-      '<p>Sua economia teve uma leve queda no período mais recente. Uma meta possível é retomar ' +
-      'uma média de <strong>' + alvo + ' kW</strong> por mês, patamar que você já alcançou antes.</p>';
-  }
 
+  if (historico.meses.length < 2 || economiaInicio === null || economiaFim === null) {
+    insightTrend.innerHTML = '<strong>Histórico:</strong> há dados de um mês. A comparação será exibida quando houver dados de outros meses.';
+    goalCard.innerHTML = '<h4>Histórico mensal</h4><p>Uma meta baseada em tendência ficará disponível após a inclusão de mais meses reais.</p>';
+  } else {
+    const variacaoEconomia = economiaInicio > 0 ? ((economiaFim - economiaInicio) / economiaInicio * 100) : 0;
+    const tendencia = variacaoEconomia >= 0 ? 'aumentou' : 'diminuiu';
+    insightTrend.innerHTML = '<strong>Sua trajetória:</strong> a economia real ' + tendencia + ' ' + Math.abs(variacaoEconomia).toFixed(1) + '% entre os períodos comparados.';
+    const alvo = (economiaFim * 1.05).toFixed(2);
+    goalCard.innerHTML = '<h4>Referência para os próximos meses</h4><p>5% acima da média mais recente da economia real corresponde a <strong>R$ ' + alvo + '</strong>.</p>';
+  }
   setTimeout(animateCounters, 300);
 
   // Exibe o nome do arquivo selecionado para anexar o boleto
