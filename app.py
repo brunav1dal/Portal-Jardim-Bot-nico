@@ -55,6 +55,7 @@ def index():
     clientes = usuarios[usuarios['tipo'] == 'cliente']
 
     transparencia = {
+        'familias_beneficiadas': len(load_csv('residencias.csv')),
         'economia_kw': round(clientes['economia_kw'].sum(), 1),
         'creditos': round(clientes['creditos'].sum(), 1),
         'kw_recebidos': round(clientes['kw_recebidos'].sum(), 1),

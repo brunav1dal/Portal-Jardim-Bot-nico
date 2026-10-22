@@ -54,6 +54,13 @@
     </p>
 
     <div class="stats-grid">
+      <button type="button" class="stat-card green fade-up" onclick="openStatModal(statInfo.familias_beneficiadas)">
+        <div class="stat-icon">🏠</div>
+        <div class="stat-label">Famílias beneficiadas</div>
+        <div class="stat-value count-up" data-target="10">0</div>
+        <div class="stat-hint">Ver detalhes</div>
+      </button>
+
       <button type="button" class="stat-card solar fade-up" onclick="openStatModal(statInfo.economia_kw)">
         <div class="stat-icon">⚡</div>
         <div class="stat-label">Economia Total (kW)</div>
@@ -529,6 +536,13 @@
 
   // ─── Dados para o modal de cada indicador ───
   const statInfo = {
+    familias_beneficiadas: {
+      title: 'Famílias beneficiadas', icon: '🏠', color: '#059669',
+      desc: 'Total de residências beneficiárias cadastradas no programa, conforme o painel administrativo. Esta contagem considera o cadastro completo e independe do filtro de período.',
+      total: 10,
+      history: { labels: ['Total cadastrado'], values: [10] },
+      chartType: 'bar'
+    },
     economia_kw: {
       title: 'Economia Total (kW)', icon: '⚡', color: '#15803d',
       desc: 'Soma da energia (em kW) que todos os clientes do banco solar deixaram de consumir da concessionária, graças aos créditos gerados pelas usinas parceiras.',
