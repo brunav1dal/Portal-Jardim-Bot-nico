@@ -118,15 +118,6 @@
       </div>
       <div class="chart-card fade-up">
         <h3>Localização das Usinas</h3>
-        {% for usina in usinas_mapa %}
-        {% if usina.localizacao %}
-        <div style="margin-bottom:1rem;">
-          <strong>{{ usina.nome }}</strong>
-          <p style="margin:0.5rem 0;overflow-wrap:anywhere;">{{ usina.localizacao }}</p>
-          <a href="https://www.google.com/maps/search/?api=1&amp;query={{ usina.localizacao | urlencode }}" target="_blank" rel="noopener noreferrer">Abrir no Google Maps</a>
-        </div>
-        {% endif %}
-        {% endfor %}
         <div id="mapaUsinas" style="height:320px;border-radius:var(--radius-sm);overflow:hidden;"></div>
       </div>
     </div>
@@ -552,7 +543,7 @@
   const usinasComCoordenadas = usinasMapa.filter(u => u.lat !== null && u.lng !== null);
 
   if (mapaEl && usinasComCoordenadas.length) {
-    const mapa = L.map('mapaUsinas', { scrollWheelZoom: false });
+    const mapa = L.map('mapaUsinas', { scrollWheelZoom: true, zoomControl: true });
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       maxZoom: 18
@@ -574,12 +565,12 @@
       bounds.push([u.lat, u.lng]);
     });
 
-    mapa.setView([usinasComCoordenadas[0].lat, usinasComCoordenadas[0].lng], 12);
+    mapa.setView([usinasComCoordenadas[0].lat, usinasComCoordenadas[0].lng], 17);
   } else if (mapaEl && usinasMapa.some(u => u.localizacao && u.localizacao.trim())) {
     const usina = usinasMapa.find(u => u.localizacao && u.localizacao.trim());
     const iframe = document.createElement('iframe');
     iframe.title = 'Mapa da localização da usina';
-    iframe.src = 'https://maps.google.com/maps?q=' + encodeURIComponent(usina.localizacao) + '&output=embed';
+    iframe.src = 'https://maps.google.com/maps?q=' + encodeURIComponent(usina.localizacao) + '&z=17&output=embed';
     iframe.loading = 'lazy';
     iframe.referrerPolicy = 'no-referrer-when-downgrade';
     iframe.style.cssText = 'width:100%;height:100%;border:0;';
