@@ -1192,3 +1192,16 @@ button.stat-card:hover { transform: translateY(-4px); }
 }
 
 .modal-chart-wrap canvas { width: 100% !important; max-height: 220px; }
+
+/* Public indicators: complete rows with equally sized cards. */
+#dados .stats-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+}
+#dados .stats-grid .stat-card { min-width: 0; }
+@media (max-width: 900px) {
+  #dados .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 480px) {
+  #dados .stats-grid { grid-template-columns: minmax(0, 1fr); }
+}
