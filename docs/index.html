@@ -156,6 +156,15 @@
       </div>
       <div class="chart-card fade-up">
         <h3>Localização das Usinas</h3>
+
+
+        <div style="margin-bottom:1rem;">
+          <strong>Usina ID 1</strong>
+          <p style="margin:0.5rem 0;overflow-wrap:anywhere;">R. Arquivista Jonathas Carécas, 74 - Castelo Branco, João Pessoa - PB, 58057-034</p>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=R.%20Arquivista%20Jonathas%20Car%C3%A9cas%2C%2074%20-%20Castelo%20Branco%2C%20Jo%C3%A3o%20Pessoa%20-%20PB%2C%2058057-034" target="_blank" rel="noopener noreferrer">Abrir no Google Maps</a>
+        </div>
+
+
         <div id="mapaUsinas" style="height:320px;border-radius:var(--radius-sm);overflow:hidden;"></div>
       </div>
     </div>
@@ -761,6 +770,15 @@
     });
 
     mapa.setView([usinasComCoordenadas[0].lat, usinasComCoordenadas[0].lng], 12);
+  } else if (mapaEl && usinasMapa.some(u => u.localizacao && u.localizacao.trim())) {
+    const usina = usinasMapa.find(u => u.localizacao && u.localizacao.trim());
+    const iframe = document.createElement('iframe');
+    iframe.title = 'Mapa da localização da usina';
+    iframe.src = 'https://maps.google.com/maps?q=' + encodeURIComponent(usina.localizacao) + '&output=embed';
+    iframe.loading = 'lazy';
+    iframe.referrerPolicy = 'no-referrer-when-downgrade';
+    iframe.style.cssText = 'width:100%;height:100%;border:0;';
+    mapaEl.replaceChildren(iframe);
   } else if (mapaEl) {
     mapaEl.innerHTML = '<p style="padding:1rem;color:var(--text-muted);font-size:0.85rem;">Localização das usinas indisponível no momento.</p>';
   }
