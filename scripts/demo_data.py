@@ -1,4 +1,4 @@
-"""Entirely fictional records shared by the online and static demos."""
+"""Fictional demo records with the configured public plant location."""
 import pandas as pd
 
 
@@ -22,7 +22,7 @@ def demo_data():
                              'valor_beneficio_rs': 40, 'valor_projeto_rs': 20,
                              'creditos_acumulados': 0, 'vencimento': month + '-20',
                              'valor_energisa_rs': 30, 'excedeu_cota_kwh': 0, 'cashback_rs': 10})
-    plants = [{'id': 1, 'nome': 'Usina demonstrativa', 'localizacao': 'Local ficticio',
+    plants = [{'id': 1, 'nome': 'Usina demonstrativa', 'localizacao': 'R. Arquivista Jonathas Carécas, 74 - Castelo Branco, João Pessoa - PB, 58057-034',
                'capacidade_kw': 10, 'geracao_mensal_kwh': 1000, 'status': 'ativa',
                'data_instalacao': '2025-01-01', 'eficiencia_percent': 90}]
     generation = [{'mes': month, 'usina_id': 1, 'geracao_kwh': 1000,
