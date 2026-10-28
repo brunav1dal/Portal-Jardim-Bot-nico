@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/noticias.css', v='news-nav-20261028') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/noticias.css', v='section-order-20261028') }}">
 </head>
 <body>
   <div class="bg-grid"></div>
@@ -25,9 +25,9 @@
     {% if not session.get('user_id') %}
       <div class="navbar-menu" aria-label="Navegação principal">
         <a href="{{ url_for('index') }}#dados">Dados</a>
+        <a href="{{ url_for('index') }}#como-funciona">Como funciona</a>
         <a href="{{ url_for('index') }}#historia">Nossa história</a>
         <a href="{{ url_for('index') }}#noticias">Notícias</a>
-        <a href="{{ url_for('index') }}#como-funciona">Como funciona</a>
       </div>
     {% endif %}
     <div class="navbar-actions">
@@ -85,7 +85,7 @@
     window.addEventListener('hashchange', atualizarMenuAtivo);
     atualizarMenuAtivo();
 
-    const secoesNavegacao = ['dados', 'historia', 'noticias', 'como-funciona']
+    const secoesNavegacao = ['dados', 'como-funciona', 'historia', 'noticias']
       .map(id => document.getElementById(id)).filter(Boolean);
     function atualizarSecaoVisivel() {
       const linhaAtiva = window.scrollY + window.innerHeight * 0.32;

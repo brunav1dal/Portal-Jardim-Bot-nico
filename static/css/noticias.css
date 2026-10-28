@@ -75,3 +75,8 @@
 .news-dialog-gallery { display: grid; gap: 1rem; margin-top: 1.25rem; }
 .news-dialog-gallery img { width: 100%; height: auto; border-radius: var(--radius-sm); }
 @media (max-width: 850px) { .admin-news-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.section#noticias { background: #f4f7fa; }
+.section#noticias .history-news { margin-top: 0; }
+.news-header .section-title { margin: 0; }
+@media (max-width: 768px) { .section#noticias { scroll-margin-top: 160px; } }
