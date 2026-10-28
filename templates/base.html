@@ -5,18 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Banco Comunitário Jardim Botânico - Transparência e gestão de energia solar comunitária">
   <title>{% block title %}Banco Comunitário Jardim Botânico{% endblock %}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v='account-menu-20261028') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v='glass-header-20261028') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/solar-scenarios.css', v='sources-art-20261028') }}">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/noticias.css', v='news-manage-20261028') }}">
+  <script src="{{ url_for('static', filename='js/header-glass.js', v='glass-header-20261028') }}" defer></script>
 </head>
 <body>
   <div class="bg-grid"></div>
 
-  <nav class="navbar">
+  <nav class="navbar{% if request.endpoint == 'index' %} is-over-video{% endif %}">
     <a href="{{ url_for('index') }}" class="navbar-brand">
       <img class="brand-logo" src="{{ url_for('static', filename='img/logo_jb.png') }}" alt="">
 
@@ -45,7 +46,7 @@
     </div>
   </nav>
 
-  {% if modo_demonstracao %}
+  {% if modo_demonstracao and request.endpoint != 'index' %}
   <div class="container" style="padding-top:1rem;">
     <p class="flash-success">Demonstra&ccedil;&atilde;o com pessoas e valores fict&iacute;cios. Altera&ccedil;&otilde;es nos pain&eacute;is s&atilde;o tempor&aacute;rias.</p>
   </div>

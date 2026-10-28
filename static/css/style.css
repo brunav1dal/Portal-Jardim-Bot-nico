@@ -1240,3 +1240,15 @@ button.stat-card:hover { transform: translateY(-4px); }
   .dashboard { padding-top: 200px; }
   .section { scroll-margin-top: 190px; }
 }
+
+/* The fixed header changes glass tone when it leaves the video. */
+.navbar { background: rgba(255,255,255,.78); -webkit-backdrop-filter: blur(18px) saturate(140%); backdrop-filter: blur(18px) saturate(140%); box-shadow: 0 1px 14px rgba(15,23,42,.04); transition: background-color .25s ease, border-color .25s ease, box-shadow .25s ease; }
+.navbar.is-over-video { --text-secondary: #e4ece8; background: rgba(8,22,18,.12); border-bottom-color: rgba(255,255,255,.14); box-shadow: none; }
+.navbar.is-over-video .navbar-brand { color: #f7fcf9; }
+.navbar.is-over-video .navbar-menu { background: rgba(8,22,18,.16); border-color: rgba(255,255,255,.2); }
+.navbar.is-over-video .navbar-menu a { color: #f2f7f4; }
+.navbar.is-over-video .navbar-actions .btn-outline { color: #f2f7f4; border-color: rgba(255,255,255,.4); background: rgba(255,255,255,.06); }
+.navbar.is-over-video .navbar-actions .btn-outline:hover { background: rgba(255,255,255,.16); }
+.navbar.is-over-video .navbar-menu a:focus-visible { outline: 2px solid white; outline-offset: 2px; }
+.hero-video-banner p.hero-demo-note { font-size: .7rem; margin-top: 1rem; color: #d6e0da; }
+@media (prefers-reduced-motion: reduce) { .navbar { transition: none; } }
