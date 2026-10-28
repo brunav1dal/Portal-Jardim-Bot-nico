@@ -8,12 +8,13 @@
   const credit = carousel.querySelector('.news-credit');
   const status = carousel.querySelector('.news-sr-status');
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let slides = [], index = 0, timer = null, paused = motion.matches, pointerOver = false, swiped = false;
+  let slides = [], index = 0, timer = null, paused = motion.matches, reading = false, swiped = false;
   function stop() { clearTimeout(timer); timer = null; }
   function schedule() {
     stop();
-    if (slides.length > 1 && !paused && !pointerOver && !document.hidden && !carousel.contains(document.activeElement)) {
-      timer = setTimeout(() => go(index + 1), 6500);
+    const keyboardFocus = viewport.contains(document.activeElement) && document.activeElement.matches(':focus-visible');
+    if (slides.length > 1 && !paused && !reading && !document.hidden && !keyboardFocus) {
+      timer = setTimeout(() => go(index + 1), 5000);
     }
   }
   function go(next, manual = false) {
@@ -36,6 +37,8 @@
     return url.href;
   }
   function ownStory(article) {
+    reading = true;
+    stop();
     const dialog = document.createElement('dialog');
     dialog.className = 'news-dialog';
     const close = document.createElement('button');
@@ -54,7 +57,7 @@
     const paragraphs = Array.isArray(article.body) ? article.body : [article.body || article.summary];
     paragraphs.forEach(text => { const p = document.createElement('p'); p.textContent = text; dialog.append(p); });
     dialog.append(gallery);
-    dialog.addEventListener('close', () => dialog.remove());
+    dialog.addEventListener('close', () => { dialog.remove(); reading = false; schedule(); });
     document.body.append(dialog); dialog.showModal();
   }
   async function init() {
@@ -102,9 +105,7 @@
     }
   }
   carousel.querySelector('[data-news-next]').addEventListener('click', () => { if (slides.length) go(index + 1, true); });
-  carousel.addEventListener('mouseenter', () => { pointerOver = true; stop(); });
-  carousel.addEventListener('mouseleave', () => { pointerOver = false; schedule(); });
-  carousel.addEventListener('focusin', stop);
+  carousel.addEventListener('focusin', event => { if (viewport.contains(event.target) && event.target.matches(':focus-visible')) stop(); else schedule(); });
   carousel.addEventListener('focusout', () => setTimeout(schedule, 0));
   carousel.addEventListener('keydown', event => {
     if (!slides.length || !['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
