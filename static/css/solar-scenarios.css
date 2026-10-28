@@ -149,3 +149,13 @@
 @media (prefers-reduced-motion: no-preference) {
   .scenario-segment:hover::before, .scenario-segment:focus-visible::before { animation: scenario-quick-fill .4s ease-out forwards; }
 }
+
+/* Shared scale separates actual consumption from unused benefit capacity. */
+.scenario-bar { display: grid; grid-template-columns: repeat(250, minmax(0, 1fr)); gap: 0; min-height: 50px; background: transparent; }
+.scenario-bar .scenario-segment { border-right: 2px solid transparent; background-clip: padding-box; min-height: 50px; }
+.scenario-bar .scenario-unused { background-color: #cbd5e1; color: #27364b; }
+.scenario-segment-compact > span { visibility: hidden; }
+.scenario-scale-note { margin: -.2rem 0 1.25rem; max-width: 850px; font-size: .74rem; line-height: 1.8; color: var(--text-secondary); }
+.scenario-card .scenario-breakdown-row:has(.scenario-unused) strong { color: #dbe4ef; }
+.scenario-card .scenario-breakdown-row > span:nth-child(2) { flex: 1; min-width: 0; }
+.scenario-card .scenario-breakdown-row strong { flex-shrink: 0; }
