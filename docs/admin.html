@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Banco Comunitário Jardim Botânico - Transparência e gestão de energia solar comunitária">
   <title>Banco Comunitário Jardim Botânico — Administração</title>
-  <link rel="stylesheet" href="static/css/style.css?v=history-gallery-20261028">
+  <link rel="stylesheet" href="static/css/style.css?v=economy-explanation-20261028">
   <link rel="stylesheet" href="static/css/solar-scenarios.css?v=scenario-unused-key-20261028">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -1033,7 +1033,7 @@
       <button type="button" class="modal-close" onclick="closeStatModal()" aria-label="Fechar">✕</button>
       <div class="modal-icon" id="statModalIcon"></div>
       <h3 id="statModalTitle"></h3>
-      <p class="modal-desc" id="statModalDesc"></p>
+      <div class="modal-desc" id="statModalDesc"></div>
       <div class="modal-chart-wrap" id="statModalChartWrap">
         <h4>Histórico recente</h4>
         <canvas id="statModalChart"></canvas>
@@ -1129,7 +1129,14 @@
         modalIcon.textContent = info.icon || '📊';
       }
       document.getElementById('statModalTitle').textContent = info.title || '';
-      document.getElementById('statModalDesc').textContent = info.desc || '';
+      const description = document.getElementById('statModalDesc');
+      description.replaceChildren();
+      const paragraphs = info.paragraphs || [info.desc || ''];
+      paragraphs.forEach(text => {
+        const paragraph = document.createElement('p');
+        paragraph.textContent = text;
+        description.appendChild(paragraph);
+      });
 
       const overlay = document.getElementById('statModalOverlay');
       overlay.classList.add('active');

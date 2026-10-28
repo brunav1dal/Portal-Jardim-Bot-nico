@@ -1191,6 +1191,8 @@ button.stat-card:hover { transform: translateY(-4px); }
   margin-bottom: 0.6rem; padding-right: 2rem;
 }
 
+.modal-desc p { margin: 0; }
+.modal-desc p + p { margin-top: .85rem; }
 .modal-desc {
   color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;
   margin-bottom: 1.25rem;
