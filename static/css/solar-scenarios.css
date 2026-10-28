@@ -155,7 +155,7 @@
 .scenario-bar .scenario-segment { border-right: 2px solid transparent; background-clip: padding-box; min-height: 50px; }
 .scenario-bar .scenario-unused { background-color: #cbd5e1; color: #27364b; }
 .scenario-segment-compact > span { visibility: hidden; }
-.scenario-scale-note { margin: -.2rem 0 1.25rem; max-width: 850px; font-size: .74rem; line-height: 1.8; color: var(--text-secondary); }
+.scenario-scale-note { margin: -.2rem 0 1.25rem; width: 100%; font-size: .74rem; line-height: 1.8; color: var(--text-secondary); }
 .scenario-card .scenario-breakdown-row:has(.scenario-unused) strong { color: #dbe4ef; }
 .scenario-card .scenario-breakdown-row > span:nth-child(2) { flex: 1; min-width: 0; }
 .scenario-card .scenario-breakdown-row strong { flex-shrink: 0; }
@@ -165,3 +165,9 @@
 .scenario-legal-note strong { font-weight: 600; color: var(--text-primary); }
 .scenario-legal-note a, .scenario-legal-source a { color: var(--accent-solar); text-decoration: underline; text-underline-offset: 3px; }
 .solar-dialog .scenario-legal-source { margin-top: 1rem; font-size: .75rem; }
+
+/* Explanatory paragraphs share the same full-width edges as the card grid. */
+.scenario-intro, .scenario-scale-note, .scenario-footnote, .scenario-legal-note { width: 100%; max-width: none; }
+@media (min-width: 641px) {
+  .scenario-intro, .scenario-scale-note, .scenario-footnote, .scenario-legal-note { text-align: justify; }
+}
