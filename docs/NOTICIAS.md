@@ -1,12 +1,12 @@
 # Cadastro de notícias
 
-No aplicativo Flask, entre com perfil de administrador e abra **Notícias**. Informe título, resumo opcional, texto e de uma a cinco fotos. A primeira foto será a capa. A publicação aparece imediatamente no carrossel de Nossa História; ao clicar, o visitante abre o texto completo e as fotos.
+No aplicativo Flask, entre com perfil de administrador, abra **Notícias** e clique em **Publicar nova notícia no portal público**. O editor abre em uma janela; a prévia e a lista de publicações ficam recolhidas para simplificar a aba. Informe título, resumo opcional, texto e de uma a cinco fotos. A primeira foto será a capa. A publicação aparece imediatamente no carrossel de Nossa História; ao clicar, o visitante abre o texto completo e as fotos.
 
 O envio completo aceita até 5 MB. As imagens JPG, PNG e WebP são verificadas, orientadas e convertidas em JPEG com até 2.400 pixels no maior lado, sem metadados. O cadastro não altera as planilhas de energia ou os dados dos beneficiários.
 
 ## Matérias de sites externos
 
-Selecione **Notícia de site externo** e cole o link da matéria. O painel busca título, resumo e foto de capa pelos metadados públicos Open Graph/Twitter do site. O botão **Buscar informações** permite repetir a busca. Confira a prévia, ajuste o título ou o resumo se precisar e clique em **Publicar notícia**. A importação sozinha não publica.
+Selecione **Notícia de site externo** e cole o link da matéria. O painel busca título, resumo e foto de capa pelos metadados públicos Open Graph/Twitter do site. A busca começa automaticamente ao colar o link ou após uma breve pausa na digitação. Se falhar, escolha **Tentar novamente** ou **Preencher dados manualmente** e informe título, resumo e foto. Confira a prévia, ajuste o título ou o resumo se precisar e clique em **Publicar notícia**. A importação sozinha não publica.
 
 Ao clicar no card, o visitante abre a matéria completa no site original. A foto importada é validada e armazenada junto às fotos do projeto. Se o site bloquear a leitura, não informar metadados ou não liberar a imagem, preencha o título e envie uma foto manualmente; o link continua sendo usado como destino da matéria. Vídeos e páginas que dependem de execução de JavaScript não são importados como mídia incorporada.
 

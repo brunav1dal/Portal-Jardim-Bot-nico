@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
-  <link rel="stylesheet" href="static/css/noticias.css?v=publish-options-20261028">
+  <link rel="stylesheet" href="static/css/noticias.css?v=publish-dialog-auto-20261028">
 </head>
 <body>
   <div class="bg-grid"></div>
@@ -988,8 +988,12 @@
 
   <p class="flash-success">O cadastro de notícias funciona no aplicativo da Render ou no ambiente local. Esta demonstração estática permite apenas visualizar o formulário.</p>
 
-  <div class="admin-news-grid">
-    <form id="adminNewsForm" class="chart-card admin-news-form" method="post" action="#" enctype="multipart/form-data" data-static-demo="true">
+  <button type="button" id="openNewsEditor" class="admin-news-open" aria-haspopup="dialog" aria-controls="adminNewsEditor"><span aria-hidden="true">+</span><span><strong>Publicar nova notícia no portal público</strong><small>Crie uma publicação própria ou adicione uma matéria por link.</small></span></button>
+  <p id="adminNewsNotice" class="admin-news-status" role="status" aria-live="polite"></p>
+  <dialog id="adminNewsEditor" class="admin-news-editor" aria-labelledby="adminNewsEditorTitle">
+    <div class="admin-news-editor-header"><h3 id="adminNewsEditorTitle">Nova notícia no portal público</h3><button type="button" id="closeNewsEditor" aria-label="Fechar formulário">×</button></div>
+  <div class="admin-news-editor-content">
+    <form id="adminNewsForm" class="admin-news-form" method="post" action="#" enctype="multipart/form-data" data-static-demo="true">
       <input type="hidden" name="csrf_token" value="">
       <input type="hidden" name="import_token" id="newsImportToken" value="">
       <input id="newsType" name="tipo" type="hidden" value="internal">
@@ -997,17 +1001,18 @@
         <button type="button" data-news-kind="internal" aria-pressed="true"><strong>Publicar notícia própria</strong><span>Adicione fotos, título e texto completo do projeto.</span></button>
         <button type="button" data-news-kind="external" aria-pressed="false"><strong>Publicar usando link</strong><span>Importe título e capa de uma matéria de outro site.</span></button>
       </div>
-      <div class="form-group" id="newsExternalFields" hidden><label for="newsExternalUrl">Link da matéria</label><div class="admin-news-link-row"><input id="newsExternalUrl" name="link_externo" type="url" maxlength="1800" placeholder="https://site.com.br/noticia" disabled><button type="button" id="newsImportButton" class="btn btn-outline" data-import-url="/admin/noticias/importar" disabled>Buscar informações</button></div><small>Cole o link para buscar título, resumo e foto de capa. Revise os campos antes de publicar. Se o site não liberar a foto, envie uma abaixo.</small></div>
+      <div class="form-group" id="newsExternalFields" hidden><label for="newsExternalUrl">Link da matéria</label><input id="newsExternalUrl" name="link_externo" type="url" maxlength="1800" placeholder="https://site.com.br/noticia" aria-describedby="newsImportHelp" disabled><small id="newsImportHelp">Cole ou digite o link. O título, o resumo e a capa serão buscados automaticamente.</small><div id="newsImportActions" class="admin-news-import-actions" hidden><button type="button" id="newsImportButton" class="btn btn-outline" data-import-url="/admin/noticias/importar" disabled>Tentar novamente</button><button type="button" id="newsManualButton" class="btn btn-outline">Preencher dados manualmente</button></div></div>
       <div class="form-group"><label for="newsTitle">Título da notícia</label><input id="newsTitle" name="titulo" type="text" maxlength="160" required placeholder="O que aconteceu na comunidade?"></div>
-      <div class="form-group"><label for="newsSummary">Resumo da capa <span>(opcional)</span></label><textarea id="newsSummary" name="resumo" maxlength="280" rows="2" placeholder="Uma frase para apresentar a notícia."></textarea></div>
+      <div class="form-group"><label for="newsSummary">Resumo da publicação</label><textarea id="newsSummary" name="resumo" maxlength="280" rows="2" placeholder="Uma frase para apresentar a notícia."></textarea></div>
       <div class="form-group"><label for="newsPhotos" id="newsPhotosLabel">Fotos</label><input id="newsPhotos" name="fotos" type="file" accept="image/jpeg,image/png,image/webp" multiple required aria-describedby="newsPhotoHelp"><small id="newsPhotoHelp">De 1 a 5 fotos. A primeira será a capa; as demais passam no carrossel. JPG, PNG ou WebP, com envio total de até 5 MB.</small></div>
       <div class="form-group" id="newsBodyFields"><label for="newsBody">Texto completo</label><textarea id="newsBody" name="texto" rows="8" maxlength="12000" required placeholder="Conte a história. Separe os parágrafos com uma linha em branco."></textarea></div>
       <button class="btn btn-primary" type="submit" disabled>Publicar notícia</button>
       <p id="adminNewsStatus" class="admin-news-status" role="status" aria-live="polite"></p>
     </form>
-    <div class="admin-news-preview-wrap"><h3>Prévia da capa</h3><div class="news-slide admin-news-preview"><img id="newsPreviewImage" class="news-photo" alt="Prévia da foto de capa" hidden><span class="news-caption"><span class="news-source" id="newsPreviewSource">Notícia do projeto</span><h4 id="newsPreviewTitle">O título da sua notícia aparece aqui</h4><p id="newsPreviewSummary">Escolha as fotos e escreva o resumo para visualizar a capa.</p><span class="news-read" id="newsPreviewRead">Ler notícia →</span></span></div><div id="newsPhotoPreviews" class="admin-news-thumbnails" aria-label="Fotos selecionadas"></div><p class="admin-news-preview-help" id="newsPreviewHelp">O visitante verá o texto completo e as fotos ao abrir a notícia.</p></div>
+    <details class="admin-news-preview-wrap"><summary>Ver prévia da publicação</summary><div class="news-slide admin-news-preview"><img id="newsPreviewImage" class="news-photo" alt="Prévia da foto de capa" hidden><span class="news-caption"><span class="news-source" id="newsPreviewSource">Notícia do projeto</span><h4 id="newsPreviewTitle">O título da sua notícia aparece aqui</h4><p id="newsPreviewSummary">Escolha as fotos e escreva o resumo para visualizar a capa.</p><span class="news-read" id="newsPreviewRead">Ler notícia →</span></span></div><div id="newsPhotoPreviews" class="admin-news-thumbnails" aria-label="Fotos selecionadas"></div><p class="admin-news-preview-help" id="newsPreviewHelp">O visitante verá o texto completo e as fotos ao abrir a notícia.</p></details>
   </div>
-  <div class="chart-card admin-news-published"><h3>Notícias publicadas pelo painel</h3><ul id="adminNewsList"></ul><p id="adminNewsEmpty">Você ainda não publicou notícias pelo painel. A matéria do Sistema Voz Popular continua disponível no carrossel.</p></div>
+  </dialog>
+  <details class="admin-news-published"><summary>Ver notícias já publicadas</summary><ul id="adminNewsList"></ul><p id="adminNewsEmpty">Você ainda não publicou notícias pelo painel. A matéria do Sistema Voz Popular continua disponível no carrossel.</p></details>
 </div>
 </div>
 
@@ -1170,7 +1175,7 @@
   </script>
 
 
-<script src="static/js/admin-noticias.js?v=publish-options-20261028" defer></script>
+<script src="static/js/admin-noticias.js?v=publish-dialog-auto-20261028" defer></script>
 <script>
   // ─── Tab Navigation ───
   function showTab(tabName) {

@@ -10,13 +10,22 @@
   const type = document.getElementById('newsType');
   const link = document.getElementById('newsExternalUrl');
   const importButton = document.getElementById('newsImportButton');
+  const importActions = document.getElementById('newsImportActions');
   const importToken = document.getElementById('newsImportToken');
   const body = document.getElementById('newsBody');
+  const editor = document.getElementById('adminNewsEditor');
   const publishButton = form.querySelector('[type="submit"]');
-  let urls = [], imported = null, importing = false;
+  let urls = [], imported = null, importing = false, importTimer = null, controller = null, version = 0, lastAttempt = '';
   const external = () => type.value === 'external';
   const importedCover = () => external() && imported && imported.url === link.value.trim() && imported.images.length > 0;
   function message(text, error = false) { status.textContent = text; status.dataset.error = String(error); }
+  function cancelImport() {
+    clearTimeout(importTimer); importTimer = null; version++;
+    if (controller) controller.abort();
+    controller = null; importing = false;
+    importButton.disabled = Boolean(form.dataset.staticDemo);
+    publishButton.disabled = Boolean(form.dataset.staticDemo);
+  }
   function updateText() {
     document.getElementById('newsPreviewTitle').textContent = title.value.trim() || 'O título da sua notícia aparece aqui';
     document.getElementById('newsPreviewSummary').textContent = summary.value.trim() || 'Escolha as fotos e escreva o resumo para visualizar a capa.';
@@ -39,6 +48,7 @@
     document.getElementById('newsPhotosLabel').textContent = importedCover() ? 'Trocar foto de capa (opcional)' : 'Fotos';
   }
   function updateType() {
+    cancelImport(); lastAttempt = ''; importActions.hidden = true; summary.required = false;
     const isExternal = external();
     form.querySelectorAll('[data-news-kind]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.newsKind === type.value)));
     document.getElementById('newsExternalFields').hidden = !isExternal;
@@ -47,36 +57,77 @@
     body.disabled = isExternal; body.required = !isExternal;
     updateText(); updatePhotos();
   }
-  async function importLink() {
-    if (form.dataset.staticDemo || !external() || importing || !link.value || !link.checkValidity()) return;
-    importing = true; importButton.disabled = true; publishButton.disabled = true;
+  async function importLink(force = false) {
     const requestedUrl = link.value.trim();
-    message('Buscando título e imagem da matéria…');
+    if (form.dataset.staticDemo || !external() || !requestedUrl || !link.checkValidity() || (!force && requestedUrl === lastAttempt)) return;
+    cancelImport();
+    const requestVersion = version;
+    controller = new AbortController();
+    importing = true; importButton.disabled = true; publishButton.disabled = true; importActions.hidden = true;
+    lastAttempt = requestedUrl;
+    const previousTitle = title.value, previousSummary = summary.value;
+    message('Buscando automaticamente o título, o resumo e a foto da matéria…');
     try {
       const payload = new FormData(); payload.set('url', requestedUrl); payload.set('csrf_token', form.elements.csrf_token.value);
-      const response = await fetch(importButton.dataset.importUrl, { method: 'POST', body: payload, headers: { Accept: 'application/json' } });
+      const response = await fetch(importButton.dataset.importUrl, { method: 'POST', body: payload, signal: controller.signal, headers: { Accept: 'application/json' } });
       const data = await response.json();
-      if (!response.ok || !data.success) throw new Error(data.error || 'Não foi possível importar. Preencha os campos manualmente.');
-      if (requestedUrl !== link.value.trim() || !external()) return;
-      imported = data.preview; link.value = imported.url; importToken.value = imported.token;
-      title.value = imported.title; summary.value = imported.summary; photos.value = '';
+      if (!response.ok || !data.success) throw new Error('Import unavailable');
+      if (requestVersion !== version || requestedUrl !== link.value.trim() || !external()) return;
+      imported = data.preview; link.value = imported.url; lastAttempt = imported.url; importToken.value = imported.token;
+      if (title.value === previousTitle) title.value = imported.title;
+      if (summary.value === previousSummary) summary.value = imported.summary;
+      summary.required = !summary.value.trim();
       updateText(); updatePhotos();
-      message(data.warning || 'Título, resumo e capa importados. Revise a prévia e clique em Publicar notícia.');
-    } catch (error) { message(error.message || 'Não foi possível importar. Preencha os campos manualmente.', true); }
-    finally { importing = false; importButton.disabled = false; publishButton.disabled = false; }
+      importActions.hidden = !data.warning;
+      message(data.warning ? `${data.warning} Tente novamente ou preencha o título, o resumo e envie uma foto.` : 'Dados importados. Confira a publicação e clique em Publicar notícia.');
+    } catch {
+      if (requestVersion !== version || requestedUrl !== link.value.trim() || !external()) return;
+      summary.required = true; importActions.hidden = false;
+      message('Não foi possível buscar os dados deste link. Tente novamente ou preencha o título e o resumo e adicione uma foto manualmente.', true);
+    } finally {
+      if (requestVersion === version) {
+        importing = false; controller = null;
+        importButton.disabled = false; publishButton.disabled = false;
+      }
+    }
   }
+  function scheduleImport(delay = 850) {
+    clearTimeout(importTimer);
+    if (external() && link.value.trim() && link.checkValidity()) importTimer = setTimeout(() => importLink(), delay);
+  }
+  document.getElementById('openNewsEditor').addEventListener('click', () => {
+    editor.showModal();
+    form.querySelector('[data-news-kind]').focus();
+    if (external()) scheduleImport(0);
+  });
+  document.getElementById('closeNewsEditor').addEventListener('click', () => editor.close());
+  editor.addEventListener('close', cancelImport);
   title.addEventListener('input', updateText); summary.addEventListener('input', updateText);
   photos.addEventListener('change', updatePhotos); type.addEventListener('change', updateType);
   form.querySelectorAll('[data-news-kind]').forEach(button => button.addEventListener('click', () => {
-    type.value = button.dataset.newsKind;
-    updateType();
+    type.value = button.dataset.newsKind; updateType(); message('');
+    if (external()) scheduleImport(0);
   }));
-  importButton.addEventListener('click', importLink);
-  link.addEventListener('input', () => { imported = null; importToken.value = ''; updateText(); updatePhotos(); });
-  link.addEventListener('paste', () => setTimeout(importLink, 0));
+  importButton.addEventListener('click', () => importLink(true));
+  document.getElementById('newsManualButton').addEventListener('click', () => {
+    cancelImport(); lastAttempt = link.value.trim(); importActions.hidden = true; summary.required = true;
+    message('Preencha o título e o resumo e envie a foto de capa. O link será usado para abrir a matéria original.');
+    title.focus();
+  });
+  link.addEventListener('input', () => {
+    if (imported) {
+      if (title.value === imported.title) title.value = '';
+      if (summary.value === imported.summary) summary.value = '';
+    }
+    cancelImport(); lastAttempt = ''; imported = null; importToken.value = ''; importActions.hidden = true;
+    summary.required = false; updateText(); updatePhotos(); scheduleImport();
+  });
+  link.addEventListener('paste', () => { setTimeout(() => scheduleImport(0), 0); });
+  link.addEventListener('change', () => scheduleImport(0));
   form.addEventListener('submit', async event => {
     event.preventDefault();
     if (form.dataset.staticDemo || importing) return;
+    clearTimeout(importTimer);
     const files = Array.from(photos.files);
     if ((!files.length && !importedCover()) || files.length > 5) { message('Selecione de uma a cinco fotos ou importe a capa pelo link.', true); return; }
     if (files.reduce((sum, file) => sum + file.size, 0) > 4.8 * 1024 * 1024) { message('Reduza o tamanho das fotos: o envio completo deve ter até 5 MB.', true); return; }
@@ -91,9 +142,10 @@
       const site = document.createElement('a'); site.href = '/#noticias'; site.target = '_blank'; site.rel = 'noopener noreferrer'; site.textContent = 'Ver no site ↗';
       detail.append(site); item.append(name, detail); document.getElementById('adminNewsList').prepend(item);
       document.getElementById('adminNewsEmpty').hidden = true;
-      imported = null; form.reset(); updateType();
-      message('Notícia publicada! Ela já aparece no carrossel de Notícias.');
-    } catch (error) { message(error.message || 'Não foi possível publicar.', true); }
+      imported = null; form.reset(); updateType(); editor.close();
+      document.getElementById('adminNewsNotice').textContent = 'Notícia publicada! Ela já aparece no portal público, na seção Notícias.';
+      message('');
+    } catch (error) { message(error.message || 'Não foi possível publicar. Tente novamente.', true); }
     finally { publishButton.disabled = false; }
   });
   updateType();
