@@ -1,4 +1,4 @@
-.history-news { margin-top: 2.5rem; }
+.history-news { margin-top: 2.5rem; scroll-margin-top: 110px; }
 .news-header { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; margin-bottom: 1rem; }
 .news-eyebrow { display: block; margin-bottom: .35rem; color: var(--accent-solar); font-size: .65rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
 .news-header h3 { margin: 0; font-size: 1.4rem; font-weight: 600; letter-spacing: -.035em; }
@@ -37,6 +37,7 @@
 .news-dialog h3 { margin-bottom: 1rem; font-size: 1.4rem; line-height: 1.4; }
 .news-dialog p { margin-bottom: 1rem; line-height: 1.8; }
 @media (max-width: 640px) {
+  .history-news { scroll-margin-top: 160px; }
   .news-header { align-items: flex-start; flex-direction: column; }
   .news-controls { align-self: flex-end; }
   .news-slide { min-height: 460px; padding: 1.25rem; }

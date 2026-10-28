@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
-  <link rel="stylesheet" href="static/css/noticias.css?v=publisher-20261028">
+  <link rel="stylesheet" href="static/css/noticias.css?v=news-nav-20261028">
 </head>
 <body>
   <div class="bg-grid"></div>
@@ -26,6 +26,7 @@
       <div class="navbar-menu" aria-label="Navegação principal">
         <a href="index.html#dados">Dados</a>
         <a href="index.html#historia">Nossa história</a>
+        <a href="index.html#noticias">Notícias</a>
         <a href="index.html#como-funciona">Como funciona</a>
       </div>
 
@@ -195,7 +196,7 @@
         </div>
       </div>
     </div>
-    <div class="history-news" data-news-carousel data-news-source="static/noticias.json" role="region" aria-roledescription="carrossel" aria-labelledby="newsHeading">
+    <div class="history-news" id="noticias" data-news-carousel data-news-source="static/noticias.json" role="region" aria-roledescription="carrossel" aria-labelledby="newsHeading">
       <div class="news-header"><div><span class="news-eyebrow">O PROJETO EM MOVIMENTO</span><h3 id="newsHeading">Notícias da comunidade</h3><p>Formação, energia solidária e histórias do nosso território.</p></div>
         <div class="news-controls" hidden><button type="button" data-news-pause>Pausar</button><button type="button" data-news-prev aria-label="Foto anterior">←</button><button type="button" data-news-next aria-label="Próxima foto">→</button></div>
       </div>
@@ -367,7 +368,7 @@
     window.addEventListener('hashchange', atualizarMenuAtivo);
     atualizarMenuAtivo();
 
-    const secoesNavegacao = ['dados', 'historia', 'como-funciona']
+    const secoesNavegacao = ['dados', 'historia', 'noticias', 'como-funciona']
       .map(id => document.getElementById(id)).filter(Boolean);
     function atualizarSecaoVisivel() {
       const linhaAtiva = window.scrollY + window.innerHeight * 0.32;
