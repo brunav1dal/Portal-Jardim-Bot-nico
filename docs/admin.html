@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
-  <link rel="stylesheet" href="static/css/noticias.css?v=publish-dialog-auto-20261028">
+  <link rel="stylesheet" href="static/css/noticias.css?v=news-manage-20261028">
 </head>
 <body>
   <div class="bg-grid"></div>
@@ -1012,7 +1012,7 @@
     <details class="admin-news-preview-wrap"><summary>Ver prévia da publicação</summary><div class="news-slide admin-news-preview"><img id="newsPreviewImage" class="news-photo" alt="Prévia da foto de capa" hidden><span class="news-caption"><span class="news-source" id="newsPreviewSource">Notícia do projeto</span><h4 id="newsPreviewTitle">O título da sua notícia aparece aqui</h4><p id="newsPreviewSummary">Escolha as fotos e escreva o resumo para visualizar a capa.</p><span class="news-read" id="newsPreviewRead">Ler notícia →</span></span></div><div id="newsPhotoPreviews" class="admin-news-thumbnails" aria-label="Fotos selecionadas"></div><p class="admin-news-preview-help" id="newsPreviewHelp">O visitante verá o texto completo e as fotos ao abrir a notícia.</p></details>
   </div>
   </dialog>
-  <details class="admin-news-published"><summary>Ver notícias já publicadas</summary><ul id="adminNewsList"></ul><p id="adminNewsEmpty">Você ainda não publicou notícias pelo painel. A matéria do Sistema Voz Popular continua disponível no carrossel.</p></details>
+  <details class="admin-news-published"><summary>Ver notícias já publicadas</summary><ul id="adminNewsList" data-manage-url="/admin/noticias"></ul><p id="adminNewsEmpty">Você ainda não publicou notícias pelo painel. A matéria do Sistema Voz Popular continua disponível no carrossel.</p></details>
 </div>
 </div>
 
@@ -1175,7 +1175,7 @@
   </script>
 
 
-<script src="static/js/admin-noticias.js?v=publish-dialog-auto-20261028" defer></script>
+<script src="static/js/admin-noticias.js?v=news-manage-20261028" defer></script>
 <script>
   // ─── Tab Navigation ───
   function showTab(tabName) {

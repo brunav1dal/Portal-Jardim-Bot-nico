@@ -122,13 +122,66 @@ def init_news(app):
         response.headers['Cache-Control'] = 'no-store'
         return response
 
+    @app.get('/admin/noticias/<article_id>')
+    def consultar_noticia(article_id):
+        if 'user_id' not in session or session.get('user_tipo') != 'admin':
+            return failure('Entre com um perfil de administrador para gerenciar notícias.', 403)
+        article = next((item for item in published() if item['id'] == article_id), None)
+        if not article:
+            return failure('Esta notícia não foi encontrada.', 404)
+        response = jsonify(success=True, article=article)
+        response.headers['Cache-Control'] = 'no-store'
+        return response
+
+    @app.post('/admin/noticias/<article_id>/excluir')
+    def excluir_noticia(article_id):
+        if 'user_id' not in session or session.get('user_tipo') != 'admin':
+            return failure('Entre com um perfil de administrador para gerenciar notícias.', 403)
+        token = request.form.get('csrf_token', '')
+        if not token or not hmac.compare_digest(token, session.get('news_csrf', '')):
+            return failure('Sua sessão expirou. Recarregue o painel.', 403)
+        article = next((item for item in published() if item['id'] == article_id), None)
+        if not article:
+            return failure('Esta notícia não foi encontrada.', 404)
+        db = storage() / 'noticias.sqlite3'
+        if not db.exists():
+            return failure('Esta notícia não foi encontrada.', 404)
+        try:
+            with closing(sqlite3.connect(db)) as connection:
+                with connection:
+                    deleted = connection.execute('DELETE FROM news WHERE id = ?', (article_id,)).rowcount
+        except sqlite3.Error:
+            return failure('Não foi possível excluir a notícia. Tente novamente.', 500)
+        if not deleted:
+            return failure('Esta notícia não foi encontrada.', 404)
+        retained = {image['src'] for item in published() for image in item.get('images', [])}
+        folder = (storage() / 'fotos').resolve()
+        for image in article.get('images', []):
+            if image['src'] in retained:
+                continue
+            name = image['src'].rsplit('/', 1)[-1]
+            if len(name) != 36 or not name.endswith('.jpg'):
+                continue
+            try:
+                int(name[:-4], 16)
+                path = (folder / name).resolve()
+                if path.parent == folder:
+                    path.unlink(missing_ok=True)
+            except (ValueError, OSError):
+                app.logger.warning('Unable to clean up a deleted news image')
+        return jsonify(success=True)
+
     @app.post('/admin/noticias')
-    def publicar_noticia():
+    @app.post('/admin/noticias/<article_id>/editar')
+    def publicar_noticia(article_id=None):
         if 'user_id' not in session or session.get('user_tipo') != 'admin':
             return failure('Entre novamente com um perfil de administrador para publicar notícias.', 403)
         token = request.form.get('csrf_token', '')
         if not token or not hmac.compare_digest(token, session.get('news_csrf', '')):
             return failure('Sua sessão do formulário expirou. Recarregue o painel e tente novamente.', 403)
+        existing = next((item for item in published() if item['id'] == article_id), None) if article_id else None
+        if article_id and not existing:
+            return failure('Esta notícia não foi encontrada.', 404)
         title = request.form.get('titulo', '').strip()
         kind = request.form.get('tipo', 'internal')
         if kind not in {'internal', 'external'}:
@@ -147,13 +200,16 @@ def init_news(app):
             except ImportErrorMessage as error:
                 return failure(str(error))
             source = urlsplit(article_url).hostname
+            if existing and existing.get('url') == article_url:
+                source = existing.get('source') or source
             draft = session.get('news_external_draft', {})
             if draft.get('url') == article_url and hmac.compare_digest(draft.get('token', ''), request.form.get('import_token', '')):
                 source = draft.get('source') or source
                 name = draft.get('image_name', '')
                 if name and (storage() / 'fotos' / name).is_file():
                     imported_cover = name
-        if len(photos) > 5 or (not photos and not imported_cover):
+        existing_images = existing.get('images', []) if existing else []
+        if len(photos) > 5 or (not photos and not imported_cover and not existing_images):
             return failure('Selecione de uma a cinco fotos JPG, PNG ou WebP.')
         # Validate every image before saving anything; re-encode to remove metadata and foreign content.
         processed = []
@@ -165,15 +221,19 @@ def init_news(app):
 
         folder = storage() / 'fotos'
         paths = []
-        article = {'id': uuid.uuid4().hex, 'type': kind, 'title': title,
+        article = {'id': article_id or uuid.uuid4().hex, 'type': kind, 'title': title,
                    'summary': summary or ' '.join(body.split())[:180],
                    'body': [paragraph.strip() for paragraph in body.split('\n\n') if paragraph.strip()] if kind == 'internal' else [],
-                   'source': source, 'tags': [], 'images': [],
-                   'created_at': datetime.now(timezone.utc).isoformat()}
+                   'source': source, 'tags': existing.get('tags', []) if existing else [], 'images': [],
+                   'created_at': existing['created_at'] if existing else datetime.now(timezone.utc).isoformat()}
+        if existing:
+            article['updated_at'] = datetime.now(timezone.utc).isoformat()
         if kind == 'external':
             article['url'] = article_url
             if not photos and imported_cover:
                 article['images'].append({'src': url_for('noticia_foto', filename=imported_cover), 'alt': title})
+        if not photos and not article['images']:
+            article['images'] = [{**image, 'alt': title} for image in existing_images]
         try:
             folder.mkdir(parents=True, exist_ok=True)
             for data in processed:
@@ -185,22 +245,30 @@ def init_news(app):
             with closing(sqlite3.connect(storage() / 'noticias.sqlite3')) as connection:
                 with connection:
                     connection.execute('CREATE TABLE IF NOT EXISTS news (id TEXT PRIMARY KEY, created_at TEXT NOT NULL, payload TEXT NOT NULL)')
-                    connection.execute('INSERT INTO news VALUES (?, ?, ?)',
-                                       (article['id'], article['created_at'], json.dumps(article, ensure_ascii=False)))
-        except (OSError, sqlite3.Error):
+                    if existing:
+                        changed = connection.execute('UPDATE news SET payload = ? WHERE id = ?',
+                                                     (json.dumps(article, ensure_ascii=False), article_id)).rowcount
+                        if not changed:
+                            raise LookupError('Article no longer exists')
+                    else:
+                        connection.execute('INSERT INTO news VALUES (?, ?, ?)',
+                                           (article['id'], article['created_at'], json.dumps(article, ensure_ascii=False)))
+        except (OSError, sqlite3.Error, LookupError) as error:
             for path in paths:
                 path.unlink(missing_ok=True)
             app.logger.exception('Unable to save news')
+            if isinstance(error, LookupError):
+                return failure('Esta notícia não foi encontrada.', 404)
             return failure('Não foi possível salvar a notícia. Tente novamente.', 500)
         if kind == 'external':
             session.pop('news_external_draft', None)
         if request.accept_mimetypes.best == 'application/json':
-            return jsonify(success=True, article=article), 201
+            return jsonify(success=True, article=article), 200 if existing else 201
         flash('Notícia publicada! Ela já está disponível na seção Notícias.', 'success')
         return redirect(url_for('admin_dashboard', aba='noticias') + '#tab-noticias')
 
     @app.errorhandler(RequestEntityTooLarge)
     def upload_too_large(error):
-        if request.path == '/admin/noticias':
+        if request.path.startswith('/admin/noticias'):
             return failure('As fotos e o texto devem somar no máximo 5 MB.', 413)
         return 'O arquivo enviado excede o limite de 5 MB.', 413

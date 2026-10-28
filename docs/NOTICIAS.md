@@ -4,6 +4,8 @@ No aplicativo Flask, entre com perfil de administrador, abra **Notícias** e cli
 
 O envio completo aceita até 5 MB. As imagens JPG, PNG e WebP são verificadas, orientadas e convertidas em JPEG com até 2.400 pixels no maior lado, sem metadados. O cadastro não altera as planilhas de energia ou os dados dos beneficiários.
 
+Em **Ver notícias já publicadas**, cada publicação cadastrada pelo painel oferece **Editar** e **Excluir**. A edição abre os dados atuais no formulário e permite alterar título, resumo, texto, link e fotos. Sem enviar novas fotos, as imagens atuais são mantidas. A exclusão pede confirmação e remove a publicação do portal, junto das imagens que não estejam sendo usadas por outra notícia.
+
 ## Matérias de sites externos
 
 Selecione **Notícia de site externo** e cole o link da matéria. O painel busca título, resumo e foto de capa pelos metadados públicos Open Graph/Twitter do site. A busca começa automaticamente ao colar o link ou após uma breve pausa na digitação. Se falhar, escolha **Tentar novamente** ou **Preencher dados manualmente** e informe título, resumo e foto. Confira a prévia, ajuste o título ou o resumo se precisar e clique em **Publicar notícia**. A importação sozinha não publica.

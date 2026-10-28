@@ -14,10 +14,13 @@
   const importToken = document.getElementById('newsImportToken');
   const body = document.getElementById('newsBody');
   const editor = document.getElementById('adminNewsEditor');
+  const list = document.getElementById('adminNewsList');
+  const notice = document.getElementById('adminNewsNotice');
   const publishButton = form.querySelector('[type="submit"]');
-  let urls = [], imported = null, importing = false, importTimer = null, controller = null, version = 0, lastAttempt = '';
+  let urls = [], imported = null, editing = null, importing = false, importTimer = null, controller = null, version = 0, lastAttempt = '';
   const external = () => type.value === 'external';
   const importedCover = () => external() && imported && imported.url === link.value.trim() && imported.images.length > 0;
+  const savedCover = () => editing && editing.images && editing.images.length > 0;
   function message(text, error = false) { status.textContent = text; status.dataset.error = String(error); }
   function cancelImport() {
     clearTimeout(importTimer); importTimer = null; version++;
@@ -44,8 +47,9 @@
       const image = document.createElement('img'); image.src = url; image.alt = `Foto ${i + 1}${i === 0 ? ' (capa)' : ''}`; thumbnails.append(image);
     });
     if (!files.length && importedCover()) { cover.src = imported.images[0].src; cover.hidden = false; }
-    photos.required = !importedCover();
-    document.getElementById('newsPhotosLabel').textContent = importedCover() ? 'Trocar foto de capa (opcional)' : 'Fotos';
+    else if (!files.length && savedCover()) { cover.src = editing.images[0].src; cover.hidden = false; }
+    photos.required = !importedCover() && !savedCover();
+    document.getElementById('newsPhotosLabel').textContent = importedCover() || savedCover() ? 'Trocar fotos (opcional; mantém as atuais se não enviar)' : 'Fotos';
   }
   function updateType() {
     cancelImport(); lastAttempt = ''; importActions.hidden = true; summary.required = false;
@@ -96,6 +100,9 @@
     if (external() && link.value.trim() && link.checkValidity()) importTimer = setTimeout(() => importLink(), delay);
   }
   document.getElementById('openNewsEditor').addEventListener('click', () => {
+    editing = null; imported = null; form.reset(); updateType(); message('');
+    document.getElementById('adminNewsEditorTitle').textContent = 'Nova notícia no portal público';
+    publishButton.textContent = 'Publicar notícia';
     editor.showModal();
     form.querySelector('[data-news-kind]').focus();
     if (external()) scheduleImport(0);
@@ -124,26 +131,70 @@
   });
   link.addEventListener('paste', () => { setTimeout(() => scheduleImport(0), 0); });
   link.addEventListener('change', () => scheduleImport(0));
+  function rowFor(article) {
+    const item = document.createElement('li'); item.dataset.newsId = article.id;
+    const name = document.createElement('strong'); name.textContent = article.title;
+    const detail = document.createElement('span'); detail.textContent = `${article.images.length} foto(s) · `;
+    const site = document.createElement('a'); site.href = '/#noticias'; site.target = '_blank'; site.rel = 'noopener noreferrer'; site.textContent = 'Ver no site ↗';
+    detail.append(site);
+    const actions = document.createElement('div'); actions.className = 'admin-news-item-actions';
+    [['edit', 'Editar', 'btn btn-outline btn-sm'], ['delete', 'Excluir', 'btn btn-signout btn-sm']].forEach(([action, label, className]) => {
+      const button = document.createElement('button'); button.type = 'button'; button.dataset.newsAction = action; button.className = className; button.textContent = label; actions.append(button);
+    });
+    item.append(name, detail, actions); return item;
+  }
+  list.addEventListener('click', async event => {
+    const button = event.target.closest('[data-news-action]');
+    if (!button || form.dataset.staticDemo) return;
+    const item = button.closest('[data-news-id]');
+    if (!item) return;
+    const id = item.dataset.newsId;
+    if (button.dataset.newsAction === 'delete' && !window.confirm(`Excluir a notícia “${item.querySelector('strong').textContent}” do portal público?`)) return;
+    button.disabled = true; notice.dataset.error = 'false';
+    try {
+      if (button.dataset.newsAction === 'edit') {
+        const response = await fetch(`${list.dataset.manageUrl}/${encodeURIComponent(id)}`, { headers: { Accept: 'application/json' }, cache: 'no-store' });
+        const data = await response.json();
+        if (!response.ok || !data.success) throw new Error(data.error || 'Não foi possível abrir a notícia.');
+        cancelImport(); form.reset(); imported = null; editing = data.article;
+        type.value = editing.type; title.value = editing.title; summary.value = editing.summary || '';
+        body.value = (editing.body || []).join('\n\n'); link.value = editing.url || ''; importToken.value = '';
+        updateType(); message('Altere os campos e salve. As fotos atuais serão mantidas se não enviar novas.');
+        document.getElementById('adminNewsEditorTitle').textContent = 'Editar notícia no portal público';
+        publishButton.textContent = 'Salvar alterações';
+        editor.showModal(); title.focus();
+      } else {
+        const payload = new FormData(); payload.set('csrf_token', form.elements.csrf_token.value);
+        const response = await fetch(`${list.dataset.manageUrl}/${encodeURIComponent(id)}/excluir`, { method: 'POST', body: payload, headers: { Accept: 'application/json' } });
+        const data = await response.json();
+        if (!response.ok || !data.success) throw new Error(data.error || 'Não foi possível excluir. Tente novamente.');
+        item.remove(); document.getElementById('adminNewsEmpty').hidden = list.children.length > 0;
+        notice.textContent = 'Notícia excluída do portal público.';
+      }
+    } catch (error) { notice.textContent = error.message || 'Não foi possível concluir. Tente novamente.'; notice.dataset.error = 'true'; }
+    finally { button.disabled = false; }
+  });
   form.addEventListener('submit', async event => {
     event.preventDefault();
     if (form.dataset.staticDemo || importing) return;
     clearTimeout(importTimer);
     const files = Array.from(photos.files);
-    if ((!files.length && !importedCover()) || files.length > 5) { message('Selecione de uma a cinco fotos ou importe a capa pelo link.', true); return; }
+    if ((!files.length && !importedCover() && !savedCover()) || files.length > 5) { message('Selecione de uma a cinco fotos ou importe a capa pelo link.', true); return; }
     if (files.reduce((sum, file) => sum + file.size, 0) > 4.8 * 1024 * 1024) { message('Reduza o tamanho das fotos: o envio completo deve ter até 5 MB.', true); return; }
     publishButton.disabled = true; message('Publicando notícia…');
     try {
-      const response = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+      const endpoint = editing ? `${list.dataset.manageUrl}/${encodeURIComponent(editing.id)}/editar` : form.action;
+      const response = await fetch(endpoint, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
       const data = await response.json();
       if (!response.ok || !data.success) throw new Error(data.error || 'Não foi possível publicar. Tente novamente.');
-      const item = document.createElement('li');
-      const name = document.createElement('strong'); name.textContent = data.article.title;
-      const detail = document.createElement('span'); detail.textContent = `${data.article.images.length} foto(s) · `;
-      const site = document.createElement('a'); site.href = '/#noticias'; site.target = '_blank'; site.rel = 'noopener noreferrer'; site.textContent = 'Ver no site ↗';
-      detail.append(site); item.append(name, detail); document.getElementById('adminNewsList').prepend(item);
+      const item = rowFor(data.article);
+      const current = Array.from(list.children).find(row => row.dataset.newsId === data.article.id);
+      if (current) current.replaceWith(item); else list.prepend(item);
       document.getElementById('adminNewsEmpty').hidden = true;
-      imported = null; form.reset(); updateType(); editor.close();
-      document.getElementById('adminNewsNotice').textContent = 'Notícia publicada! Ela já aparece no portal público, na seção Notícias.';
+      const wasEditing = Boolean(editing);
+      editing = null; imported = null; form.reset(); updateType(); editor.close();
+      notice.dataset.error = 'false';
+      notice.textContent = wasEditing ? 'Notícia atualizada no portal público.' : 'Notícia publicada! Ela já aparece no portal público, na seção Notícias.';
       message('');
     } catch (error) { message(error.message || 'Não foi possível publicar. Tente novamente.', true); }
     finally { publishButton.disabled = false; }

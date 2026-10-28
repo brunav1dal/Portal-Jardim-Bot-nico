@@ -103,6 +103,66 @@ class NewsPublishingTests(unittest.TestCase):
         self.assertEqual(response.status_code, 413)
         self.assertIn('5 MB', response.get_json()['error'])
 
+    def test_edit_preserves_photos_and_creation_date(self):
+        self.login()
+        original = self.post().get_json()['article']
+        response = self.client.post(f'/admin/noticias/{original["id"]}/editar', data={
+            'csrf_token': 'test-csrf', 'titulo': 'Título atualizado', 'resumo': 'Novo resumo',
+            'texto': 'Texto atualizado.'}, headers={'Accept': 'application/json'})
+        self.assertEqual(response.status_code, 200)
+        article = response.get_json()['article']
+        self.assertEqual(article['id'], original['id'])
+        self.assertEqual(article['created_at'], original['created_at'])
+        self.assertIn('updated_at', article)
+        self.assertEqual([image['src'] for image in article['images']], [image['src'] for image in original['images']])
+        self.assertEqual(self.client.get('/api/noticias').get_json()[0]['title'], 'Título atualizado')
+
+    def test_edit_can_replace_photos(self):
+        self.login()
+        original = self.post().get_json()['article']
+        response = self.client.post(f'/admin/noticias/{original["id"]}/editar', data={
+            'csrf_token': 'test-csrf', 'titulo': original['title'], 'texto': 'Texto revisado.',
+            'fotos': (photo(), 'nova-capa.png')}, headers={'Accept': 'application/json'})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.get_json()['article']['images']), 1)
+        self.assertNotEqual(response.get_json()['article']['images'][0]['src'], original['images'][0]['src'])
+
+    def test_edit_and_delete_require_admin_and_csrf(self):
+        self.login()
+        article = self.post().get_json()['article']
+        base = f'/admin/noticias/{article["id"]}'
+        for action in ['editar', 'excluir']:
+            response = self.client.post(base + '/' + action, data={'csrf_token': 'bad'}, headers={'Accept': 'application/json'})
+            self.assertEqual(response.status_code, 403)
+        self.login('cliente')
+        self.assertEqual(self.client.get(base, headers={'Accept': 'application/json'}).status_code, 403)
+        for action in ['editar', 'excluir']:
+            response = self.client.post(base + '/' + action, data={'csrf_token': 'test-csrf'}, headers={'Accept': 'application/json'})
+            self.assertEqual(response.status_code, 403)
+        self.assertEqual(self.client.get('/api/noticias').get_json()[0]['id'], article['id'])
+
+    def test_delete_removes_article_from_feed_and_admin(self):
+        self.login()
+        article = self.post().get_json()['article']
+        base = f'/admin/noticias/{article["id"]}'
+        self.assertEqual(self.client.get(base, headers={'Accept': 'application/json'}).status_code, 200)
+        response = self.client.post(base + '/excluir', data={'csrf_token': 'test-csrf'}, headers={'Accept': 'application/json'})
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(any(item.get('id') == article['id'] for item in self.client.get('/api/noticias').get_json()))
+        self.assertEqual(self.client.get(article['images'][0]['src']).status_code, 404)
+        self.assertEqual(self.client.get(base, headers={'Accept': 'application/json'}).status_code, 404)
+        html = self.client.get('/admin').get_data(as_text=True)
+        self.assertNotIn('data-news-id="' + article['id'] + '"', html)
+
+    def test_invalid_edit_does_not_change_article(self):
+        self.login()
+        original = self.post().get_json()['article']
+        response = self.client.post(f'/admin/noticias/{original["id"]}/editar', data={
+            'csrf_token': 'test-csrf', 'titulo': 'Não deve ser salvo', 'texto': 'Texto.',
+            'fotos': (BytesIO(b'invalid'), 'foto.jpg')}, headers={'Accept': 'application/json'})
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(self.client.get('/api/noticias').get_json()[0]['title'], original['title'])
+
 
 if __name__ == '__main__':
     unittest.main()

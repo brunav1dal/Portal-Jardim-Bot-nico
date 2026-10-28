@@ -115,3 +115,5 @@
   .admin-news-open { padding: 1.2rem; gap: .75rem; }
   .admin-news-open > span:first-child { width: 34px; height: 34px; }
 }
+
+.admin-news-item-actions { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .5rem; }
