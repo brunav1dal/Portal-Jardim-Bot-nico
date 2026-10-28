@@ -7,7 +7,6 @@
 .news-controls[hidden] { display: none; }
 .news-controls button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid var(--glass-border); border-radius: 50%; background: var(--bg-secondary); color: var(--text-primary); font-family: inherit; font-size: 1.1rem; cursor: pointer; }
 .news-controls button:hover { border-color: var(--accent-solar); color: var(--accent-solar); }
-.news-controls button[data-news-pause] { width: auto; min-width: 44px; padding: 0 .85rem; border-radius: 24px; font-size: .72rem; }
 .news-viewport { overflow: hidden; border-radius: var(--radius); background: #1b2d37; touch-action: pan-y; }
 .news-track { display: flex; transition: transform .65s cubic-bezier(.22,.61,.36,1); }
 .news-slide { position: relative; display: flex; align-items: flex-end; flex: 0 0 100%; min-width: 0; min-height: 430px; padding: 2rem; overflow: hidden; isolation: isolate; border: 0; background: #1b2d37; color: white; text-align: left; text-decoration: none; font-family: inherit; cursor: pointer; }
@@ -22,10 +21,6 @@
 .news-slide:hover .news-read { text-decoration: underline; text-underline-offset: 4px; }
 .news-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .75rem; margin-top: .8rem; }
 .news-credit { font-size: .68rem; color: var(--text-muted); }
-.news-dots { display: flex; align-items: center; gap: .3rem; }
-.news-dots button { display: grid; place-items: center; width: 30px; height: 30px; padding: 0; background: transparent; border: 0; cursor: pointer; }
-.news-dots button::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #cbd5e1; transition: width .2s; }
-.news-dots button[aria-current="true"]::after { width: 22px; border-radius: 4px; background: var(--accent-solar); }
 .news-count { margin-right: .6rem; color: var(--text-muted); font-size: .7rem; }
 .news-pagination { display: flex; align-items: center; }
 .history-news button:focus-visible, .news-slide:focus-visible { outline: 3px solid #16a34a; outline-offset: 3px; }
@@ -45,7 +40,7 @@
   .news-photo { object-position: 55% center; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .news-track, .news-dots button::after { transition: none; }
+  .news-track { transition: none; }
 }
 
 .admin-news-intro { margin: -.5rem 0 1.5rem; color: var(--text-secondary); font-size: .9rem; line-height: 1.8; }

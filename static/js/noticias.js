@@ -4,11 +4,9 @@
   const track = carousel.querySelector('.news-track');
   const viewport = carousel.querySelector('.news-viewport');
   const controls = carousel.querySelector('.news-controls');
-  const dots = carousel.querySelector('.news-dots');
   const count = carousel.querySelector('.news-count');
   const credit = carousel.querySelector('.news-credit');
   const status = carousel.querySelector('.news-sr-status');
-  const pause = carousel.querySelector('[data-news-pause]');
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let slides = [], index = 0, timer = null, paused = motion.matches, pointerOver = false, swiped = false;
   function stop() { clearTimeout(timer); timer = null; }
@@ -18,10 +16,6 @@
       timer = setTimeout(() => go(index + 1), 6500);
     }
   }
-  function setPauseLabel() {
-    pause.textContent = paused ? 'Reproduzir' : 'Pausar';
-    pause.setAttribute('aria-label', paused ? 'Iniciar avanço automático das fotos' : 'Pausar avanço automático das fotos');
-  }
   function go(next, manual = false) {
     index = (next + slides.length) % slides.length;
     track.style.transform = `translateX(-${index * 100}%)`;
@@ -29,7 +23,6 @@
       slide.inert = i !== index;
       slide.setAttribute('aria-hidden', String(i !== index));
     });
-    Array.from(dots.children).forEach((dot, i) => dot.setAttribute('aria-current', String(i === index)));
     const current = slides[index];
     count.textContent = `Foto ${current.photo + 1} de ${current.article.images.length}`;
     credit.textContent = current.article.type === 'external' ? `Fonte e fotos: ${current.article.source}` : 'Notícia do projeto';
@@ -101,21 +94,14 @@
       });
       if (!slides.length) return;
       track.replaceChildren(fragment);
-      slides.forEach((slide, i) => {
-        const button = document.createElement('button'); button.type = 'button';
-        button.setAttribute('aria-label', `Mostrar foto ${slide.photo + 1}: ${slide.article.title}`);
-        button.addEventListener('click', () => go(i, true)); dots.append(button);
-      });
       controls.hidden = slides.length < 2;
-      setPauseLabel(); go(0);
+      go(0);
     } catch {
       // Keep the initial article readable and linked when the feed cannot load.
       controls.hidden = true;
     }
   }
-  carousel.querySelector('[data-news-prev]').addEventListener('click', () => { if (slides.length) go(index - 1, true); });
   carousel.querySelector('[data-news-next]').addEventListener('click', () => { if (slides.length) go(index + 1, true); });
-  pause.addEventListener('click', () => { paused = !paused; setPauseLabel(); schedule(); });
   carousel.addEventListener('mouseenter', () => { pointerOver = true; stop(); });
   carousel.addEventListener('mouseleave', () => { pointerOver = false; schedule(); });
   carousel.addEventListener('focusin', stop);
@@ -125,7 +111,7 @@
     event.preventDefault(); go(index + (event.key === 'ArrowRight' ? 1 : -1), true);
   });
   document.addEventListener('visibilitychange', schedule);
-  motion.addEventListener('change', () => { if (motion.matches) paused = true; setPauseLabel(); schedule(); });
+  motion.addEventListener('change', () => { paused = motion.matches; schedule(); });
   let startX = null;
   viewport.addEventListener('pointerdown', event => { if (event.pointerType === 'touch') startX = event.clientX; });
   viewport.addEventListener('pointerup', event => {
