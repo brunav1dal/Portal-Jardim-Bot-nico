@@ -7,10 +7,33 @@
     <source src="{{ url_for('static', filename='video/painel-voz-popular-novo-15s.mp4') }}" type="video/mp4">
   </video>
 
+  <svg class="hero-light-network" viewBox="0 0 1440 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false" fill="none">
+    <defs>
+      <path id="heroLightRoute1" d="M-60 460H200L320 340H640L760 220H1120L1280 60H1500"/>
+      <path id="heroLightRoute2" d="M-40 120H280L440 280H980L1120 420H1500"/>
+      <path id="heroLightRoute3" d="M160-40V150L340 330V650"/>
+      <path id="heroLightRoute4" d="M1180-40V170L980 370V650"/>
+    </defs>
+    <g class="hero-light-lines"><use href="#heroLightRoute1"/><use href="#heroLightRoute2"/><use href="#heroLightRoute3"/><use href="#heroLightRoute4"/></g>
+    <g class="hero-light-stations">
+      <circle cx="200" cy="460" r="3.5"/><circle cx="320" cy="340" r="3.5"/><circle cx="640" cy="340" r="3.5"/><circle cx="760" cy="220" r="3.5"/><circle cx="1120" cy="220" r="3.5"/>
+      <circle cx="280" cy="120" r="3.5"/><circle cx="440" cy="280" r="3.5"/><circle cx="980" cy="280" r="3.5"/><circle cx="1120" cy="420" r="3.5"/>
+      <circle cx="160" cy="150" r="3.5"/><circle cx="340" cy="330" r="3.5"/><circle cx="1180" cy="170" r="3.5"/><circle cx="980" cy="370" r="3.5"/>
+    </g>
+    <g class="hero-light-travelers">
+      <circle r="2.5"><animateMotion dur="22s" repeatCount="indefinite" calcMode="paced"><mpath href="#heroLightRoute1"/></animateMotion></circle>
+      <circle r="2"><animateMotion dur="22s" begin="-11s" repeatCount="indefinite" calcMode="paced"><mpath href="#heroLightRoute1"/></animateMotion></circle>
+      <circle r="2.5"><animateMotion dur="26s" begin="-5s" repeatCount="indefinite" calcMode="paced"><mpath href="#heroLightRoute2"/></animateMotion></circle>
+      <circle r="2"><animateMotion dur="26s" begin="-18s" repeatCount="indefinite" calcMode="paced"><mpath href="#heroLightRoute2"/></animateMotion></circle>
+      <circle r="2"><animateMotion dur="18s" begin="-7s" repeatCount="indefinite" calcMode="paced"><mpath href="#heroLightRoute3"/></animateMotion></circle>
+      <circle r="2"><animateMotion dur="20s" begin="-12s" repeatCount="indefinite" calcMode="paced"><mpath href="#heroLightRoute4"/></animateMotion></circle>
+    </g>
+  </svg>
+
   <h1>Energia Solar Comunitária</h1>
   <p>Energia solar, crédito acessível e a moeda social Orquídea a serviço da comunidade de São Rafael, em João Pessoa (PB).</p>
 </section>
-<script src="{{ url_for('static', filename='js/hero-video.js', v='slow-video-20261028') }}" defer></script>
+<script src="{{ url_for('static', filename='js/hero-video.js', v='light-network-20261028') }}" defer></script>
 
 <div class="container">
   <!-- Indicadores principais -->

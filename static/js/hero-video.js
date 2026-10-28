@@ -2,9 +2,13 @@
   const hero = document.querySelector('.hero-video-banner');
   if (!hero) return;
   const video = hero.querySelector('video');
+  const network = hero.querySelector('.hero-light-network');
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
   function update() {
     hero.classList.toggle('is-paused', video.paused);
+    if (network && typeof network.pauseAnimations === 'function') {
+      if (video.paused) network.pauseAnimations(); else network.unpauseAnimations();
+    }
   }
   async function play() {
     try { await video.play(); } catch { /* Keep the poster when autoplay is unavailable. */ }

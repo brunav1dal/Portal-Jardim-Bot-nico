@@ -1252,3 +1252,11 @@ button.stat-card:hover { transform: translateY(-4px); }
 .navbar.is-over-video .navbar-menu a:focus-visible { outline: 2px solid white; outline-offset: 2px; }
 .hero-video-banner p.hero-demo-note { font-size: .7rem; margin-top: 1rem; color: #d6e0da; }
 @media (prefers-reduced-motion: reduce) { .navbar { transition: none; } }
+
+/* A faint transit-map network sits between the dimmed film and the text. */
+.hero-light-network { position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%; opacity: .32; pointer-events: none; -webkit-mask-image: radial-gradient(ellipse at 50% 48%, rgba(0,0,0,.2), #000 70%); mask-image: radial-gradient(ellipse at 50% 48%, rgba(0,0,0,.2), #000 70%); }
+.hero-light-lines { stroke: #bcebd8; stroke-opacity: .2; stroke-width: 1.15; stroke-linecap: round; stroke-linejoin: round; }
+.hero-light-stations { fill: #122b22; fill-opacity: .5; stroke: #bcebd8; stroke-opacity: .4; stroke-width: 1; }
+.hero-light-travelers { fill: #d0f9e7; filter: drop-shadow(0 0 4px rgba(173,245,209,.7)); }
+.hero-video-banner h1, .hero-video-banner p { z-index: 4; }
+@media (prefers-reduced-motion: reduce) { .hero-light-travelers { display: none; } }
