@@ -165,7 +165,7 @@
       </select>
     </div>
     <p class="admin-economia-intro">
-      Economia real = valor que seria pago sem a economia menos (valor pago à Energisa + doação ao banco - cashback). A doação corresponde a 50% do benefício e o cashback a 25%. Meses e totais usam somente os dados disponíveis na planilha.
+      Economia real = valor que seria pago sem a economia menos (valor pago à concessionária de energia elétrica + doação ao banco - cashback). A doação corresponde a 50% do benefício e o cashback a 25%. Meses e totais usam somente os dados disponíveis na planilha.
     </p>
     <div class="table-card admin-economia-card">
       <div class="admin-economia-scroll">
@@ -174,7 +174,7 @@
           <tr>
             <th>Mês</th>
             <th>Beneficiário</th>
-            <th>Pago à Energisa (R$)</th>
+            <th>Pago à concessionária de energia elétrica (R$)</th>
             <th>Beneficio correspondente (R$)</th>
             <th>Doado ao banco (R$)</th>
             <th>Sem economia (R$)</th>
@@ -225,8 +225,8 @@
       <div class="economia-exemplo">
         <div class="economia-exemplo-heading"><strong>Exemplo ilustrativo</strong><span>Valores arredondados; n&atilde;o s&atilde;o dados reais de um benefici&aacute;rio.</span></div>
         <div class="economia-fluxo">
-          <article><h4>Sem o projeto</h4><p>R$ 40 da Energisa + R$ 100 de benef&iacute;cio</p><strong>R$ 140</strong></article>
-          <article><h4>Com o projeto</h4><p>R$ 40 da Energisa + R$ 50 ao Banco - R$ 25 de cashback</p><strong>R$ 65</strong></article>
+          <article><h4>Sem o projeto</h4><p>R$ 40 da concessionária de energia elétrica + R$ 100 de benef&iacute;cio</p><strong>R$ 140</strong></article>
+          <article><h4>Com o projeto</h4><p>R$ 40 da concessionária de energia elétrica + R$ 50 ao Banco - R$ 25 de cashback</p><strong>R$ 65</strong></article>
           <article class="economia-resultado"><h4>Economia real</h4><p>R$ 140 - R$ 65</p><strong>R$ 75</strong></article>
         </div>
       </div>
@@ -383,7 +383,7 @@
     <div class="table-card">
       <h3>Beneficiários dentro da cota de energia</h3>
       <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:1rem;">
-        Para classificar um mês como dentro da cota, o consumo elegível deve ser igual ou menor que a cota e não pode haver excedente informado para a Energisa. Para tarifa social, os primeiros 80 kWh não entram no consumo elegível. A conta da Energisa também inclui impostos e encargos, por isso o valor total da fatura não é usado para inferir excedente.
+        Para classificar um mês como dentro da cota, o consumo elegível deve ser igual ou menor que a cota e não pode haver excedente informado para a concessionária de energia elétrica. Para tarifa social, os primeiros 80 kWh não entram no consumo elegível. A conta da concessionária de energia elétrica também inclui impostos e encargos, por isso o valor total da fatura não é usado para inferir excedente.
       </p>
       {% if historico_cotas %}
       <div class="filter-bar">
@@ -404,7 +404,7 @@
 
       <h3 style="margin-top:1rem;">Quem ficou dentro da cota</h3>
       <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.5rem;">
-        Cada ponto representa um mês importado. Verde indica consumo elegível dentro da cota e nenhum excedente informado à Energisa; cinza indica dados insuficientes.
+        Cada ponto representa um mês importado. Verde indica consumo elegível dentro da cota e nenhum excedente informado à concessionária de energia elétrica; cinza indica dados insuficientes.
       </p>
       <div class="rank-grid">
         {% for r in residencias_dentro_cota %}
