@@ -1,0 +1,130 @@
+/* Local design: original infographic structure, the consumption cards' visual identity. */
+#como-funciona > .section-heading, #historia > .section-heading { margin-bottom: .9rem; }
+#como-funciona > .section-heading .section-title, #historia > .section-heading .section-title { margin-bottom: .55rem; line-height: 1.35; }
+#como-funciona > .scenario-intro { margin: 0 0 1.5rem; }
+.business-flow { width: 100%; margin: 0 0 2rem; }
+.business-flow-scroll { width: 100%; overflow-x: auto; padding: .3rem; }
+.business-flow-scroll:focus-visible { outline: 2px solid var(--accent-solar); outline-offset: 3px; border-radius: var(--radius); }
+.business-flow-canvas { position: relative; width: 100%; min-width: 1120px; height: 1040px; }
+.business-panel { position: absolute; z-index: 1; box-sizing: border-box; padding: 1.25rem; border: 1px solid rgba(225,235,246,.16); border-radius: var(--radius); color: #f3f6fa; font: inherit; }
+.business-panel header { display: flex; align-items: flex-start; gap: .7rem; margin-bottom: .7rem; }
+.business-number { display: inline-grid; place-items: center; flex: 0 0 31px; width: 31px; height: 31px; border: 1px solid rgba(225,235,246,.27); border-radius: 9px; color: #a7e3d0; font-size: .8rem; font-weight: 600; }
+.business-panel h3 { margin: .15rem 0 0; font-size: 1rem; font-weight: 600; line-height: 1.45; letter-spacing: -.025em; }
+.business-panel > p { position: relative; margin: 0; color: #d1dbe6; font-size: .81rem; line-height: 1.85; }
+.business-panel > p strong { color: #f3f6fa; font-weight: 600; }
+.business-generation { left: 0; top: 0; width: 49%; height: 31%; background: #203847; }
+.business-generation > p { max-width: 57%; }
+.business-panel-art { position: absolute; bottom: 1rem; left: 1.5rem; width: 56%; height: 136px; color: #f8d98a; }
+.business-grid { right: 0; top: 0; width: 49%; height: 39%; background: #293a56; }
+.business-grid header { max-width: 75%; }
+.business-grid > p { margin-left: 2.6rem; max-width: 60%; font-size: .77rem; line-height: 1.8; }
+.business-grid-art { position: absolute; left: 1.2rem; bottom: 1.2rem; width: 62%; height: 100px; color: #bfdbfe; }
+.business-bill { position: absolute; right: 1rem; top: 5.2rem; width: 24%; display: flex; flex-direction: column; gap: .7rem; padding: .75rem; border: 1px solid #8ca7c9; border-radius: 9px; background: #e6edf6; color: #243b5a; transform: rotate(-3deg); }
+.business-bill > span { font-size: .58rem; font-weight: 650; line-height: 1.6; }
+.business-bill small { font-size: .56rem; line-height: 1.65; }
+.business-bill strong { padding: .1rem; border-radius: 5px; background: #f8e7b8; font-size: 1.7rem; font-weight: 600; text-align: center; }
+.business-bill i { height: 20px; background: repeating-linear-gradient(90deg, #334155, #334155 1px, transparent 1px, transparent 3px, #334155 3px, #334155 5px, transparent 5px, transparent 7px); }
+.business-payment { left: 0; top: 34%; width: 28%; height: 31%; background: #203e3b; }
+.business-payment h3 { font-size: .91rem; }
+.business-payment > p { font-size: .79rem; }
+.business-formula { display: flex; justify-content: space-between; align-items: center; gap: .8rem; margin-top: .8rem; padding: .65rem .9rem; border: 1px solid rgba(167,227,208,.24); border-radius: 9px; background: rgba(167,227,208,.07); }
+.business-formula span { font-size: .72rem; color: #c6ded4; }
+.business-formula strong { font-size: 1.7rem; font-weight: 600; letter-spacing: -.03em; color: #a7e3d0; }
+.business-community { position: absolute; z-index: 3; left: 28.5%; top: 24%; width: 33%; text-align: center; }
+.business-community svg { display: block; width: 100%; height: auto; }
+.business-community > div { position: relative; width: 65%; margin: -2.5rem auto 0; padding: .5rem .6rem; border: 1px solid #83b7a0; border-radius: 30px; background: #203e3b; }
+.business-community strong { display: block; color: #edf8f0; font-size: 1.1rem; font-weight: 600; letter-spacing: -.025em; }
+.business-community span { color: #b9d3c6; font-size: .75rem; }
+.business-bank { position: absolute; z-index: 2; left: 36%; top: 60%; width: 25%; color: #376c4b; text-align: center; }
+.business-bank svg { display: block; width: 88%; height: 133px; margin: 0 auto; background: #fff; border-radius: 12px; }
+.business-bank strong { display: block; margin-top: .4rem; font-size: .77rem; font-weight: 600; line-height: 1.6; }
+.business-split { right: 0; top: 42%; width: 37%; height: 57%; background: #42354c; }
+.business-split > p { font-size: .77rem; }
+.business-split-total { width: 55%; margin: .65rem auto 0; padding: .35rem; border: 1px solid rgba(225,235,246,.2); border-radius: 8px; font-size: 1.6rem; font-weight: 600; text-align: center; }
+.business-branches { display: block; width: 100%; height: 32px; }
+.business-split-destinations { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; }
+.business-split-destinations > div { display: flex; flex-direction: column; padding: .85rem .7rem; border: 1px solid rgba(225,235,246,.17); border-radius: 10px; }
+.business-fund { background: rgba(167,227,208,.06); color: #a7e3d0; }
+.business-operation { background: rgba(252,215,139,.06); color: #fcd78b; }
+.business-split-destinations h4 { font-size: .84rem; font-weight: 600; line-height: 1.6; text-align: center; }
+.business-split-destinations h4 span { font-size: .7rem; font-weight: 400; }
+.business-split-destinations svg { width: 70px; height: 58px; margin: .55rem auto; }
+.business-split-destinations p { margin: 0; min-height: 7rem; color: #d1dbe6; font-size: .73rem; line-height: 1.85; }
+.business-split-destinations > div > strong { display: block; margin-top: .5rem; padding: .35rem; border-radius: 6px; background: rgba(255,255,255,.06); font-size: 1.6rem; font-weight: 600; text-align: center; }
+.business-split-destinations small { margin-top: .65rem; font-size: .54rem; line-height: 1.8; text-align: center; letter-spacing: .025em; }
+.business-commerce { left: 0; top: 68%; width: 50%; height: 31%; background: #203e3b; }
+.business-commerce > p { max-width: 66%; }
+.business-commerce-art { position: absolute; bottom: 1.1rem; left: 1.1rem; width: 69%; height: 110px; color: #a7e3d0; }
+.business-label { position: absolute; z-index: 4; padding: .6rem .8rem; border: 1px solid #e4d7b4; border-radius: 10px; background: #fbf4e3; color: #866523; font-size: .75rem; font-weight: 500; line-height: 1.5; text-align: center; }
+.business-energy-label { left: 34%; top: 8%; width: 15%; }
+.business-reference-label { left: 66%; top: 33%; width: 17%; border-color: #ccdbeb; background: #eaf1f9; color: #40648b; }
+.business-cashback-label { left: 43%; top: 82%; width: 17%; border-color: #cbdecf; background: #edf5ee; color: #376c4b; }
+.business-cashback-label strong { display: block; font-size: .95rem; font-weight: 600; }
+.business-flow-links { position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.business-link { stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.business-link-energy { stroke: #c39440; }
+.business-link-grid { stroke: #648bb1; }
+.business-link-money { stroke: #4a9165; }
+.business-flow-particles circle { stroke: white; stroke-width: .65; filter: drop-shadow(0 0 3px rgba(255,255,255,.7)); }
+.business-flow-legend { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; padding: 1rem 1.2rem; margin-top: .5rem; border: 1px solid var(--glass-border); border-radius: 12px; background: #f8faf9; }
+.business-flow-legend > span { display: grid; grid-template-columns: 27px 1fr; gap: .2rem .55rem; align-content: start; }
+.business-flow-legend i { grid-row: 1 / 3; width: 25px; height: 3px; margin-top: .5rem; border-radius: 4px; }
+.business-legend-energy { background: #c39440; }
+.business-legend-grid { background: #648bb1; }
+.business-legend-money { background: #4a9165; }
+.business-flow-legend strong { font-size: .71rem; font-weight: 550; color: var(--text-secondary); }
+.business-flow-legend small { font-size: .65rem; color: var(--text-muted); line-height: 1.7; }
+.project-scenarios-heading h3 { margin: .2rem 0 .4rem; font-size: 1.2rem; font-weight: 600; letter-spacing: -.025em; }
+.project-scenarios-heading p { color: var(--text-secondary); font-size: .82rem; line-height: 1.8; }
+@media (max-width: 640px) { .business-flow-legend { grid-template-columns: minmax(0, 1fr); } }
+@media (prefers-reduced-motion: reduce) { .business-flow-particles { display: none; } }
+
+/* Compact revision: larger copy and reserved space for every illustration. */
+.business-flow-canvas { height: 980px; }
+.business-panel { padding: 1.1rem; }
+.business-panel h3 { font-size: 1.04rem; line-height: 1.4; }
+.business-panel > p { font-size: .86rem; line-height: 1.7; }
+.business-generation { height: 275px; }
+.business-panel-art { height: 118px; bottom: .9rem; }
+.business-grid { height: 355px; }
+.business-grid > p { max-width: 59%; font-size: .84rem; line-height: 1.65; }
+.business-grid-art { left: 24%; bottom: .8rem; width: 47%; height: 94px; }
+.business-bill { top: 4.7rem; right: .9rem; padding: .7rem; gap: .5rem; }
+.business-bill > span { font-size: .65rem; }
+.business-bill small { font-size: .62rem; line-height: 1.6; }
+.business-bill strong { font-size: 1.5rem; }
+.business-reference-label { top: 365px; left: 65%; width: 24%; padding: .5rem .7rem; font-size: .78rem; }
+.business-payment { top: 310px; height: 280px; }
+.business-payment h3 { font-size: .96rem; }
+.business-payment > p { font-size: .85rem; line-height: 1.7; }
+.business-formula { margin-top: .65rem; padding: .5rem .75rem; }
+.business-formula strong { font-size: 1.45rem; }
+.business-community { top: 230px; }
+.business-bank { left: 34%; top: 565px; width: 27%; padding: .75rem; border: 1px solid rgba(167,227,208,.3); border-radius: 14px; background: #243e38; color: #cee5d9; box-shadow: 0 8px 24px rgba(15,23,42,.08); }
+.business-bank svg { width: 100%; height: 143px; background: transparent; border-radius: 0; }
+.business-bank-caption { padding: .65rem .35rem .2rem; border-top: 1px solid rgba(167,227,208,.2); }
+.business-bank-caption strong { margin: 0; font-size: .9rem; font-weight: 600; color: #f1f8f3; line-height: 1.5; }
+.business-bank-caption span { display: block; margin-top: .3rem; color: #c0d8cc; font-size: .64rem; line-height: 1.7; }
+.business-split { top: 420px; height: 550px; }
+.business-split > p { font-size: .82rem; line-height: 1.65; }
+.business-split-total { margin-top: .5rem; font-size: 1.4rem; padding: .3rem; }
+.business-branches { height: 24px; }
+.business-split-destinations { gap: .6rem; }
+.business-split-destinations > div { padding: .7rem .6rem; }
+.business-split-destinations h4 { font-size: .86rem; line-height: 1.5; }
+.business-split-destinations h4 span { font-size: .74rem; }
+.business-split-destinations .business-money-unit { font: inherit; }
+.business-split-destinations svg { height: 42px; margin: .45rem auto; }
+.business-split-destinations p { flex: 1; min-height: 0; font-size: .8rem; line-height: 1.65; }
+.business-split-destinations > div > strong { font-size: 1.3rem; }
+.business-split-destinations small { font-size: .6rem; line-height: 1.7; }
+.business-commerce { top: 620px; width: 32%; height: 350px; }
+.business-commerce > p { max-width: 100%; font-size: .86rem; line-height: 1.7; }
+.business-commerce-art { left: 1rem; bottom: 1.1rem; width: calc(100% - 2rem); height: 108px; }
+.business-cashback-label { top: 850px; left: 37%; width: 23%; font-size: .8rem; }
+.business-energy-label { font-size: .8rem; }
+
+.community-currency-connections { fill: none; stroke: #a7e3d0; stroke-width: 1.6; stroke-opacity: .55; stroke-dasharray: 3 5; stroke-linecap: round; }
+.community-currency-moving { filter: drop-shadow(0 1px 2px rgba(0,0,0,.2)); }
+.community-currency-still { display: none; }
+@media (prefers-reduced-motion: reduce) { .community-currency-moving { display: none; } .community-currency-still { display: inline; } }
