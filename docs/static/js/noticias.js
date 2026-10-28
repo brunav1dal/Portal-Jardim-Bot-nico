@@ -4,11 +4,12 @@
   const track = carousel.querySelector('.news-track');
   const viewport = carousel.querySelector('.news-viewport');
   const controls = carousel.querySelector('.news-controls');
+  const nextButton = carousel.querySelector('[data-news-next]');
   const count = carousel.querySelector('.news-count');
   const credit = carousel.querySelector('.news-credit');
   const status = carousel.querySelector('.news-sr-status');
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let slides = [], index = 0, timer = null, paused = motion.matches, reading = false, swiped = false;
+  let slides = [], articleStarts = [], index = 0, timer = null, paused = motion.matches, reading = false, swiped = false;
   function stop() { clearTimeout(timer); timer = null; }
   function schedule() {
     stop();
@@ -25,7 +26,7 @@
       slide.setAttribute('aria-hidden', String(i !== index));
     });
     const current = slides[index];
-    count.textContent = `Foto ${current.photo + 1} de ${current.article.images.length}`;
+    count.textContent = `Notícia ${current.articleNumber} de ${articleStarts.length} · Foto ${current.photo + 1} de ${current.article.images.length}`;
     credit.textContent = current.article.type === 'external' ? `Fonte e fotos: ${current.article.source}` : 'Notícia do projeto';
     if (manual) status.textContent = `${current.article.title}. ${count.textContent}.`;
     schedule();
@@ -68,7 +69,9 @@
       const articles = await response.json();
       const fragment = document.createDocumentFragment();
       articles.forEach(article => {
-        if (!article.title || !Array.isArray(article.images)) return;
+        if (!article.title || !Array.isArray(article.images) || !article.images.length) return;
+        articleStarts.push(slides.length);
+        const articleNumber = articleStarts.length;
         article.images.forEach((photo, photoIndex) => {
           const slide = document.createElement(article.type === 'external' ? 'a' : 'button');
           slide.className = 'news-slide';
@@ -92,19 +95,24 @@
           const tags = document.createElement('span'); tags.className = 'news-tags';
           tags.textContent = (article.tags || []).map(tag => `#${tag}`).join(' ');
           caption.append(source, title, summary, read, tags); slide.append(image, caption); fragment.append(slide);
-          slides.push({ article, photo: photoIndex });
+          slides.push({ article, photo: photoIndex, articleNumber });
         });
       });
       if (!slides.length) return;
       track.replaceChildren(fragment);
       controls.hidden = slides.length < 2;
+      nextButton.setAttribute('aria-label', articleStarts.length > 1 ? 'Avançar para a próxima notícia' : 'Avançar para a próxima foto da notícia');
       go(0);
     } catch {
       // Keep the initial article readable and linked when the feed cannot load.
       controls.hidden = true;
     }
   }
-  carousel.querySelector('[data-news-next]').addEventListener('click', () => { if (slides.length) go(index + 1, true); });
+  nextButton.addEventListener('click', () => {
+    if (!slides.length) return;
+    const next = articleStarts.length > 1 ? (articleStarts.find(start => start > index) ?? articleStarts[0]) : index + 1;
+    go(next, true);
+  });
   carousel.addEventListener('focusin', event => { if (viewport.contains(event.target) && event.target.matches(':focus-visible')) stop(); else schedule(); });
   carousel.addEventListener('focusout', () => setTimeout(schedule, 0));
   carousel.addEventListener('keydown', event => {
