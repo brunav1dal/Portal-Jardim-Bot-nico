@@ -5,6 +5,7 @@
   const viewport = carousel.querySelector('.news-viewport');
   const controls = carousel.querySelector('.news-controls');
   const nextButton = carousel.querySelector('[data-news-next]');
+  const previousButton = carousel.querySelector('[data-news-prev]');
   const count = carousel.querySelector('.news-count');
   const credit = carousel.querySelector('.news-credit');
   const status = carousel.querySelector('.news-sr-status');
@@ -100,19 +101,23 @@
       });
       if (!slides.length) return;
       track.replaceChildren(fragment);
-      controls.hidden = slides.length < 2;
-      nextButton.setAttribute('aria-label', articleStarts.length > 1 ? 'Avançar para a próxima notícia' : 'Avançar para a próxima foto da notícia');
+      controls.hidden = false;
+      nextButton.disabled = articleStarts.length < 2;
+      previousButton.disabled = articleStarts.length < 2;
       go(0);
     } catch {
       // Keep the initial article readable and linked when the feed cannot load.
       controls.hidden = true;
     }
   }
-  nextButton.addEventListener('click', () => {
-    if (!slides.length) return;
-    const next = articleStarts.length > 1 ? (articleStarts.find(start => start > index) ?? articleStarts[0]) : index + 1;
-    go(next, true);
-  });
+  function changeArticle(direction) {
+    if (articleStarts.length < 2) return;
+    const currentArticle = slides[index].articleNumber - 1;
+    const target = (currentArticle + direction + articleStarts.length) % articleStarts.length;
+    go(articleStarts[target], true);
+  }
+  nextButton.addEventListener('click', () => changeArticle(1));
+  previousButton.addEventListener('click', () => changeArticle(-1));
   carousel.addEventListener('focusin', event => { if (viewport.contains(event.target) && event.target.matches(':focus-visible')) stop(); else schedule(); });
   carousel.addEventListener('focusout', () => setTimeout(schedule, 0));
   carousel.addEventListener('keydown', event => {
