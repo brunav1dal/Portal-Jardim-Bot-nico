@@ -1,5 +1,5 @@
 /* Solar scenarios use the portal's existing typography, palette and surfaces. */
-.scenario-intro { max-width: 760px; margin: -.25rem 0 2rem; color: var(--text-secondary); font-size: .95rem; line-height: 1.8; }
+.scenario-intro { width: 100%; margin: -.25rem 0 2rem; color: var(--text-secondary); font-size: .95rem; line-height: 1.8; }
 .scenario-overview { display: flex; align-items: center; justify-content: space-between; gap: 2rem; padding: 1.75rem 2rem; border: 1px solid var(--glass-border); border-radius: var(--radius); background: var(--gradient-hero); }
 .scenario-eyebrow { display: block; font-size: .65rem; font-weight: 650; letter-spacing: .12em; color: var(--accent-solar); margin-bottom: .7rem; }
 .scenario-overview h3 { font-size: clamp(1.3rem, 2.4vw, 1.8rem); font-weight: 600; letter-spacing: -.04em; line-height: 1.25; }
@@ -46,7 +46,7 @@
 .scenario-result p { font-size: .85rem; font-weight: 550; line-height: 1.6; }
 .scenario-result > span { display: block; margin-top: .35rem; color: var(--text-muted); font-size: .75rem; line-height: 1.7; }
 .scenario-reward { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; margin-top: .65rem; padding: .4rem .7rem; border: 0; border-radius: 7px; background: #eef7ef; color: var(--accent-solar); font-size: .72rem; cursor: pointer; }
-.scenario-footnote { max-width: 850px; margin-top: 1.2rem; font-size: .72rem; color: var(--text-muted); line-height: 1.8; }
+.scenario-footnote { width: 100%; margin-top: 1.2rem; font-size: .72rem; color: var(--text-muted); line-height: 1.8; }
 .scenario-quota:hover, .scenario-balance:hover { border-color: var(--accent-solar); }
 .scenario-legend-item:hover, .scenario-breakdown-row:hover { color: var(--accent-solar); }
 #como-funciona button:focus-visible { outline: 2px solid var(--accent-solar); outline-offset: 4px; }
