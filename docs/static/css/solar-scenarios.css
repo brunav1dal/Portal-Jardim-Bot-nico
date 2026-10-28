@@ -171,3 +171,20 @@
 @media (min-width: 641px) {
   .scenario-intro, .scenario-scale-note, .scenario-footnote, .scenario-legal-note { text-align: justify; }
 }
+
+/* The utility grid and the standalone community panel feed the house independently. */
+.source-active { color: var(--source-color); }
+.source-inactive { color: #99a5b4; }
+.source-connection { opacity: .3; }
+.source-inactive .source-connection { stroke-dasharray: 3 5; opacity: .45; }
+.scenario-source-status { display: grid; gap: .65rem; margin: .25rem 0 .7rem; }
+.source-status { display: flex; align-items: flex-start; gap: .5rem; }
+.source-status-mark { display: inline-grid; place-items: center; flex-shrink: 0; width: 16px; height: 19px; font-size: .6rem; }
+.source-inactive .source-status-mark { font-size: 1.1rem; line-height: 1; }
+.source-status strong { display: block; font-size: .68rem; font-weight: 550; line-height: 1.5; }
+.source-status small { display: block; margin-top: .1rem; font-size: .61rem; line-height: 1.6; color: var(--text-muted); }
+.source-status.source-inactive small { color: #b8c2ce; }
+@keyframes source-energy-arrival { to { stroke-dashoffset: -32; } }
+@media (prefers-reduced-motion: no-preference) {
+  .scenario-visible .source-active .source-flow { animation: source-energy-arrival 1.5s linear infinite; }
+}
