@@ -159,3 +159,9 @@
 .scenario-card .scenario-breakdown-row:has(.scenario-unused) strong { color: #dbe4ef; }
 .scenario-card .scenario-breakdown-row > span:nth-child(2) { flex: 1; min-width: 0; }
 .scenario-card .scenario-breakdown-row strong { flex-shrink: 0; }
+
+.scenario-result { margin-top: 1rem; }
+.scenario-legal-note { width: 100%; margin-top: 1.25rem; color: var(--text-secondary); font-size: .74rem; line-height: 1.85; }
+.scenario-legal-note strong { font-weight: 600; color: var(--text-primary); }
+.scenario-legal-note a, .scenario-legal-source a { color: var(--accent-solar); text-decoration: underline; text-underline-offset: 3px; }
+.solar-dialog .scenario-legal-source { margin-top: 1rem; font-size: .75rem; }
