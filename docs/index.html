@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Banco Comunitário Jardim Botânico - Transparência e gestão de energia solar comunitária">
   <title>Banco Comunitário Jardim Botânico — Transparência</title>
-  <link rel="stylesheet" href="static/css/style.css?v=responsive-header-local-20261028">
+  <link rel="stylesheet" href="static/css/style.css?v=history-gallery-20261028">
   <link rel="stylesheet" href="static/css/solar-scenarios.css?v=scenario-unused-key-20261028">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -13,7 +13,7 @@
   <link rel="icon" type="image/svg+xml" href="static/img/orquidea-icon.svg?v=orange-20261028">
   <link rel="stylesheet" href="static/css/noticias.css?v=news-manage-20261028">
   <script src="static/js/header-glass.js?v=glass-header-20261028" defer></script>
-  <link rel="stylesheet" href="static/css/project-flow.css?v=social-cashback-local-20261028">
+  <link rel="stylesheet" href="static/css/project-flow.css?v=flow-payment-highlight-20261028">
   <script src="static/js/header-menu.js?v=responsive-local-20261028" defer></script>
 </head>
 <body>
@@ -196,15 +196,15 @@
         <defs>
           <marker id="businessArrowEnergy" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#c39440"/></marker>
           <marker id="businessArrowGrid" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#648bb1"/></marker>
-          <marker id="businessArrowMoney" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#4a9165"/></marker>
+          <marker id="businessArrowMoney" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#4a9165"/></marker>
           <path id="businessEnergyPath" d="M433 160Q483 104 532 106H703Q772 106 812 177"/>
           <path id="businessReferencePath" d="M1390 280V298Q1390 337 1338 337H939"/>
-          <path id="businessPaymentPath" d="M455 423Q405 411 405 458V587Q405 646 461 646H551"/>
+          <path id="businessPaymentPath" d="M455 423Q405 411 405 458V587Q405 646 461 646H510"/>
           <path id="businessReturnPath" d="M986 667Q941 663 941 713V767Q941 815 888 815H490"/>
         </defs>
         <use href="#businessEnergyPath" class="business-link business-link-energy" marker-end="url(#businessArrowEnergy)"/>
         <use href="#businessReferencePath" class="business-link business-link-grid" marker-end="url(#businessArrowGrid)"/>
-        <use href="#businessPaymentPath" class="business-link business-link-money" marker-end="url(#businessArrowMoney)"/>
+        <path class="business-link business-link-money business-payment-arrow" d="M455 423Q405 411 405 458V587Q405 646 461 646H510" marker-end="url(#businessArrowMoney)"/>
         <use href="#businessReturnPath" class="business-link business-link-money" marker-end="url(#businessArrowMoney)"/>
         <g class="business-flow-particles">
           <circle r="3.5" fill="#f2ce85"><animateMotion dur="6s" repeatCount="indefinite" calcMode="paced"><mpath href="#businessEnergyPath"/></animateMotion></circle>
@@ -230,9 +230,9 @@
       <div class="business-label business-reference-label">Conta de energia<br>(valor R$ X)</div>
 
       <article class="business-panel business-payment">
-        <header><span class="business-number">3</span><h3>Pagamento ao Banco Comunitário Jardim Botânico</h3></header>
-        <p>A família paga apenas metade do valor R$ X (<strong>R$ X/2</strong>) ao Banco Comunitário Jardim Botânico, via boleto ou outro meio de pagamento.</p>
-        <div class="business-formula"><span>Valor pago</span><strong>R$ X/2</strong></div>
+        <header><span class="business-number">3</span><h3>Pagamento da energia solar</h3></header>
+        <p>A família paga ao Banco Comunitário Jardim Botânico <strong>metade do valor da energia solar calculado no bloco 2</strong>: R$ X/2, em reais, via boleto ou outro meio. O excedente de energia é pago à concessionária.</p>
+        <div class="business-formula"><span>Pago em reais ao banco</span><strong>R$ X/2</strong></div>
       </article>
 
       <div class="business-community">
@@ -333,7 +333,7 @@
         <span class="source-status source-solar source-inactive" style="--source-color:#fcd78b;"><span class="source-status-mark" aria-hidden="true">×</span><span><strong>Orquídea Solar</strong><small>Sem uso neste cenário</small></span></span>
       </div>
     </div></div>
-      <footer class="scenario-result"><p>Uma família consome 70 kWh e é atendida pela Tarifa Social.</p><span>Imagine uma família de baixa renda que tem direito à Tarifa Social. Durante o mês, ela usa 70 kWh para manter a geladeira ligada, acender as luzes e utilizar seus aparelhos. Toda essa energia chega pela rede da concessionária de energia elétrica.</span><span>Como o consumo fica abaixo dos 80 kWh cobertos pelo benefício governamental, <strong>os 70 kWh têm isenção da tarifa de energia</strong>. Nesse exemplo, a família não precisa recorrer é cota solar solidária e não paga ao banco pelo uso de energia solar.</span><span>No programa Orquídea Solar, essa família <strong>ganha 5 Orquídeas</strong> para utilizar no comércio da comunidade. A isenção é sobre a tarifa de energia; a fatura da concessionária ainda pode incluir impostos e outros encargos.</span><button type="button" class="scenario-reward" data-solar-topic="orquideas" aria-haspopup="dialog" aria-controls="solarExplanation"><svg class="scenario-orchid-coin" width="22" height="22" viewBox="0 0 32 32" fill="none" aria-hidden="true" focusable="false"><circle cx="16" cy="16" r="14" fill="#fff7dd" stroke="#b7791f" stroke-width="1.4"/><circle cx="16" cy="16" r="11" stroke="#d6b267" stroke-width=".7"/><g stroke="#7c3d76" stroke-width=".8" stroke-linejoin="round"><path d="M16 15C11 10 11 6 14 7C16 7 17 11 16 15Z" fill="#e9d5e8"/><path d="M16 15C16 9 20 6 21 9C22 11 19 14 16 15Z" fill="#e9d5e8"/><path d="M16 15C21 11 26 13 24 16C22 18 19 16 16 15Z" fill="#f1e3ef"/><path d="M16 15C11 11 6 13 8 16C10 18 13 16 16 15Z" fill="#f1e3ef"/><path d="M16 15C11 15 10 19 13 20L16 18L19 20C22 19 21 15 16 15Z" fill="#d8b4d5"/></g><circle cx="16" cy="16" r="1.6" fill="#b7791f"/><path d="M16 20V25M16 23L20 21" stroke="#58805c" stroke-width="1" stroke-linecap="round"/></svg><span>Ganha <strong>5 Orquídeas</strong></span><span aria-hidden="true">↗</span></button></footer>
+      <footer class="scenario-result"><p>Uma família consome 70 kWh e é atendida pela Tarifa Social.</p><span>Imagine uma família de baixa renda que tem direito à Tarifa Social. Durante o mês, ela usa 70 kWh para manter a geladeira ligada, acender as luzes e utilizar seus aparelhos. Toda essa energia chega pela rede da concessionária de energia elétrica.</span><span>Como o consumo fica abaixo dos 80 kWh cobertos pelo benefício governamental, <strong>os 70 kWh têm isenção da tarifa de energia</strong>. Nesse exemplo, a família não precisa recorrer à cota solar solidária e não paga ao banco pelo uso de energia solar.</span><span>No programa Orquídea Solar, essa família <strong>ganha 5 Orquídeas</strong> para utilizar no comércio da comunidade. A isenção é sobre a tarifa de energia; a fatura da concessionária ainda pode incluir impostos e outros encargos.</span><button type="button" class="scenario-reward" data-solar-topic="orquideas" aria-haspopup="dialog" aria-controls="solarExplanation"><svg class="scenario-orchid-coin" width="22" height="22" viewBox="0 0 32 32" fill="none" aria-hidden="true" focusable="false"><circle cx="16" cy="16" r="14" fill="#fff7dd" stroke="#b7791f" stroke-width="1.4"/><circle cx="16" cy="16" r="11" stroke="#d6b267" stroke-width=".7"/><g stroke="#7c3d76" stroke-width=".8" stroke-linejoin="round"><path d="M16 15C11 10 11 6 14 7C16 7 17 11 16 15Z" fill="#e9d5e8"/><path d="M16 15C16 9 20 6 21 9C22 11 19 14 16 15Z" fill="#e9d5e8"/><path d="M16 15C21 11 26 13 24 16C22 18 19 16 16 15Z" fill="#f1e3ef"/><path d="M16 15C11 11 6 13 8 16C10 18 13 16 16 15Z" fill="#f1e3ef"/><path d="M16 15C11 15 10 19 13 20L16 18L19 20C22 19 21 15 16 15Z" fill="#d8b4d5"/></g><circle cx="16" cy="16" r="1.6" fill="#b7791f"/><path d="M16 20V25M16 23L20 21" stroke="#58805c" stroke-width="1" stroke-linecap="round"/></svg><span>Ganha <strong>5 Orquídeas</strong></span><span aria-hidden="true">↗</span></button></footer>
       <div class="scenario-metrics"><div class="scenario-consumption"><span>Consumo do mês</span><strong>70 <small>kWh</small></strong></div>
       <div class="scenario-bar" style="--scenario-total: 200;" role="group" aria-label="Consumo e benefícios do cenário 1; 100% da energia e dos benefícios representados neste exemplo"><button type="button" class="scenario-segment scenario-social" data-solar-topic="social" aria-haspopup="dialog" aria-controls="solarExplanation" style="grid-column:span 70;" aria-label="Cenário 1: Tarifa social, 70 kWh. Ver explicação"><span>70<small> kWh</small></span></button><button type="button" class="scenario-segment scenario-unused scenario-segment-compact" data-solar-topic="isencao_saldo" aria-haspopup="dialog" aria-controls="solarExplanation" style="grid-column:span 10;" aria-label="Não utilizado. Isenção não utilizada: 10 kWh. Ver explicação" title="Não utilizado — Isenção não utilizada: 10 kWh"><span>10<small> kWh</small></span></button><button type="button" class="scenario-segment scenario-unused" data-solar-topic="saldo" aria-haspopup="dialog" aria-controls="solarExplanation" style="grid-column:span 120;" aria-label="Não utilizado. Saldo de energia solar solidária: 120 kWh. Ver explicação" title="Não utilizado — Saldo de energia solar solidária: 120 kWh"><span>120<small> kWh</small></span></button></div>
       <div class="scenario-breakdown"><button type="button" class="scenario-breakdown-row" data-solar-topic="social" aria-haspopup="dialog" aria-controls="solarExplanation" ><span class="scenario-dot scenario-social"></span><span>Tarifa social</span><strong>70 <small>kWh</small></strong></button><button type="button" class="scenario-breakdown-row" data-solar-topic="isencao_saldo" aria-haspopup="dialog" aria-controls="solarExplanation"><span class="scenario-dot scenario-unused"></span><span>Isenção não utilizada</span><strong>10 <small>kWh</small></strong></button></div></div>
@@ -493,15 +493,21 @@
       <div class="history-coins fade-up">
         <p class="history-coins-caption">A moeda social Orquídea, em suas cinco denominações</p>
         <div class="coins-grid">
-          <img src="static/img/moeda05_1.jpg" alt="Nota da moeda social Orquídea de 0,5">
-          <img src="static/img/moeda1_1.jpg" alt="Nota da moeda social Orquídea de 1">
-          <img src="static/img/moeda2_1.jpg" alt="Nota da moeda social Orquídea de 2">
-          <img src="static/img/moeda5_1.jpg" alt="Nota da moeda social Orquídea de 5">
-          <img src="static/img/moeda10_1.jpg" alt="Nota da moeda social Orquídea de 10">
+          <button type="button" class="coin-preview" aria-haspopup="dialog" aria-controls="historyImageDialog" aria-label="Ampliar: Nota da moeda social Orquídea de 0,5"><img src="static/img/moeda05_1.jpg" alt="Nota da moeda social Orquídea de 0,5"></button>
+          <button type="button" class="coin-preview" aria-haspopup="dialog" aria-controls="historyImageDialog" aria-label="Ampliar: Nota da moeda social Orquídea de 1"><img src="static/img/moeda1_1.jpg" alt="Nota da moeda social Orquídea de 1"></button>
+          <button type="button" class="coin-preview" aria-haspopup="dialog" aria-controls="historyImageDialog" aria-label="Ampliar: Nota da moeda social Orquídea de 2"><img src="static/img/moeda2_1.jpg" alt="Nota da moeda social Orquídea de 2"></button>
+          <button type="button" class="coin-preview" aria-haspopup="dialog" aria-controls="historyImageDialog" aria-label="Ampliar: Nota da moeda social Orquídea de 5"><img src="static/img/moeda5_1.jpg" alt="Nota da moeda social Orquídea de 5"></button>
+          <button type="button" class="coin-preview" aria-haspopup="dialog" aria-controls="historyImageDialog" aria-label="Ampliar: Nota da moeda social Orquídea de 10"><img src="static/img/moeda10_1.jpg" alt="Nota da moeda social Orquídea de 10"></button>
         </div>
       </div>
     </div>
   </section>
+
+  <dialog id="historyImageDialog" class="history-image-dialog" aria-labelledby="historyImageCaption">
+    <button type="button" class="history-image-close" data-close-image aria-label="Fechar imagem ampliada">&#215;</button>
+    <figure><img alt=""><figcaption id="historyImageCaption" data-image-caption></figcaption></figure>
+  </dialog>
+  <script src="static/js/history-gallery.js?v=20261028" defer></script>
 
   <section class="section" id="noticias" aria-labelledby="newsHeading">
     <div class="history-news" data-news-carousel data-news-source="static/noticias.json" role="region" aria-roledescription="carrossel" aria-labelledby="newsHeading">
@@ -904,12 +910,12 @@
       datasets: [{
         label: 'Geração (kWh)',
         data: geracaoMes.map(d => d.geracao_kwh),
-        borderColor: '#16a34a',
-        backgroundColor: 'rgba(22,163,74,0.1)',
+        borderColor: '#35685c',
+        backgroundColor: 'rgba(53,104,92,0.1)',
         fill: true,
         tension: 0.4,
-        pointBackgroundColor: '#16a34a',
-        pointBorderColor: '#16a34a',
+        pointBackgroundColor: '#35685c',
+        pointBorderColor: '#35685c',
         pointRadius: 4,
         pointHoverRadius: 7
       }]
@@ -928,9 +934,10 @@
       labels: geracaoUsina.map(d => d.nome),
       datasets: [{
         data: geracaoUsina.map(d => d.geracao_kwh),
-        backgroundColor: ['#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899'],
-        borderWidth: 0,
-        hoverOffset: 8
+        backgroundColor: geracaoUsina.map((_, index) => ['#35685c', '#66897f', '#94afa4', '#c4d3cc', '#e0e7e3'][index % 5]),
+        borderColor: '#ffffff',
+        borderWidth: 2,
+        hoverOffset: 6
       }]
     },
     options: {
@@ -950,11 +957,11 @@
       datasets: [{
         label: 'CO₂ Evitado (kg)',
         data: geracaoMes.map(d => d.co2_evitado_kg),
-        backgroundColor: 'rgba(16,185,129,0.6)',
-        borderColor: '#10b981',
+        backgroundColor: 'rgba(53,104,92,0.65)',
+        borderColor: '#35685c',
         borderWidth: 1,
         borderRadius: 6,
-        hoverBackgroundColor: 'rgba(16,185,129,0.8)'
+        hoverBackgroundColor: 'rgba(53,104,92,0.85)'
       }]
     },
     options: {

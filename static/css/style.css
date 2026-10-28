@@ -906,7 +906,17 @@ tbody tr:hover { background: var(--glass); }
   z-index: 2;
 }
 
-.coins-grid img:last-child { grid-column: span 2; max-width: 60%; margin: 0 auto; }
+.coins-grid > .coin-preview:last-child { grid-column: span 2; max-width: 60%; margin: 0 auto; }
+.coin-preview { display: block; min-width: 0; padding: 0; border: 0; border-radius: var(--radius-sm); background: transparent; cursor: zoom-in; }
+.coin-preview img { display: block; cursor: zoom-in; }
+.coin-preview:focus-visible { outline: 3px solid var(--accent-warning); outline-offset: 5px; }
+.history-image-dialog { position: fixed; inset: 0; margin: auto; width: min(1080px, calc(100% - 2rem)); max-height: calc(100dvh - 2rem); overflow-y: auto; padding: 3.5rem 1.25rem 1.25rem; border: 1px solid var(--glass-border); border-radius: 16px; background: #f8faf9; color: var(--text-primary); box-shadow: 0 24px 80px rgba(0,0,0,.25); }
+.history-image-dialog::backdrop { background: rgba(10,24,20,.8); backdrop-filter: blur(6px); }
+.history-image-dialog figure { margin: 0; }
+.history-image-dialog img { display: block; width: 100%; max-height: calc(100dvh - 10rem); object-fit: contain; }
+.history-image-dialog figcaption { margin-top: 1rem; text-align: center; font-size: .85rem; }
+.history-image-close { position: absolute; top: .5rem; right: .5rem; display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--glass-border); border-radius: 50%; background: #fff; color: #203e3b; font: 1.6rem/1 sans-serif; cursor: pointer; }
+.history-image-close:focus-visible { outline: 2px solid var(--accent-warning); outline-offset: 2px; }
 
 @media (max-width: 900px) {
   .history-grid { grid-template-columns: 1fr; }

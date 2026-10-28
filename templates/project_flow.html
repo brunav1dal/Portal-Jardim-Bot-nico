@@ -5,15 +5,15 @@
         <defs>
           <marker id="businessArrowEnergy" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#c39440"/></marker>
           <marker id="businessArrowGrid" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#648bb1"/></marker>
-          <marker id="businessArrowMoney" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#4a9165"/></marker>
+          <marker id="businessArrowMoney" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#4a9165"/></marker>
           <path id="businessEnergyPath" d="M433 160Q483 104 532 106H703Q772 106 812 177"/>
           <path id="businessReferencePath" d="M1390 280V298Q1390 337 1338 337H939"/>
-          <path id="businessPaymentPath" d="M455 423Q405 411 405 458V587Q405 646 461 646H551"/>
+          <path id="businessPaymentPath" d="M455 423Q405 411 405 458V587Q405 646 461 646H510"/>
           <path id="businessReturnPath" d="M986 667Q941 663 941 713V767Q941 815 888 815H490"/>
         </defs>
         <use href="#businessEnergyPath" class="business-link business-link-energy" marker-end="url(#businessArrowEnergy)"/>
         <use href="#businessReferencePath" class="business-link business-link-grid" marker-end="url(#businessArrowGrid)"/>
-        <use href="#businessPaymentPath" class="business-link business-link-money" marker-end="url(#businessArrowMoney)"/>
+        <path class="business-link business-link-money business-payment-arrow" d="M455 423Q405 411 405 458V587Q405 646 461 646H510" marker-end="url(#businessArrowMoney)"/>
         <use href="#businessReturnPath" class="business-link business-link-money" marker-end="url(#businessArrowMoney)"/>
         <g class="business-flow-particles">
           <circle r="3.5" fill="#f2ce85"><animateMotion dur="6s" repeatCount="indefinite" calcMode="paced"><mpath href="#businessEnergyPath"/></animateMotion></circle>
@@ -39,9 +39,9 @@
       <div class="business-label business-reference-label">Conta de energia<br>(valor R$ X)</div>
 
       <article class="business-panel business-payment">
-        <header><span class="business-number">3</span><h3>Pagamento ao Banco Comunitário Jardim Botânico</h3></header>
-        <p>A família paga apenas metade do valor R$ X (<strong>R$ X/2</strong>) ao Banco Comunitário Jardim Botânico, via boleto ou outro meio de pagamento.</p>
-        <div class="business-formula"><span>Valor pago</span><strong>R$ X/2</strong></div>
+        <header><span class="business-number">3</span><h3>Pagamento da energia solar</h3></header>
+        <p>A família paga ao Banco Comunitário Jardim Botânico <strong>metade do valor da energia solar calculado no bloco 2</strong>: R$ X/2, em reais, via boleto ou outro meio. O excedente de energia é pago à concessionária.</p>
+        <div class="business-formula"><span>Pago em reais ao banco</span><strong>R$ X/2</strong></div>
       </article>
 
       <div class="business-community">

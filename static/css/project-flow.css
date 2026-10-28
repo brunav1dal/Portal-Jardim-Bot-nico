@@ -94,9 +94,9 @@
 .business-bill small { font-size: .62rem; line-height: 1.6; }
 .business-bill strong { font-size: 1.5rem; }
 .business-reference-label { top: 365px; left: 65%; width: 24%; padding: .5rem .7rem; font-size: .78rem; }
-.business-payment { top: 310px; height: 280px; }
+.business-payment { top: 310px; height: 300px; }
 .business-payment h3 { font-size: .96rem; }
-.business-payment > p { font-size: .85rem; line-height: 1.7; }
+.business-payment > p { font-size: .83rem; line-height: 1.65; }
 .business-formula { margin-top: .65rem; padding: .5rem .75rem; }
 .business-formula strong { font-size: 1.45rem; }
 .business-community { top: 230px; }
@@ -121,7 +121,8 @@
 .business-commerce { top: 620px; width: 32%; height: 350px; }
 .business-commerce > p { max-width: 100%; font-size: .86rem; line-height: 1.7; }
 .business-commerce-art { left: 1rem; bottom: 1.1rem; width: calc(100% - 2rem); height: 108px; }
-.business-cashback-label { top: 850px; left: 37%; width: 23%; font-size: .8rem; }
+.business-cashback-label { top: 850px; left: 37%; width: 23%; font-size: .85rem; border: 2px solid #d97706; background: #fbe1a5; color: #663e0c; box-shadow: 0 5px 18px rgba(180,83,9,.16); }
+.business-cashback-label strong { margin-top: .2rem; font-size: 1.1rem; color: #663e0c; }
 .business-energy-label { font-size: .8rem; }
 
 .community-currency-connections { fill: none; stroke: #a7e3d0; stroke-width: 1.6; stroke-opacity: .55; stroke-dasharray: 3 5; stroke-linecap: round; }
