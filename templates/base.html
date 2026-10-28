@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Banco Comunitário Jardim Botânico - Transparência e gestão de energia solar comunitária">
   <title>{% block title %}Banco Comunitário Jardim Botânico{% endblock %}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v='new-video-dark-20261028') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v='account-menu-20261028') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/solar-scenarios.css', v='sources-art-20261028') }}">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/noticias.css', v='news-prev-next-20261028') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/noticias.css', v='publish-options-20261028') }}">
 </head>
 <body>
   <div class="bg-grid"></div>
@@ -22,25 +22,23 @@
 
       Banco Comunitário Jardim Botânico
     </a>
-    {% if not session.get('user_id') %}
       <div class="navbar-menu" aria-label="Navegação principal">
         <a href="{{ url_for('index') }}#dados">Dados</a>
         <a href="{{ url_for('index') }}#como-funciona">Como funciona</a>
         <a href="{{ url_for('index') }}#historia">Nossa história</a>
         <a href="{{ url_for('index') }}#noticias">Notícias</a>
       </div>
-    {% endif %}
     <div class="navbar-actions">
       {% if session.get('user_id') %}
         {% if session.get('user_tipo') != 'admin' %}
-          <span style="color:var(--text-secondary);font-size:0.85rem;">Olá, {{ session.get('user_nome') }}</span>
+          <span class="navbar-greeting" style="color:var(--text-secondary);font-size:0.85rem;">Olá, {{ session.get('user_nome') }}</span>
         {% endif %}
         {% if session.get('user_tipo') == 'admin' %}
-          <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline btn-sm">Painel</a>
+          <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline btn-sm">Painel administrativo</a>
         {% else %}
-          <a href="{{ url_for('cliente_dashboard') }}" class="btn btn-outline btn-sm">📊 Meu Painel</a>
+          <a href="{{ url_for('cliente_dashboard') }}" class="btn btn-primary btn-sm">Painel do beneficiário</a>
         {% endif %}
-        <a href="{{ url_for('logout') }}" class="btn btn-outline btn-sm">Sair</a>
+        <a href="{{ url_for('logout') }}" class="btn btn-signout btn-sm">Sair</a>
       {% else %}
         <a href="{{ url_for('login') }}" class="btn btn-primary">Entrar</a>
       {% endif %}

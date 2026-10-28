@@ -82,3 +82,11 @@
 .section#noticias .history-news { margin-top: 0; }
 .news-header .section-title { margin: 0; }
 @media (max-width: 768px) { .section#noticias { scroll-margin-top: 160px; } }
+
+.news-publish-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; margin-bottom: 1.4rem; }
+.news-publish-options button { display: flex; flex-direction: column; gap: .45rem; padding: 1rem; border: 1px solid var(--glass-border); border-radius: var(--radius-sm); background: var(--bg-secondary); color: var(--text-primary); text-align: left; font: inherit; cursor: pointer; }
+.news-publish-options strong { font-size: .82rem; font-weight: 600; line-height: 1.5; }
+.news-publish-options span { font-size: .72rem; color: var(--text-secondary); line-height: 1.7; }
+.news-publish-options button[aria-pressed="true"] { border-color: var(--accent-solar); background: #eff8f1; box-shadow: inset 0 0 0 1px var(--accent-solar); }
+.news-publish-options button:focus-visible { outline: 2px solid var(--accent-solar); outline-offset: 3px; }
+@media (max-width: 480px) { .news-publish-options { grid-template-columns: minmax(0, 1fr); } }

@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Banco Comunitário Jardim Botânico - Transparência e gestão de energia solar comunitária">
   <title>Banco Comunitário Jardim Botânico — Administração</title>
-  <link rel="stylesheet" href="static/css/style.css?v=new-video-dark-20261028">
+  <link rel="stylesheet" href="static/css/style.css?v=account-menu-20261028">
   <link rel="stylesheet" href="static/css/solar-scenarios.css?v=sources-art-20261028">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
-  <link rel="stylesheet" href="static/css/noticias.css?v=news-prev-next-20261028">
+  <link rel="stylesheet" href="static/css/noticias.css?v=publish-options-20261028">
 </head>
 <body>
   <div class="bg-grid"></div>
@@ -22,14 +22,19 @@
 
       Banco Comunitário Jardim Botânico
     </a>
-
+      <div class="navbar-menu" aria-label="Navegação principal">
+        <a href="index.html#dados">Dados</a>
+        <a href="index.html#como-funciona">Como funciona</a>
+        <a href="index.html#historia">Nossa história</a>
+        <a href="index.html#noticias">Notícias</a>
+      </div>
     <div class="navbar-actions">
 
 
 
-          <a href="admin.html" class="btn btn-outline btn-sm">Painel</a>
+          <a href="admin.html" class="btn btn-outline btn-sm">Painel administrativo</a>
 
-        <a href="index.html" class="btn btn-outline btn-sm">Sair</a>
+        <a href="index.html" class="btn btn-signout btn-sm">Sair</a>
 
     </div>
   </nav>
@@ -987,7 +992,11 @@
     <form id="adminNewsForm" class="chart-card admin-news-form" method="post" action="#" enctype="multipart/form-data" data-static-demo="true">
       <input type="hidden" name="csrf_token" value="">
       <input type="hidden" name="import_token" id="newsImportToken" value="">
-      <div class="form-group"><label for="newsType">Tipo de notícia</label><select id="newsType" name="tipo"><option value="internal">Notícia própria do projeto</option><option value="external">Notícia de site externo</option></select></div>
+      <input id="newsType" name="tipo" type="hidden" value="internal">
+      <div class="news-publish-options" role="group" aria-label="Escolha como publicar no site">
+        <button type="button" data-news-kind="internal" aria-pressed="true"><strong>Publicar notícia própria</strong><span>Adicione fotos, título e texto completo do projeto.</span></button>
+        <button type="button" data-news-kind="external" aria-pressed="false"><strong>Publicar usando link</strong><span>Importe título e capa de uma matéria de outro site.</span></button>
+      </div>
       <div class="form-group" id="newsExternalFields" hidden><label for="newsExternalUrl">Link da matéria</label><div class="admin-news-link-row"><input id="newsExternalUrl" name="link_externo" type="url" maxlength="1800" placeholder="https://site.com.br/noticia" disabled><button type="button" id="newsImportButton" class="btn btn-outline" data-import-url="/admin/noticias/importar" disabled>Buscar informações</button></div><small>Cole o link para buscar título, resumo e foto de capa. Revise os campos antes de publicar. Se o site não liberar a foto, envie uma abaixo.</small></div>
       <div class="form-group"><label for="newsTitle">Título da notícia</label><input id="newsTitle" name="titulo" type="text" maxlength="160" required placeholder="O que aconteceu na comunidade?"></div>
       <div class="form-group"><label for="newsSummary">Resumo da capa <span>(opcional)</span></label><textarea id="newsSummary" name="resumo" maxlength="280" rows="2" placeholder="Uma frase para apresentar a notícia."></textarea></div>
@@ -1161,7 +1170,7 @@
   </script>
 
 
-<script src="static/js/admin-noticias.js?v=external-import-20261028" defer></script>
+<script src="static/js/admin-noticias.js?v=publish-options-20261028" defer></script>
 <script>
   // ─── Tab Navigation ───
   function showTab(tabName) {

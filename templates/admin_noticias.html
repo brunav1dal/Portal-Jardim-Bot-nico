@@ -8,7 +8,11 @@
     <form id="adminNewsForm" class="chart-card admin-news-form" method="post" action="{{ url_for('publicar_noticia') }}" enctype="multipart/form-data"{% if news_static_export %} data-static-demo="true"{% endif %}>
       <input type="hidden" name="csrf_token" value="{{ news_csrf }}">
       <input type="hidden" name="import_token" id="newsImportToken" value="">
-      <div class="form-group"><label for="newsType">Tipo de notícia</label><select id="newsType" name="tipo"><option value="internal">Notícia própria do projeto</option><option value="external">Notícia de site externo</option></select></div>
+      <input id="newsType" name="tipo" type="hidden" value="internal">
+      <div class="news-publish-options" role="group" aria-label="Escolha como publicar no site">
+        <button type="button" data-news-kind="internal" aria-pressed="true"><strong>Publicar notícia própria</strong><span>Adicione fotos, título e texto completo do projeto.</span></button>
+        <button type="button" data-news-kind="external" aria-pressed="false"><strong>Publicar usando link</strong><span>Importe título e capa de uma matéria de outro site.</span></button>
+      </div>
       <div class="form-group" id="newsExternalFields" hidden><label for="newsExternalUrl">Link da matéria</label><div class="admin-news-link-row"><input id="newsExternalUrl" name="link_externo" type="url" maxlength="1800" placeholder="https://site.com.br/noticia" disabled><button type="button" id="newsImportButton" class="btn btn-outline" data-import-url="{{ url_for('importar_noticia') }}"{% if news_static_export %} disabled{% endif %}>Buscar informações</button></div><small>Cole o link para buscar título, resumo e foto de capa. Revise os campos antes de publicar. Se o site não liberar a foto, envie uma abaixo.</small></div>
       <div class="form-group"><label for="newsTitle">Título da notícia</label><input id="newsTitle" name="titulo" type="text" maxlength="160" required placeholder="O que aconteceu na comunidade?"></div>
       <div class="form-group"><label for="newsSummary">Resumo da capa <span>(opcional)</span></label><textarea id="newsSummary" name="resumo" maxlength="280" rows="2" placeholder="Uma frase para apresentar a notícia."></textarea></div>

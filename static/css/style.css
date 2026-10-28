@@ -1218,3 +1218,25 @@ button.stat-card:hover { transform: translateY(-4px); }
   .hero-video-banner { min-height: 430px; padding: 165px 1.25rem 100px; }
 }
 @media (prefers-reduced-motion: reduce) { .hero-video-banner::before { animation: none; } }
+
+/* Account actions stay separate from the public navigation. */
+.btn-signout { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+.btn-signout:hover { background: #fecaca; border-color: #fca5a5; color: #7f1d1d; }
+.btn-signout:focus-visible { outline: 2px solid #b91c1c; outline-offset: 3px; }
+.navbar-actions > a { white-space: nowrap; }
+@media (max-width: 1400px) {
+  .navbar { height: auto; min-height: 70px; flex-wrap: wrap; gap: .5rem; padding: .6rem 1.25rem; }
+  .navbar-brand { flex: 1; font-size: .9rem; }
+  .navbar-menu { order: 3; width: 100%; margin: 0; justify-content: center; overflow-x: auto; }
+  .navbar-greeting { display: none; }
+  .dashboard { padding-top: 155px; }
+  .section { scroll-margin-top: 150px; }
+}
+@media (max-width: 640px) {
+  .navbar-brand { flex-basis: 100%; justify-content: center; font-size: .7rem; }
+  .navbar-brand .brand-logo { width: 30px; height: 30px; }
+  .navbar-actions { width: 100%; justify-content: center; gap: .6rem; }
+  .navbar-menu { justify-content: flex-start; }
+  .dashboard { padding-top: 200px; }
+  .section { scroll-margin-top: 190px; }
+}

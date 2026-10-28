@@ -40,6 +40,7 @@
   }
   function updateType() {
     const isExternal = external();
+    form.querySelectorAll('[data-news-kind]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.newsKind === type.value)));
     document.getElementById('newsExternalFields').hidden = !isExternal;
     document.getElementById('newsBodyFields').hidden = isExternal;
     link.disabled = !isExternal; link.required = isExternal;
@@ -66,6 +67,10 @@
   }
   title.addEventListener('input', updateText); summary.addEventListener('input', updateText);
   photos.addEventListener('change', updatePhotos); type.addEventListener('change', updateType);
+  form.querySelectorAll('[data-news-kind]').forEach(button => button.addEventListener('click', () => {
+    type.value = button.dataset.newsKind;
+    updateType();
+  }));
   importButton.addEventListener('click', importLink);
   link.addEventListener('input', () => { imported = null; importToken.value = ''; updateText(); updatePhotos(); });
   link.addEventListener('paste', () => setTimeout(importLink, 0));
