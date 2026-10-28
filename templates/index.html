@@ -169,79 +169,40 @@
     </p>
 
     <p style="padding:0.9rem 1rem;border-left:4px solid var(--accent-solar-light);background:rgba(245,158,11,0.10);border-radius:0.5rem;color:var(--text-primary);font-size:0.9rem;line-height:1.6;margin-bottom:1.5rem;">
-      <strong>CEN&Aacute;RIO DEMONSTRATIVO:</strong> Os quatro exemplos abaixo usam uma gera&ccedil;&atilde;o hipot&eacute;tica de 1.000 kWh e uma cota de 12% (120 kWh). S&atilde;o simula&ccedil;&otilde;es para explicar as regras, n&atilde;o representam dados reais de benefici&aacute;rios, faturas ou da usina.
+      <strong>EXEMPLOS ILUSTRATIVOS:</strong> O esquema abaixo usa uma cota solar mensal de 120 kWh para explicar quatro situa&ccedil;&otilde;es de consumo. N&atilde;o representa faturas ou medi&ccedil;&otilde;es reais.
     </p>
 
-    <h3 style="font-family:'Geist', sans-serif;font-size:1.1rem;font-weight:700;margin:0 0 1rem;">Quatro situa&ccedil;&otilde;es poss&iacute;veis</h3>
-    <div class="how-steps">
-      <div class="how-step fade-up">
-        <div class="how-step-num">1</div>
-        <h4>Tarifa social, consumo menor que 80 kWh</h4>
-        <p>Exemplo: consumo de 70 kWh. Ele fica na faixa isenta da tarifa social e n&atilde;o usa energia solar solid&aacute;ria. Os 120 kWh da cota ficam como cr&eacute;dito acumulado, e a pessoa ainda recebe 5 Orqu&iacute;deas. A Energisa pode cobrar impostos e outros encargos.</p>
-      </div>
-      <div class="how-step fade-up">
-        <div class="how-step-num">2</div>
-        <h4>Tarifa social, consumo acima da cota</h4>
-        <p>Exemplo: consumo de 250 kWh. Os primeiros 80 kWh ficam isentos. Dos 170 kWh restantes, até 120 kWh podem ser atendidos pela energia solar solidária; os outros 50 kWh ficam na fatura da Energisa.</p>
-      </div>
-      <div class="how-step fade-up">
-        <div class="how-step-num">3</div>
-        <h4>Sem tarifa social, consumo dentro da cota</h4>
-        <p>Exemplo: consumo de 100 kWh e cota de 120 kWh. A energia solar solidária atende os 100 kWh consumidos; os 20 kWh não usados da cota viram crédito para os meses seguintes. A fatura da Energisa ainda pode incluir impostos e demais cobran&ccedil;as.</p>
-      </div>
-      <div class="how-step fade-up">
-        <div class="how-step-num">4</div>
-        <h4>Consumo acima da cota</h4>
-        <p>Exemplo: consumo de 180 kWh sem tarifa social. A energia solar solidária fica limitada a 120 kWh; os 60 kWh restantes seguem na fatura da Energisa, junto dos impostos e encargos.</p>
+    <h3>Quatro cenários da cota solar mensal</h3>
+    <p class="solar-help">Clique nas barras coloridas ou na legenda para entender cada conceito. No celular, deslize a imagem para os lados.</p>
+    <div class="solar-scroll" role="region" aria-label="Esquema interativo dos quatro cenários solares" tabindex="0">
+      <div class="solar-diagram">
+        <img src="{{ url_for('static', filename='img/cenarios-cota-solar.png') }}" width="1536" height="1024" loading="lazy" alt="Quatro cenários ilustrativos com cota solar de 120 kWh: consumos de 70, 250, 100 e 180 kWh. As barras e a legenda abrem explicações sobre tarifa social, cota solar, excedente e saldo não utilizado.">
+        <button type="button" class="solar-hotspot" data-solar-topic="cota" aria-label="Entender a cota solar mensal de 120 kWh" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:25.0651%;top:1.5625%;width:53.7109%;height:4.8828%;"></button>
+        <button type="button" class="solar-hotspot" data-solar-topic="social" aria-label="Tarifa social: 70 kWh" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:2.0182%;top:43.8477%;width:12.2396%;height:5.6641%;"></button>
+        <button type="button" class="solar-hotspot" data-solar-topic="saldo" aria-label="Cota nao utilizada no primeiro cenario" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:14.3229%;top:43.8477%;width:9.9609%;height:5.6641%;"></button>
+        <button type="button" class="solar-hotspot" data-solar-topic="social" aria-label="Tarifa social: 80 kWh" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:27.5391%;top:43.8477%;width:6.5755%;height:5.6641%;"></button>
+        <button type="button" class="solar-hotspot" data-solar-topic="cota" aria-label="Cota solar: 120 kWh" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:34.1797%;top:43.8477%;width:9.0495%;height:5.6641%;"></button>
+        <button type="button" class="solar-hotspot" data-solar-topic="excedente" aria-label="Excedente: 50 kWh" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:43.2943%;top:43.8477%;width:6.3802%;height:5.6641%;"></button>
+        <button type="button" class="solar-hotspot" data-solar-topic="saldo" aria-label="Cota nao utilizada: 20 kWh" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:52.4089%;top:43.8477%;width:6.5755%;height:5.6641%;"></button>
+        <button type="button" class="solar-hotspot" data-solar-topic="cota" aria-label="Cota solar: 100 kWh" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:59.0495%;top:43.8477%;width:9.5703%;height:5.6641%;"></button>
+        <button type="button" class="solar-hotspot" data-solar-topic="saldo" aria-label="Saldo indicado como zero" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:68.6849%;top:43.8477%;width:5.5339%;height:5.6641%;"></button>
+        <button type="button" class="solar-hotspot" data-solar-topic="saldo" aria-label="Saldo indicado como zero" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:76.8880%;top:43.8477%;width:6.1198%;height:5.6641%;"></button>
+        <button type="button" class="solar-hotspot" data-solar-topic="cota" aria-label="Cota solar: 120 kWh" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:83.0729%;top:43.8477%;width:8.7891%;height:5.6641%;"></button>
+        <button type="button" class="solar-hotspot" data-solar-topic="excedente" aria-label="Excedente: 60 kWh" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:91.9271%;top:43.8477%;width:6.4453%;height:5.6641%;"></button>
+        <button type="button" class="solar-hotspot" data-solar-topic="orquideas" aria-label="Entender a recompensa de 5 Orquideas" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:1.4974%;top:69.4336%;width:23.1120%;height:17.1875%;"></button>
+        <button type="button" class="solar-hotspot" data-solar-topic="social" aria-label="O que e tarifa social?" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:2.3438%;top:90.7227%;width:20.8984%;height:4.4922%;"></button>
+        <button type="button" class="solar-hotspot" data-solar-topic="cota" aria-label="O que e cota solar?" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:24.0885%;top:90.7227%;width:27.7995%;height:4.4922%;"></button>
+        <button type="button" class="solar-hotspot" data-solar-topic="excedente" aria-label="O que e excedente?" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:52.8646%;top:90.7227%;width:28.9062%;height:4.4922%;"></button>
+        <button type="button" class="solar-hotspot" data-solar-topic="saldo" aria-label="O que e cota nao utilizada?" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:82.6823%;top:90.7227%;width:15.6250%;height:4.4922%;"></button>
       </div>
     </div>
-
-    <div class="table-card" style="margin-top:1.5rem;">
-      <div style="overflow-x:auto;">
-        <table>
-          <thead>
-            <tr>
-              <th>Simula&ccedil;&atilde;o</th>
-              <th>Tarifa social</th>
-              <th>Consumo</th>
-              <th>Cota m&aacute;xima</th>
-              <th>Faixa isenta</th>
-              <th>Consumo eleg&iacute;vel</th>
-              <th>Energia solar solid&aacute;ria</th>
-              <th>Cr&eacute;dito da cota n&atilde;o usada</th>
-              <th>Excedente na Energisa</th>
-              <th>Recompensa</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>1</td><td>Sim</td><td>70 kWh</td><td>120 kWh</td><td>80 kWh</td><td>0 kWh</td><td>0 kWh</td><td>120 kWh</td><td>0 kWh</td><td>5 Orqu&iacute;deas</td></tr>
-            <tr><td>2</td><td>Sim</td><td>250 kWh</td><td>120 kWh</td><td>80 kWh</td><td>170 kWh</td><td>120 kWh</td><td>0 kWh</td><td>50 kWh</td><td>&mdash;</td></tr>
-            <tr><td>3</td><td>N&atilde;o</td><td>100 kWh</td><td>120 kWh</td><td>N&atilde;o se aplica</td><td>100 kWh</td><td>100 kWh</td><td>20 kWh</td><td>0 kWh</td><td>&mdash;</td></tr>
-            <tr><td>4</td><td>N&atilde;o</td><td>180 kWh</td><td>120 kWh</td><td>N&atilde;o se aplica</td><td>180 kWh</td><td>120 kWh</td><td>0 kWh</td><td>60 kWh</td><td>&mdash;</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p style="font-size:0.78rem;color:var(--text-muted);margin-top:1rem;">
-        * Cen&aacute;rio demonstrativo; n&atilde;o s&atilde;o dados reais. Cr&eacute;dito ilustrado = cota m&aacute;xima menos energia solar solid&aacute;ria usada. Excedente = consumo eleg&iacute;vel acima da cota. A Energisa pode cobrar impostos e encargos em todos os cen&aacute;rios.
-      </p>
-    </div>
-
-    <div class="how-readout">
-      <div class="how-readout-item fade-up">
-        <span class="how-readout-name">Tarifa social</span>
-        Os primeiros 80 kWh são isentos pela concessionária. O consumo acima disso pode ser atendido pela energia solar solidária, respeitando a cota individual.
-      </div>
-      <div class="how-readout-item fade-up">
-        <span class="how-readout-name">Sem tarifa social</span>
-        Também recebe o benefício calculado; metade é destinada ao projeto e um quarto retorna como cashback.
-      </div>
-      <div class="how-readout-item fade-up">
-        <span class="how-readout-name">Acima da cota</span>
-        O excedente não é atendido pela energia solar solidária e permanece na fatura da Energisa, junto dos impostos e demais cobranças.
-      </div>
-
-
-    </div>
+    <p class="solar-help">Esquema ilustrativo fornecido para explicar o programa. Para entender o saldo do primeiro cenário, clique na barra cinza.</p>
+    <dialog id="solarExplanation" class="solar-dialog" aria-labelledby="solarExplanationTitle" aria-describedby="solarExplanationText">
+      <button type="button" class="solar-close" aria-label="Fechar explicação">×</button>
+      <h3 id="solarExplanationTitle"></h3>
+      <p id="solarExplanationText"></p>
+    </dialog>
+    <script src="{{ url_for('static', filename='js/cenarios-solares.js') }}" defer></script>
   </section>
 </div>
 {% endblock %}
