@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Banco Comunitário Jardim Botânico - Transparência e gestão de energia solar comunitária">
   <title>Banco Comunitário Jardim Botânico — Transparência</title>
-  <link rel="stylesheet" href="static/css/style.css?v=solar-reward-20261028">
-  <link rel="stylesheet" href="static/css/solar-scenarios.css?v=reward-20261028">
+  <link rel="stylesheet" href="static/css/style.css?v=solar-houses-20261028">
+  <link rel="stylesheet" href="static/css/solar-scenarios.css?v=houses-20261028">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -204,24 +204,25 @@
     <div class="scenario-grid"><article class="scenario-card" aria-labelledby="scenarioTitle1">
       <header class="scenario-card-header"><span class="scenario-number">01</span><span class="scenario-category">Com tarifa social</span></header>
       <h4 id="scenarioTitle1">Consumo na faixa social</h4>
-      <svg class="scenario-art" viewBox="0 0 360 140" fill="none" aria-hidden="true" focusable="false">
-      <path d="M20 120H340" stroke="currentColor" opacity=".12"/>
-      <circle cx="286" cy="38" r="24" fill="currentColor" opacity=".05"/>
-      <g class="scenario-sun" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-        <circle cx="286" cy="38" r="10" fill="currentColor" fill-opacity=".08"/>
-        <path d="M286 18V14M286 62V58M266 38H262M310 38H306M272 24L269 21M303 55L300 52M272 52L269 55M303 21L300 24"/>
-      </g>
-      <path d="M88 120V72L143 33L198 72V120" fill="white" stroke="currentColor" stroke-opacity=".45" stroke-width="1.8" stroke-linejoin="round"/>
-      <path d="M78 74L143 27L208 74" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M136 120V91H155V120" stroke="currentColor" stroke-opacity=".5" stroke-width="1.6"/>
-      <rect x="102" y="83" width="18" height="18" rx="3" fill="currentColor" fill-opacity=".07" stroke="currentColor" stroke-opacity=".3"/>
-      <path d="M140 41L177 67H144L119 50L132 41H140Z" fill="currentColor" fill-opacity=".13" stroke="currentColor" stroke-width="1.3"/>
-      <path d="M135 43L163 66M127 48L151 66M134 54H157M142 60H167" stroke="currentColor" stroke-opacity=".55"/>
-      <path class="scenario-energy" d="M265 58Q238 88 204 66" stroke="currentColor" stroke-width="1.8" stroke-dasharray="4 7" stroke-linecap="round"/>
-      <circle cx="236" cy="108" r="12" fill="currentColor" fill-opacity=".07"/>
-      <path d="M238 100L231 109H237L234 116L242 106H236L238 100Z" fill="currentColor"/>
-      <path d="M54 119V106M47 108Q38 88 53 79Q70 89 61 105" stroke="currentColor" stroke-opacity=".4" stroke-width="1.8" stroke-linecap="round"/>
-    </svg>
+      <div class="scenario-house-scene" data-consumption="70" data-usage-level="1">
+      <svg class="scenario-art" viewBox="0 0 320 190" fill="none" role="img" aria-label="Casa com consumo de 70 kWh: 1 de quatro janelas iluminadas para comparação visual.">
+        <ellipse cx="156" cy="151" rx="104" ry="12" fill="currentColor" opacity=".04"/>
+        <path d="M32 154H288" stroke="currentColor" opacity=".18" stroke-linecap="round"/>
+        <circle cx="65" cy="46" r="22" fill="currentColor" opacity=".035"/>
+        <g class="scenario-sun" stroke="#f8d98a" stroke-width="1.5" stroke-linecap="round"><circle cx="65" cy="46" r="9"/><path d="M65 29V25M65 67V63M48 46H44M86 46H82M53 34L50 31M80 61L77 58M53 58L50 61M80 31L77 34"/></g>
+        <path d="M100 150V70L151 34L202 70V150Z" fill="currentColor" fill-opacity=".04" stroke="currentColor" stroke-opacity=".65" stroke-width="1.6"/>
+        <path d="M89 73L151 28L213 73" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M185 45V27H195V53" stroke="currentColor" stroke-opacity=".5" stroke-width="1.5"/>
+        <rect class="house-window is-lit" x="120" y="78" width="22" height="24" rx="3"/><path d="M131 78V102M120 90H142" stroke="#0f2330" stroke-opacity=".4" stroke-width="1"/><rect class="house-window" x="156" y="78" width="22" height="24" rx="3"/><path d="M167 78V102M156 90H178" stroke="#0f2330" stroke-opacity=".4" stroke-width="1"/><rect class="house-window" x="120" y="111" width="22" height="24" rx="3"/><path d="M131 111V135M120 123H142" stroke="#0f2330" stroke-opacity=".4" stroke-width="1"/><rect class="house-window" x="156" y="111" width="22" height="24" rx="3"/><path d="M167 111V135M156 123H178" stroke="#0f2330" stroke-opacity=".4" stroke-width="1"/>
+        <path d="M183 150V119H194V150" stroke="currentColor" stroke-opacity=".5" stroke-width="1.3"/>
+        <path d="M60 150V134M52 136C43 123 48 116 58 117C69 117 73 129 65 136" stroke="currentColor" stroke-opacity=".4" stroke-width="1.5" stroke-linecap="round"/>
+        <rect x="243" y="64" width="30" height="83" rx="7" stroke="currentColor" stroke-opacity=".2"/>
+        <rect x="250" y="128" width="16" height="11" rx="3" fill="#f8d98a" opacity="1"/><rect x="250" y="110" width="16" height="11" rx="3" fill="currentColor" opacity="0.12"/><rect x="250" y="92" width="16" height="11" rx="3" fill="currentColor" opacity="0.12"/><rect x="250" y="74" width="16" height="11" rx="3" fill="currentColor" opacity="0.12"/>
+        <path class="scenario-energy" d="M210 111H239" stroke="#f8d98a" stroke-width="1.8" stroke-dasharray="3 5" stroke-linecap="round"/>
+        <path d="M58 93L52 103H58L55 111L64 100H58L61 93Z" fill="currentColor" opacity=".55"/>
+      </svg>
+      <span class="scenario-usage-caption"><span class="scenario-usage-dot"></span>Menor consumo</span>
+    </div>
       <div class="scenario-consumption"><span>Consumo do mês</span><strong>70 <small>kWh</small></strong></div>
       <div class="scenario-bar" role="group" aria-label="Distribuição dos 70 kWh do cenário 1"><button type="button" class="scenario-segment scenario-social" data-solar-topic="social" aria-haspopup="dialog" aria-controls="solarExplanation" style="flex-grow:70;" aria-label="Cenário 1: Tarifa social, 70 kWh. Ver explicação"><span>70<small> kWh</small></span></button></div>
       <div class="scenario-breakdown"><button type="button" class="scenario-breakdown-row" data-solar-topic="social" aria-haspopup="dialog" aria-controls="solarExplanation" ><span class="scenario-dot scenario-social"></span><span>Tarifa social</span><strong>70 <small>kWh</small></strong></button></div>
@@ -230,24 +231,25 @@
     </article><article class="scenario-card" aria-labelledby="scenarioTitle2">
       <header class="scenario-card-header"><span class="scenario-number">02</span><span class="scenario-category">Com tarifa social</span></header>
       <h4 id="scenarioTitle2">Consumo acima dos benefícios</h4>
-      <svg class="scenario-art" viewBox="0 0 360 140" fill="none" aria-hidden="true" focusable="false">
-      <path d="M20 120H340" stroke="currentColor" opacity=".12"/>
-      <circle cx="286" cy="38" r="24" fill="currentColor" opacity=".05"/>
-      <g class="scenario-sun" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-        <circle cx="286" cy="38" r="10" fill="currentColor" fill-opacity=".08"/>
-        <path d="M286 18V14M286 62V58M266 38H262M310 38H306M272 24L269 21M303 55L300 52M272 52L269 55M303 21L300 24"/>
-      </g>
-      <path d="M88 120V72L143 33L198 72V120" fill="white" stroke="currentColor" stroke-opacity=".45" stroke-width="1.8" stroke-linejoin="round"/>
-      <path d="M78 74L143 27L208 74" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M136 120V91H155V120" stroke="currentColor" stroke-opacity=".5" stroke-width="1.6"/>
-      <rect x="102" y="83" width="18" height="18" rx="3" fill="currentColor" fill-opacity=".07" stroke="currentColor" stroke-opacity=".3"/>
-      <path d="M140 41L177 67H144L119 50L132 41H140Z" fill="currentColor" fill-opacity=".13" stroke="currentColor" stroke-width="1.3"/>
-      <path d="M135 43L163 66M127 48L151 66M134 54H157M142 60H167" stroke="currentColor" stroke-opacity=".55"/>
-      <path class="scenario-energy" d="M265 58Q238 88 204 66" stroke="currentColor" stroke-width="1.8" stroke-dasharray="4 7" stroke-linecap="round"/>
-      <circle cx="236" cy="108" r="12" fill="currentColor" fill-opacity=".07"/>
-      <path d="M238 100L231 109H237L234 116L242 106H236L238 100Z" fill="currentColor"/>
-      <path d="M54 119V106M47 108Q38 88 53 79Q70 89 61 105" stroke="currentColor" stroke-opacity=".4" stroke-width="1.8" stroke-linecap="round"/>
-    </svg>
+      <div class="scenario-house-scene" data-consumption="250" data-usage-level="4">
+      <svg class="scenario-art" viewBox="0 0 320 190" fill="none" role="img" aria-label="Casa com consumo de 250 kWh: 4 de quatro janelas iluminadas para comparação visual.">
+        <ellipse cx="156" cy="151" rx="104" ry="12" fill="currentColor" opacity=".04"/>
+        <path d="M32 154H288" stroke="currentColor" opacity=".18" stroke-linecap="round"/>
+        <circle cx="65" cy="46" r="22" fill="currentColor" opacity=".035"/>
+        <g class="scenario-sun" stroke="#f8d98a" stroke-width="1.5" stroke-linecap="round"><circle cx="65" cy="46" r="9"/><path d="M65 29V25M65 67V63M48 46H44M86 46H82M53 34L50 31M80 61L77 58M53 58L50 61M80 31L77 34"/></g>
+        <path d="M100 150V70L151 34L202 70V150Z" fill="currentColor" fill-opacity=".04" stroke="currentColor" stroke-opacity=".65" stroke-width="1.6"/>
+        <path d="M89 73L151 28L213 73" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M185 45V27H195V53" stroke="currentColor" stroke-opacity=".5" stroke-width="1.5"/>
+        <rect class="house-window is-lit" x="120" y="78" width="22" height="24" rx="3"/><path d="M131 78V102M120 90H142" stroke="#0f2330" stroke-opacity=".4" stroke-width="1"/><rect class="house-window is-lit" x="156" y="78" width="22" height="24" rx="3"/><path d="M167 78V102M156 90H178" stroke="#0f2330" stroke-opacity=".4" stroke-width="1"/><rect class="house-window is-lit" x="120" y="111" width="22" height="24" rx="3"/><path d="M131 111V135M120 123H142" stroke="#0f2330" stroke-opacity=".4" stroke-width="1"/><rect class="house-window is-lit" x="156" y="111" width="22" height="24" rx="3"/><path d="M167 111V135M156 123H178" stroke="#0f2330" stroke-opacity=".4" stroke-width="1"/>
+        <path d="M183 150V119H194V150" stroke="currentColor" stroke-opacity=".5" stroke-width="1.3"/>
+        <path d="M60 150V134M52 136C43 123 48 116 58 117C69 117 73 129 65 136" stroke="currentColor" stroke-opacity=".4" stroke-width="1.5" stroke-linecap="round"/>
+        <rect x="243" y="64" width="30" height="83" rx="7" stroke="currentColor" stroke-opacity=".2"/>
+        <rect x="250" y="128" width="16" height="11" rx="3" fill="#f8d98a" opacity="1"/><rect x="250" y="110" width="16" height="11" rx="3" fill="#f8d98a" opacity="1"/><rect x="250" y="92" width="16" height="11" rx="3" fill="#f8d98a" opacity="1"/><rect x="250" y="74" width="16" height="11" rx="3" fill="#f8d98a" opacity="1"/>
+        <path class="scenario-energy" d="M210 111H239" stroke="#f8d98a" stroke-width="1.8" stroke-dasharray="3 5" stroke-linecap="round"/>
+        <path d="M58 93L52 103H58L55 111L64 100H58L61 93Z" fill="currentColor" opacity=".55"/>
+      </svg>
+      <span class="scenario-usage-caption"><span class="scenario-usage-dot"></span>Maior consumo</span>
+    </div>
       <div class="scenario-consumption"><span>Consumo do mês</span><strong>250 <small>kWh</small></strong></div>
       <div class="scenario-bar" role="group" aria-label="Distribuição dos 250 kWh do cenário 2"><button type="button" class="scenario-segment scenario-social" data-solar-topic="social" aria-haspopup="dialog" aria-controls="solarExplanation" style="flex-grow:80;" aria-label="Cenário 2: Tarifa social, 80 kWh. Ver explicação"><span>80<small> kWh</small></span></button><button type="button" class="scenario-segment scenario-solar" data-solar-topic="cota" aria-haspopup="dialog" aria-controls="solarExplanation" style="flex-grow:120;" aria-label="Cenário 2: Cota solar, 120 kWh. Ver explicação"><span>120<small> kWh</small></span></button><button type="button" class="scenario-segment scenario-excess" data-solar-topic="excedente" aria-haspopup="dialog" aria-controls="solarExplanation" style="flex-grow:50;" aria-label="Cenário 2: Excedente, 50 kWh. Ver explicação"><span>50<small> kWh</small></span></button></div>
       <div class="scenario-breakdown"><button type="button" class="scenario-breakdown-row" data-solar-topic="social" aria-haspopup="dialog" aria-controls="solarExplanation" ><span class="scenario-dot scenario-social"></span><span>Tarifa social</span><strong>80 <small>kWh</small></strong></button><button type="button" class="scenario-breakdown-row" data-solar-topic="cota" aria-haspopup="dialog" aria-controls="solarExplanation" ><span class="scenario-dot scenario-solar"></span><span>Cota solar</span><strong>120 <small>kWh</small></strong></button><button type="button" class="scenario-breakdown-row" data-solar-topic="excedente" aria-haspopup="dialog" aria-controls="solarExplanation" ><span class="scenario-dot scenario-excess"></span><span>Excedente</span><strong>50 <small>kWh</small></strong></button></div>
@@ -256,24 +258,25 @@
     </article><article class="scenario-card" aria-labelledby="scenarioTitle3">
       <header class="scenario-card-header"><span class="scenario-number">03</span><span class="scenario-category">Sem tarifa social</span></header>
       <h4 id="scenarioTitle3">Consumo dentro da cota</h4>
-      <svg class="scenario-art" viewBox="0 0 360 140" fill="none" aria-hidden="true" focusable="false">
-      <path d="M20 120H340" stroke="currentColor" opacity=".12"/>
-      <circle cx="286" cy="38" r="24" fill="currentColor" opacity=".05"/>
-      <g class="scenario-sun" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-        <circle cx="286" cy="38" r="10" fill="currentColor" fill-opacity=".08"/>
-        <path d="M286 18V14M286 62V58M266 38H262M310 38H306M272 24L269 21M303 55L300 52M272 52L269 55M303 21L300 24"/>
-      </g>
-      <path d="M88 120V72L143 33L198 72V120" fill="white" stroke="currentColor" stroke-opacity=".45" stroke-width="1.8" stroke-linejoin="round"/>
-      <path d="M78 74L143 27L208 74" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M136 120V91H155V120" stroke="currentColor" stroke-opacity=".5" stroke-width="1.6"/>
-      <rect x="102" y="83" width="18" height="18" rx="3" fill="currentColor" fill-opacity=".07" stroke="currentColor" stroke-opacity=".3"/>
-      <path d="M140 41L177 67H144L119 50L132 41H140Z" fill="currentColor" fill-opacity=".13" stroke="currentColor" stroke-width="1.3"/>
-      <path d="M135 43L163 66M127 48L151 66M134 54H157M142 60H167" stroke="currentColor" stroke-opacity=".55"/>
-      <path class="scenario-energy" d="M265 58Q238 88 204 66" stroke="currentColor" stroke-width="1.8" stroke-dasharray="4 7" stroke-linecap="round"/>
-      <circle cx="236" cy="108" r="12" fill="currentColor" fill-opacity=".07"/>
-      <path d="M238 100L231 109H237L234 116L242 106H236L238 100Z" fill="currentColor"/>
-      <path d="M54 119V106M47 108Q38 88 53 79Q70 89 61 105" stroke="currentColor" stroke-opacity=".4" stroke-width="1.8" stroke-linecap="round"/>
-    </svg>
+      <div class="scenario-house-scene" data-consumption="100" data-usage-level="2">
+      <svg class="scenario-art" viewBox="0 0 320 190" fill="none" role="img" aria-label="Casa com consumo de 100 kWh: 2 de quatro janelas iluminadas para comparação visual.">
+        <ellipse cx="156" cy="151" rx="104" ry="12" fill="currentColor" opacity=".04"/>
+        <path d="M32 154H288" stroke="currentColor" opacity=".18" stroke-linecap="round"/>
+        <circle cx="65" cy="46" r="22" fill="currentColor" opacity=".035"/>
+        <g class="scenario-sun" stroke="#f8d98a" stroke-width="1.5" stroke-linecap="round"><circle cx="65" cy="46" r="9"/><path d="M65 29V25M65 67V63M48 46H44M86 46H82M53 34L50 31M80 61L77 58M53 58L50 61M80 31L77 34"/></g>
+        <path d="M100 150V70L151 34L202 70V150Z" fill="currentColor" fill-opacity=".04" stroke="currentColor" stroke-opacity=".65" stroke-width="1.6"/>
+        <path d="M89 73L151 28L213 73" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M185 45V27H195V53" stroke="currentColor" stroke-opacity=".5" stroke-width="1.5"/>
+        <rect class="house-window is-lit" x="120" y="78" width="22" height="24" rx="3"/><path d="M131 78V102M120 90H142" stroke="#0f2330" stroke-opacity=".4" stroke-width="1"/><rect class="house-window is-lit" x="156" y="78" width="22" height="24" rx="3"/><path d="M167 78V102M156 90H178" stroke="#0f2330" stroke-opacity=".4" stroke-width="1"/><rect class="house-window" x="120" y="111" width="22" height="24" rx="3"/><path d="M131 111V135M120 123H142" stroke="#0f2330" stroke-opacity=".4" stroke-width="1"/><rect class="house-window" x="156" y="111" width="22" height="24" rx="3"/><path d="M167 111V135M156 123H178" stroke="#0f2330" stroke-opacity=".4" stroke-width="1"/>
+        <path d="M183 150V119H194V150" stroke="currentColor" stroke-opacity=".5" stroke-width="1.3"/>
+        <path d="M60 150V134M52 136C43 123 48 116 58 117C69 117 73 129 65 136" stroke="currentColor" stroke-opacity=".4" stroke-width="1.5" stroke-linecap="round"/>
+        <rect x="243" y="64" width="30" height="83" rx="7" stroke="currentColor" stroke-opacity=".2"/>
+        <rect x="250" y="128" width="16" height="11" rx="3" fill="#f8d98a" opacity="1"/><rect x="250" y="110" width="16" height="11" rx="3" fill="#f8d98a" opacity="1"/><rect x="250" y="92" width="16" height="11" rx="3" fill="currentColor" opacity="0.12"/><rect x="250" y="74" width="16" height="11" rx="3" fill="currentColor" opacity="0.12"/>
+        <path class="scenario-energy" d="M210 111H239" stroke="#f8d98a" stroke-width="1.8" stroke-dasharray="3 5" stroke-linecap="round"/>
+        <path d="M58 93L52 103H58L55 111L64 100H58L61 93Z" fill="currentColor" opacity=".55"/>
+      </svg>
+      <span class="scenario-usage-caption"><span class="scenario-usage-dot"></span>Consumo intermediário</span>
+    </div>
       <div class="scenario-consumption"><span>Consumo do mês</span><strong>100 <small>kWh</small></strong></div>
       <div class="scenario-bar" role="group" aria-label="Distribuição dos 100 kWh do cenário 3"><button type="button" class="scenario-segment scenario-solar" data-solar-topic="cota" aria-haspopup="dialog" aria-controls="solarExplanation" style="flex-grow:100;" aria-label="Cenário 3: Cota solar, 100 kWh. Ver explicação"><span>100<small> kWh</small></span></button></div>
       <div class="scenario-breakdown"><button type="button" class="scenario-breakdown-row" data-solar-topic="cota" aria-haspopup="dialog" aria-controls="solarExplanation" ><span class="scenario-dot scenario-solar"></span><span>Cota solar</span><strong>100 <small>kWh</small></strong></button></div>
@@ -282,24 +285,25 @@
     </article><article class="scenario-card" aria-labelledby="scenarioTitle4">
       <header class="scenario-card-header"><span class="scenario-number">04</span><span class="scenario-category">Sem tarifa social</span></header>
       <h4 id="scenarioTitle4">Consumo acima da cota</h4>
-      <svg class="scenario-art" viewBox="0 0 360 140" fill="none" aria-hidden="true" focusable="false">
-      <path d="M20 120H340" stroke="currentColor" opacity=".12"/>
-      <circle cx="286" cy="38" r="24" fill="currentColor" opacity=".05"/>
-      <g class="scenario-sun" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-        <circle cx="286" cy="38" r="10" fill="currentColor" fill-opacity=".08"/>
-        <path d="M286 18V14M286 62V58M266 38H262M310 38H306M272 24L269 21M303 55L300 52M272 52L269 55M303 21L300 24"/>
-      </g>
-      <path d="M88 120V72L143 33L198 72V120" fill="white" stroke="currentColor" stroke-opacity=".45" stroke-width="1.8" stroke-linejoin="round"/>
-      <path d="M78 74L143 27L208 74" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M136 120V91H155V120" stroke="currentColor" stroke-opacity=".5" stroke-width="1.6"/>
-      <rect x="102" y="83" width="18" height="18" rx="3" fill="currentColor" fill-opacity=".07" stroke="currentColor" stroke-opacity=".3"/>
-      <path d="M140 41L177 67H144L119 50L132 41H140Z" fill="currentColor" fill-opacity=".13" stroke="currentColor" stroke-width="1.3"/>
-      <path d="M135 43L163 66M127 48L151 66M134 54H157M142 60H167" stroke="currentColor" stroke-opacity=".55"/>
-      <path class="scenario-energy" d="M265 58Q238 88 204 66" stroke="currentColor" stroke-width="1.8" stroke-dasharray="4 7" stroke-linecap="round"/>
-      <circle cx="236" cy="108" r="12" fill="currentColor" fill-opacity=".07"/>
-      <path d="M238 100L231 109H237L234 116L242 106H236L238 100Z" fill="currentColor"/>
-      <path d="M54 119V106M47 108Q38 88 53 79Q70 89 61 105" stroke="currentColor" stroke-opacity=".4" stroke-width="1.8" stroke-linecap="round"/>
-    </svg>
+      <div class="scenario-house-scene" data-consumption="180" data-usage-level="3">
+      <svg class="scenario-art" viewBox="0 0 320 190" fill="none" role="img" aria-label="Casa com consumo de 180 kWh: 3 de quatro janelas iluminadas para comparação visual.">
+        <ellipse cx="156" cy="151" rx="104" ry="12" fill="currentColor" opacity=".04"/>
+        <path d="M32 154H288" stroke="currentColor" opacity=".18" stroke-linecap="round"/>
+        <circle cx="65" cy="46" r="22" fill="currentColor" opacity=".035"/>
+        <g class="scenario-sun" stroke="#f8d98a" stroke-width="1.5" stroke-linecap="round"><circle cx="65" cy="46" r="9"/><path d="M65 29V25M65 67V63M48 46H44M86 46H82M53 34L50 31M80 61L77 58M53 58L50 61M80 31L77 34"/></g>
+        <path d="M100 150V70L151 34L202 70V150Z" fill="currentColor" fill-opacity=".04" stroke="currentColor" stroke-opacity=".65" stroke-width="1.6"/>
+        <path d="M89 73L151 28L213 73" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M185 45V27H195V53" stroke="currentColor" stroke-opacity=".5" stroke-width="1.5"/>
+        <rect class="house-window is-lit" x="120" y="78" width="22" height="24" rx="3"/><path d="M131 78V102M120 90H142" stroke="#0f2330" stroke-opacity=".4" stroke-width="1"/><rect class="house-window is-lit" x="156" y="78" width="22" height="24" rx="3"/><path d="M167 78V102M156 90H178" stroke="#0f2330" stroke-opacity=".4" stroke-width="1"/><rect class="house-window is-lit" x="120" y="111" width="22" height="24" rx="3"/><path d="M131 111V135M120 123H142" stroke="#0f2330" stroke-opacity=".4" stroke-width="1"/><rect class="house-window" x="156" y="111" width="22" height="24" rx="3"/><path d="M167 111V135M156 123H178" stroke="#0f2330" stroke-opacity=".4" stroke-width="1"/>
+        <path d="M183 150V119H194V150" stroke="currentColor" stroke-opacity=".5" stroke-width="1.3"/>
+        <path d="M60 150V134M52 136C43 123 48 116 58 117C69 117 73 129 65 136" stroke="currentColor" stroke-opacity=".4" stroke-width="1.5" stroke-linecap="round"/>
+        <rect x="243" y="64" width="30" height="83" rx="7" stroke="currentColor" stroke-opacity=".2"/>
+        <rect x="250" y="128" width="16" height="11" rx="3" fill="#f8d98a" opacity="1"/><rect x="250" y="110" width="16" height="11" rx="3" fill="#f8d98a" opacity="1"/><rect x="250" y="92" width="16" height="11" rx="3" fill="#f8d98a" opacity="1"/><rect x="250" y="74" width="16" height="11" rx="3" fill="currentColor" opacity="0.12"/>
+        <path class="scenario-energy" d="M210 111H239" stroke="#f8d98a" stroke-width="1.8" stroke-dasharray="3 5" stroke-linecap="round"/>
+        <path d="M58 93L52 103H58L55 111L64 100H58L61 93Z" fill="currentColor" opacity=".55"/>
+      </svg>
+      <span class="scenario-usage-caption"><span class="scenario-usage-dot"></span>Consumo elevado</span>
+    </div>
       <div class="scenario-consumption"><span>Consumo do mês</span><strong>180 <small>kWh</small></strong></div>
       <div class="scenario-bar" role="group" aria-label="Distribuição dos 180 kWh do cenário 4"><button type="button" class="scenario-segment scenario-solar" data-solar-topic="cota" aria-haspopup="dialog" aria-controls="solarExplanation" style="flex-grow:120;" aria-label="Cenário 4: Cota solar, 120 kWh. Ver explicação"><span>120<small> kWh</small></span></button><button type="button" class="scenario-segment scenario-excess" data-solar-topic="excedente" aria-haspopup="dialog" aria-controls="solarExplanation" style="flex-grow:60;" aria-label="Cenário 4: Excedente, 60 kWh. Ver explicação"><span>60<small> kWh</small></span></button></div>
       <div class="scenario-breakdown"><button type="button" class="scenario-breakdown-row" data-solar-topic="cota" aria-haspopup="dialog" aria-controls="solarExplanation" ><span class="scenario-dot scenario-solar"></span><span>Cota solar</span><strong>120 <small>kWh</small></strong></button><button type="button" class="scenario-breakdown-row" data-solar-topic="excedente" aria-haspopup="dialog" aria-controls="solarExplanation" ><span class="scenario-dot scenario-excess"></span><span>Excedente</span><strong>60 <small>kWh</small></strong></button></div>
@@ -313,7 +317,7 @@
       <h3 id="solarExplanationTitle"></h3>
       <p id="solarExplanationText"></p>
     </dialog>
-    <script src="static/js/cenarios-solares.js?v=reward-20261028" defer></script>
+    <script src="static/js/cenarios-solares.js?v=houses-20261028" defer></script>
   </section>
 </div>
 
