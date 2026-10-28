@@ -4,6 +4,12 @@ No aplicativo Flask, entre com perfil de administrador e abra **Notícias**. Inf
 
 O envio completo aceita até 5 MB. As imagens JPG, PNG e WebP são verificadas, orientadas e convertidas em JPEG com até 2.400 pixels no maior lado, sem metadados. O cadastro não altera as planilhas de energia ou os dados dos beneficiários.
 
+## Matérias de sites externos
+
+Selecione **Notícia de site externo** e cole o link da matéria. O painel busca título, resumo e foto de capa pelos metadados públicos Open Graph/Twitter do site. O botão **Buscar informações** permite repetir a busca. Confira a prévia, ajuste o título ou o resumo se precisar e clique em **Publicar notícia**. A importação sozinha não publica.
+
+Ao clicar no card, o visitante abre a matéria completa no site original. A foto importada é validada e armazenada junto às fotos do projeto. Se o site bloquear a leitura, não informar metadados ou não liberar a imagem, preencha o título e envie uma foto manualmente; o link continua sendo usado como destino da matéria. Vídeos e páginas que dependem de execução de JavaScript não são importados como mídia incorporada.
+
 ## Armazenamento na Render
 
 As notícias e fotos usam um diretório independente, configurado pela variável `NEWS_STORAGE_DIR`. Por padrão ele é `runtime/noticias` no projeto, ignorado pelo Git. Esse diretório contém `noticias.sqlite3` e a pasta `fotos`.

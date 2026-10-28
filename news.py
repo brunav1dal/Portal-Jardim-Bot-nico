@@ -10,10 +10,28 @@ import secrets
 import sqlite3
 import uuid
 import warnings
+from urllib.parse import urlsplit
 
 from flask import abort, flash, jsonify, redirect, request, send_from_directory, session, url_for
 from PIL import Image, ImageOps, UnidentifiedImageError
 from werkzeug.exceptions import RequestEntityTooLarge
+from news_import import ImportErrorMessage, import_article, public_url
+
+
+def prepare_photo(data):
+    with warnings.catch_warnings():
+        warnings.simplefilter('error', Image.DecompressionBombWarning)
+        with Image.open(BytesIO(data)) as image:
+            if image.format not in {'JPEG', 'PNG', 'WEBP'} or image.width * image.height > 24000000:
+                raise ValueError('Imagem incompatível ou maior que 24 megapixels.')
+            image.load()
+            image = ImageOps.exif_transpose(image).convert('RGBA')
+            image.thumbnail((2400, 2400), Image.Resampling.LANCZOS)
+            background = Image.new('RGB', image.size, 'white')
+            background.paste(image, mask=image.getchannel('A'))
+            output = BytesIO()
+            background.save(output, 'JPEG', quality=90, optimize=True)
+            return output.getvalue()
 
 
 def init_news(app):
@@ -72,6 +90,38 @@ def init_news(app):
         flash(message, 'error')
         return redirect(url_for('admin_dashboard', aba='noticias') + '#tab-noticias')
 
+    @app.post('/admin/noticias/importar')
+    def importar_noticia():
+        if 'user_id' not in session or session.get('user_tipo') != 'admin':
+            return failure('Entre com um perfil de administrador para importar notícias.', 403)
+        token = request.form.get('csrf_token', '')
+        if not token or not hmac.compare_digest(token, session.get('news_csrf', '')):
+            return failure('Sua sessão expirou. Recarregue o painel.', 403)
+        try:
+            metadata = import_article(request.form.get('url', '').strip())
+        except ImportErrorMessage as error:
+            return failure(str(error))
+        image_name = ''
+        images = []
+        if metadata['image_bytes']:
+            try:
+                data = prepare_photo(metadata['image_bytes'])
+                folder = storage() / 'fotos'
+                folder.mkdir(parents=True, exist_ok=True)
+                image_name = uuid.uuid4().hex + '.jpg'
+                (folder / image_name).write_bytes(data)
+                images.append({'src': url_for('noticia_foto', filename=image_name), 'alt': metadata['title']})
+            except (ValueError, OSError, UnidentifiedImageError, Image.DecompressionBombError, Image.DecompressionBombWarning):
+                metadata['warning'] = 'Título e resumo importados. Envie uma foto: a imagem do site não pôde ser usada.'
+                image_name = ''
+        draft = {'token': secrets.token_urlsafe(24), 'url': metadata['url'], 'source': metadata['source'], 'image_name': image_name}
+        session['news_external_draft'] = draft
+        response = jsonify(success=True, preview={'token': draft['token'], 'url': draft['url'],
+                           'title': metadata['title'], 'summary': metadata['summary'],
+                           'source': metadata['source'], 'images': images}, warning=metadata['warning'])
+        response.headers['Cache-Control'] = 'no-store'
+        return response
+
     @app.post('/admin/noticias')
     def publicar_noticia():
         if 'user_id' not in session or session.get('user_tipo') != 'admin':
@@ -80,40 +130,50 @@ def init_news(app):
         if not token or not hmac.compare_digest(token, session.get('news_csrf', '')):
             return failure('Sua sessão do formulário expirou. Recarregue o painel e tente novamente.', 403)
         title = request.form.get('titulo', '').strip()
+        kind = request.form.get('tipo', 'internal')
+        if kind not in {'internal', 'external'}:
+            return failure('Escolha notícia própria ou notícia de site externo.')
         summary = request.form.get('resumo', '').strip()
         body = request.form.get('texto', '').strip()
         photos = [photo for photo in request.files.getlist('fotos') if photo.filename]
-        if not title or len(title) > 160 or not body or len(body) > 12000 or len(summary) > 280:
+        if not title or len(title) > 160 or (kind == 'internal' and not body) or len(body) > 12000 or len(summary) > 280:
             return failure('Informe título e texto. Limites: título 160, resumo 280 e texto 12.000 caracteres.')
-        if not 1 <= len(photos) <= 5:
+        imported_cover = ''
+        article_url = ''
+        source = 'Projeto Orquídea Solar'
+        if kind == 'external':
+            try:
+                article_url = public_url(request.form.get('link_externo', '').strip())
+            except ImportErrorMessage as error:
+                return failure(str(error))
+            source = urlsplit(article_url).hostname
+            draft = session.get('news_external_draft', {})
+            if draft.get('url') == article_url and hmac.compare_digest(draft.get('token', ''), request.form.get('import_token', '')):
+                source = draft.get('source') or source
+                name = draft.get('image_name', '')
+                if name and (storage() / 'fotos' / name).is_file():
+                    imported_cover = name
+        if len(photos) > 5 or (not photos and not imported_cover):
             return failure('Selecione de uma a cinco fotos JPG, PNG ou WebP.')
         # Validate every image before saving anything; re-encode to remove metadata and foreign content.
         processed = []
         try:
             for photo in photos:
-                with warnings.catch_warnings():
-                    warnings.simplefilter('error', Image.DecompressionBombWarning)
-                    with Image.open(BytesIO(photo.read())) as image:
-                        if image.format not in {'JPEG', 'PNG', 'WEBP'} or image.width * image.height > 24000000:
-                            return failure('Use fotos JPG, PNG ou WebP de até 24 megapixels.')
-                        image.load()
-                        image = ImageOps.exif_transpose(image).convert('RGBA')
-                        image.thumbnail((2400, 2400), Image.Resampling.LANCZOS)
-                        background = Image.new('RGB', image.size, 'white')
-                        background.paste(image, mask=image.getchannel('A'))
-                        output = BytesIO()
-                        background.save(output, 'JPEG', quality=90, optimize=True)
-                        processed.append(output.getvalue())
+                processed.append(prepare_photo(photo.read()))
         except (UnidentifiedImageError, OSError, ValueError, Image.DecompressionBombError, Image.DecompressionBombWarning):
             return failure('Uma das fotos não é uma imagem válida. Envie fotos JPG, PNG ou WebP.')
 
         folder = storage() / 'fotos'
         paths = []
-        article = {'id': uuid.uuid4().hex, 'type': 'internal', 'title': title,
+        article = {'id': uuid.uuid4().hex, 'type': kind, 'title': title,
                    'summary': summary or ' '.join(body.split())[:180],
-                   'body': [paragraph.strip() for paragraph in body.split('\n\n') if paragraph.strip()],
-                   'source': 'Projeto Orquídea Solar', 'tags': [], 'images': [],
+                   'body': [paragraph.strip() for paragraph in body.split('\n\n') if paragraph.strip()] if kind == 'internal' else [],
+                   'source': source, 'tags': [], 'images': [],
                    'created_at': datetime.now(timezone.utc).isoformat()}
+        if kind == 'external':
+            article['url'] = article_url
+            if not photos and imported_cover:
+                article['images'].append({'src': url_for('noticia_foto', filename=imported_cover), 'alt': title})
         try:
             folder.mkdir(parents=True, exist_ok=True)
             for data in processed:
@@ -132,9 +192,11 @@ def init_news(app):
                 path.unlink(missing_ok=True)
             app.logger.exception('Unable to save news')
             return failure('Não foi possível salvar a notícia. Tente novamente.', 500)
+        if kind == 'external':
+            session.pop('news_external_draft', None)
         if request.accept_mimetypes.best == 'application/json':
             return jsonify(success=True, article=article), 201
-        flash('Notícia publicada! Ela já está disponível em Nossa História.', 'success')
+        flash('Notícia publicada! Ela já está disponível na seção Notícias.', 'success')
         return redirect(url_for('admin_dashboard', aba='noticias') + '#tab-noticias')
 
     @app.errorhandler(RequestEntityTooLarge)
