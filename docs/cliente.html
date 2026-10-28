@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Banco Comunitário Jardim Botânico - Transparência e gestão de energia solar comunitária">
   <title>Banco Comunitário Jardim Botânico — Meu Painel</title>
-  <link rel="stylesheet" href="static/css/style.css?v=video-frame-top-20261028">
-  <link rel="stylesheet" href="static/css/solar-scenarios.css?v=sources-art-20261028">
+  <link rel="stylesheet" href="static/css/style.css?v=responsive-header-local-20261028">
+  <link rel="stylesheet" href="static/css/solar-scenarios.css?v=scenario-rows-local-20261028">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="static/css/noticias.css?v=news-manage-20261028">
   <script src="static/js/header-glass.js?v=glass-header-20261028" defer></script>
   <link rel="stylesheet" href="static/css/project-flow.css?v=social-cashback-local-20261028">
+  <script src="static/js/header-menu.js?v=responsive-local-20261028" defer></script>
 </head>
 <body>
   <div class="bg-grid"></div>
@@ -22,8 +23,10 @@
     <a href="index.html" class="navbar-brand">
       <img class="brand-logo" src="static/img/logo_jb.png" alt="">
 
-      Banco Comunitário Jardim Botânico
+      <span class="navbar-brand-name">Banco Comunitário Jardim Botânico</span>
     </a>
+    <button type="button" class="navbar-toggle" aria-expanded="false" aria-controls="navbarContent">Menu <svg viewBox="0 0 16 16" width="16" height="16" fill="none" aria-hidden="true"><path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="navbar-content" id="navbarContent">
       <div class="navbar-menu" aria-label="Navegação principal">
         <a href="index.html#dados">Dados</a>
         <a href="index.html#como-funciona">Como funciona</a>
@@ -40,6 +43,7 @@
 
         <a href="index.html" class="btn btn-signout btn-sm">Sair</a>
 
+    </div>
     </div>
   </nav>
 
