@@ -155,6 +155,20 @@
         </div>
       </div>
     </div>
+    <div class="history-news" data-news-carousel data-news-source="{{ url_for('static', filename='noticias.json', v='news-20261028') }}" role="region" aria-roledescription="carrossel" aria-labelledby="newsHeading">
+      <div class="news-header"><div><span class="news-eyebrow">O PROJETO EM MOVIMENTO</span><h3 id="newsHeading">Notícias da comunidade</h3><p>Formação, energia solidária e histórias do nosso território.</p></div>
+        <div class="news-controls" hidden><button type="button" data-news-pause>Pausar</button><button type="button" data-news-prev aria-label="Foto anterior">←</button><button type="button" data-news-next aria-label="Próxima foto">→</button></div>
+      </div>
+      <div class="news-viewport"><div class="news-track">
+        <a class="news-slide" href="https://sistemavozpopular.blogspot.com/2026/10/projeto-orquidea-solar-comeca-terceira.html" target="_blank" rel="noopener noreferrer">
+          <img class="news-photo" src="{{ url_for('static', filename='img/noticias/curso-eletrica-turma-3-1.jpg') }}" width="1600" height="900" loading="lazy" alt="Aula do curso de Elétrica Básica com participantes e apresentação na comunidade São Rafael.">
+          <span class="news-caption"><span class="news-source">Na imprensa · Sistema Voz Popular</span><h4>Projeto Orquídea Solar começa terceira turma do curso de Elétrica Básica</h4><p>Formação profissional e energia solidária na comunidade São Rafael, em João Pessoa.</p><span class="news-read">Ler matéria completa ↗</span><span class="news-tags">#ecosol #eletrica #cursosprofissionalizantes #orquideasolar</span></span>
+        </a>
+      </div></div>
+      <div class="news-footer"><span class="news-credit">Fonte e fotos: Sistema Voz Popular</span><div class="news-pagination"><span class="news-count"></span><div class="news-dots" role="group" aria-label="Escolher foto da notícia"></div></div></div>
+      <p class="news-sr-status" aria-live="polite" aria-atomic="true"></p>
+    </div>
+    <script src="{{ url_for('static', filename='js/noticias.js', v='news-20261028') }}" defer></script>
   </section>
 
   <!-- Como Funciona -->
