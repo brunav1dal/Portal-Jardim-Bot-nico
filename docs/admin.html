@@ -5,11 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Banco Comunitário Jardim Botânico - Transparência e gestão de energia solar comunitária">
   <title>Banco Comunitário Jardim Botânico — Administração</title>
-  <link rel="stylesheet" href="static/css/style.css">
+  <link rel="stylesheet" href="static/css/style.css?v=solar-unused-tip-20261028">
+  <link rel="stylesheet" href="static/css/solar-scenarios.css?v=unused-tip-20261028">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+  <link rel="stylesheet" href="static/css/noticias.css?v=publisher-20261028">
 </head>
 <body>
   <div class="bg-grid"></div>
@@ -69,6 +71,7 @@
     <button class="tab-btn active" onclick="showTab('usinas')">Usinas</button>
     <button class="tab-btn" onclick="showTab('economia')">Economia</button>
     <button class="tab-btn" onclick="showTab('residencias')">Residências</button>
+    <button class="tab-btn" data-tab="noticias" onclick="showTab('noticias')">Notícias</button>
   </div>
 
   <!-- ═══ TAB: USINAS ═══ -->
@@ -93,7 +96,7 @@
             </div>
           </div>
           <p style="font-size:0.78rem;color:var(--text-muted);margin-top:4px;">
-            📍 Local ficticio · 10 kW cap. ·
+            📍 R. Arquivista Jonathas Carécas, 74 - Castelo Branco, João Pessoa - PB, 58057-034 · 10 kW cap. ·
             <span>ativa</span>
           </p>
         </div>
@@ -974,6 +977,26 @@
       </div>
     </div>
   </div>
+<div class="tab-content" id="tab-noticias">
+  <h2 class="section-title">Notícias do projeto</h2>
+  <p class="admin-news-intro">Publique fotos e histórias da comunidade. O título aparece sobre o degradê da capa; ao clicar, o visitante abre o texto completo.</p>
+
+  <p class="flash-success">O cadastro de notícias funciona no aplicativo da Render ou no ambiente local. Esta demonstração estática permite apenas visualizar o formulário.</p>
+
+  <div class="admin-news-grid">
+    <form id="adminNewsForm" class="chart-card admin-news-form" method="post" action="#" enctype="multipart/form-data" data-static-demo="true">
+      <input type="hidden" name="csrf_token" value="">
+      <div class="form-group"><label for="newsTitle">Título da notícia</label><input id="newsTitle" name="titulo" type="text" maxlength="160" required placeholder="O que aconteceu na comunidade?"></div>
+      <div class="form-group"><label for="newsSummary">Resumo da capa <span>(opcional)</span></label><textarea id="newsSummary" name="resumo" maxlength="280" rows="2" placeholder="Uma frase para apresentar a notícia."></textarea></div>
+      <div class="form-group"><label for="newsPhotos">Fotos</label><input id="newsPhotos" name="fotos" type="file" accept="image/jpeg,image/png,image/webp" multiple required aria-describedby="newsPhotoHelp"><small id="newsPhotoHelp">De 1 a 5 fotos. A primeira será a capa; as demais passam no carrossel. JPG, PNG ou WebP, com envio total de até 5 MB.</small></div>
+      <div class="form-group"><label for="newsBody">Texto completo</label><textarea id="newsBody" name="texto" rows="8" maxlength="12000" required placeholder="Conte a história. Separe os parágrafos com uma linha em branco."></textarea></div>
+      <button class="btn btn-primary" type="submit" disabled>Publicar notícia</button>
+      <p id="adminNewsStatus" class="admin-news-status" role="status" aria-live="polite"></p>
+    </form>
+    <div class="admin-news-preview-wrap"><h3>Prévia da capa</h3><div class="news-slide admin-news-preview"><img id="newsPreviewImage" class="news-photo" alt="Prévia da foto de capa" hidden><span class="news-caption"><span class="news-source">Notícia do projeto</span><h4 id="newsPreviewTitle">O título da sua notícia aparece aqui</h4><p id="newsPreviewSummary">Escolha as fotos e escreva o resumo para visualizar a capa.</p><span class="news-read">Ler notícia →</span></span></div><div id="newsPhotoPreviews" class="admin-news-thumbnails" aria-label="Fotos selecionadas"></div><p class="admin-news-preview-help">O visitante verá o texto completo e as fotos ao abrir a notícia.</p></div>
+  </div>
+  <div class="chart-card admin-news-published"><h3>Notícias publicadas pelo painel</h3><ul id="adminNewsList"></ul><p id="adminNewsEmpty">Você ainda não publicou notícias pelo painel. A matéria do Sistema Voz Popular continua disponível no carrossel.</p></div>
+</div>
 </div>
 
 
@@ -1135,13 +1158,15 @@
   </script>
 
 
+<script src="static/js/admin-noticias.js?v=publisher-20261028" defer></script>
 <script>
   // ─── Tab Navigation ───
   function showTab(tabName) {
     document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('tab-' + tabName).classList.add('active');
-    event.target.classList.add('active');
+    const activeButton = Array.from(document.querySelectorAll('.tab-btn')).find(button => button.getAttribute('onclick').includes("'" + tabName + "'"));
+    if (activeButton) activeButton.classList.add('active');
     animateCounters();
     setTimeout(() => Object.values(Chart.instances).forEach(chart => chart.resize()), 50);
   }

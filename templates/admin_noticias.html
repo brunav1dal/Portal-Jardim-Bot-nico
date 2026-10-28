@@ -1,0 +1,20 @@
+<div class="tab-content" id="tab-noticias">
+  <h2 class="section-title">Notícias do projeto</h2>
+  <p class="admin-news-intro">Publique fotos e histórias da comunidade. O título aparece sobre o degradê da capa; ao clicar, o visitante abre o texto completo.</p>
+  {% if news_static_export %}
+  <p class="flash-success">O cadastro de notícias funciona no aplicativo da Render ou no ambiente local. Esta demonstração estática permite apenas visualizar o formulário.</p>
+  {% endif %}
+  <div class="admin-news-grid">
+    <form id="adminNewsForm" class="chart-card admin-news-form" method="post" action="{{ url_for('publicar_noticia') }}" enctype="multipart/form-data"{% if news_static_export %} data-static-demo="true"{% endif %}>
+      <input type="hidden" name="csrf_token" value="{{ news_csrf }}">
+      <div class="form-group"><label for="newsTitle">Título da notícia</label><input id="newsTitle" name="titulo" type="text" maxlength="160" required placeholder="O que aconteceu na comunidade?"></div>
+      <div class="form-group"><label for="newsSummary">Resumo da capa <span>(opcional)</span></label><textarea id="newsSummary" name="resumo" maxlength="280" rows="2" placeholder="Uma frase para apresentar a notícia."></textarea></div>
+      <div class="form-group"><label for="newsPhotos">Fotos</label><input id="newsPhotos" name="fotos" type="file" accept="image/jpeg,image/png,image/webp" multiple required aria-describedby="newsPhotoHelp"><small id="newsPhotoHelp">De 1 a 5 fotos. A primeira será a capa; as demais passam no carrossel. JPG, PNG ou WebP, com envio total de até 5 MB.</small></div>
+      <div class="form-group"><label for="newsBody">Texto completo</label><textarea id="newsBody" name="texto" rows="8" maxlength="12000" required placeholder="Conte a história. Separe os parágrafos com uma linha em branco."></textarea></div>
+      <button class="btn btn-primary" type="submit"{% if news_static_export %} disabled{% endif %}>Publicar notícia</button>
+      <p id="adminNewsStatus" class="admin-news-status" role="status" aria-live="polite"></p>
+    </form>
+    <div class="admin-news-preview-wrap"><h3>Prévia da capa</h3><div class="news-slide admin-news-preview"><img id="newsPreviewImage" class="news-photo" alt="Prévia da foto de capa" hidden><span class="news-caption"><span class="news-source">Notícia do projeto</span><h4 id="newsPreviewTitle">O título da sua notícia aparece aqui</h4><p id="newsPreviewSummary">Escolha as fotos e escreva o resumo para visualizar a capa.</p><span class="news-read">Ler notícia →</span></span></div><div id="newsPhotoPreviews" class="admin-news-thumbnails" aria-label="Fotos selecionadas"></div><p class="admin-news-preview-help">O visitante verá o texto completo e as fotos ao abrir a notícia.</p></div>
+  </div>
+  <div class="chart-card admin-news-published"><h3>Notícias publicadas pelo painel</h3><ul id="adminNewsList">{% for noticia in noticias_publicadas %}<li><strong>{{ noticia.title }}</strong><span>{{ noticia.images|length }} foto(s) · <a href="{{ url_for('index') }}#historia" target="_blank" rel="noopener noreferrer">Ver no site ↗</a></span></li>{% endfor %}</ul><p id="adminNewsEmpty"{% if noticias_publicadas %} hidden{% endif %}>Você ainda não publicou notícias pelo painel. A matéria do Sistema Voz Popular continua disponível no carrossel.</p></div>
+</div>

@@ -10,10 +10,12 @@ import pandas as pd
 from scripts.demo_data import demo_data
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash, Response
 from werkzeug.utils import secure_filename
+from news import init_news
 
 app = Flask(__name__)
 app.secret_key = 'banco-solar-secret-key-2026'
 app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024  # 5 MB por upload
+init_news(app)
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), 'data')
 MODO_DEMONSTRACAO = not os.path.exists(os.path.join(DATA_DIR, 'beneficios_mensais.csv'))

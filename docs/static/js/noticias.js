@@ -51,15 +51,23 @@
     const title = document.createElement('h3'); title.textContent = article.title; title.id = 'ownNewsTitle';
     dialog.setAttribute('aria-labelledby', title.id);
     dialog.append(close, title);
+    const gallery = document.createElement('div'); gallery.className = 'news-dialog-gallery';
+    article.images.forEach(photo => {
+      const image = document.createElement('img');
+      image.src = safeUrl(photo.src, new URL(carousel.dataset.newsSource, window.location.href), true);
+      image.alt = photo.alt || article.title; image.loading = 'lazy';
+      gallery.append(image);
+    });
     const paragraphs = Array.isArray(article.body) ? article.body : [article.body || article.summary];
     paragraphs.forEach(text => { const p = document.createElement('p'); p.textContent = text; dialog.append(p); });
+    dialog.append(gallery);
     dialog.addEventListener('close', () => dialog.remove());
     document.body.append(dialog); dialog.showModal();
   }
   async function init() {
     try {
       const dataUrl = new URL(carousel.dataset.newsSource, window.location.href);
-      const response = await fetch(dataUrl);
+      const response = await fetch(dataUrl, { cache: 'no-store' });
       if (!response.ok) throw new Error('News unavailable');
       const articles = await response.json();
       const fragment = document.createDocumentFragment();

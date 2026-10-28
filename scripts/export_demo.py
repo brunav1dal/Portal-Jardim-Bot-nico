@@ -18,6 +18,7 @@ from scripts.demo_data import demo_data
 def export():
     frames = demo_data()
     app.config['TESTING'] = True
+    app.config['NEWS_STATIC_EXPORT'] = True
     output = ROOT / 'docs'
     with app.test_request_context():
         urls = {url_for(endpoint): filename for endpoint, filename in {
@@ -40,6 +41,10 @@ def export():
             html = re.sub(r'((?:href|src)=")(/[^"?#]*)([^"\n]*)"',
                           lambda match: match[1] + (match[2][1:] if match[2].startswith('/static/')
                           else urls.get(match[2], match[2])) + match[3] + '"', html)
+            if route == '/':
+                html = html.replace('data-news-source="/api/noticias"', 'data-news-source="static/noticias.json"')
+            if route == '/admin':
+                html = html.replace('action="/admin/noticias"', 'action="#"')
             if route == '/login':
                 html = re.sub(r'<form\b.*?</form>', '''<p class="subtitle">Demonstracao com dados inteiramente ficticios.</p>
 <div class="form-group">
@@ -59,7 +64,7 @@ def export():
                 html = re.sub(r'<form\b[^>]*class="upload-form"[^>]*>',
                               '<form class="upload-form" onsubmit="event.preventDefault(); alert(\'Envio indisponivel na demonstracao estatica.\');">', html)
             assert '{{' not in html and '{%' not in html
-            assert '@example.invalid' not in html and 'unused' not in html
+            assert '@example.invalid' not in html and 'value="unused"' not in html
             html = '\n'.join(line.rstrip() for line in html.splitlines()) + '\n'
             (output / urls[route]).write_text(html, encoding='utf-8')
             print('Generated:', 'docs/' + urls[route])

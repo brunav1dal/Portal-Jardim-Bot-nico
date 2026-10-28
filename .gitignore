@@ -9,3 +9,4 @@ venv/
 .env
 .DS_Store
 static/uploads/
+runtime/
