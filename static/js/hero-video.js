@@ -11,6 +11,9 @@
     update();
   }
   video.muted = true;
+  const slowMotion = () => { video.defaultPlaybackRate = 0.5; video.playbackRate = 0.5; };
+  slowMotion();
+  video.addEventListener('loadedmetadata', slowMotion);
   video.addEventListener('play', update);
   video.addEventListener('pause', update);
   video.addEventListener('error', () => { video.pause(); hero.classList.add('is-paused'); });

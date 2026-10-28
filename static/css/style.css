@@ -1208,9 +1208,9 @@ button.stat-card:hover { transform: translateY(-4px); }
 
 /* The community rooftop film fills the opening banner. */
 .hero-video-banner { isolation: isolate; display: grid; align-content: center; justify-items: center; gap: 0; width: 100%; min-height: clamp(380px, 56vh, 600px); padding: 150px 2rem 100px; background: #132d25 url('../img/painel-voz-popular.jpg') center 42% / cover no-repeat; }
-.hero-video-banner::before { z-index: 0; pointer-events: none; background: radial-gradient(ellipse at 35% 38%, rgba(74,222,128,.35), transparent 62%); }
-.hero-background-video { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; object-fit: cover; object-position: center 42%; opacity: .88; pointer-events: none; }
-.hero-video-banner::after { content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(180deg, rgba(7,22,20,.48), rgba(7,22,20,.58) 60%, rgba(7,22,20,.72)); }
+.hero-video-banner::before { content: none; display: none; animation: none; }
+.hero-background-video { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; object-fit: cover; object-position: center 42%; opacity: 1; pointer-events: none; }
+.hero-video-banner::after { content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: rgba(0,0,0,.36); }
 .hero-video-banner h1 { z-index: 3; max-width: 1100px; margin: 0 0 1.2rem; font-size: clamp(2.1rem, 4.5vw, 3.7rem); line-height: 1.15; letter-spacing: -.045em; background: none; color: #f7fcf9; -webkit-text-fill-color: #f7fcf9; text-shadow: 0 2px 18px rgba(0,0,0,.2); }
 .hero-video-banner p { z-index: 3; max-width: 780px; font-size: clamp(.95rem, 1.5vw, 1.15rem); line-height: 1.8; color: #edf5f0; }
 .hero-video-banner.is-paused::before { animation-play-state: paused; }
