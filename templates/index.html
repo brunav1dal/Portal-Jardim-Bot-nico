@@ -159,50 +159,126 @@
 
   <!-- Como Funciona -->
   <section class="section" id="como-funciona">
-    <h2 class="section-title">Como funciona a energia solar solidária e a economia</h2>
-    <p style="color:var(--text-secondary);font-size:0.95rem;line-height:1.75;margin-bottom:2rem;">
-      A usina gera energia e cada beneficiário recebe uma cota mensal. A energia solar solidária usada não ultrapassa essa cota nem o consumo elegível.
-      O benefício em reais é repartido entre o valor destinado ao projeto e o cashback em Orquídeas.
-      A conta da Energisa continua sendo paga, incluindo impostos e eventual consumo acima da cota.
-      Se parte da cota não for usada, essa quantidade em kWh entra como crédito acumulado para uso futuro; crédito de energia não é valor em reais.
-      Os exemplos em kWh e reais a seguir s&atilde;o hipot&eacute;ticos e did&aacute;ticos; nenhum representa benefici&aacute;rios, faturas ou meses reais.
-    </p>
-
-    <p style="padding:0.9rem 1rem;border-left:4px solid var(--accent-solar-light);background:rgba(245,158,11,0.10);border-radius:0.5rem;color:var(--text-primary);font-size:0.9rem;line-height:1.6;margin-bottom:1.5rem;">
-      <strong>EXEMPLOS ILUSTRATIVOS:</strong> O esquema abaixo usa uma cota solar mensal de 120 kWh para explicar quatro situa&ccedil;&otilde;es de consumo. N&atilde;o representa faturas ou medi&ccedil;&otilde;es reais.
-    </p>
-
-    <h3>Quatro cenários da cota solar mensal</h3>
-    <p class="solar-help">Clique nas barras coloridas ou na legenda para entender cada conceito. No celular, deslize a imagem para os lados.</p>
-    <div class="solar-scroll" role="region" aria-label="Esquema interativo dos quatro cenários solares" tabindex="0">
-      <div class="solar-diagram">
-        <img src="{{ url_for('static', filename='img/cenarios-cota-solar.png') }}" width="1536" height="1024" loading="lazy" alt="Quatro cenários ilustrativos com cota solar de 120 kWh: consumos de 70, 250, 100 e 180 kWh. As barras e a legenda abrem explicações sobre tarifa social, cota solar, excedente e saldo não utilizado.">
-        <button type="button" class="solar-hotspot" data-solar-topic="cota" aria-label="Entender a cota solar mensal de 120 kWh" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:25.0651%;top:1.5625%;width:53.7109%;height:4.8828%;"></button>
-        <button type="button" class="solar-hotspot" data-solar-topic="social" aria-label="Tarifa social: 70 kWh" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:2.0182%;top:43.8477%;width:12.2396%;height:5.6641%;"></button>
-        <button type="button" class="solar-hotspot" data-solar-topic="saldo" aria-label="Cota nao utilizada no primeiro cenario" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:14.3229%;top:43.8477%;width:9.9609%;height:5.6641%;"></button>
-        <button type="button" class="solar-hotspot" data-solar-topic="social" aria-label="Tarifa social: 80 kWh" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:27.5391%;top:43.8477%;width:6.5755%;height:5.6641%;"></button>
-        <button type="button" class="solar-hotspot" data-solar-topic="cota" aria-label="Cota solar: 120 kWh" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:34.1797%;top:43.8477%;width:9.0495%;height:5.6641%;"></button>
-        <button type="button" class="solar-hotspot" data-solar-topic="excedente" aria-label="Excedente: 50 kWh" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:43.2943%;top:43.8477%;width:6.3802%;height:5.6641%;"></button>
-        <button type="button" class="solar-hotspot" data-solar-topic="saldo" aria-label="Cota nao utilizada: 20 kWh" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:52.4089%;top:43.8477%;width:6.5755%;height:5.6641%;"></button>
-        <button type="button" class="solar-hotspot" data-solar-topic="cota" aria-label="Cota solar: 100 kWh" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:59.0495%;top:43.8477%;width:9.5703%;height:5.6641%;"></button>
-        <button type="button" class="solar-hotspot" data-solar-topic="saldo" aria-label="Saldo indicado como zero" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:68.6849%;top:43.8477%;width:5.5339%;height:5.6641%;"></button>
-        <button type="button" class="solar-hotspot" data-solar-topic="saldo" aria-label="Saldo indicado como zero" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:76.8880%;top:43.8477%;width:6.1198%;height:5.6641%;"></button>
-        <button type="button" class="solar-hotspot" data-solar-topic="cota" aria-label="Cota solar: 120 kWh" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:83.0729%;top:43.8477%;width:8.7891%;height:5.6641%;"></button>
-        <button type="button" class="solar-hotspot" data-solar-topic="excedente" aria-label="Excedente: 60 kWh" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:91.9271%;top:43.8477%;width:6.4453%;height:5.6641%;"></button>
-        <button type="button" class="solar-hotspot" data-solar-topic="orquideas" aria-label="Entender a recompensa de 5 Orquideas" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:1.4974%;top:69.4336%;width:23.1120%;height:17.1875%;"></button>
-        <button type="button" class="solar-hotspot" data-solar-topic="social" aria-label="O que e tarifa social?" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:2.3438%;top:90.7227%;width:20.8984%;height:4.4922%;"></button>
-        <button type="button" class="solar-hotspot" data-solar-topic="cota" aria-label="O que e cota solar?" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:24.0885%;top:90.7227%;width:27.7995%;height:4.4922%;"></button>
-        <button type="button" class="solar-hotspot" data-solar-topic="excedente" aria-label="O que e excedente?" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:52.8646%;top:90.7227%;width:28.9062%;height:4.4922%;"></button>
-        <button type="button" class="solar-hotspot" data-solar-topic="saldo" aria-label="O que e cota nao utilizada?" aria-haspopup="dialog" aria-controls="solarExplanation" style="left:82.6823%;top:90.7227%;width:15.6250%;height:4.4922%;"></button>
-      </div>
+    <h2 class="section-title">Como funciona a energia solar solidária</h2>
+    <p class="scenario-intro">A energia da usina se transforma em economia para a comunidade. Explore quatro exemplos para entender como a cota solar participa do consumo de cada família.</p>
+    <div class="scenario-overview">
+      <div><span class="scenario-eyebrow">UMA COTA, QUATRO POSSIBILIDADES</span><h3>De onde vem cada kWh?</h3><p>Clique nas barras para conhecer cada parte do consumo.</p></div>
+      <button type="button" class="scenario-quota" data-solar-topic="cota" aria-haspopup="dialog" aria-controls="solarExplanation" ><span>Cota mensal do exemplo</span><strong>120 <small>kWh</small></strong><span class="scenario-quota-link">Entender a cota <span aria-hidden="true">↗</span></span></button>
     </div>
-    <p class="solar-help">Esquema ilustrativo fornecido para explicar o programa. Para entender o saldo do primeiro cenário, clique na barra cinza.</p>
+    <div class="scenario-legend" role="group" aria-label="Entenda os conceitos"><button type="button" class="scenario-legend-item" data-solar-topic="social" aria-haspopup="dialog" aria-controls="solarExplanation" ><span class="scenario-dot scenario-social"></span>Tarifa social<span aria-hidden="true">↗</span></button><button type="button" class="scenario-legend-item" data-solar-topic="cota" aria-haspopup="dialog" aria-controls="solarExplanation" ><span class="scenario-dot scenario-solar"></span>Cota solar<span aria-hidden="true">↗</span></button><button type="button" class="scenario-legend-item" data-solar-topic="excedente" aria-haspopup="dialog" aria-controls="solarExplanation" ><span class="scenario-dot scenario-excess"></span>Excedente<span aria-hidden="true">↗</span></button><button type="button" class="scenario-legend-item" data-solar-topic="saldo" aria-haspopup="dialog" aria-controls="solarExplanation" ><span class="scenario-dot scenario-unused"></span>Cota não utilizada<span aria-hidden="true">↗</span></button></div>
+    <div class="scenario-grid"><article class="scenario-card" aria-labelledby="scenarioTitle1">
+      <header class="scenario-card-header"><span class="scenario-number">01</span><span class="scenario-category">Com tarifa social</span></header>
+      <h4 id="scenarioTitle1">Consumo na faixa social</h4>
+      <svg class="scenario-art" viewBox="0 0 360 140" fill="none" aria-hidden="true" focusable="false">
+      <path d="M20 120H340" stroke="currentColor" opacity=".12"/>
+      <circle cx="286" cy="38" r="24" fill="currentColor" opacity=".05"/>
+      <g class="scenario-sun" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <circle cx="286" cy="38" r="10" fill="currentColor" fill-opacity=".08"/>
+        <path d="M286 18V14M286 62V58M266 38H262M310 38H306M272 24L269 21M303 55L300 52M272 52L269 55M303 21L300 24"/>
+      </g>
+      <path d="M88 120V72L143 33L198 72V120" fill="white" stroke="currentColor" stroke-opacity=".45" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M78 74L143 27L208 74" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M136 120V91H155V120" stroke="currentColor" stroke-opacity=".5" stroke-width="1.6"/>
+      <rect x="102" y="83" width="18" height="18" rx="3" fill="currentColor" fill-opacity=".07" stroke="currentColor" stroke-opacity=".3"/>
+      <path d="M140 41L177 67H144L119 50L132 41H140Z" fill="currentColor" fill-opacity=".13" stroke="currentColor" stroke-width="1.3"/>
+      <path d="M135 43L163 66M127 48L151 66M134 54H157M142 60H167" stroke="currentColor" stroke-opacity=".55"/>
+      <path class="scenario-energy" d="M265 58Q238 88 204 66" stroke="currentColor" stroke-width="1.8" stroke-dasharray="4 7" stroke-linecap="round"/>
+      <circle cx="236" cy="108" r="12" fill="currentColor" fill-opacity=".07"/>
+      <path d="M238 100L231 109H237L234 116L242 106H236L238 100Z" fill="currentColor"/>
+      <path d="M54 119V106M47 108Q38 88 53 79Q70 89 61 105" stroke="currentColor" stroke-opacity=".4" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+      <div class="scenario-consumption"><span>Consumo do mês</span><strong>70 <small>kWh</small></strong></div>
+      <div class="scenario-bar" role="group" aria-label="Distribuição dos 70 kWh do cenário 1"><button type="button" class="scenario-segment scenario-social" data-solar-topic="social" aria-haspopup="dialog" aria-controls="solarExplanation" style="flex-grow:70;" aria-label="Cenário 1: Tarifa social, 70 kWh. Ver explicação"><span>70<small> kWh</small></span></button></div>
+      <div class="scenario-breakdown"><button type="button" class="scenario-breakdown-row" data-solar-topic="social" aria-haspopup="dialog" aria-controls="solarExplanation" ><span class="scenario-dot scenario-social"></span><span>Tarifa social</span><strong>70 <small>kWh</small></strong></button></div>
+      <button type="button" class="scenario-balance" data-solar-topic="saldo" aria-haspopup="dialog" aria-controls="solarExplanation" ><span>Cota não utilizada</span><strong>120 <small>kWh</small><span aria-hidden="true"> ↗</span></strong></button>
+      <footer class="scenario-result"><p>O consumo fica na faixa social do exemplo.</p><span>A cota solar não é utilizada neste mês.</span><button type="button" class="scenario-reward" data-solar-topic="orquideas" aria-haspopup="dialog" aria-controls="solarExplanation" ><span aria-hidden="true">✦</span> 5 Orquídeas no exemplo <span aria-hidden="true">↗</span></button></footer>
+    </article><article class="scenario-card" aria-labelledby="scenarioTitle2">
+      <header class="scenario-card-header"><span class="scenario-number">02</span><span class="scenario-category">Com tarifa social</span></header>
+      <h4 id="scenarioTitle2">Consumo acima dos benefícios</h4>
+      <svg class="scenario-art" viewBox="0 0 360 140" fill="none" aria-hidden="true" focusable="false">
+      <path d="M20 120H340" stroke="currentColor" opacity=".12"/>
+      <circle cx="286" cy="38" r="24" fill="currentColor" opacity=".05"/>
+      <g class="scenario-sun" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <circle cx="286" cy="38" r="10" fill="currentColor" fill-opacity=".08"/>
+        <path d="M286 18V14M286 62V58M266 38H262M310 38H306M272 24L269 21M303 55L300 52M272 52L269 55M303 21L300 24"/>
+      </g>
+      <path d="M88 120V72L143 33L198 72V120" fill="white" stroke="currentColor" stroke-opacity=".45" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M78 74L143 27L208 74" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M136 120V91H155V120" stroke="currentColor" stroke-opacity=".5" stroke-width="1.6"/>
+      <rect x="102" y="83" width="18" height="18" rx="3" fill="currentColor" fill-opacity=".07" stroke="currentColor" stroke-opacity=".3"/>
+      <path d="M140 41L177 67H144L119 50L132 41H140Z" fill="currentColor" fill-opacity=".13" stroke="currentColor" stroke-width="1.3"/>
+      <path d="M135 43L163 66M127 48L151 66M134 54H157M142 60H167" stroke="currentColor" stroke-opacity=".55"/>
+      <path class="scenario-energy" d="M265 58Q238 88 204 66" stroke="currentColor" stroke-width="1.8" stroke-dasharray="4 7" stroke-linecap="round"/>
+      <circle cx="236" cy="108" r="12" fill="currentColor" fill-opacity=".07"/>
+      <path d="M238 100L231 109H237L234 116L242 106H236L238 100Z" fill="currentColor"/>
+      <path d="M54 119V106M47 108Q38 88 53 79Q70 89 61 105" stroke="currentColor" stroke-opacity=".4" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+      <div class="scenario-consumption"><span>Consumo do mês</span><strong>250 <small>kWh</small></strong></div>
+      <div class="scenario-bar" role="group" aria-label="Distribuição dos 250 kWh do cenário 2"><button type="button" class="scenario-segment scenario-social" data-solar-topic="social" aria-haspopup="dialog" aria-controls="solarExplanation" style="flex-grow:80;" aria-label="Cenário 2: Tarifa social, 80 kWh. Ver explicação"><span>80<small> kWh</small></span></button><button type="button" class="scenario-segment scenario-solar" data-solar-topic="cota" aria-haspopup="dialog" aria-controls="solarExplanation" style="flex-grow:120;" aria-label="Cenário 2: Cota solar, 120 kWh. Ver explicação"><span>120<small> kWh</small></span></button><button type="button" class="scenario-segment scenario-excess" data-solar-topic="excedente" aria-haspopup="dialog" aria-controls="solarExplanation" style="flex-grow:50;" aria-label="Cenário 2: Excedente, 50 kWh. Ver explicação"><span>50<small> kWh</small></span></button></div>
+      <div class="scenario-breakdown"><button type="button" class="scenario-breakdown-row" data-solar-topic="social" aria-haspopup="dialog" aria-controls="solarExplanation" ><span class="scenario-dot scenario-social"></span><span>Tarifa social</span><strong>80 <small>kWh</small></strong></button><button type="button" class="scenario-breakdown-row" data-solar-topic="cota" aria-haspopup="dialog" aria-controls="solarExplanation" ><span class="scenario-dot scenario-solar"></span><span>Cota solar</span><strong>120 <small>kWh</small></strong></button><button type="button" class="scenario-breakdown-row" data-solar-topic="excedente" aria-haspopup="dialog" aria-controls="solarExplanation" ><span class="scenario-dot scenario-excess"></span><span>Excedente</span><strong>50 <small>kWh</small></strong></button></div>
+      <button type="button" class="scenario-balance" data-solar-topic="saldo" aria-haspopup="dialog" aria-controls="solarExplanation" ><span>Cota não utilizada</span><strong>0 <small>kWh</small><span aria-hidden="true"> ↗</span></strong></button>
+      <footer class="scenario-result"><p>Uma parte é solar. O restante fica na Energisa.</p><span>80 kWh na faixa social + 120 kWh solares + 50 kWh excedentes.</span></footer>
+    </article><article class="scenario-card" aria-labelledby="scenarioTitle3">
+      <header class="scenario-card-header"><span class="scenario-number">03</span><span class="scenario-category">Sem tarifa social</span></header>
+      <h4 id="scenarioTitle3">Consumo dentro da cota</h4>
+      <svg class="scenario-art" viewBox="0 0 360 140" fill="none" aria-hidden="true" focusable="false">
+      <path d="M20 120H340" stroke="currentColor" opacity=".12"/>
+      <circle cx="286" cy="38" r="24" fill="currentColor" opacity=".05"/>
+      <g class="scenario-sun" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <circle cx="286" cy="38" r="10" fill="currentColor" fill-opacity=".08"/>
+        <path d="M286 18V14M286 62V58M266 38H262M310 38H306M272 24L269 21M303 55L300 52M272 52L269 55M303 21L300 24"/>
+      </g>
+      <path d="M88 120V72L143 33L198 72V120" fill="white" stroke="currentColor" stroke-opacity=".45" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M78 74L143 27L208 74" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M136 120V91H155V120" stroke="currentColor" stroke-opacity=".5" stroke-width="1.6"/>
+      <rect x="102" y="83" width="18" height="18" rx="3" fill="currentColor" fill-opacity=".07" stroke="currentColor" stroke-opacity=".3"/>
+      <path d="M140 41L177 67H144L119 50L132 41H140Z" fill="currentColor" fill-opacity=".13" stroke="currentColor" stroke-width="1.3"/>
+      <path d="M135 43L163 66M127 48L151 66M134 54H157M142 60H167" stroke="currentColor" stroke-opacity=".55"/>
+      <path class="scenario-energy" d="M265 58Q238 88 204 66" stroke="currentColor" stroke-width="1.8" stroke-dasharray="4 7" stroke-linecap="round"/>
+      <circle cx="236" cy="108" r="12" fill="currentColor" fill-opacity=".07"/>
+      <path d="M238 100L231 109H237L234 116L242 106H236L238 100Z" fill="currentColor"/>
+      <path d="M54 119V106M47 108Q38 88 53 79Q70 89 61 105" stroke="currentColor" stroke-opacity=".4" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+      <div class="scenario-consumption"><span>Consumo do mês</span><strong>100 <small>kWh</small></strong></div>
+      <div class="scenario-bar" role="group" aria-label="Distribuição dos 100 kWh do cenário 3"><button type="button" class="scenario-segment scenario-solar" data-solar-topic="cota" aria-haspopup="dialog" aria-controls="solarExplanation" style="flex-grow:100;" aria-label="Cenário 3: Cota solar, 100 kWh. Ver explicação"><span>100<small> kWh</small></span></button></div>
+      <div class="scenario-breakdown"><button type="button" class="scenario-breakdown-row" data-solar-topic="cota" aria-haspopup="dialog" aria-controls="solarExplanation" ><span class="scenario-dot scenario-solar"></span><span>Cota solar</span><strong>100 <small>kWh</small></strong></button></div>
+      <button type="button" class="scenario-balance" data-solar-topic="saldo" aria-haspopup="dialog" aria-controls="solarExplanation" ><span>Cota não utilizada</span><strong>20 <small>kWh</small><span aria-hidden="true"> ↗</span></strong></button>
+      <footer class="scenario-result"><p>A cota solar atende o consumo do exemplo.</p><span>São utilizados 100 dos 120 kWh disponíveis.</span></footer>
+    </article><article class="scenario-card" aria-labelledby="scenarioTitle4">
+      <header class="scenario-card-header"><span class="scenario-number">04</span><span class="scenario-category">Sem tarifa social</span></header>
+      <h4 id="scenarioTitle4">Consumo acima da cota</h4>
+      <svg class="scenario-art" viewBox="0 0 360 140" fill="none" aria-hidden="true" focusable="false">
+      <path d="M20 120H340" stroke="currentColor" opacity=".12"/>
+      <circle cx="286" cy="38" r="24" fill="currentColor" opacity=".05"/>
+      <g class="scenario-sun" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <circle cx="286" cy="38" r="10" fill="currentColor" fill-opacity=".08"/>
+        <path d="M286 18V14M286 62V58M266 38H262M310 38H306M272 24L269 21M303 55L300 52M272 52L269 55M303 21L300 24"/>
+      </g>
+      <path d="M88 120V72L143 33L198 72V120" fill="white" stroke="currentColor" stroke-opacity=".45" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M78 74L143 27L208 74" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M136 120V91H155V120" stroke="currentColor" stroke-opacity=".5" stroke-width="1.6"/>
+      <rect x="102" y="83" width="18" height="18" rx="3" fill="currentColor" fill-opacity=".07" stroke="currentColor" stroke-opacity=".3"/>
+      <path d="M140 41L177 67H144L119 50L132 41H140Z" fill="currentColor" fill-opacity=".13" stroke="currentColor" stroke-width="1.3"/>
+      <path d="M135 43L163 66M127 48L151 66M134 54H157M142 60H167" stroke="currentColor" stroke-opacity=".55"/>
+      <path class="scenario-energy" d="M265 58Q238 88 204 66" stroke="currentColor" stroke-width="1.8" stroke-dasharray="4 7" stroke-linecap="round"/>
+      <circle cx="236" cy="108" r="12" fill="currentColor" fill-opacity=".07"/>
+      <path d="M238 100L231 109H237L234 116L242 106H236L238 100Z" fill="currentColor"/>
+      <path d="M54 119V106M47 108Q38 88 53 79Q70 89 61 105" stroke="currentColor" stroke-opacity=".4" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+      <div class="scenario-consumption"><span>Consumo do mês</span><strong>180 <small>kWh</small></strong></div>
+      <div class="scenario-bar" role="group" aria-label="Distribuição dos 180 kWh do cenário 4"><button type="button" class="scenario-segment scenario-solar" data-solar-topic="cota" aria-haspopup="dialog" aria-controls="solarExplanation" style="flex-grow:120;" aria-label="Cenário 4: Cota solar, 120 kWh. Ver explicação"><span>120<small> kWh</small></span></button><button type="button" class="scenario-segment scenario-excess" data-solar-topic="excedente" aria-haspopup="dialog" aria-controls="solarExplanation" style="flex-grow:60;" aria-label="Cenário 4: Excedente, 60 kWh. Ver explicação"><span>60<small> kWh</small></span></button></div>
+      <div class="scenario-breakdown"><button type="button" class="scenario-breakdown-row" data-solar-topic="cota" aria-haspopup="dialog" aria-controls="solarExplanation" ><span class="scenario-dot scenario-solar"></span><span>Cota solar</span><strong>120 <small>kWh</small></strong></button><button type="button" class="scenario-breakdown-row" data-solar-topic="excedente" aria-haspopup="dialog" aria-controls="solarExplanation" ><span class="scenario-dot scenario-excess"></span><span>Excedente</span><strong>60 <small>kWh</small></strong></button></div>
+      <button type="button" class="scenario-balance" data-solar-topic="saldo" aria-haspopup="dialog" aria-controls="solarExplanation" ><span>Cota não utilizada</span><strong>0 <small>kWh</small><span aria-hidden="true"> ↗</span></strong></button>
+      <footer class="scenario-result"><p>A cota é usada por completo.</p><span>120 kWh solares + 60 kWh que ficam na Energisa.</span></footer>
+    </article></div>
+    <p class="scenario-footnote">Exemplos ilustrativos, não são faturas reais. A faixa social de 80 kWh e a cota de 120 kWh são as referências destes exemplos. A conta da concessionária pode incluir impostos e outros encargos. Crédito de energia é medido em kWh, não em reais.</p>
     <dialog id="solarExplanation" class="solar-dialog" aria-labelledby="solarExplanationTitle" aria-describedby="solarExplanationText">
       <button type="button" class="solar-close" aria-label="Fechar explicação">×</button>
+      <span class="scenario-eyebrow">ENTENDA A ENERGIA SOLIDÁRIA</span>
       <h3 id="solarExplanationTitle"></h3>
       <p id="solarExplanationText"></p>
     </dialog>
-    <script src="{{ url_for('static', filename='js/cenarios-solares.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/cenarios-solares.js', v='minimal-20261028') }}" defer></script>
   </section>
 </div>
 {% endblock %}

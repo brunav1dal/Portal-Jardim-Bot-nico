@@ -1205,16 +1205,3 @@ button.stat-card:hover { transform: translateY(-4px); }
 @media (max-width: 480px) {
   #dados .stats-grid { grid-template-columns: minmax(0, 1fr); }
 }
-
-.solar-help { margin: .75rem 0 1rem; color: var(--text-secondary); line-height: 1.6; }
-.solar-scroll { overflow-x: auto; border-radius: var(--radius); margin-top: 1rem; }
-.solar-diagram { position: relative; min-width: 1000px; }
-.solar-diagram img { display: block; width: 100%; height: auto; }
-.solar-hotspot { position: absolute; display: block; padding: 0; border: 2px solid transparent; border-radius: 8px; background: transparent; cursor: pointer; }
-.solar-hotspot:hover { background: rgba(255,255,255,.18); border-color: #12245c; }
-.solar-hotspot:focus-visible { outline: 3px solid #12245c; outline-offset: 3px; background: rgba(255,255,255,.25); }
-.solar-dialog { box-sizing: border-box; position: fixed; inset: 0; margin: auto; width: min(520px, calc(100% - 2rem)); max-height: 85vh; overflow-y: auto; padding: 2rem; border: 0; border-radius: 20px; background: var(--bg-card, white); color: var(--text-primary, #172238); box-shadow: 0 24px 80px #0004; }
-.solar-dialog::backdrop { background: rgba(15,23,42,.6); }
-.solar-dialog h3 { padding-right: 1.5rem; margin: 0 0 1rem; }
-.solar-dialog p { line-height: 1.8; margin: 0; }
-.solar-close { position: absolute; right: .6rem; top: .4rem; width: 44px; height: 44px; border: 0; border-radius: 50%; background: transparent; color: inherit; font-size: 1.8rem; cursor: pointer; }

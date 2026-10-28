@@ -1,0 +1,76 @@
+/* Solar scenarios use the portal's existing typography, palette and surfaces. */
+.scenario-intro { max-width: 760px; margin: -.25rem 0 2rem; color: var(--text-secondary); font-size: .95rem; line-height: 1.8; }
+.scenario-overview { display: flex; align-items: center; justify-content: space-between; gap: 2rem; padding: 1.75rem 2rem; border: 1px solid var(--glass-border); border-radius: var(--radius); background: var(--gradient-hero); }
+.scenario-eyebrow { display: block; font-size: .65rem; font-weight: 650; letter-spacing: .12em; color: var(--accent-solar); margin-bottom: .7rem; }
+.scenario-overview h3 { font-size: clamp(1.3rem, 2.4vw, 1.8rem); font-weight: 600; letter-spacing: -.04em; line-height: 1.25; }
+.scenario-overview p { margin-top: .6rem; font-size: .83rem; color: var(--text-secondary); }
+#como-funciona button { font-family: inherit; }
+.scenario-quota { flex-shrink: 0; display: grid; gap: .2rem; min-width: 190px; padding: 1rem 1.4rem; text-align: left; border: 1px solid rgba(21,128,61,.16); border-radius: var(--radius-sm); background: rgba(255,255,255,.75); color: var(--text-primary); cursor: pointer; transition: border-color .2s, background .2s; }
+.scenario-quota > span:first-child { font-size: .72rem; color: var(--text-secondary); }
+.scenario-quota > strong { font-size: 2rem; font-weight: 600; letter-spacing: -.04em; line-height: 1.4; color: var(--accent-solar); }
+.scenario-quota small { font-size: .85rem; font-weight: 450; letter-spacing: 0; }
+.scenario-quota-link { color: var(--accent-solar); font-size: .72rem; }
+.scenario-legend { display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; padding: 1.1rem 0 1.4rem; }
+.scenario-legend-item { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; border: 0; background: transparent; color: var(--text-secondary); font-size: .75rem; cursor: pointer; }
+.scenario-legend-item > span:last-child { color: var(--text-muted); font-size: .7rem; }
+.scenario-dot { display: inline-block; width: 8px; height: 8px; flex-shrink: 0; border-radius: 50%; }
+.scenario-social { background: #15803d; color: white; }
+.scenario-solar { background: #dceadf; color: #14532d; }
+.scenario-excess { background: #dce8fa; color: #1e40af; }
+.scenario-unused { background: #cbd5e1; }
+.scenario-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+.scenario-card { display: flex; flex-direction: column; min-width: 0; padding: 1.5rem; border: 1px solid var(--glass-border); border-radius: var(--radius); background: var(--bg-card); transition: border-color .25s, box-shadow .25s; }
+.scenario-card:hover { border-color: rgba(21,128,61,.25); box-shadow: 0 8px 28px rgba(15,23,42,.035); }
+.scenario-card-header { display: flex; align-items: center; gap: .7rem; margin-bottom: .75rem; }
+.scenario-number { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border: 1px solid var(--glass-border); border-radius: 9px; font-size: .7rem; font-variant-numeric: tabular-nums; color: var(--accent-solar); }
+.scenario-category { color: var(--text-muted); font-size: .72rem; }
+.scenario-card h4 { font-size: 1.05rem; font-weight: 600; letter-spacing: -.025em; line-height: 1.4; }
+.scenario-art { display: block; width: 100%; height: 130px; margin: .25rem 0 1rem; color: var(--accent-solar); }
+.scenario-consumption { display: flex; align-items: baseline; justify-content: space-between; gap: .5rem; margin-bottom: .7rem; }
+.scenario-consumption > span { color: var(--text-muted); font-size: .75rem; }
+.scenario-consumption strong { font-size: 1.4rem; letter-spacing: -.04em; font-weight: 600; }
+.scenario-consumption small { font-size: .75rem; font-weight: 450; letter-spacing: 0; color: var(--text-muted); }
+.scenario-bar { display: flex; gap: 3px; width: 100%; border-radius: 8px; overflow: hidden; margin-bottom: .85rem; }
+.scenario-segment { position: relative; display: flex; align-items: center; justify-content: center; min-width: 0; flex-basis: 0; min-height: 46px; padding: .35rem .1rem; border: 0; font-weight: 600; font-size: .78rem; cursor: pointer; transition: filter .2s; }
+.scenario-segment small { font-size: .6rem; font-weight: 450; }
+.scenario-segment:hover { filter: brightness(.94); }
+.scenario-breakdown { display: grid; gap: .1rem; min-height: 132px; align-content: start; }
+.scenario-breakdown-row { display: flex; align-items: center; gap: .6rem; width: 100%; min-height: 42px; padding: .35rem 0; text-align: left; border: 0; border-bottom: 1px solid rgba(15,23,42,.045); background: transparent; color: var(--text-secondary); font-size: .75rem; cursor: pointer; }
+.scenario-breakdown-row strong { margin-left: auto; color: var(--text-primary); font-size: .78rem; font-weight: 550; }
+.scenario-breakdown-row small { font-weight: 400; color: var(--text-muted); font-size: .65rem; }
+.scenario-balance { display: flex; align-items: center; justify-content: space-between; gap: .6rem; width: 100%; min-height: 44px; margin: .6rem 0 1rem; padding: .6rem .75rem; border: 1px dashed var(--glass-border); border-radius: 8px; background: var(--glass); color: var(--text-secondary); font-size: .72rem; cursor: pointer; }
+.scenario-balance strong { white-space: nowrap; font-weight: 550; color: var(--text-primary); }
+.scenario-balance small { font-weight: 400; }
+.scenario-result { flex: 1; padding-top: 1rem; border-top: 1px solid var(--glass-border); }
+.scenario-result p { font-size: .85rem; font-weight: 550; line-height: 1.6; }
+.scenario-result > span { display: block; margin-top: .35rem; color: var(--text-muted); font-size: .75rem; line-height: 1.7; }
+.scenario-reward { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; margin-top: .65rem; padding: .4rem .7rem; border: 0; border-radius: 7px; background: #eef7ef; color: var(--accent-solar); font-size: .72rem; cursor: pointer; }
+.scenario-footnote { max-width: 850px; margin-top: 1.2rem; font-size: .72rem; color: var(--text-muted); line-height: 1.8; }
+.scenario-quota:hover, .scenario-balance:hover { border-color: var(--accent-solar); }
+.scenario-legend-item:hover, .scenario-breakdown-row:hover { color: var(--accent-solar); }
+#como-funciona button:focus-visible { outline: 2px solid var(--accent-solar); outline-offset: 4px; }
+.scenario-segment:focus-visible { z-index: 1; outline: 2px solid var(--text-primary) !important; outline-offset: -4px !important; }
+.solar-dialog { position: fixed; inset: 0; box-sizing: border-box; margin: auto; width: min(500px, calc(100% - 2rem)); max-height: 85vh; overflow-y: auto; padding: 2rem; border: 1px solid var(--glass-border); border-radius: var(--radius); background: var(--bg-secondary); color: var(--text-primary); box-shadow: var(--shadow-lg); }
+.solar-dialog::backdrop { background: rgba(15,23,42,.45); backdrop-filter: blur(3px); }
+.solar-dialog .scenario-eyebrow { padding-right: 1.5rem; }
+.solar-dialog h3 { margin: 1rem 0; padding-right: 1rem; font-size: 1.25rem; font-weight: 600; letter-spacing: -.03em; }
+.solar-dialog p { color: var(--text-secondary); font-size: .9rem; line-height: 1.9; }
+.solar-close { position: absolute; right: .55rem; top: .4rem; width: 44px; height: 44px; border: 0; border-radius: 50%; background: transparent; color: var(--text-muted); font-size: 1.6rem; cursor: pointer; }
+.solar-close:hover { background: var(--glass); color: var(--text-primary); }
+@keyframes scenario-flow { to { stroke-dashoffset: -44; } }
+@keyframes scenario-reveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: no-preference) {
+  .scenario-visible .scenario-art { animation: scenario-reveal .7s ease-out both; }
+  .scenario-visible .scenario-energy { animation: scenario-flow 2s linear 2; }
+  .scenario-visible .scenario-bar { animation: scenario-reveal .6s .12s ease-out both; }
+}
+@media (max-width: 640px) {
+  .scenario-grid { grid-template-columns: minmax(0, 1fr); }
+  .scenario-overview { align-items: stretch; flex-direction: column; padding: 1.3rem; gap: 1.2rem; }
+  .scenario-quota { min-width: 0; }
+  .scenario-card { padding: 1.2rem; }
+  .scenario-breakdown { min-height: 0; }
+  .scenario-legend { gap: .25rem 1rem; }
+  .scenario-segment { font-size: .75rem; }
+  .scenario-segment small { font-size: .58rem; }
+}
