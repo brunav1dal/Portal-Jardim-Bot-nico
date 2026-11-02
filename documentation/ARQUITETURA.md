@@ -89,6 +89,9 @@ Notícias registra seus endpoints em `init_news(app)`.
 `templates/base.html` contém a estrutura compartilhada e o cabeçalho.
 `templates/components/project_flow.html` é um trecho incluído na página inicial.
 `templates/admin/noticias.html` é incluído no painel administrativo.
+`templates/components/economia_partition.html` mostra a divisão percentual da
+economia real no modal. É um exemplo por R$ 100 de energia solar, separado do
+histórico mensal, com pagamento bruto e cashback identificados.
 
 ## Aparência e comportamento no navegador
 
@@ -98,6 +101,7 @@ Notícias registra seus endpoints em `init_news(app)`.
 | `css/noticias.css` | Notícias e editor. |
 | `css/project-flow.css` | Fluxo de funcionamento do projeto. |
 | `css/solar-scenarios.css` | Cenários de cotas solares. |
+| `css/economia-breakdown.css` | Anel, legenda e resumo da composição da economia real. |
 | `js/header-menu.js` | Menu responsivo. |
 | `js/header-glass.js` | Efeito visual do cabeçalho. |
 | `js/hero-video.js` | Vídeo de destaque. |
@@ -105,6 +109,7 @@ Notícias registra seus endpoints em `init_news(app)`.
 | `js/cenarios-solares.js` | Interações dos cenários solares. |
 | `js/noticias.js` | Notícias e visualização de matérias no portal. |
 | `js/admin-noticias.js` | Formulário de administração das notícias. |
+| `js/economia-breakdown.js` | Gráfico de composição 50%/25%/25% e ciclo de abertura e fechamento no modal. |
 | `noticias.json` | Notícias externas iniciais, combinadas com as do SQLite. |
 | `img/` | Logos, moedas, diagramas e fotos utilizadas pelo site. |
 | `video/` | Vídeos utilizados pelo site. |

@@ -259,6 +259,8 @@
   // ─── Dados para o modal de cada indicador ───
   const statInfo = {
     economia_real_rs: {
+      // Compartilha a mesma explicação percentual da economia disponível no portal público.
+      showEconomyBreakdown: true,
       title: 'Minha Economia (R$)', icon: '⚡', color: '#15803d',
       desc: 'Economia real individual: 75% do benefício, após a contribuição ao projeto e o cashback.',
       total: kpisPorPeriodoCliente.todos.economia_real_rs,

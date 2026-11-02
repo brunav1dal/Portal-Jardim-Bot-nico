@@ -7,6 +7,9 @@
   <meta name="description" content="Banco Comunitário Jardim Botânico - Transparência e gestão de energia solar comunitária">
   <title>{% block title %}Banco Comunitário Jardim Botânico{% endblock %}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v='economy-explanation-20261028') }}">
+  {# Composição da economia: estilo e gráfico separados do histórico compartilhado dos indicadores. #}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/economia-breakdown.css', v='20261102') }}">
+  <script src="{{ url_for('static', filename='js/economia-breakdown.js', v='20261102') }}" defer></script>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/solar-scenarios.css', v='scenario-unused-key-20261028') }}">
   {# Comportamento: carrega o módulo indicado ou executa as interações específicas desta tela. #}
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
@@ -80,6 +83,7 @@
       <button type="button" class="modal-close" onclick="closeStatModal()" aria-label="Fechar">✕</button>
       <div class="modal-icon" id="statModalIcon"></div>
       <h3 id="statModalTitle"></h3>
+      {% include 'components/economia_partition.html' %}
       <div class="modal-desc" id="statModalDesc"></div>
       <div class="modal-chart-wrap" id="statModalChartWrap">
         <h4>Histórico recente</h4>
@@ -202,6 +206,9 @@
       overlay.classList.add('active');
       document.body.style.overflow = 'hidden';
 
+      // Mostra a composição percentual somente nos indicadores de economia; preserva o histórico abaixo.
+      if (window.EconomiaBreakdown) window.EconomiaBreakdown.render(Boolean(info.showEconomyBreakdown));
+
       if (statModalChart) { statModalChart.destroy(); statModalChart = null; }
 
       const chartWrap = document.getElementById('statModalChartWrap');
@@ -242,6 +249,8 @@
       if (e && e.target !== e.currentTarget) return;
       document.getElementById('statModalOverlay').classList.remove('active');
       document.body.style.overflow = '';
+      // Libera o canvas da composição ao fechar para evitar instâncias acumuladas.
+      if (window.EconomiaBreakdown) window.EconomiaBreakdown.destroy();
     }
 
     // Permite controlar a interface pelo teclado.

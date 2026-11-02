@@ -8,6 +8,9 @@
   <meta name="description" content="Banco Comunitário Jardim Botânico - Transparência e gestão de energia solar comunitária">
   <title>Banco Comunitário Jardim Botânico — Meu Painel</title>
   <link rel="stylesheet" href="static/css/style.css?v=economy-explanation-20261028">
+
+  <link rel="stylesheet" href="static/css/economia-breakdown.css?v=20261102">
+  <script src="static/js/economia-breakdown.js?v=20261102" defer></script>
   <link rel="stylesheet" href="static/css/solar-scenarios.css?v=scenario-unused-key-20261028">
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
@@ -256,6 +259,28 @@
       <button type="button" class="modal-close" onclick="closeStatModal()" aria-label="Fechar">✕</button>
       <div class="modal-icon" id="statModalIcon"></div>
       <h3 id="statModalTitle"></h3>
+
+<section class="economia-partition" id="economiaPartition" aria-labelledby="economiaPartitionTitle" hidden>
+  <h4 id="economiaPartitionTitle">Como o valor da energia se divide</h4>
+  <p class="economia-partition-intro">Exemplo para cada R$ 100 que a parte solar custaria na concessionária, sem impostos e taxas.</p>
+  <div class="economia-partition-body">
+    <div class="economia-partition-chart">
+      <canvas id="economiaPartitionChart" role="img" aria-label="Divisão do valor original: 50% de economia na energia, 25% de cashback em Orquídeas e 25% para o banco após o cashback."></canvas>
+      <div class="economia-partition-center" aria-hidden="true"><strong>75%</strong><span>economia real</span></div>
+    </div>
+
+    <ul class="economia-partition-legend">
+      <li><span class="economia-partition-dot" style="--partition-color: #15803d" aria-hidden="true"></span><span>Economia na energia</span><strong>50%</strong></li>
+      <li><span class="economia-partition-dot" style="--partition-color: #d97706" aria-hidden="true"></span><span>Cashback em Orquídeas</span><strong>25%</strong></li>
+      <li><span class="economia-partition-dot" style="--partition-color: #7c3aed" aria-hidden="true"></span><span>Banco após o cashback</span><strong>25%</strong></li>
+    </ul>
+  </div>
+  <div class="economia-partition-summary">
+    <p><strong>Economia real: R$ 75</strong> = R$ 50 não gastos + O$ 25 em Orquídeas.</p>
+    <p><strong>Pagamento ao Banco Jardim Botânico: R$ 50.</strong> Desse valor, o equivalente a O$ 25 retorna em cashback e R$ 25 ficam com o banco.</p>
+  </div>
+  <p class="economia-partition-note">As porcentagens usam o valor original da parte solar como base. O cashback já faz parte dos 75% de economia real.</p>
+</section>
       <div class="modal-desc" id="statModalDesc"></div>
       <div class="modal-chart-wrap" id="statModalChartWrap">
         <h4>Histórico recente</h4>
@@ -378,6 +403,9 @@
       overlay.classList.add('active');
       document.body.style.overflow = 'hidden';
 
+      // Mostra a composição percentual somente nos indicadores de economia; preserva o histórico abaixo.
+      if (window.EconomiaBreakdown) window.EconomiaBreakdown.render(Boolean(info.showEconomyBreakdown));
+
       if (statModalChart) { statModalChart.destroy(); statModalChart = null; }
 
       const chartWrap = document.getElementById('statModalChartWrap');
@@ -418,6 +446,8 @@
       if (e && e.target !== e.currentTarget) return;
       document.getElementById('statModalOverlay').classList.remove('active');
       document.body.style.overflow = '';
+      // Libera o canvas da composição ao fechar para evitar instâncias acumuladas.
+      if (window.EconomiaBreakdown) window.EconomiaBreakdown.destroy();
     }
 
     // Permite controlar a interface pelo teclado.
@@ -487,6 +517,8 @@
   // ─── Dados para o modal de cada indicador ───
   const statInfo = {
     economia_real_rs: {
+      // Compartilha a mesma explicação percentual da economia disponível no portal público.
+      showEconomyBreakdown: true,
       title: 'Minha Economia (R$)', icon: '⚡', color: '#15803d',
       desc: 'Economia real individual: 75% do benefício, após a contribuição ao projeto e o cashback.',
       total: kpisPorPeriodoCliente.todos.economia_real_rs,

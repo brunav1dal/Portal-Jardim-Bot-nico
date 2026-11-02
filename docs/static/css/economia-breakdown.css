@@ -1,0 +1,35 @@
+/* Objetivo: apresentar a composição da economia com as cores e superfícies dos gráficos do portal. */
+
+/* Mantém a explicação exclusiva do indicador de economia e preserva o comportamento de hidden. */
+.economia-partition[hidden] { display: none; }
+.economia-partition {
+  margin: 1rem 0 1.5rem; padding: 1.1rem;
+  border: 1px solid var(--glass-border); border-radius: var(--radius-sm);
+  background: var(--bg-primary); text-align: left;
+}
+.economia-partition h4 { margin: 0 0 .35rem; font-size: .95rem; color: var(--text-primary); }
+.economia-partition-intro, .economia-partition-note {
+  margin: 0; font-size: .78rem; line-height: 1.6; color: var(--text-secondary);
+}
+
+/* O anel e a legenda formam um único exemplo: as três parcelas totalizam 100% da base. */
+.economia-partition-body { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 1rem; align-items: center; margin: 1rem 0; }
+.economia-partition-chart { position: relative; width: 150px; height: 150px; }
+.economia-partition-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; }
+.economia-partition-center strong { font-size: 1.35rem; color: var(--accent-solar); }
+.economia-partition-center span { font-size: .68rem; color: var(--text-secondary); }
+.economia-partition-legend { display: grid; gap: .8rem; list-style: none; padding: 0; margin: 0; }
+.economia-partition-legend li { display: grid; grid-template-columns: 8px minmax(0, 1fr) auto; gap: .5rem; align-items: baseline; font-size: .76rem; color: var(--text-secondary); }
+.economia-partition-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--partition-color); }
+.economia-partition-legend strong { color: var(--text-primary); font-size: .85rem; }
+
+/* Explica a diferença entre o pagamento bruto ao banco e a parcela que retorna como cashback. */
+.economia-partition-summary { margin-bottom: .65rem; padding: .7rem; border-radius: var(--radius-xs); background: rgba(21,128,61,.07); font-size: .78rem; line-height: 1.6; color: var(--text-primary); }
+.economia-partition-summary p { margin: 0; }
+.economia-partition-summary p + p { margin-top: .3rem; }
+
+/* Em celulares estreitos, empilha o anel e a legenda para manter todos os rótulos visíveis. */
+@media (max-width: 480px) {
+  .economia-partition-body { grid-template-columns: minmax(0, 1fr); }
+  .economia-partition-chart { margin: 0 auto; }
+}
