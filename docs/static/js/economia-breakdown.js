@@ -23,7 +23,7 @@
         labels: ['Valor original da energia'],
         datasets: [
           { label: 'Economia direta', data: [50], backgroundColor: '#15803d' },
-          { label: 'Retorno em Orquídeas', data: [25], backgroundColor: '#d97706' },
+          { label: 'Retorno em Orquídeas', data: [25], backgroundColor: '#86efac' },
           { label: 'Custo efetivo da energia', data: [25], backgroundColor: '#dc2626' }
         ].map(dataset => ({ ...dataset, borderWidth: 0, barThickness: 36 }))
       },
@@ -49,6 +49,7 @@
           ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
           chart.data.datasets.forEach((dataset, index) => {
             const bar = chart.getDatasetMeta(index).data[0];
+            ctx.fillStyle = index === 1 ? '#14532d' : '#ffffff';
             if (bar && Math.abs(bar.x - bar.base) >= 38) ctx.fillText(`${dataset.data[0]}%`, (bar.x + bar.base) / 2, bar.y);
           });
           ctx.restore();
