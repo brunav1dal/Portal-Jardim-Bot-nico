@@ -21,8 +21,8 @@
 .partner-card.is-flipped .partner-card-inner { transform: rotateY(180deg); }
 
 /* As duas faces ocupam a mesma célula; a maior define a altura sem cortar textos. */
-/* Vidro fosco: a transparência deixa a foto aparecer; o desfoque preserva a leitura das marcas. */
-.partner-face { grid-area: 1 / 1; display: flex; flex-direction: column; min-width: 0; padding: 1rem; border: 1px solid rgba(248,231,201,.30); border-radius: var(--radius); backface-visibility: hidden; -webkit-backface-visibility: hidden; background: rgba(255,255,255,.10); backdrop-filter: blur(6px) saturate(1.05); -webkit-backdrop-filter: blur(6px) saturate(1.05); box-shadow: 0 8px 28px rgba(70,44,9,.08), inset 0 1px 0 rgba(248,231,201,.12); overflow-wrap: anywhere; }
+/* Frente e verso compartilham a mesma superfície branca sólida, sem transparência ou desfoque. */
+.partner-face { grid-area: 1 / 1; display: flex; flex-direction: column; min-width: 0; padding: 1rem; border: 1px solid #e7e1d8; border-radius: var(--radius); backface-visibility: hidden; -webkit-backface-visibility: hidden; background: #ffffff; box-shadow: 0 8px 24px rgba(45,29,8,.10); overflow-wrap: anywhere; }
 .partner-category { font-size: .6rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); }
 .partner-identity { display: flex; align-items: center; justify-content: center; flex-direction: column; gap: .5rem; min-height: 105px; padding: .25rem 0; color: var(--partner-accent); }
 /* Preserva cores, proporção e desenho original dos arquivos; não aplica filtros às marcas. */
@@ -33,19 +33,19 @@
 .partner-card--ufrj .partner-logo, .partner-card--ufrj .partner-logo-secondary { width: calc((100% - .75rem) / 2); height: 85px; }
 .partner-wordmark { font-size: clamp(1.65rem, 2.8vw, 2.1rem); font-weight: 750; letter-spacing: -.065em; }
 /* A ação tem formato arredondado, apenas contorno e fundo transparente nas duas faces. */
-.partner-card-action { display: inline-flex; align-self: center; justify-content: center; align-items: center; gap: .75rem; min-height: 44px; margin-top: auto; padding: .6rem 1.1rem; border: 1px solid rgba(248,231,201,.38); border-radius: 999px; background: transparent; font-size: .75rem; font-weight: 550; color: #f3e6d1; text-shadow: 0 1px 3px rgba(45,29,8,.65); }
+.partner-card-action { display: inline-flex; align-self: center; justify-content: center; align-items: center; gap: .75rem; min-height: 44px; margin-top: auto; padding: .6rem 1.1rem; border: 1px solid rgba(118,83,30,.30); border-radius: 999px; background: transparent; font-size: .75rem; font-weight: 550; color: #76531e; }
 .partner-card-action > span { font-size: 1.1rem; }
 
 /* O verso revela a colaboração; cores e espaçamento preservam a leitura do texto. */
-.partner-back { transform: rotateY(180deg); border-color: rgba(248,231,201,.35); background: rgba(45,29,8,.24); color: #ffffff; text-shadow: 0 1px 3px rgba(45,29,8,.65); }
-.partner-back .partner-category { color: #ffffff; }
-.partner-back-name { margin-top: .4rem; font-size: .95rem; font-weight: 600; line-height: 1.45; letter-spacing: -.025em; color: #ffffff; }
-.partner-contribution { display: block; margin: .6rem 0; font-size: .8rem; line-height: 1.5; color: #ffffff; }
+.partner-back { transform: rotateY(180deg); color: var(--text-primary); }
+.partner-back .partner-category { color: #76531e; }
+.partner-back-name { margin-top: .4rem; font-size: .95rem; font-weight: 600; line-height: 1.45; letter-spacing: -.025em; color: var(--text-primary); }
+.partner-contribution { display: block; margin: .6rem 0; font-size: .8rem; line-height: 1.5; color: var(--text-secondary); }
 
 /* Indica interação sem virar por hover: o texto permanece estável até o usuário selecionar o card. */
 .partner-card:focus-visible { outline: 3px solid var(--accent-solar); outline-offset: 5px; }
 @media (hover: hover) {
-  .partner-card:hover .partner-face { border-color: rgba(248,231,201,.48); box-shadow: 0 10px 30px rgba(70,44,9,.14), inset 0 1px 0 rgba(248,231,201,.18); }
+  .partner-card:hover .partner-face { border-color: #cdbb9e; box-shadow: 0 10px 28px rgba(45,29,8,.16); }
 }
 
 /* Tablets usam duas colunas; telas estreitas empilham os cards. */
@@ -56,11 +56,6 @@
   .partners-section { padding: 1rem; border-radius: 0; }
   .partner-card { flex-basis: 100%; width: 100%; min-height: 205px; }
   .partner-identity { min-height: 105px; }
-}
-
-/* Navegadores sem desfoque usam uma superfície mais opaca para manter o contraste. */
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .partner-face { background: rgba(255,255,255,.16); }
 }
 
 /* Mantém a alternância acessível a quem solicita menos movimento, sem rotação animada. */
