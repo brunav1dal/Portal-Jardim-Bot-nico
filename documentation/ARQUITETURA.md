@@ -108,7 +108,7 @@ histórico mensal, com pagamento bruto e cashback identificados.
 | `css/project-flow.css` | Fluxo de funcionamento do projeto. |
 | `css/solar-scenarios.css` | Cenários de cotas solares. |
 | `css/parceiros.css` | Cards reversíveis dos parceiros, faces e adaptação a celulares. |
-| `css/economia-breakdown.css` | Anel, legenda e resumo da composição da economia real. |
+| `css/economia-breakdown.css` | Barra de 100%, legenda e resumo da composição da economia real. |
 | `js/header-menu.js` | Menu responsivo. |
 | `js/header-glass.js` | Efeito visual do cabeçalho. |
 | `js/hero-video.js` | Vídeo de destaque. |

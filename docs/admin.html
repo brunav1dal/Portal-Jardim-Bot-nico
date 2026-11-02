@@ -9,8 +9,8 @@
   <title>Banco Comunitário Jardim Botânico — Administração</title>
   <link rel="stylesheet" href="static/css/style.css?v=economy-explanation-20261028">
 
-  <link rel="stylesheet" href="static/css/economia-breakdown.css?v=20261102">
-  <script src="static/js/economia-breakdown.js?v=20261102" defer></script>
+  <link rel="stylesheet" href="static/css/economia-breakdown.css?v=barra-100-20261102">
+  <script src="static/js/economia-breakdown.js?v=barra-100-20261102" defer></script>
   <link rel="stylesheet" href="static/css/solar-scenarios.css?v=scenario-unused-key-20261028">
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
@@ -1093,24 +1093,24 @@
       <h3 id="statModalTitle"></h3>
 
 <section class="economia-partition" id="economiaPartition" aria-labelledby="economiaPartitionTitle" hidden>
-  <h4 id="economiaPartitionTitle">Como o valor da energia se divide</h4>
+  <h4 id="economiaPartitionTitle">Como se divide o valor original · 100%</h4>
   <p class="economia-partition-intro">Exemplo para cada R$ 100 que a parte solar custaria na concessionária, sem impostos e taxas.</p>
   <div class="economia-partition-body">
     <div class="economia-partition-chart">
-      <canvas id="economiaPartitionChart" role="img" aria-label="Divisão do valor original: 50% de economia na energia, 25% de cashback em Orquídeas e 25% para o banco após o cashback."></canvas>
-      <div class="economia-partition-center" aria-hidden="true"><strong>75%</strong><span>economia real</span></div>
+      <canvas id="economiaPartitionChart" role="img" aria-label="Barra de 100%: 50% de economia direta, 25% que retornam ao beneficiário em Orquídeas e 25% em vermelho como custo efetivo da energia. As duas últimas parcelas compõem os 50% pagos ao banco."></canvas>
     </div>
+    <div class="economia-payment-route" aria-hidden="true"><span>50% não pagos</span><span>50% pagos ao banco</span></div>
 
     <ul class="economia-partition-legend">
-      <li><span class="economia-partition-dot" style="--partition-color: #15803d" aria-hidden="true"></span><span>Economia na energia</span><strong>50%</strong></li>
-      <li><span class="economia-partition-dot" style="--partition-color: #d97706" aria-hidden="true"></span><span>Cashback em Orquídeas</span><strong>25%</strong></li>
-      <li><span class="economia-partition-dot" style="--partition-color: #7c3aed" aria-hidden="true"></span><span>Banco após o cashback</span><strong>25%</strong></li>
+      <li><span class="economia-partition-dot" style="--partition-color: #15803d" aria-hidden="true"></span><span>Economia direta: valor não pago</span><strong>50%</strong></li>
+      <li><span class="economia-partition-dot" style="--partition-color: #d97706" aria-hidden="true"></span><span>Retorna ao beneficiário em Orquídeas</span><strong>25%</strong></li>
+      <li><span class="economia-partition-dot" style="--partition-color: #dc2626" aria-hidden="true"></span><span>Custo efetivo da energia</span><strong>25%</strong></li>
     </ul>
   </div>
   <div class="economia-partition-summary">
     <p><strong>Economia real: R$ 75</strong> = R$ 50 não gastos + O$ 25 em Orquídeas (que retornam pro beneficiário).</p>
   </div>
-  <p class="economia-partition-note">As porcentagens usam o valor original da parte solar como base. O cashback já faz parte dos 75% de economia real.</p>
+  <p class="economia-partition-note">Dos 50% pagos ao banco, o equivalente a 25% do valor original retorna ao beneficiário em Orquídeas. Os outros 25%, em vermelho, são o custo efetivo da energia após considerar esse retorno em moeda social.</p>
 </section>
       <div class="modal-desc" id="statModalDesc"></div>
       <div class="modal-chart-wrap" id="statModalChartWrap">

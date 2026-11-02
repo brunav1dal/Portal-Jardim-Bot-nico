@@ -12,12 +12,12 @@
   margin: 0; font-size: .78rem; line-height: 1.6; color: var(--text-secondary);
 }
 
-/* O anel e a legenda formam um único exemplo: as três parcelas totalizam 100% da base. */
-.economia-partition-body { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 1rem; align-items: center; margin: 1rem 0; }
-.economia-partition-chart { position: relative; width: 150px; height: 150px; }
-.economia-partition-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; }
-.economia-partition-center strong { font-size: 1.35rem; color: var(--accent-solar); }
-.economia-partition-center span { font-size: .68rem; color: var(--text-secondary); }
+/* Uma barra horizontal ocupa toda a largura; seus segmentos sempre totalizam 100%. */
+.economia-partition-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: .8rem; margin: 1rem 0; }
+.economia-partition-chart { position: relative; width: 100%; height: 82px; min-width: 0; }
+/* Agrupa visualmente cashback e custo efetivo dentro dos 50% pagos ao banco. */
+.economia-payment-route { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .35rem; font-size: .67rem; color: var(--text-secondary); text-align: center; }
+.economia-payment-route span { border-top: 1px solid var(--glass-border); padding-top: .4rem; }
 .economia-partition-legend { display: grid; gap: .8rem; list-style: none; padding: 0; margin: 0; }
 .economia-partition-legend li { display: grid; grid-template-columns: 8px minmax(0, 1fr) auto; gap: .5rem; align-items: baseline; font-size: .76rem; color: var(--text-secondary); }
 .economia-partition-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--partition-color); }
@@ -28,8 +28,7 @@
 .economia-partition-summary p { margin: 0; }
 .economia-partition-summary p + p { margin-top: .3rem; }
 
-/* Em celulares estreitos, empilha o anel e a legenda para manter todos os rótulos visíveis. */
+/* Em celulares estreitos, os rótulos podem quebrar a linha sem comprimir o gráfico. */
 @media (max-width: 480px) {
-  .economia-partition-body { grid-template-columns: minmax(0, 1fr); }
-  .economia-partition-chart { margin: 0 auto; }
+  .economia-partition-legend li { font-size: .72rem; }
 }
