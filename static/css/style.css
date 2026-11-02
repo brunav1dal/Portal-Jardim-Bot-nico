@@ -1532,7 +1532,7 @@ button.stat-card:hover { transform: translateY(-4px); }
 }
 /* Cartões de indicadores: ajusta dimensões e espaçamento. */
 /* Os seis indicadores p?blicos usam fundo s?lido e uma ?nica cor de destaque. */
-#dados .stats-grid .stat-card { min-width: 0; background: #ffffff; backdrop-filter: none; }
+#dados .stats-grid .stat-card { min-width: 0; background: #ffffff; border: 1px solid #e3e6e9; backdrop-filter: none; }
 #dados .stats-grid .stat-card::before { background: #15803d; }
 #dados .stats-grid .stat-card .stat-value { color: #166534; }
 /* Responsividade: aplica os ajustes deste bloco apenas à faixa de tela indicada. */
