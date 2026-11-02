@@ -1,0 +1,47 @@
+{# Objetivo: apresentar os parceiros em cards que revelam as contribuições confirmadas pela equipe. #}
+{# Conteúdo editável: uma contribuição vazia mantém o verso sem descrição, para preenchimento posterior. #}
+{% set parceiros = [
+  {'id': 'decode', 'sigla': 'DECODE', 'logo': 'decode.png', 'nome': 'DECODE', 'instituicao': 'DECODE', 'categoria': 'Parceria do projeto', 'contribuicao': none},
+  {'id': 'ufpb', 'sigla': 'UFPB', 'logo': 'ufpb.png', 'nome': 'Universidade Federal da Paraíba', 'instituicao': 'UFPB', 'categoria': 'Universidade pública', 'contribuicao': none},
+  {'id': 'ufrj', 'sigla': 'UFRJ', 'logo': 'ufrj.png', 'nome': 'UFRJ · LABIS', 'instituicao': 'Universidade Federal do Rio de Janeiro', 'categoria': 'Universidade e laboratório', 'contribuicao': 'Desenvolvimento de software e apoio à organização dos dados do projeto.'},
+  {'id': 'fgv', 'sigla': 'FGV', 'logo': 'fgv.png', 'nome': 'FGV Rio', 'instituicao': 'Fundação Getulio Vargas', 'categoria': 'Parceria do projeto', 'contribuicao': none},
+  {'id': 'cnpq', 'sigla': 'CNPq', 'logo': 'cnpq.png', 'nome': 'CNPq', 'instituicao': 'Conselho Nacional de Desenvolvimento Científico e Tecnológico', 'categoria': 'Apoio', 'contribuicao': 'Financiou as primeiras placas solares do projeto.'}
+] %}
+
+<section class="section partners-section" id="parceiros" aria-labelledby="partnersHeading">
+  {# Identifica visualmente a seção sem adicionar instruções ou descrições aos cards. #}
+  <h2 id="partnersHeading" class="partners-title">Parceiros</h2>
+
+  {# Cada card é um botão: clique, toque, Enter e Espaço executam a mesma ação. #}
+  <div class="partners-grid">
+    {% for parceiro in parceiros %}
+    <button type="button" class="partner-card partner-card--{{ parceiro.id }}" data-partner-card data-partner-name="{{ parceiro.nome }}"
+            aria-expanded="false" aria-controls="partnerDetails-{{ parceiro.id }}"
+            aria-label="Conhecer a contribuição de {{ parceiro.nome }}">
+      <span class="partner-card-inner">
+        <span class="partner-face partner-front">
+          {# Usa arquivos locais de marca, preservando o desenho e a proporção de cada instituição. #}
+          <span class="partner-identity" aria-hidden="true">
+            {% if parceiro.logo %}
+            <img class="partner-logo" src="{{ url_for('static', filename='img/parceiros/' ~ parceiro.logo) }}" width="280" height="140" loading="lazy" decoding="async" alt="">
+            {% else %}
+            <span class="partner-wordmark">{{ parceiro.sigla }}</span>
+            {% endif %}
+            {% if parceiro.id == 'ufrj' %}<img class="partner-logo-secondary" src="{{ url_for('static', filename='img/parceiros/labis.png', v='labis-enviado-20261102') }}" width="320" height="320" loading="lazy" decoding="async" alt="">{% endif %}
+          </span>
+          <span class="partner-card-action">Como contribui <span aria-hidden="true">↗</span></span>
+        </span>
+        <span class="partner-face partner-back" id="partnerDetails-{{ parceiro.id }}" aria-hidden="true">
+          {# Versos sem contribuição confirmada permanecem vazios, exceto pelo controle de retorno. #}
+          {% if parceiro.contribuicao %}
+          <span class="partner-category">A CONTRIBUIÇÃO</span>
+          <span class="partner-back-name">{{ parceiro.nome }}</span>
+          <span class="partner-contribution">{{ parceiro.contribuicao }}</span>
+          {% endif %}
+          <span class="partner-card-action">Voltar ao parceiro <span aria-hidden="true">↶</span></span>
+        </span>
+      </span>
+    </button>
+    {% endfor %}
+  </div>
+</section>

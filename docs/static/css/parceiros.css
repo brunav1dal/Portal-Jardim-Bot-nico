@@ -1,0 +1,69 @@
+/* Objetivo: apresentar os parceiros em cards reversíveis, com o tema visual do portal e adaptação a celulares. */
+
+/* A seção exibe somente logos e ações; seu título continua disponível para leitores de tela. */
+.partners-section { position: relative; isolation: isolate; margin-top: 2.75rem; padding: 2rem; border: 1px solid rgba(217,119,6,.25); border-radius: 0; scroll-margin-top: 110px; background: #dcae60; }
+/* Reutiliza a foto real das placas do projeto; o tratamento de cor afeta somente o fundo. */
+.partners-section::before { content: ''; position: absolute; inset: 0; z-index: -2; border-radius: inherit; background: url('../img/painel-voz-popular-novo.jpg') center 38% / cover no-repeat; filter: sepia(.4) saturate(.85); pointer-events: none; }
+/* A camada dourada usa as mesmas cores #f59e0b e #d97706 do destaque do menu. */
+.partners-section::after { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: linear-gradient(rgba(28,19,8,.38), rgba(28,19,8,.48)), linear-gradient(135deg, rgba(245,158,11,.48), rgba(217,119,6,.5)); pointer-events: none; }
+/* Título centralizado e branco para acompanhar as bordas e os botões sobre a foto dourada. */
+.partners-title { margin: 0 0 1.5rem; text-align: center; color: #ffffff; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; letter-spacing: -.035em; text-shadow: 0 1px 4px rgba(45,29,8,.65); }
+
+/* Centraliza todas as linhas, inclusive a última quando há menos de três parceiros. */
+.partners-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+.partner-card { --partner-accent: #15803d; flex: 0 0 calc((100% - 2rem) / 3); width: calc((100% - 2rem) / 3); min-width: 0; min-height: 205px; padding: 0; border: 0; border-radius: var(--radius); background: transparent; font: inherit; text-align: left; color: var(--text-primary); cursor: pointer; perspective: 1200px; -webkit-tap-highlight-color: transparent; }
+.partner-card--decode { --partner-accent: #927215; }
+.partner-card--ufpb { --partner-accent: #1d4b7b; }
+.partner-card--ufrj { --partner-accent: #245959; }
+.partner-card--fgv { --partner-accent: #164b77; }
+.partner-card--cnpq { --partner-accent: #23539a; }
+.partner-card-inner { position: relative; display: grid; width: 100%; height: 100%; min-height: inherit; transform-style: preserve-3d; transition: transform .65s cubic-bezier(.2,.7,.2,1); }
+.partner-card.is-flipped .partner-card-inner { transform: rotateY(180deg); }
+
+/* As duas faces ocupam a mesma célula; a maior define a altura sem cortar textos. */
+/* Vidro fosco: a transparência deixa a foto aparecer; o desfoque preserva a leitura das marcas. */
+.partner-face { grid-area: 1 / 1; display: flex; flex-direction: column; min-width: 0; padding: 1rem; border: 1px solid rgba(248,231,201,.30); border-radius: var(--radius); backface-visibility: hidden; -webkit-backface-visibility: hidden; background: rgba(255,255,255,.10); backdrop-filter: blur(6px) saturate(1.05); -webkit-backdrop-filter: blur(6px) saturate(1.05); box-shadow: 0 8px 28px rgba(70,44,9,.08), inset 0 1px 0 rgba(248,231,201,.12); overflow-wrap: anywhere; }
+.partner-category { font-size: .6rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); }
+.partner-identity { display: flex; align-items: center; justify-content: center; flex-direction: column; gap: .5rem; min-height: 105px; padding: .25rem 0; color: var(--partner-accent); }
+/* Preserva cores, proporção e desenho original dos arquivos; não aplica filtros às marcas. */
+.partner-logo { display: block; width: 100%; max-width: 235px; height: 85px; object-fit: contain; }
+/* Enquadra a marca LABIS enviada, retirando apenas as margens brancas do enquadramento visual. */
+.partner-logo-secondary { display: block; width: 150px; max-width: 100%; height: 90px; object-fit: cover; object-position: center; }
+.partner-card--ufrj .partner-identity { flex-direction: row; gap: .75rem; }
+.partner-card--ufrj .partner-logo, .partner-card--ufrj .partner-logo-secondary { width: calc((100% - .75rem) / 2); height: 85px; }
+.partner-wordmark { font-size: clamp(1.65rem, 2.8vw, 2.1rem); font-weight: 750; letter-spacing: -.065em; }
+/* A ação tem formato arredondado, apenas contorno e fundo transparente nas duas faces. */
+.partner-card-action { display: inline-flex; align-self: center; justify-content: center; align-items: center; gap: .75rem; min-height: 44px; margin-top: auto; padding: .6rem 1.1rem; border: 1px solid rgba(248,231,201,.38); border-radius: 999px; background: transparent; font-size: .75rem; font-weight: 550; color: #f3e6d1; text-shadow: 0 1px 3px rgba(45,29,8,.65); }
+.partner-card-action > span { font-size: 1.1rem; }
+
+/* O verso revela a colaboração; cores e espaçamento preservam a leitura do texto. */
+.partner-back { transform: rotateY(180deg); border-color: rgba(248,231,201,.35); background: rgba(45,29,8,.24); color: #ffffff; text-shadow: 0 1px 3px rgba(45,29,8,.65); }
+.partner-back .partner-category { color: #ffffff; }
+.partner-back-name { margin-top: .4rem; font-size: .95rem; font-weight: 600; line-height: 1.45; letter-spacing: -.025em; color: #ffffff; }
+.partner-contribution { display: block; margin: .6rem 0; font-size: .8rem; line-height: 1.5; color: #ffffff; }
+
+/* Indica interação sem virar por hover: o texto permanece estável até o usuário selecionar o card. */
+.partner-card:focus-visible { outline: 3px solid var(--accent-solar); outline-offset: 5px; }
+@media (hover: hover) {
+  .partner-card:hover .partner-face { border-color: rgba(248,231,201,.48); box-shadow: 0 10px 30px rgba(70,44,9,.14), inset 0 1px 0 rgba(248,231,201,.18); }
+}
+
+/* Tablets usam duas colunas; telas estreitas empilham os cards. */
+@media (max-width: 1050px) {
+  .partner-card { flex-basis: calc((100% - 1rem) / 2); width: calc((100% - 1rem) / 2); }
+}
+@media (max-width: 540px) {
+  .partners-section { padding: 1rem; border-radius: 0; }
+  .partner-card { flex-basis: 100%; width: 100%; min-height: 205px; }
+  .partner-identity { min-height: 105px; }
+}
+
+/* Navegadores sem desfoque usam uma superfície mais opaca para manter o contraste. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .partner-face { background: rgba(255,255,255,.16); }
+}
+
+/* Mantém a alternância acessível a quem solicita menos movimento, sem rotação animada. */
+@media (prefers-reduced-motion: reduce) {
+  .partner-card-inner { transition: none; }
+}

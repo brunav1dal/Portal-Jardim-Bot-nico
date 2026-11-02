@@ -402,6 +402,10 @@
     {# Comportamento: carrega o módulo indicado ou executa as interações específicas desta tela. #}
     <script src="{{ url_for('static', filename='js/noticias.js', v='news-prev-next-20261028') }}" defer></script>
   </section>
+  {# Encerramento do portal: parceiros selecionados e contribuição de cada instituição. #}
+  {% include 'components/parceiros.html' %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/parceiros.css', v='20261102') }}">
+  <script src="{{ url_for('static', filename='js/parceiros.js', v='20261102') }}" defer></script>
 </div>
 {% endblock %}
 

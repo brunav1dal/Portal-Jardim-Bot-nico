@@ -89,6 +89,12 @@ Notícias registra seus endpoints em `init_news(app)`.
 `templates/base.html` contém a estrutura compartilhada e o cabeçalho.
 `templates/components/project_flow.html` é um trecho incluído na página inicial.
 `templates/admin/noticias.html` é incluído no painel administrativo.
+`templates/components/parceiros.html` encerra o portal com os parceiros. A lista
+no início do arquivo reúne nome, identificação e contribuição; `none` deixa o
+verso sem descrição. As informações foram fornecidas pela equipe. A universidade
+norueguesa foi retirada; permanecem DECODE, UFPB, UFRJ/LABIS, FGV Rio e CNPq.
+Os PNGs locais e suas fontes estão em `static/img/parceiros/README.md`. A marca
+DECODE foi fornecida pela usuária e convertida para PNG com transparência.
 `templates/components/economia_partition.html` mostra a divisão percentual da
 economia real no modal. É um exemplo por R$ 100 de energia solar, separado do
 histórico mensal, com pagamento bruto e cashback identificados.
@@ -101,6 +107,7 @@ histórico mensal, com pagamento bruto e cashback identificados.
 | `css/noticias.css` | Notícias e editor. |
 | `css/project-flow.css` | Fluxo de funcionamento do projeto. |
 | `css/solar-scenarios.css` | Cenários de cotas solares. |
+| `css/parceiros.css` | Cards reversíveis dos parceiros, faces e adaptação a celulares. |
 | `css/economia-breakdown.css` | Anel, legenda e resumo da composição da economia real. |
 | `js/header-menu.js` | Menu responsivo. |
 | `js/header-glass.js` | Efeito visual do cabeçalho. |
@@ -109,6 +116,7 @@ histórico mensal, com pagamento bruto e cashback identificados.
 | `js/cenarios-solares.js` | Interações dos cenários solares. |
 | `js/noticias.js` | Notícias e visualização de matérias no portal. |
 | `js/admin-noticias.js` | Formulário de administração das notícias. |
+| `js/parceiros.js` | Alternância dos cards por clique, toque e teclado e sincronização de acessibilidade. |
 | `js/economia-breakdown.js` | Gráfico de composição 50%/25%/25% e ciclo de abertura e fechamento no modal. |
 | `noticias.json` | Notícias externas iniciais, combinadas com as do SQLite. |
 | `img/` | Logos, moedas, diagramas e fotos utilizadas pelo site. |
