@@ -1534,7 +1534,7 @@ button.stat-card:hover { transform: translateY(-4px); }
 /* Os seis indicadores p?blicos usam fundo s?lido e uma ?nica cor de destaque. */
 #dados .stats-grid .stat-card { min-width: 0; background: #ffffff; border: 1px solid #e3e6e9; backdrop-filter: none; }
 #dados .stats-grid .stat-card::before { background: #15803d; }
-#dados .stats-grid .stat-card .stat-value { color: #166534; text-align: center; }
+#dados .stats-grid .stat-card .stat-value { display: block; width: 100%; color: #166534; text-align: center; }
 /* Responsividade: aplica os ajustes deste bloco apenas à faixa de tela indicada. */
 @media (max-width: 900px) {
   #dados .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
