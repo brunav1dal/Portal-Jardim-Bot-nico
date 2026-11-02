@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -7,17 +9,22 @@
   <title>Banco Comunitário Jardim Botânico — Meu Painel</title>
   <link rel="stylesheet" href="static/css/style.css?v=economy-explanation-20261028">
   <link rel="stylesheet" href="static/css/solar-scenarios.css?v=scenario-unused-key-20261028">
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <link rel="icon" type="image/svg+xml" href="static/img/orquidea-icon.svg?v=orange-20261028">
   <link rel="stylesheet" href="static/css/noticias.css?v=news-manage-20261028">
+
   <script src="static/js/header-glass.js?v=glass-header-20261028" defer></script>
   <link rel="stylesheet" href="static/css/project-flow.css?v=flow-payment-highlight-20261028">
+
   <script src="static/js/header-menu.js?v=responsive-local-20261028" defer></script>
 </head>
 <body>
   <div class="bg-grid"></div>
+
 
   <nav class="navbar">
     <a href="index.html" class="navbar-brand">
@@ -36,7 +43,10 @@
     <div class="navbar-actions">
 
 
+
+
           <span class="navbar-greeting" style="color:var(--text-secondary);font-size:0.85rem;">Olá, Pessoa exemplo 01</span>
+
 
 
           <a href="cliente.html" class="btn btn-primary btn-sm">Painel do beneficiário</a>
@@ -48,9 +58,11 @@
   </nav>
 
 
+
   <div class="container" style="padding-top:1rem;">
     <p class="flash-success">Demonstra&ccedil;&atilde;o com pessoas e valores fict&iacute;cios. Altera&ccedil;&otilde;es nos pain&eacute;is s&atilde;o tempor&aacute;rias.</p>
   </div>
+
 
 
 <div class="container dashboard"><p class="flash-success">Demonstracao estatica: pessoas e valores ficticios. Alteracoes nao sao gravadas no servidor.</p>
@@ -65,7 +77,9 @@
 
 
 
+
   <!-- Fatura Atual -->
+
 
   <div class="invoice-card fade-up">
     <div class="invoice-card-info">
@@ -84,6 +98,7 @@
     <label for="selectPeriodoCliente" style="color:var(--text-secondary);font-size:0.9rem;font-weight:600;">Ver dados de:</label>
     <select id="selectPeriodoCliente" onchange="atualizarCardsCliente()">
       <option value="todos" selected>Todo o período</option>
+
 
       <option value="2025-01">01/2025</option>
 
@@ -122,6 +137,7 @@
 
   <!-- Status da Residência -->
 
+
   <div class="status-card fade-up">
     <h3>Status da Minha Residência</h3>
     <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:1rem;">UC ficticia 01</p>
@@ -154,14 +170,17 @@
   <div class="charts-grid charts-grid-3">
     <div class="chart-card fade-up">
       <h3>Minha Economia ao Longo do Tempo (R$)</h3>
+
       <canvas id="chartEconomia"></canvas>
     </div>
     <div class="chart-card fade-up">
       <h3>Energia Recebida (kWh) por Mês</h3>
+
       <canvas id="chartKW"></canvas>
     </div>
     <div class="chart-card fade-up">
       <h3>Evolução dos Créditos</h3>
+
       <canvas id="chartCreditos"></canvas>
     </div>
   </div>
@@ -187,8 +206,10 @@
       Envie o boleto da concessionária de energia todo mês para manter seu cadastro em dia no banco.
     </p>
 
+
     <form class="upload-form" onsubmit="event.preventDefault(); alert('Envio indisponivel na demonstracao estatica.');">
       <label for="boletoInput" class="upload-icon-btn" title="Selecionar arquivo">
+
         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
           <polyline points="17 8 12 3 7 8"/>
@@ -201,6 +222,7 @@
     </form>
 
     <div class="table-card">
+
       <table>
         <thead>
           <tr>
@@ -211,6 +233,7 @@
         </thead>
         <tbody>
 
+
           <tr>
             <td colspan="3" style="text-align:center;color:var(--text-muted);">Nenhum boleto enviado ainda.</td>
           </tr>
@@ -220,6 +243,7 @@
     </div>
   </div>
 </div>
+
 
 
   <footer class="footer">
@@ -235,17 +259,21 @@
       <div class="modal-desc" id="statModalDesc"></div>
       <div class="modal-chart-wrap" id="statModalChartWrap">
         <h4>Histórico recente</h4>
+
         <canvas id="statModalChart"></canvas>
       </div>
     </div>
   </div>
 
+
   <script>
     const menuLinks = document.querySelectorAll('.navbar-menu a');
+    // Destaca o link correspondente à seção atual da página.
     function atualizarMenuAtivo() {
       const destino = window.location.hash || '#dados';
       menuLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href').endsWith(destino)));
     }
+    // Responde ao clique deste controle e sincroniza sua ação com a interface.
     menuLinks.forEach(link => link.addEventListener('click', () => {
       menuLinks.forEach(item => item.classList.remove('active'));
       link.classList.add('active');
@@ -255,6 +283,7 @@
 
     const secoesNavegacao = ['dados', 'como-funciona', 'historia', 'noticias']
       .map(id => document.getElementById(id)).filter(Boolean);
+    // Identifica a seção em exibição e mantém a navegação sincronizada com a rolagem.
     function atualizarSecaoVisivel() {
       const linhaAtiva = window.scrollY + window.innerHeight * 0.32;
       let secaoAtual = secoesNavegacao[0] && secoesNavegacao[0].id;
@@ -263,6 +292,7 @@
       });
       menuLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href').endsWith('#' + secaoAtual)));
     }
+    // Reavalia o estado visual durante a rolagem sem bloquear o evento.
     window.addEventListener('scroll', atualizarSecaoVisivel, { passive: true });
     atualizarSecaoVisivel();
 
@@ -271,7 +301,9 @@
         const ativa = step.classList.toggle('active');
         step.setAttribute('aria-pressed', ativa ? 'true' : 'false');
       };
+      // Responde ao clique deste controle e sincroniza sua ação com a interface.
       step.addEventListener('click', alternarEtapa);
+      // Permite controlar a interface pelo teclado.
       step.addEventListener('keydown', event => {
         if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault();
@@ -280,6 +312,7 @@
       });
     });
 
+    // Observa a entrada dos cartões na área visível antes de iniciar sua revelação.
     const revealObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -291,11 +324,13 @@
     document.querySelectorAll('.fade-up').forEach(element => revealObserver.observe(element));
 
     // ─── PRNG determinístico (mesmo dado sempre gera o mesmo "histórico") ───
+    // Transforma um texto em uma semente numérica para a série ilustrativa reproduzível.
     function seedFromString(str) {
       let h = 0;
       for (let i = 0; i < str.length; i++) { h = Math.imul(31, h) + str.charCodeAt(i) | 0; }
       return h >>> 0;
     }
+    // Gera números pseudoaleatórios reproduzíveis para compor históricos ilustrativos.
     function mulberry32(seed) {
       return function () {
         seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
@@ -305,6 +340,7 @@
       };
     }
     // Distribui um total acumulado em N meses de forma estável (mesma chave = mesmo gráfico)
+    // Distribui um total em uma série ilustrativa quando o indicador não fornece histórico próprio.
     function distributeHistory(total, seedKey, labels) {
       const rand = mulberry32(seedFromString(seedKey));
       const n = labels.length;
@@ -318,6 +354,7 @@
     // ─── Modal de estatística ───
     let statModalChart = null;
 
+    // Preenche a explicação do indicador e monta o gráfico no modal compartilhado.
     function openStatModal(info, sourceIcon) {
       const modalIcon = document.getElementById('statModalIcon');
       modalIcon.className = 'modal-icon';
@@ -351,6 +388,7 @@
 
       chartWrap.style.display = 'block';
       const color = info.color || '#15803d';
+      // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
       statModalChart = new Chart(document.getElementById('statModalChart'), {
         type: info.chartType || 'line',
         data: {
@@ -375,20 +413,25 @@
       });
     }
 
+    // Fecha o modal e devolve a rolagem à página principal.
     function closeStatModal(e) {
       if (e && e.target !== e.currentTarget) return;
       document.getElementById('statModalOverlay').classList.remove('active');
       document.body.style.overflow = '';
     }
 
+    // Permite controlar a interface pelo teclado.
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') closeStatModal();
     });
   </script>
 
 
+
+
 <script>
   // Counter animation
+  // Anima os indicadores numéricos até seus valores finais sem alterar os dados de origem.
   function animateCounters() {
     document.querySelectorAll('.count-up').forEach(el => {
       const target = parseFloat(el.dataset.target);
@@ -396,6 +439,7 @@
       const isCurrency = prefix.trim() === 'R$';
       const duration = 2000;
       const start = performance.now();
+      // Avança o valor exibido conforme o tempo da animação.
       function update(now) {
         const elapsed = now - start;
         const progress = Math.min(elapsed / duration, 1);
@@ -415,8 +459,11 @@
   Chart.defaults.borderColor = 'rgba(15,23,42,0.08)';
   Chart.defaults.font.family = "'Geist', sans-serif";
 
+  // Recebe dados serializados pelo Flask; os filtros abaixo atuam nessa cópia no navegador.
   const historico = {"cashback": [10.0, 10.0], "creditos": [0.0, 0.0], "economia": [30.0, 30.0], "investido": [20.0, 20.0], "kw_recebidos": [100.0, 100.0], "meses": ["2025-01", "2025-02"]};
+  // Recebe dados serializados pelo Flask; os filtros abaixo atuam nessa cópia no navegador.
   const kpisPorPeriodoCliente = {"2025-01": {"cashback_orquideas": 10.0, "creditos": 0.0, "economia_real_rs": 30.0, "investido": 20.0, "kw_recebidos": 100.0}, "2025-02": {"cashback_orquideas": 10.0, "creditos": 0.0, "economia_real_rs": 30.0, "investido": 20.0, "kw_recebidos": 100.0}, "todos": {"cashback_orquideas": 20.0, "creditos": 0.0, "economia_real_rs": 60.0, "investido": 40.0, "kw_recebidos": 200.0}};
+  // Troca os indicadores individuais pelos valores do período selecionado.
   function atualizarCardsCliente() {
     const periodo = document.getElementById('selectPeriodoCliente').value;
     const dados = kpisPorPeriodoCliente[periodo];
@@ -468,6 +515,7 @@
   atualizarCardsCliente();
 
   // Economia line chart
+  // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
   new Chart(document.getElementById('chartEconomia'), {
     type: 'line',
     data: {
@@ -489,6 +537,7 @@
   });
 
   // Energia Recebida bar chart
+  // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
   new Chart(document.getElementById('chartKW'), {
     type: 'bar',
     data: {
@@ -508,6 +557,7 @@
   });
 
   // Créditos area chart
+  // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
   new Chart(document.getElementById('chartCreditos'), {
     type: 'line',
     data: {
@@ -554,6 +604,7 @@
   // Exibe o nome do arquivo selecionado para anexar o boleto
   const boletoInput = document.getElementById('boletoInput');
   if (boletoInput) {
+    // Sincroniza a interface após a mudança de seleção ou de preferência.
     boletoInput.addEventListener('change', function () {
       const nomeArquivo = boletoInput.files.length ? boletoInput.files[0].name : 'Nenhum arquivo selecionado';
       document.getElementById('boletoFileName').textContent = nomeArquivo;

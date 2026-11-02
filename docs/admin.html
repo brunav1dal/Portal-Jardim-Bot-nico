@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -7,17 +9,22 @@
   <title>Banco Comunitário Jardim Botânico — Administração</title>
   <link rel="stylesheet" href="static/css/style.css?v=economy-explanation-20261028">
   <link rel="stylesheet" href="static/css/solar-scenarios.css?v=scenario-unused-key-20261028">
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <link rel="icon" type="image/svg+xml" href="static/img/orquidea-icon.svg?v=orange-20261028">
   <link rel="stylesheet" href="static/css/noticias.css?v=news-manage-20261028">
+
   <script src="static/js/header-glass.js?v=glass-header-20261028" defer></script>
   <link rel="stylesheet" href="static/css/project-flow.css?v=flow-payment-highlight-20261028">
+
   <script src="static/js/header-menu.js?v=responsive-local-20261028" defer></script>
 </head>
 <body>
   <div class="bg-grid"></div>
+
 
   <nav class="navbar">
     <a href="index.html" class="navbar-brand">
@@ -37,6 +44,9 @@
 
 
 
+
+
+
           <a href="admin.html" class="btn btn-outline btn-sm">Painel administrativo</a>
 
         <a href="index.html" class="btn btn-signout btn-sm">Sair</a>
@@ -46,9 +56,11 @@
   </nav>
 
 
+
   <div class="container" style="padding-top:1rem;">
     <p class="flash-success">Demonstra&ccedil;&atilde;o com pessoas e valores fict&iacute;cios. Altera&ccedil;&otilde;es nos pain&eacute;is s&atilde;o tempor&aacute;rias.</p>
   </div>
+
 
 
 <div class="container dashboard"><p class="flash-success">Demonstracao estatica: pessoas e valores ficticios. Alteracoes nao sao gravadas no servidor.</p>
@@ -58,6 +70,7 @@
       <p class="welcome">Gestão completa das usinas e residências beneficiárias.</p>
     </div>
   </div>
+
 
   <section class="solar-overview" aria-label="Resumo do Meu Solar">
     <div class="solar-summary-card">
@@ -91,6 +104,7 @@
 
     <div class="stats-grid">
 
+
       <button type="button" class="stat-card green fade-up" onclick="openUsinaModal('Usina demonstrativa')">
         <div class="stat-icon">☀️</div>
         <div class="stat-label">Usina demonstrativa</div>
@@ -107,6 +121,7 @@
             </div>
           </div>
           <p style="font-size:0.78rem;color:var(--text-muted);margin-top:4px;">
+
             📍 R. Arquivista Jonathas Carécas, 74 - Castelo Branco, João Pessoa - PB, 58057-034 · 10 kW cap. ·
             <span>ativa</span>
           </p>
@@ -121,6 +136,7 @@
       <label style="color:var(--text-secondary);font-size:0.85rem;font-weight:600;">Selecionar usina:</label>
       <select id="selectUsina" onchange="updateUsinaChart()">
 
+
         <option value="Usina demonstrativa">Usina demonstrativa</option>
 
       </select>
@@ -129,10 +145,12 @@
     <div class="charts-grid">
       <div class="chart-card">
         <h3>Geração Individual (kWh/mês)</h3>
+
         <canvas id="chartUsinaIndividual"></canvas>
       </div>
       <div class="chart-card">
       <h3>Pagamento ao projeto por mes (R$)</h3>
+
         <canvas id="chartUsinaReceita"></canvas>
         <p style="font-size:0.78rem;color:var(--text-muted);margin-top:0.75rem;">As barras mostram metade do valor do beneficio em cada mes. Receita da usina nao informada.</p>
       </div>
@@ -185,18 +203,22 @@
     <div class="charts-grid">
       <div class="chart-card">
         <h3>Geração Total Mensal (kWh)</h3>
+
         <canvas id="chartGeracaoTotal"></canvas>
       </div>
       <div class="chart-card">
         <h3>Receita Total Mensal (R$)</h3>
+
         <canvas id="chartReceitaTotal"></canvas>
       </div>
       <div class="chart-card">
         <h3>CO₂ Evitado Mensal (kg)</h3>
+
         <canvas id="chartCO2Total"></canvas>
       </div>
       <div class="chart-card">
         <h3>Comparativo por Usina (kWh acumulado)</h3>
+
         <canvas id="chartComparativo"></canvas>
       </div>
     </div>
@@ -210,6 +232,7 @@
       <select id="selectMesEconomia" onchange="filtrarDemonstrativoEconomia()">
         <option value="todos">Todo o período</option>
 
+
         <option value="2025-01" >01/2025</option>
 
         <option value="2025-02" selected>02/2025</option>
@@ -221,6 +244,7 @@
     </p>
     <div class="table-card admin-economia-card">
       <div class="admin-economia-scroll">
+
       <table class="admin-economia-table" aria-label="Demonstrativo mensal da economia dos beneficiários">
         <thead>
           <tr>
@@ -236,6 +260,7 @@
           </tr>
         </thead>
         <tbody>
+
 
           <tr class="linha-economia" data-mes="2025-01">
             <td>01/2025</td>
@@ -481,8 +506,10 @@
         <tfoot>
           <tr class="total-economia" data-mes="todos">
             <th colspan="2">Total do período</th>
+
             <th>600,00</th><th>800,00</th><th>400,00</th><th>1400,00</th><th>1000,00</th><th>800,00</th><th>600,00</th>
           </tr>
+
 
           <tr class="total-economia" data-mes="2025-01">
             <th colspan="2">Total 01/2025</th>
@@ -510,6 +537,7 @@
       </table>
       </div>
     </div>
+
     <section class="economia-guia" aria-label="Exemplo ilustrativo de economia">
       <div class="economia-exemplo">
         <div class="economia-exemplo-heading"><strong>Exemplo ilustrativo</strong><span>Valores arredondados; n&atilde;o s&atilde;o dados reais de um benefici&aacute;rio.</span></div>
@@ -531,6 +559,7 @@
       <label for="selectProjetoBeneficiarios" style="color:var(--text-secondary);font-size:0.85rem;font-weight:600;">Projeto:</label>
       <select id="selectProjetoBeneficiarios" onchange="atualizarCardsBeneficiarios()">
 
+
         <option value="todos">Todos os projetos</option>
 
         <option value="1">Usina demonstrativa</option>
@@ -539,6 +568,7 @@
       <label for="selectMesBeneficiarios" style="color:var(--text-secondary);font-size:0.85rem;font-weight:600;">Mês ou período:</label>
       <select id="selectMesBeneficiarios" onchange="atualizarCardsBeneficiarios()">
         <option value="todos" selected>Todo o período</option>
+
 
         <option value="2025-01">01/2025</option>
 
@@ -596,6 +626,7 @@
 
     <!-- Tabela de Residências -->
     <div class="table-card">
+
       <table id="tabelaResidencias">
         <thead>
           <tr>
@@ -609,6 +640,7 @@
           </tr>
         </thead>
         <tbody>
+
 
           <tr data-id="1" data-usuario-id="2" data-nome="pessoa exemplo 01" data-endereco="uc ficticia 01"
               data-status="ok">
@@ -737,6 +769,7 @@
           <span>Residência</span>
           <select id="painelSelectResidencia" onchange="carregarResidenciaNoPainel()">
 
+
             <option value="1">Pessoa exemplo 01</option>
 
             <option value="2">Pessoa exemplo 02</option>
@@ -796,9 +829,11 @@
         Para classificar um mês como dentro da cota, o consumo elegível deve ser igual ou menor que a cota e não pode haver excedente informado para a concessionária de energia elétrica. Para tarifa social, os primeiros 80 kWh não entram no consumo elegível. A conta da concessionária de energia elétrica também inclui impostos e encargos, por isso o valor total da fatura não é usado para inferir excedente.
       </p>
 
+
       <div class="filter-bar">
         <label for="selectBeneficiarioCota" style="color:var(--text-secondary);font-size:0.85rem;font-weight:600;">Beneficiário:</label>
         <select id="selectBeneficiarioCota" onchange="atualizarGraficoCotas()">
+
 
           <option value="10">Pessoa exemplo 09</option>
 
@@ -824,6 +859,7 @@
       </div>
       <div class="chart-card" style="margin-bottom:1.5rem;">
         <h3>Histórico mensal: cota e energia recebida (kWh)</h3>
+
         <canvas id="chartHistoricoCotas"></canvas>
       </div>
 
@@ -834,10 +870,12 @@
       </p>
       <div class="rank-grid">
 
+
         <div class="rank-card">
           <div class="rank-card-body">
             <div class="rank-card-name">Pessoa exemplo 09</div>
             <div class="rank-card-months">
+
 
               <span class="month-dot filled" title="01/2025: dentro da cota"></span>
 
@@ -853,6 +891,7 @@
             <div class="rank-card-name">Pessoa exemplo 10</div>
             <div class="rank-card-months">
 
+
               <span class="month-dot filled" title="01/2025: dentro da cota"></span>
 
               <span class="month-dot filled" title="02/2025: dentro da cota"></span>
@@ -866,6 +905,7 @@
           <div class="rank-card-body">
             <div class="rank-card-name">Pessoa exemplo 01</div>
             <div class="rank-card-months">
+
 
               <span class="month-dot filled" title="01/2025: dentro da cota"></span>
 
@@ -881,6 +921,7 @@
             <div class="rank-card-name">Pessoa exemplo 02</div>
             <div class="rank-card-months">
 
+
               <span class="month-dot filled" title="01/2025: dentro da cota"></span>
 
               <span class="month-dot filled" title="02/2025: dentro da cota"></span>
@@ -894,6 +935,7 @@
           <div class="rank-card-body">
             <div class="rank-card-name">Pessoa exemplo 03</div>
             <div class="rank-card-months">
+
 
               <span class="month-dot filled" title="01/2025: dentro da cota"></span>
 
@@ -909,6 +951,7 @@
             <div class="rank-card-name">Pessoa exemplo 04</div>
             <div class="rank-card-months">
 
+
               <span class="month-dot filled" title="01/2025: dentro da cota"></span>
 
               <span class="month-dot filled" title="02/2025: dentro da cota"></span>
@@ -922,6 +965,7 @@
           <div class="rank-card-body">
             <div class="rank-card-name">Pessoa exemplo 05</div>
             <div class="rank-card-months">
+
 
               <span class="month-dot filled" title="01/2025: dentro da cota"></span>
 
@@ -937,6 +981,7 @@
             <div class="rank-card-name">Pessoa exemplo 06</div>
             <div class="rank-card-months">
 
+
               <span class="month-dot filled" title="01/2025: dentro da cota"></span>
 
               <span class="month-dot filled" title="02/2025: dentro da cota"></span>
@@ -951,6 +996,7 @@
             <div class="rank-card-name">Pessoa exemplo 07</div>
             <div class="rank-card-months">
 
+
               <span class="month-dot filled" title="01/2025: dentro da cota"></span>
 
               <span class="month-dot filled" title="02/2025: dentro da cota"></span>
@@ -964,6 +1010,7 @@
           <div class="rank-card-body">
             <div class="rank-card-name">Pessoa exemplo 08</div>
             <div class="rank-card-months">
+
 
               <span class="month-dot filled" title="01/2025: dentro da cota"></span>
 
@@ -980,25 +1027,32 @@
     <div class="charts-grid">
       <div class="chart-card">
         <h3>Status das Residências</h3>
+
         <canvas id="chartStatusResidencias"></canvas>
       </div>
       <div class="chart-card">
         <h3>Consumo por Residência (kWh)</h3>
+
         <canvas id="chartConsumoResidencias"></canvas>
       </div>
     </div>
   </div>
+
+
 <div class="tab-content" id="tab-noticias">
   <h2 class="section-title">Notícias do projeto</h2>
   <p class="admin-news-intro">Publique fotos e histórias da comunidade. O título aparece sobre o degradê da capa; ao clicar, o visitante abre o texto completo.</p>
+
 
   <p class="flash-success">O cadastro de notícias funciona no aplicativo da Render ou no ambiente local. Esta demonstração estática permite apenas visualizar o formulário.</p>
 
   <button type="button" id="openNewsEditor" class="admin-news-open" aria-haspopup="dialog" aria-controls="adminNewsEditor"><span aria-hidden="true">+</span><span><strong>Publicar nova notícia no portal público</strong><small>Crie uma publicação própria ou adicione uma matéria por link.</small></span></button>
   <p id="adminNewsNotice" class="admin-news-status" role="status" aria-live="polite"></p>
+
   <dialog id="adminNewsEditor" class="admin-news-editor" aria-labelledby="adminNewsEditorTitle">
     <div class="admin-news-editor-header"><h3 id="adminNewsEditorTitle">Nova notícia no portal público</h3><button type="button" id="closeNewsEditor" aria-label="Fechar formulário">×</button></div>
   <div class="admin-news-editor-content">
+
     <form id="adminNewsForm" class="admin-news-form" method="post" action="#" enctype="multipart/form-data" data-static-demo="true">
       <input type="hidden" name="csrf_token" value="">
       <input type="hidden" name="import_token" id="newsImportToken" value="">
@@ -1023,6 +1077,7 @@
 </div>
 
 
+
   <footer class="footer">
     <p>© 2026 Banco Comunitário Jardim Botânico — Energia limpa, economia real. 🌱</p>
   </footer>
@@ -1036,17 +1091,21 @@
       <div class="modal-desc" id="statModalDesc"></div>
       <div class="modal-chart-wrap" id="statModalChartWrap">
         <h4>Histórico recente</h4>
+
         <canvas id="statModalChart"></canvas>
       </div>
     </div>
   </div>
 
+
   <script>
     const menuLinks = document.querySelectorAll('.navbar-menu a');
+    // Destaca o link correspondente à seção atual da página.
     function atualizarMenuAtivo() {
       const destino = window.location.hash || '#dados';
       menuLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href').endsWith(destino)));
     }
+    // Responde ao clique deste controle e sincroniza sua ação com a interface.
     menuLinks.forEach(link => link.addEventListener('click', () => {
       menuLinks.forEach(item => item.classList.remove('active'));
       link.classList.add('active');
@@ -1056,6 +1115,7 @@
 
     const secoesNavegacao = ['dados', 'como-funciona', 'historia', 'noticias']
       .map(id => document.getElementById(id)).filter(Boolean);
+    // Identifica a seção em exibição e mantém a navegação sincronizada com a rolagem.
     function atualizarSecaoVisivel() {
       const linhaAtiva = window.scrollY + window.innerHeight * 0.32;
       let secaoAtual = secoesNavegacao[0] && secoesNavegacao[0].id;
@@ -1064,6 +1124,7 @@
       });
       menuLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href').endsWith('#' + secaoAtual)));
     }
+    // Reavalia o estado visual durante a rolagem sem bloquear o evento.
     window.addEventListener('scroll', atualizarSecaoVisivel, { passive: true });
     atualizarSecaoVisivel();
 
@@ -1072,7 +1133,9 @@
         const ativa = step.classList.toggle('active');
         step.setAttribute('aria-pressed', ativa ? 'true' : 'false');
       };
+      // Responde ao clique deste controle e sincroniza sua ação com a interface.
       step.addEventListener('click', alternarEtapa);
+      // Permite controlar a interface pelo teclado.
       step.addEventListener('keydown', event => {
         if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault();
@@ -1081,6 +1144,7 @@
       });
     });
 
+    // Observa a entrada dos cartões na área visível antes de iniciar sua revelação.
     const revealObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -1092,11 +1156,13 @@
     document.querySelectorAll('.fade-up').forEach(element => revealObserver.observe(element));
 
     // ─── PRNG determinístico (mesmo dado sempre gera o mesmo "histórico") ───
+    // Transforma um texto em uma semente numérica para a série ilustrativa reproduzível.
     function seedFromString(str) {
       let h = 0;
       for (let i = 0; i < str.length; i++) { h = Math.imul(31, h) + str.charCodeAt(i) | 0; }
       return h >>> 0;
     }
+    // Gera números pseudoaleatórios reproduzíveis para compor históricos ilustrativos.
     function mulberry32(seed) {
       return function () {
         seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
@@ -1106,6 +1172,7 @@
       };
     }
     // Distribui um total acumulado em N meses de forma estável (mesma chave = mesmo gráfico)
+    // Distribui um total em uma série ilustrativa quando o indicador não fornece histórico próprio.
     function distributeHistory(total, seedKey, labels) {
       const rand = mulberry32(seedFromString(seedKey));
       const n = labels.length;
@@ -1119,6 +1186,7 @@
     // ─── Modal de estatística ───
     let statModalChart = null;
 
+    // Preenche a explicação do indicador e monta o gráfico no modal compartilhado.
     function openStatModal(info, sourceIcon) {
       const modalIcon = document.getElementById('statModalIcon');
       modalIcon.className = 'modal-icon';
@@ -1152,6 +1220,7 @@
 
       chartWrap.style.display = 'block';
       const color = info.color || '#15803d';
+      // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
       statModalChart = new Chart(document.getElementById('statModalChart'), {
         type: info.chartType || 'line',
         data: {
@@ -1176,21 +1245,27 @@
       });
     }
 
+    // Fecha o modal e devolve a rolagem à página principal.
     function closeStatModal(e) {
       if (e && e.target !== e.currentTarget) return;
       document.getElementById('statModalOverlay').classList.remove('active');
       document.body.style.overflow = '';
     }
 
+    // Permite controlar a interface pelo teclado.
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') closeStatModal();
     });
   </script>
 
 
+
+
 <script src="static/js/admin-noticias.js?v=news-manage-20261028" defer></script>
+
 <script>
   // ─── Tab Navigation ───
+  // Alterna a aba visível e destaca o botão correspondente no painel administrativo.
   function showTab(tabName) {
     document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -1201,6 +1276,7 @@
     setTimeout(() => Object.values(Chart.instances).forEach(chart => chart.resize()), 50);
   }
 
+  // Mostra as linhas e os totais correspondentes ao mês escolhido no demonstrativo.
   function filtrarDemonstrativoEconomia() {
     const seletor = document.getElementById('selectMesEconomia');
     if (!seletor) return;
@@ -1211,17 +1287,21 @@
   }
   filtrarDemonstrativoEconomia();
 
+  // Recebe dados serializados pelo Flask; os filtros abaixo atuam nessa cópia no navegador.
   const beneficiosPorMesCards = {"2025-01": {"beneficiarios": 10, "cashback_rs": 100.0, "doado_banco_rs": 200.0, "economia_real_rs": 300.0, "energia_kwh": 1000.0}, "2025-02": {"beneficiarios": 10, "cashback_rs": 100.0, "doado_banco_rs": 200.0, "economia_real_rs": 300.0, "energia_kwh": 1000.0}, "todos": {"beneficiarios": 10, "cashback_rs": 200.0, "doado_banco_rs": 400.0, "economia_real_rs": 600.0, "energia_kwh": 2000.0}};
+  // Atualiza o projeto selecionado e recalcula os cartões de beneficiários.
   function selecionarProjetoBeneficiarios(projetoId) {
     const seletor = document.getElementById('selectProjetoBeneficiarios');
     if (seletor) seletor.value = projetoId;
     atualizarCardsBeneficiarios();
   }
+  // Atualiza o período selecionado e recalcula os cartões de beneficiários.
   function selecionarPeriodoBeneficiarios(periodo) {
     const seletor = document.getElementById('selectMesBeneficiarios');
     if (seletor) seletor.value = periodo;
     atualizarCardsBeneficiarios();
   }
+  // Aplica os filtros atuais aos indicadores e exibe os valores correspondentes.
   function atualizarCardsBeneficiarios() {
     const mes = document.getElementById('selectMesBeneficiarios')?.value;
     const dados = beneficiosPorMesCards[mes];
@@ -1238,10 +1318,12 @@
   atualizarCardsBeneficiarios();
 
   // ─── Filter Residências ───
+  // Filtra as linhas de residências conforme os critérios escolhidos no painel.
   function filterResidencias() {
     const status = document.getElementById('filterStatus').value;
     const search = document.getElementById('filterSearch').value.toLowerCase();
     const periodo = document.getElementById('selectMesBeneficiarios').value;
+    // Recebe dados serializados pelo Flask; os filtros abaixo atuam nessa cópia no navegador.
     const historico = {"10": {"2025-01": {"consumo_kwh": 100.0, "economia_rs": 30.0}, "2025-02": {"consumo_kwh": 100.0, "economia_rs": 30.0}}, "11": {"2025-01": {"consumo_kwh": 100.0, "economia_rs": 30.0}, "2025-02": {"consumo_kwh": 100.0, "economia_rs": 30.0}}, "2": {"2025-01": {"consumo_kwh": 100.0, "economia_rs": 30.0}, "2025-02": {"consumo_kwh": 100.0, "economia_rs": 30.0}}, "3": {"2025-01": {"consumo_kwh": 100.0, "economia_rs": 30.0}, "2025-02": {"consumo_kwh": 100.0, "economia_rs": 30.0}}, "4": {"2025-01": {"consumo_kwh": 100.0, "economia_rs": 30.0}, "2025-02": {"consumo_kwh": 100.0, "economia_rs": 30.0}}, "5": {"2025-01": {"consumo_kwh": 100.0, "economia_rs": 30.0}, "2025-02": {"consumo_kwh": 100.0, "economia_rs": 30.0}}, "6": {"2025-01": {"consumo_kwh": 100.0, "economia_rs": 30.0}, "2025-02": {"consumo_kwh": 100.0, "economia_rs": 30.0}}, "7": {"2025-01": {"consumo_kwh": 100.0, "economia_rs": 30.0}, "2025-02": {"consumo_kwh": 100.0, "economia_rs": 30.0}}, "8": {"2025-01": {"consumo_kwh": 100.0, "economia_rs": 30.0}, "2025-02": {"consumo_kwh": 100.0, "economia_rs": 30.0}}, "9": {"2025-01": {"consumo_kwh": 100.0, "economia_rs": 30.0}, "2025-02": {"consumo_kwh": 100.0, "economia_rs": 30.0}}};
     document.getElementById('thConsumoResidencias').textContent = periodo === 'todos' ? 'Consumo acumulado (kWh)' : 'Consumo no mês (kWh)';
     document.getElementById('thEconomiaResidencias').textContent = periodo === 'todos' ? 'Economia acumulada (R$)' : 'Economia no mês (R$)';
@@ -1264,12 +1346,14 @@
   }
 
   // ─── Counter Animation ───
+  // Anima os indicadores numéricos até seus valores finais sem alterar os dados de origem.
   function animateCounters() {
     document.querySelectorAll('.count-up').forEach(el => {
       const target = parseFloat(el.dataset.target);
       const prefix = el.dataset.prefix || '';
       const duration = 2000;
       const start = performance.now();
+      // Avança o valor exibido conforme o tempo da animação.
       function update(now) {
         const elapsed = now - start;
         const progress = Math.min(elapsed / duration, 1);
@@ -1289,11 +1373,15 @@
   Chart.defaults.borderColor = 'rgba(15,23,42,0.08)';
   Chart.defaults.font.family = "'Geist', sans-serif";
 
+  // Recebe dados serializados pelo Flask; os filtros abaixo atuam nessa cópia no navegador.
   const geracaoMes = [{"co2_evitado_kg": 100, "geracao_kwh": 1000, "mes": "2025-01", "receita_rs": 200}, {"co2_evitado_kg": 100, "geracao_kwh": 1000, "mes": "2025-02", "receita_rs": 200}];
+  // Recebe dados serializados pelo Flask; os filtros abaixo atuam nessa cópia no navegador.
   const geracaoInd = {"Usina demonstrativa": {"co2": [100, 100], "doado_banco": [200.0, 200.0], "geracao": [1000, 1000], "meses": ["2025-01", "2025-02"], "receita": [200, 200]}};
+  // Recebe dados serializados pelo Flask; os filtros abaixo atuam nessa cópia no navegador.
   const residencias = [{"cashback_em_dia": "sim", "consumo_mensal_kwh": 100, "economia_mensal_rs": 30, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "UC ficticia 01", "id": 1, "nome": "Pessoa exemplo 01", "ultima_atualizacao": "2025-02-01", "usuario_id": "2"}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 100, "economia_mensal_rs": 30, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "UC ficticia 02", "id": 2, "nome": "Pessoa exemplo 02", "ultima_atualizacao": "2025-02-01", "usuario_id": "3"}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 100, "economia_mensal_rs": 30, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "UC ficticia 03", "id": 3, "nome": "Pessoa exemplo 03", "ultima_atualizacao": "2025-02-01", "usuario_id": "4"}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 100, "economia_mensal_rs": 30, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "UC ficticia 04", "id": 4, "nome": "Pessoa exemplo 04", "ultima_atualizacao": "2025-02-01", "usuario_id": "5"}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 100, "economia_mensal_rs": 30, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "UC ficticia 05", "id": 5, "nome": "Pessoa exemplo 05", "ultima_atualizacao": "2025-02-01", "usuario_id": "6"}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 100, "economia_mensal_rs": 30, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "UC ficticia 06", "id": 6, "nome": "Pessoa exemplo 06", "ultima_atualizacao": "2025-02-01", "usuario_id": "7"}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 100, "economia_mensal_rs": 30, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "UC ficticia 07", "id": 7, "nome": "Pessoa exemplo 07", "ultima_atualizacao": "2025-02-01", "usuario_id": "8"}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 100, "economia_mensal_rs": 30, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "UC ficticia 08", "id": 8, "nome": "Pessoa exemplo 08", "ultima_atualizacao": "2025-02-01", "usuario_id": "9"}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 100, "economia_mensal_rs": 30, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "UC ficticia 09", "id": 9, "nome": "Pessoa exemplo 09", "ultima_atualizacao": "2025-02-01", "usuario_id": "10"}, {"cashback_em_dia": "sim", "consumo_mensal_kwh": 100, "economia_mensal_rs": 30, "em_dia_banco": "sim", "em_dia_concessionaria": "sim", "endereco": "UC ficticia 10", "id": 10, "nome": "Pessoa exemplo 10", "ultima_atualizacao": "2025-02-01", "usuario_id": "11"}];
 
   // ─── Modal de uma usina específica (usa o histórico real dela) ───
+  // Abre os detalhes da usina escolhida e prepara seus gráficos de geração e impacto.
   function openUsinaModal(nome) {
     const data = geracaoInd[nome];
     openStatModal({
@@ -1364,6 +1452,7 @@
   let chartUsinaInd = null;
   let chartUsinaRec = null;
 
+  // Atualiza o gráfico individual da usina conforme a seleção do filtro.
   function updateUsinaChart() {
     const nome = document.getElementById('selectUsina').value;
     const data = geracaoInd[nome];
@@ -1371,6 +1460,7 @@
     if (chartUsinaInd) chartUsinaInd.destroy();
     if (chartUsinaRec) chartUsinaRec.destroy();
 
+    // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
     chartUsinaInd = new Chart(document.getElementById('chartUsinaIndividual'), {
       type: 'line',
       data: {
@@ -1387,6 +1477,7 @@
       }
     });
 
+    // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
     chartUsinaRec = new Chart(document.getElementById('chartUsinaReceita'), {
       type: 'bar',
       data: {
@@ -1406,6 +1497,7 @@
   updateUsinaChart();
 
   // ═══ UNIFIED TAB CHARTS ═══
+  // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
   new Chart(document.getElementById('chartGeracaoTotal'), {
     type: 'line',
     data: {
@@ -1421,6 +1513,7 @@
     }
   });
 
+  // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
   new Chart(document.getElementById('chartReceitaTotal'), {
     type: 'bar',
     data: {
@@ -1436,6 +1529,7 @@
     }
   });
 
+  // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
   new Chart(document.getElementById('chartCO2Total'), {
     type: 'line',
     data: {
@@ -1454,6 +1548,7 @@
   // Comparativo horizontal bar
   const usinaNames = Object.keys(geracaoInd);
   const usinaTotals = usinaNames.map(n => geracaoInd[n].geracao.reduce((a, b) => a + b, 0));
+  // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
   new Chart(document.getElementById('chartComparativo'), {
     type: 'bar',
     data: {
@@ -1476,6 +1571,7 @@
   const emDiaConc = 10;
   const cashOk = 10;
 
+  // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
   new Chart(document.getElementById('chartStatusResidencias'), {
     type: 'doughnut',
     data: {
@@ -1496,6 +1592,7 @@
     }
   });
 
+  // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
   new Chart(document.getElementById('chartConsumoResidencias'), {
     type: 'bar',
     data: {
@@ -1510,8 +1607,10 @@
     }
   });
 
+  // Recebe dados serializados pelo Flask; os filtros abaixo atuam nessa cópia no navegador.
   const historicoCotas = [{"consumo_elegivel_kwh": [100.0, 100.0], "cotas_kwh": [100.0, 100.0], "energia_recebida_kwh": [100.0, 100.0], "meses": ["01/2025", "02/2025"], "nome": "Pessoa exemplo 09", "usuario_id": "10"}, {"consumo_elegivel_kwh": [100.0, 100.0], "cotas_kwh": [100.0, 100.0], "energia_recebida_kwh": [100.0, 100.0], "meses": ["01/2025", "02/2025"], "nome": "Pessoa exemplo 10", "usuario_id": "11"}, {"consumo_elegivel_kwh": [100.0, 100.0], "cotas_kwh": [100.0, 100.0], "energia_recebida_kwh": [100.0, 100.0], "meses": ["01/2025", "02/2025"], "nome": "Pessoa exemplo 01", "usuario_id": "2"}, {"consumo_elegivel_kwh": [100.0, 100.0], "cotas_kwh": [100.0, 100.0], "energia_recebida_kwh": [100.0, 100.0], "meses": ["01/2025", "02/2025"], "nome": "Pessoa exemplo 02", "usuario_id": "3"}, {"consumo_elegivel_kwh": [100.0, 100.0], "cotas_kwh": [100.0, 100.0], "energia_recebida_kwh": [100.0, 100.0], "meses": ["01/2025", "02/2025"], "nome": "Pessoa exemplo 03", "usuario_id": "4"}, {"consumo_elegivel_kwh": [100.0, 100.0], "cotas_kwh": [100.0, 100.0], "energia_recebida_kwh": [100.0, 100.0], "meses": ["01/2025", "02/2025"], "nome": "Pessoa exemplo 04", "usuario_id": "5"}, {"consumo_elegivel_kwh": [100.0, 100.0], "cotas_kwh": [100.0, 100.0], "energia_recebida_kwh": [100.0, 100.0], "meses": ["01/2025", "02/2025"], "nome": "Pessoa exemplo 05", "usuario_id": "6"}, {"consumo_elegivel_kwh": [100.0, 100.0], "cotas_kwh": [100.0, 100.0], "energia_recebida_kwh": [100.0, 100.0], "meses": ["01/2025", "02/2025"], "nome": "Pessoa exemplo 06", "usuario_id": "7"}, {"consumo_elegivel_kwh": [100.0, 100.0], "cotas_kwh": [100.0, 100.0], "energia_recebida_kwh": [100.0, 100.0], "meses": ["01/2025", "02/2025"], "nome": "Pessoa exemplo 07", "usuario_id": "8"}, {"consumo_elegivel_kwh": [100.0, 100.0], "cotas_kwh": [100.0, 100.0], "energia_recebida_kwh": [100.0, 100.0], "meses": ["01/2025", "02/2025"], "nome": "Pessoa exemplo 08", "usuario_id": "9"}];
   let gráficoHistoricoCotas = null;
+  // Recalcula as séries do gráfico de cotas a partir dos filtros do painel.
   function atualizarGraficoCotas() {
     const seletor = document.getElementById('selectBeneficiarioCota');
     if (!seletor) return;
@@ -1543,6 +1642,7 @@
       gráficoHistoricoCotas.update();
       return;
     }
+    // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
     gráficoHistoricoCotas = new Chart(document.getElementById('chartHistoricoCotas'), {
       type: 'bar',
       data: dados,
@@ -1568,6 +1668,7 @@
   };
 
   const residenciasMap = {};
+
 
   residenciasMap[1] = {
     em_dia_banco: "sim",
@@ -1633,6 +1734,7 @@
   let painelResidenciaId = null;
   let painelValoresAtuais = {};
 
+  // Expande ou recolhe o editor de status e prepara a residência selecionada.
   function togglePainelControle() {
     const painel = document.getElementById('painelControle');
     const expandido = painel.style.display === 'block';
@@ -1648,6 +1750,7 @@
     painel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
+  // Carrega os status atuais da residência nos controles de edição.
   function carregarResidenciaNoPainel() {
     const select = document.getElementById('painelSelectResidencia');
     painelResidenciaId = parseInt(select.value, 10);
@@ -1655,6 +1758,7 @@
     atualizarBotoesToggle();
   }
 
+  // Sincroniza os botões de status com os valores mantidos na edição local.
   function atualizarBotoesToggle() {
     document.querySelectorAll('#painelControle .toggle-btn').forEach(btn => {
       const campo = btn.dataset.campo;
@@ -1663,6 +1767,7 @@
     });
   }
 
+  // Alterna um status somente na edição local, antes da confirmação de gravação.
   function alterarStatus(btn) {
     const campo = btn.dataset.campo;
     const novoValor = btn.dataset.valor;
@@ -1676,12 +1781,14 @@
     atualizarBotoesToggle();
   }
 
+  // Descarta a edição local e retorna os controles ao estado cadastrado.
   function cancelarPainelControle() {
     document.getElementById('painelControle').style.display = 'none';
     document.getElementById('botaoPainelControle').textContent = 'Painel de Controle';
     painelResidenciaId = null;
   }
 
+  // Envia os status ao servidor e atualiza a interface somente após a resposta.
   function salvarPainelControle() {
     if (!painelResidenciaId) return;
 
@@ -1699,6 +1806,7 @@
       .catch(() => alert('Não foi possível salvar as alterações.'));
   }
 
+  // Reflete os status salvos na linha correspondente da tabela de residências.
   function atualizarLinhaTabela(id, valores) {
     const row = document.querySelector('#tabelaResidencias tbody tr[data-id="' + id + '"]');
     if (!row) return;

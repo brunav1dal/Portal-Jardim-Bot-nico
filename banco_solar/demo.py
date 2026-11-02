@@ -1,13 +1,17 @@
-"""Fictional demo records with the configured public plant location."""
+"""Objetivo: Produz tabelas fictícias para demonstrações e testes sem expor cadastros reais."""
+# Dependências usadas por este módulo.
 import pandas as pd
 
 
 def demo_data():
+    """Retorna DataFrames fictícios com as mesmas colunas das tabelas operacionais."""
+    # Cria o administrador fictício que serve de base para os demais cadastros.
     users = [{'id': 1, 'nome': 'Administrador exemplo', 'email': 'admin@example.invalid',
               'senha': 'unused', 'tipo': 'admin', 'economia_kw': 0, 'creditos': 0,
               'kw_recebidos': 0, 'investido': 0, 'cashback_orquideas': 0,
               'data_cadastro': '2025-01-01'}]
     homes, benefits = [], []
+    # Gera dez beneficiários, suas residências e dois meses de benefícios consistentes.
     for i in range(1, 11):
         uid, name = i + 1, f'Pessoa exemplo {i:02d}'
         users.append(dict(users[0], id=uid, nome=name, email=f'pessoa{i}@example.invalid', tipo='cliente'))
@@ -22,6 +26,7 @@ def demo_data():
                              'valor_beneficio_rs': 40, 'valor_projeto_rs': 20,
                              'creditos_acumulados': 0, 'vencimento': month + '-20',
                              'valor_energisa_rs': 30, 'excedeu_cota_kwh': 0, 'cashback_rs': 10})
+    # Define uma usina fictícia e a geração mensal usada nas demonstrações.
     plants = [{'id': 1, 'nome': 'Usina demonstrativa', 'localizacao': 'R. Arquivista Jonathas Carécas, 74 - Castelo Branco, João Pessoa - PB, 58057-034',
                'capacidade_kw': 10, 'geracao_mensal_kwh': 1000, 'status': 'ativa',
                'data_instalacao': '2025-01-01', 'eficiencia_percent': 90}]
@@ -29,6 +34,7 @@ def demo_data():
                    'co2_evitado_kg': 100, 'receita_rs': 200,
                    'energia_beneficiarios_kwh': 1000, 'fonte': 'planilha'}
                   for month in ['2025-01', '2025-02']]
+    # Entrega tabelas separadas por nome de CSV, incluindo um histórico vazio de boletos.
     return {'usuarios.csv': pd.DataFrame(users), 'residencias.csv': pd.DataFrame(homes),
             'beneficios_mensais.csv': pd.DataFrame(benefits), 'usinas.csv': pd.DataFrame(plants),
             'geracao_mensal.csv': pd.DataFrame(generation),

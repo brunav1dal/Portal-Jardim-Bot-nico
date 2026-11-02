@@ -1,37 +1,73 @@
+/* Objetivo: Define o visual do carrossel de notícias, da leitura de matérias e do editor administrativo. */
+/* Galeria e história do projeto: ajusta a apresentação dos elementos selecionados. */
 .history-news { margin-top: 2.5rem; scroll-margin-top: 110px; }
+/* Carrossel e conteúdo das notícias: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .news-header { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; margin-bottom: 1rem; }
+/* Carrossel e conteúdo das notícias: define a leitura dos textos, define cores e acabamento. */
 .news-eyebrow { display: block; margin-bottom: .35rem; color: var(--accent-solar); font-size: .65rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+/* Carrossel e conteúdo das notícias: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .news-header h3 { margin: 0; font-size: 1.4rem; font-weight: 600; letter-spacing: -.035em; }
+/* Carrossel e conteúdo das notícias: define a leitura dos textos, define cores e acabamento. */
 .news-header p { margin-top: .4rem; font-size: .8rem; color: var(--text-secondary); }
+/* Carrossel e conteúdo das notícias: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .news-controls { display: flex; justify-content: center; align-items: center; gap: .75rem; width: 100%; margin-top: 1.2rem; }
+/* Carrossel e conteúdo das notícias: representa o estado oculto ou indisponível do controle. */
 .news-controls[hidden] { display: none; }
+/* Carrossel e conteúdo das notícias: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .news-controls button { display: inline-flex; justify-content: center; align-items: center; gap: .65rem; min-height: 44px; padding: .7rem 1.3rem; border: 1px solid #1e3a32; border-radius: 24px; background: #1e3a32; color: #f4faf6; font-family: inherit; font-size: .8rem; font-weight: 500; cursor: pointer; transition: background .2s; }
+/* Carrossel e conteúdo das notícias: destaca o estado de interação por ponteiro ou teclado. */
 .news-controls button:not(:disabled):hover { border-color: #102b23; background: #102b23; color: white; }
+/* Carrossel e conteúdo das notícias: representa o estado oculto ou indisponível do controle. */
 .news-controls button:disabled { opacity: .45; cursor: default; }
+/* Carrossel e conteúdo das notícias: define cores e acabamento. */
 .news-viewport { overflow: hidden; border-radius: var(--radius); background: #1b2d37; touch-action: pan-y; }
+/* Carrossel e conteúdo das notícias: organiza a disposição dos elementos, controla movimento ou transição. */
 .news-track { display: flex; transition: transform .65s cubic-bezier(.22,.61,.36,1); }
+/* Carrossel e conteúdo das notícias: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .news-slide { position: relative; display: flex; align-items: flex-end; flex: 0 0 100%; min-width: 0; min-height: 430px; padding: 2rem; overflow: hidden; isolation: isolate; border: 0; background: #1b2d37; color: white; text-align: left; text-decoration: none; font-family: inherit; cursor: pointer; }
+/* Carrossel e conteúdo das notícias: desenha uma camada decorativa sem adicionar HTML, define cores e acabamento. */
 .news-slide::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(to top, rgba(8,20,24,.98) 0%, rgba(8,20,24,.78) 26%, rgba(8,20,24,.16) 68%, transparent 100%); }
+/* Carrossel e conteúdo das notícias: ajusta dimensões e espaçamento. */
 .news-photo { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: center 42%; }
+/* Carrossel e conteúdo das notícias: ajusta dimensões e espaçamento. */
 .news-caption { display: block; max-width: 740px; }
+/* Carrossel e conteúdo das notícias: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .news-source { display: inline-block; margin-bottom: .65rem; padding: .3rem .6rem; border: 1px solid rgba(255,255,255,.25); border-radius: 6px; background: rgba(8,20,24,.4); color: #e2eee8; font-size: .65rem; }
+/* Carrossel e conteúdo das notícias: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .news-caption h4 { max-width: 720px; margin: 0; color: white; font-size: clamp(1.25rem, 2.5vw, 2rem); font-weight: 600; line-height: 1.25; letter-spacing: -.035em; }
+/* Carrossel e conteúdo das notícias: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .news-caption p { margin: .65rem 0 0; font-size: .82rem; line-height: 1.7; color: #e0e8e4; }
+/* Carrossel e conteúdo das notícias: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .news-read { display: inline-flex; align-items: center; gap: .5rem; margin-top: 1rem; color: #d4f3df; font-size: .8rem; font-weight: 500; }
+/* Carrossel e conteúdo das notícias: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .news-tags { display: block; margin-top: .6rem; color: #c9d9d2; font-size: .65rem; line-height: 1.8; }
+/* Carrossel e conteúdo das notícias: destaca o estado de interação por ponteiro ou teclado. */
 .news-slide:hover .news-read { text-decoration: underline; text-underline-offset: 4px; }
+/* Carrossel e conteúdo das notícias: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .news-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .75rem; margin-top: .8rem; }
+/* Carrossel e conteúdo das notícias: define a leitura dos textos, define cores e acabamento. */
 .news-credit { font-size: .68rem; color: var(--text-muted); }
+/* Carrossel e conteúdo das notícias: define a leitura dos textos, define cores e acabamento. */
 .news-count { margin-right: .6rem; color: var(--text-muted); font-size: .7rem; }
+/* Carrossel e conteúdo das notícias: organiza a disposição dos elementos. */
 .news-pagination { display: flex; align-items: center; }
+/* Carrossel e conteúdo das notícias: destaca o estado de interação por ponteiro ou teclado. */
 .history-news button:focus-visible, .news-slide:focus-visible { outline: 3px solid #16a34a; outline-offset: 3px; }
+/* Carrossel e conteúdo das notícias: destaca o estado de interação por ponteiro ou teclado. */
 .news-slide:focus-visible { outline-offset: -5px; }
+/* Carrossel e conteúdo das notícias: ajusta dimensões e espaçamento. */
 .news-sr-status { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+/* Janela de leitura da notícia: ajusta dimensões e espaçamento, define cores e acabamento. */
 .news-dialog { position: fixed; inset: 0; margin: auto; width: min(680px, calc(100% - 2rem)); max-height: 85vh; overflow-y: auto; padding: 2rem; border: 1px solid var(--glass-border); border-radius: var(--radius); background: var(--bg-secondary); color: var(--text-primary); }
+/* Janela de leitura da notícia: define cores e acabamento. */
 .news-dialog::backdrop { background: rgba(15,23,42,.55); }
+/* Janela de leitura da notícia: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .news-dialog > button { display: block; margin-left: auto; min-width: 44px; min-height: 44px; border: 0; background: transparent; font-size: 1.5rem; cursor: pointer; }
+/* Janela de leitura da notícia: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .news-dialog h3 { margin-bottom: 1rem; font-size: 1.4rem; line-height: 1.4; }
+/* Janela de leitura da notícia: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .news-dialog p { margin-bottom: 1rem; line-height: 1.8; }
+/* Responsividade: aplica os ajustes deste bloco apenas à faixa de tela indicada. */
 @media (max-width: 640px) {
   .history-news { scroll-margin-top: 160px; }
   .news-header { align-items: flex-start; flex-direction: column; }
@@ -40,80 +76,146 @@
   .news-caption p { font-size: .78rem; }
   .news-photo { object-position: 55% center; }
 }
+/* Acessibilidade: adapta as animações à preferência de movimento do visitante. */
 @media (prefers-reduced-motion: reduce) {
   .news-track { transition: none; }
 }
 
+/* Editor de notícias: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .admin-news-intro { margin: -.5rem 0 1.5rem; color: var(--text-secondary); font-size: .9rem; line-height: 1.8; }
+/* Editor de notícias: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .admin-news-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: start; gap: 1.5rem; }
+/* Editor de notícias: ajusta a apresentação dos elementos selecionados. */
 .admin-news-form .form-group { margin-bottom: 1.1rem; }
+/* Editor de notícias: define a leitura dos textos. */
 .admin-news-form label { display: block; margin-bottom: .45rem; font-size: .8rem; font-weight: 550; }
+/* Editor de notícias: define a leitura dos textos, define cores e acabamento. */
 .admin-news-form label span, .admin-news-form small { color: var(--text-muted); font-weight: 400; }
+/* Editor de notícias: representa o estado oculto ou indisponível do controle. */
 .admin-news-form input:not([type="hidden"]), .admin-news-form textarea { display: block; box-sizing: border-box; width: 100%; padding: .8rem .9rem; border: 1px solid var(--glass-border); border-radius: var(--radius-xs); background: var(--bg-secondary); color: var(--text-primary); font: inherit; font-size: .85rem; }
+/* Editor de notícias: ajusta a apresentação dos elementos selecionados. */
 .admin-news-form textarea { resize: vertical; }
+/* Editor de notícias: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .admin-news-form select { width: 100%; padding: .8rem .9rem; border: 1px solid var(--glass-border); border-radius: var(--radius-xs); background: var(--bg-secondary); color: var(--text-primary); font: inherit; font-size: .85rem; }
+/* Editor de notícias: representa o estado oculto ou indisponível do controle. */
 .admin-news-form .form-group[hidden] { display: none; }
+/* Editor de notícias: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .admin-news-link-row { display: flex; gap: .6rem; align-items: stretch; }
+/* Editor de notícias: ajusta dimensões e espaçamento. */
 .admin-news-link-row input { min-width: 0; flex: 1; }
+/* Editor de notícias: ajusta a apresentação dos elementos selecionados. */
 .admin-news-link-row button { flex-shrink: 0; }
+/* Responsividade: aplica os ajustes deste bloco apenas à faixa de tela indicada. */
 @media (max-width: 640px) { .admin-news-link-row { flex-direction: column; } }
+/* Editor de notícias: destaca o estado de interação por ponteiro ou teclado. */
 .admin-news-form input:focus, .admin-news-form textarea:focus { outline: 2px solid var(--accent-solar); outline-offset: 2px; }
+/* Editor de notícias: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .admin-news-form small { display: block; margin-top: .4rem; font-size: .72rem; line-height: 1.7; }
+/* Editor de notícias: representa o estado oculto ou indisponível do controle. */
 .admin-news-form [type="submit"]:disabled { opacity: .6; cursor: wait; }
+/* Editor de notícias: define a leitura dos textos, define cores e acabamento. */
 .admin-news-status { margin-top: .9rem; font-size: .8rem; color: var(--accent-solar); }
+/* Editor de notícias: define cores e acabamento. */
 .admin-news-status[data-error="true"] { color: var(--accent-red); }
+/* Editor de notícias: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .admin-news-preview-wrap > h3 { margin: 0 0 .8rem; font-size: .9rem; font-weight: 550; }
+/* Editor de notícias: ajusta dimensões e espaçamento, define cores e acabamento. */
 .admin-news-preview { min-height: 340px; border-radius: var(--radius); cursor: default; }
+/* Editor de notícias: define a leitura dos textos. */
 .admin-news-preview .news-caption h4 { font-size: 1.4rem; }
+/* Editor de notícias: representa o estado oculto ou indisponível do controle. */
 .admin-news-preview .news-photo[hidden] { display: none; }
+/* Editor de notícias: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .admin-news-preview-help { margin-top: .7rem; color: var(--text-muted); font-size: .75rem; line-height: 1.8; }
+/* Editor de notícias: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .admin-news-thumbnails { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .75rem; }
+/* Editor de notícias: ajusta dimensões e espaçamento, define cores e acabamento. */
 .admin-news-thumbnails img { width: 70px; height: 54px; object-fit: cover; border-radius: 7px; }
+/* Editor de notícias: ajusta a apresentação dos elementos selecionados. */
 .admin-news-published { margin-top: 1.5rem; }
+/* Editor de notícias: ajusta dimensões e espaçamento. */
 .admin-news-published ul { list-style: none; padding: 0; }
+/* Editor de notícias: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .admin-news-published li { display: flex; flex-direction: column; gap: .25rem; padding: .8rem 0; border-bottom: 1px solid var(--glass-border); }
+/* Editor de notícias: define a leitura dos textos. */
 .admin-news-published li strong { font-size: .85rem; font-weight: 550; }
+/* Editor de notícias: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .admin-news-published li span, .admin-news-published > p { font-size: .75rem; color: var(--text-muted); line-height: 1.8; }
+/* Janela de leitura da notícia: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .news-dialog-gallery { display: grid; gap: 1rem; margin-top: 1.25rem; }
+/* Janela de leitura da notícia: ajusta dimensões e espaçamento, define cores e acabamento. */
 .news-dialog-gallery img { width: 100%; height: auto; border-radius: var(--radius-sm); }
+/* Responsividade: aplica os ajustes deste bloco apenas à faixa de tela indicada. */
 @media (max-width: 850px) { .admin-news-grid { grid-template-columns: minmax(0, 1fr); } }
 
+/* Apresentação do componente: define cores e acabamento. */
 .section#noticias { background: #f4f7fa; }
+/* Galeria e história do projeto: ajusta a apresentação dos elementos selecionados. */
 .section#noticias .history-news { margin-top: 0; }
+/* Carrossel e conteúdo das notícias: ajusta dimensões e espaçamento. */
 .news-header .section-title { margin: 0; }
+/* Responsividade: aplica os ajustes deste bloco apenas à faixa de tela indicada. */
 @media (max-width: 768px) { .section#noticias { scroll-margin-top: 160px; } }
 
+/* Carrossel e conteúdo das notícias: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .news-publish-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; margin-bottom: 1.4rem; }
+/* Carrossel e conteúdo das notícias: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .news-publish-options button { display: flex; flex-direction: column; gap: .45rem; padding: 1rem; border: 1px solid var(--glass-border); border-radius: var(--radius-sm); background: var(--bg-secondary); color: var(--text-primary); text-align: left; font: inherit; cursor: pointer; }
+/* Carrossel e conteúdo das notícias: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .news-publish-options strong { font-size: .82rem; font-weight: 600; line-height: 1.5; }
+/* Carrossel e conteúdo das notícias: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .news-publish-options span { font-size: .72rem; color: var(--text-secondary); line-height: 1.7; }
+/* Carrossel e conteúdo das notícias: define cores e acabamento. */
 .news-publish-options button[aria-pressed="true"] { border-color: var(--accent-solar); background: #eff8f1; box-shadow: inset 0 0 0 1px var(--accent-solar); }
+/* Carrossel e conteúdo das notícias: destaca o estado de interação por ponteiro ou teclado. */
 .news-publish-options button:focus-visible { outline: 2px solid var(--accent-solar); outline-offset: 3px; }
+/* Responsividade: aplica os ajustes deste bloco apenas à faixa de tela indicada. */
 @media (max-width: 480px) { .news-publish-options { grid-template-columns: minmax(0, 1fr); } }
 
+/* Editor de notícias: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .admin-news-open { display: flex; align-items: center; justify-content: center; gap: 1rem; width: 100%; min-height: 110px; padding: 1.5rem; border: 0; border-radius: var(--radius); background: #166534; color: white; text-align: left; font: inherit; cursor: pointer; box-shadow: 0 8px 24px rgba(21,128,61,.12); }
+/* Editor de notícias: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .admin-news-open > span:first-child { display: grid; place-items: center; width: 44px; height: 44px; flex-shrink: 0; border: 1px solid rgba(255,255,255,.3); border-radius: 50%; font-size: 1.7rem; }
+/* Editor de notícias: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .admin-news-open strong { display: block; font-size: clamp(1rem, 2vw, 1.3rem); font-weight: 650; line-height: 1.5; }
+/* Editor de notícias: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .admin-news-open small { display: block; margin-top: .25rem; color: #d7eedf; font-size: .8rem; line-height: 1.7; }
+/* Editor de notícias: destaca o estado de interação por ponteiro ou teclado. */
 .admin-news-open:hover { background: #14532d; }
+/* Editor de notícias: destaca o estado de interação por ponteiro ou teclado. */
 .admin-news-open:focus-visible { outline: 3px solid #16a34a; outline-offset: 4px; }
+/* Editor de notícias: ajusta dimensões e espaçamento, define cores e acabamento. */
 .admin-news-editor { position: fixed; inset: 0; margin: auto; width: min(760px, calc(100% - 2rem)); max-height: 88vh; max-height: 88dvh; overflow-y: auto; padding: 0 1.5rem 1.5rem; border: 1px solid var(--glass-border); border-radius: var(--radius); background: var(--bg-secondary); color: var(--text-primary); box-shadow: var(--shadow-lg); }
+/* Editor de notícias: define cores e acabamento. */
 .admin-news-editor::backdrop { background: rgba(15,23,42,.6); backdrop-filter: blur(3px); }
+/* Editor de notícias: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .admin-news-editor-header { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.2rem 0; background: var(--bg-secondary); }
+/* Editor de notícias: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .admin-news-editor-header h3 { font-size: 1.15rem; font-weight: 600; line-height: 1.5; letter-spacing: -.02em; }
+/* Editor de notícias: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .admin-news-editor-header > button { flex-shrink: 0; width: 44px; height: 44px; border: 0; border-radius: 50%; background: var(--glass); color: var(--text-primary); font-size: 1.6rem; cursor: pointer; }
+/* Editor de notícias: ajusta a apresentação dos elementos selecionados. */
 .admin-news-editor-content { display: block; }
+/* Editor de notícias: ajusta a apresentação dos elementos selecionados. */
 .admin-news-preview-wrap { margin-top: 1.5rem; }
+/* Editor de notícias: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .admin-news-preview-wrap > summary, .admin-news-published > summary { min-height: 44px; padding: .7rem 0; color: var(--text-secondary); font-size: .85rem; font-weight: 550; cursor: pointer; }
+/* Editor de notícias: ajusta a apresentação dos elementos selecionados. */
 .admin-news-preview-wrap[open] > summary { margin-bottom: .7rem; }
+/* Editor de notícias: ajusta dimensões e espaçamento, define cores e acabamento. */
 .admin-news-published { padding: .5rem 0; border-top: 1px solid var(--glass-border); }
+/* Editor de notícias: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .admin-news-import-actions { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .8rem; }
+/* Editor de notícias: representa o estado oculto ou indisponível do controle. */
 .admin-news-import-actions[hidden] { display: none; }
+/* Editor de notícias: ajusta dimensões e espaçamento. */
 .admin-news-editor .admin-news-form > button[type="submit"] { width: 100%; justify-content: center; min-height: 48px; }
+/* Responsividade: aplica os ajustes deste bloco apenas à faixa de tela indicada. */
 @media (max-width: 480px) {
   .admin-news-editor { padding: 0 1rem 1rem; }
   .admin-news-open { padding: 1.2rem; gap: .75rem; }
   .admin-news-open > span:first-child { width: 34px; height: 34px; }
 }
 
+/* Editor de notícias: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .admin-news-item-actions { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .5rem; }

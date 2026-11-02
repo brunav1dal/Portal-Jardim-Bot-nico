@@ -1,7 +1,6 @@
-"""Administrator news publishing, independent from the energy spreadsheets."""
+"""Objetivo: Gerencia notícias e fotos via HTTP, com permissões, CSRF e respostas para o editor."""
+# Dependências usadas por este módulo.
 from datetime import datetime, timezone
-from contextlib import closing
-from io import BytesIO
 from pathlib import Path
 import hmac
 import json
@@ -9,52 +8,40 @@ import os
 import secrets
 import sqlite3
 import uuid
-import warnings
 from urllib.parse import urlsplit
 
 from flask import abort, flash, jsonify, redirect, request, send_from_directory, session, url_for
-from PIL import Image, ImageOps, UnidentifiedImageError
+from PIL import Image, UnidentifiedImageError
 from werkzeug.exceptions import RequestEntityTooLarge
-from news_import import ImportErrorMessage, import_article, public_url
+from banco_solar.services.importacao_noticias import ImportErrorMessage, import_article, public_url
 
 
-def prepare_photo(data):
-    with warnings.catch_warnings():
-        warnings.simplefilter('error', Image.DecompressionBombWarning)
-        with Image.open(BytesIO(data)) as image:
-            if image.format not in {'JPEG', 'PNG', 'WEBP'} or image.width * image.height > 24000000:
-                raise ValueError('Imagem incompatível ou maior que 24 megapixels.')
-            image.load()
-            image = ImageOps.exif_transpose(image).convert('RGBA')
-            image.thumbnail((2400, 2400), Image.Resampling.LANCZOS)
-            background = Image.new('RGB', image.size, 'white')
-            background.paste(image, mask=image.getchannel('A'))
-            output = BytesIO()
-            background.save(output, 'JPEG', quality=90, optimize=True)
-            return output.getvalue()
+from banco_solar.services.imagens import prepare_photo
+from banco_solar.config import ROOT_DIR
+from banco_solar.repositories import noticias as noticias_repository
 
 
 def init_news(app):
-    app.config.setdefault('NEWS_STORAGE_DIR', os.environ.get('NEWS_STORAGE_DIR', str(Path(app.root_path) / 'runtime' / 'noticias')))
+    """Registra o contexto, as rotas e o tratamento de uploads do módulo de notícias."""
+    app.config.setdefault('NEWS_STORAGE_DIR', os.environ.get('NEWS_STORAGE_DIR', str(ROOT_DIR / 'runtime' / 'noticias')))
 
     def storage():
+        """Retorna o diretório persistente configurado para banco e fotos das notícias."""
         return Path(app.config['NEWS_STORAGE_DIR'])
 
     def published():
-        db = storage() / 'noticias.sqlite3'
-        if not db.exists():
-            return []
-        with closing(sqlite3.connect(db)) as connection:
-            rows = connection.execute('SELECT payload FROM news ORDER BY created_at DESC, id DESC').fetchall()
-        return [json.loads(row[0]) for row in rows]
+        """Consulta as publicações cadastradas, ordenadas das mais recentes para as antigas."""
+        return noticias_repository.listar(storage())
 
     def csrf_token():
+        """Gera e reutiliza o token de proteção dos formulários na sessão atual."""
         if 'news_csrf' not in session:
             session['news_csrf'] = secrets.token_urlsafe(32)
         return session['news_csrf']
 
     @app.context_processor
     def news_context():
+        """Disponibiliza publicações e token ao template administrativo, respeitando a exportação."""
         if request.endpoint != 'admin_dashboard' or session.get('user_tipo') != 'admin':
             return {}
         exporting = app.config.get('NEWS_STATIC_EXPORT', False)
@@ -63,6 +50,7 @@ def init_news(app):
 
     @app.get('/api/noticias')
     def api_noticias():
+        """Combina as notícias cadastradas com o arquivo inicial e responde JSON sem cache."""
         with (Path(app.static_folder) / 'noticias.json').open(encoding='utf-8') as source:
             seed = json.load(source)
         for article in seed:
@@ -74,6 +62,7 @@ def init_news(app):
 
     @app.get('/noticias/fotos/<filename>')
     def noticia_foto(filename):
+        """Entrega somente fotos com identificador hexadecimal e extensão JPEG esperados."""
         if len(filename) != 36 or not filename.endswith('.jpg'):
             abort(404)
         try:
@@ -85,6 +74,7 @@ def init_news(app):
         return response
 
     def failure(message, status=400):
+        """Converte falhas em JSON ou mensagem com redirecionamento, conforme o pedido do navegador."""
         if request.accept_mimetypes.best == 'application/json':
             return jsonify(success=False, error=message), status
         flash(message, 'error')
@@ -92,8 +82,11 @@ def init_news(app):
 
     @app.post('/admin/noticias/importar')
     def importar_noticia():
+        """Prepara um rascunho de matéria externa sem publicá-lo no portal."""
+        # Confere o perfil administrativo antes de permitir a operação.
         if 'user_id' not in session or session.get('user_tipo') != 'admin':
             return failure('Entre com um perfil de administrador para importar notícias.', 403)
+        # Valida o token da sessão para recusar envios de formulários externos ou expirados.
         token = request.form.get('csrf_token', '')
         if not token or not hmac.compare_digest(token, session.get('news_csrf', '')):
             return failure('Sua sessão expirou. Recarregue o painel.', 403)
@@ -103,6 +96,7 @@ def init_news(app):
             return failure(str(error))
         image_name = ''
         images = []
+        # Reprocessa a capa importada e a salva como rascunho, ainda sem publicação.
         if metadata['image_bytes']:
             try:
                 data = prepare_photo(metadata['image_bytes'])
@@ -114,6 +108,7 @@ def init_news(app):
             except (ValueError, OSError, UnidentifiedImageError, Image.DecompressionBombError, Image.DecompressionBombWarning):
                 metadata['warning'] = 'Título e resumo importados. Envie uma foto: a imagem do site não pôde ser usada.'
                 image_name = ''
+        # Associa o rascunho ao link e a um token para validar seu uso na publicação.
         draft = {'token': secrets.token_urlsafe(24), 'url': metadata['url'], 'source': metadata['source'], 'image_name': image_name}
         session['news_external_draft'] = draft
         response = jsonify(success=True, preview={'token': draft['token'], 'url': draft['url'],
@@ -124,6 +119,8 @@ def init_news(app):
 
     @app.get('/admin/noticias/<article_id>')
     def consultar_noticia(article_id):
+        """Retorna uma publicação para preencher o formulário de edição administrativa."""
+        # Confere o perfil administrativo antes de permitir a operação.
         if 'user_id' not in session or session.get('user_tipo') != 'admin':
             return failure('Entre com um perfil de administrador para gerenciar notícias.', 403)
         article = next((item for item in published() if item['id'] == article_id), None)
@@ -135,25 +132,24 @@ def init_news(app):
 
     @app.post('/admin/noticias/<article_id>/excluir')
     def excluir_noticia(article_id):
+        """Exclui a publicação e remove fotos que nenhuma outra notícia utiliza."""
+        # Confere o perfil administrativo antes de permitir a operação.
         if 'user_id' not in session or session.get('user_tipo') != 'admin':
             return failure('Entre com um perfil de administrador para gerenciar notícias.', 403)
+        # Valida o token da sessão para recusar envios de formulários externos ou expirados.
         token = request.form.get('csrf_token', '')
         if not token or not hmac.compare_digest(token, session.get('news_csrf', '')):
             return failure('Sua sessão expirou. Recarregue o painel.', 403)
         article = next((item for item in published() if item['id'] == article_id), None)
         if not article:
             return failure('Esta notícia não foi encontrada.', 404)
-        db = storage() / 'noticias.sqlite3'
-        if not db.exists():
-            return failure('Esta notícia não foi encontrada.', 404)
         try:
-            with closing(sqlite3.connect(db)) as connection:
-                with connection:
-                    deleted = connection.execute('DELETE FROM news WHERE id = ?', (article_id,)).rowcount
+            deleted = noticias_repository.excluir(storage(), article_id)
         except sqlite3.Error:
             return failure('Não foi possível excluir a notícia. Tente novamente.', 500)
         if not deleted:
             return failure('Esta notícia não foi encontrada.', 404)
+        # Identifica fotos compartilhadas antes de limpar arquivos da notícia excluída.
         retained = {image['src'] for item in published() for image in item.get('images', [])}
         folder = (storage() / 'fotos').resolve()
         for image in article.get('images', []):
@@ -174,14 +170,18 @@ def init_news(app):
     @app.post('/admin/noticias')
     @app.post('/admin/noticias/<article_id>/editar')
     def publicar_noticia(article_id=None):
+        """Valida o formulário e as imagens e grava uma publicação nova ou editada."""
+        # Confere o perfil administrativo antes de permitir a operação.
         if 'user_id' not in session or session.get('user_tipo') != 'admin':
             return failure('Entre novamente com um perfil de administrador para publicar notícias.', 403)
+        # Valida o token da sessão para recusar envios de formulários externos ou expirados.
         token = request.form.get('csrf_token', '')
         if not token or not hmac.compare_digest(token, session.get('news_csrf', '')):
             return failure('Sua sessão do formulário expirou. Recarregue o painel e tente novamente.', 403)
         existing = next((item for item in published() if item['id'] == article_id), None) if article_id else None
         if article_id and not existing:
             return failure('Esta notícia não foi encontrada.', 404)
+        # Normaliza os campos e valida os limites de texto e o tipo da notícia.
         title = request.form.get('titulo', '').strip()
         kind = request.form.get('tipo', 'internal')
         if kind not in {'internal', 'external'}:
@@ -194,6 +194,7 @@ def init_news(app):
         imported_cover = ''
         article_url = ''
         source = 'Projeto Orquídea Solar'
+        # Para matérias externas, preserva o link e vincula somente a capa do rascunho correspondente.
         if kind == 'external':
             try:
                 article_url = public_url(request.form.get('link_externo', '').strip())
@@ -208,10 +209,12 @@ def init_news(app):
                 name = draft.get('image_name', '')
                 if name and (storage() / 'fotos' / name).is_file():
                     imported_cover = name
+        # Mantém as fotos atuais na edição e exige uma capa válida para publicações novas.
         existing_images = existing.get('images', []) if existing else []
         if len(photos) > 5 or (not photos and not imported_cover and not existing_images):
             return failure('Selecione de uma a cinco fotos JPG, PNG ou WebP.')
-        # Validate every image before saving anything; re-encode to remove metadata and foreign content.
+        # Valida todas as imagens antes de salvar; a conversão remove metadados e conteúdo externo.
+        # Valida todas as fotos antes de iniciar a gravação dos arquivos da publicação.
         processed = []
         try:
             for photo in photos:
@@ -221,6 +224,7 @@ def init_news(app):
 
         folder = storage() / 'fotos'
         paths = []
+        # Monta o registro persistido, preservando a data de criação nas edições.
         article = {'id': article_id or uuid.uuid4().hex, 'type': kind, 'title': title,
                    'summary': summary or ' '.join(body.split())[:180],
                    'body': [paragraph.strip() for paragraph in body.split('\n\n') if paragraph.strip()] if kind == 'internal' else [],
@@ -228,6 +232,7 @@ def init_news(app):
                    'created_at': existing['created_at'] if existing else datetime.now(timezone.utc).isoformat()}
         if existing:
             article['updated_at'] = datetime.now(timezone.utc).isoformat()
+        # Para matérias externas, preserva o link e vincula somente a capa do rascunho correspondente.
         if kind == 'external':
             article['url'] = article_url
             if not photos and imported_cover:
@@ -235,6 +240,7 @@ def init_news(app):
         if not photos and not article['images']:
             article['images'] = [{**image, 'alt': title} for image in existing_images]
         try:
+            # Grava as fotos processadas e depois salva a publicação em transação SQLite.
             folder.mkdir(parents=True, exist_ok=True)
             for data in processed:
                 name = uuid.uuid4().hex + '.jpg'
@@ -242,17 +248,8 @@ def init_news(app):
                 path.write_bytes(data)
                 paths.append(path)
                 article['images'].append({'src': url_for('noticia_foto', filename=name), 'alt': title})
-            with closing(sqlite3.connect(storage() / 'noticias.sqlite3')) as connection:
-                with connection:
-                    connection.execute('CREATE TABLE IF NOT EXISTS news (id TEXT PRIMARY KEY, created_at TEXT NOT NULL, payload TEXT NOT NULL)')
-                    if existing:
-                        changed = connection.execute('UPDATE news SET payload = ? WHERE id = ?',
-                                                     (json.dumps(article, ensure_ascii=False), article_id)).rowcount
-                        if not changed:
-                            raise LookupError('Article no longer exists')
-                    else:
-                        connection.execute('INSERT INTO news VALUES (?, ?, ?)',
-                                           (article['id'], article['created_at'], json.dumps(article, ensure_ascii=False)))
+            noticias_repository.salvar(storage(), article, atualizar=existing is not None)
+        # Remove arquivos recém-criados caso a publicação não possa ser persistida.
         except (OSError, sqlite3.Error, LookupError) as error:
             for path in paths:
                 path.unlink(missing_ok=True)
@@ -260,6 +257,7 @@ def init_news(app):
             if isinstance(error, LookupError):
                 return failure('Esta notícia não foi encontrada.', 404)
             return failure('Não foi possível salvar a notícia. Tente novamente.', 500)
+        # Para matérias externas, preserva o link e vincula somente a capa do rascunho correspondente.
         if kind == 'external':
             session.pop('news_external_draft', None)
         if request.accept_mimetypes.best == 'application/json':
@@ -269,6 +267,7 @@ def init_news(app):
 
     @app.errorhandler(RequestEntityTooLarge)
     def upload_too_large(error):
+        """Retorna uma mensagem adequada quando o envio ultrapassa o limite configurado."""
         if request.path.startswith('/admin/noticias'):
             return failure('As fotos e o texto devem somar no máximo 5 MB.', 413)
         return 'O arquivo enviado excede o limite de 5 MB.', 413

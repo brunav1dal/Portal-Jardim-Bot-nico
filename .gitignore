@@ -1,12 +1,17 @@
+# Objetivo: excluir do versionamento caches, ambientes e arquivos gerados localmente.
+# Caches e extensões compiladas do Python.
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 .Python
+# Ambientes virtuais locais: as dependências são reinstaladas por requirements.txt.
 env/
 venv/
 .venv/
+# Configuração local e metadados do sistema operacional.
 .env
 .DS_Store
+# Documentos recebidos e armazenamento de execução não fazem parte do código-fonte.
 static/uploads/
 runtime/

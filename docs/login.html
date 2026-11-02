@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -7,17 +9,22 @@
   <title>Banco Comunitário Jardim Botânico — Entrar</title>
   <link rel="stylesheet" href="static/css/style.css?v=economy-explanation-20261028">
   <link rel="stylesheet" href="static/css/solar-scenarios.css?v=scenario-unused-key-20261028">
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <link rel="icon" type="image/svg+xml" href="static/img/orquidea-icon.svg?v=orange-20261028">
   <link rel="stylesheet" href="static/css/noticias.css?v=news-manage-20261028">
+
   <script src="static/js/header-glass.js?v=glass-header-20261028" defer></script>
   <link rel="stylesheet" href="static/css/project-flow.css?v=flow-payment-highlight-20261028">
+
   <script src="static/js/header-menu.js?v=responsive-local-20261028" defer></script>
 </head>
 <body>
   <div class="bg-grid"></div>
+
 
   <nav class="navbar">
     <a href="index.html" class="navbar-brand">
@@ -35,6 +42,7 @@
       </div>
     <div class="navbar-actions">
 
+
         <a href="login.html" class="btn btn-primary">Entrar</a>
 
     </div>
@@ -42,15 +50,19 @@
   </nav>
 
 
+
   <div class="container" style="padding-top:1rem;">
     <p class="flash-success">Demonstra&ccedil;&atilde;o com pessoas e valores fict&iacute;cios. Altera&ccedil;&otilde;es nos pain&eacute;is s&atilde;o tempor&aacute;rias.</p>
   </div>
+
 
 
 <div class="login-page">
   <div class="login-card">
     <h2>Bem-vindo de volta</h2>
     <p class="subtitle">Acesse seu painel do Banco Comunitário Jardim Botânico</p>
+
+
 
 
 
@@ -69,6 +81,7 @@
 </div>
 
 
+
   <footer class="footer">
     <p>© 2026 Banco Comunitário Jardim Botânico — Energia limpa, economia real. 🌱</p>
   </footer>
@@ -82,17 +95,21 @@
       <div class="modal-desc" id="statModalDesc"></div>
       <div class="modal-chart-wrap" id="statModalChartWrap">
         <h4>Histórico recente</h4>
+
         <canvas id="statModalChart"></canvas>
       </div>
     </div>
   </div>
 
+
   <script>
     const menuLinks = document.querySelectorAll('.navbar-menu a');
+    // Destaca o link correspondente à seção atual da página.
     function atualizarMenuAtivo() {
       const destino = window.location.hash || '#dados';
       menuLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href').endsWith(destino)));
     }
+    // Responde ao clique deste controle e sincroniza sua ação com a interface.
     menuLinks.forEach(link => link.addEventListener('click', () => {
       menuLinks.forEach(item => item.classList.remove('active'));
       link.classList.add('active');
@@ -102,6 +119,7 @@
 
     const secoesNavegacao = ['dados', 'como-funciona', 'historia', 'noticias']
       .map(id => document.getElementById(id)).filter(Boolean);
+    // Identifica a seção em exibição e mantém a navegação sincronizada com a rolagem.
     function atualizarSecaoVisivel() {
       const linhaAtiva = window.scrollY + window.innerHeight * 0.32;
       let secaoAtual = secoesNavegacao[0] && secoesNavegacao[0].id;
@@ -110,6 +128,7 @@
       });
       menuLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href').endsWith('#' + secaoAtual)));
     }
+    // Reavalia o estado visual durante a rolagem sem bloquear o evento.
     window.addEventListener('scroll', atualizarSecaoVisivel, { passive: true });
     atualizarSecaoVisivel();
 
@@ -118,7 +137,9 @@
         const ativa = step.classList.toggle('active');
         step.setAttribute('aria-pressed', ativa ? 'true' : 'false');
       };
+      // Responde ao clique deste controle e sincroniza sua ação com a interface.
       step.addEventListener('click', alternarEtapa);
+      // Permite controlar a interface pelo teclado.
       step.addEventListener('keydown', event => {
         if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault();
@@ -127,6 +148,7 @@
       });
     });
 
+    // Observa a entrada dos cartões na área visível antes de iniciar sua revelação.
     const revealObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -138,11 +160,13 @@
     document.querySelectorAll('.fade-up').forEach(element => revealObserver.observe(element));
 
     // ─── PRNG determinístico (mesmo dado sempre gera o mesmo "histórico") ───
+    // Transforma um texto em uma semente numérica para a série ilustrativa reproduzível.
     function seedFromString(str) {
       let h = 0;
       for (let i = 0; i < str.length; i++) { h = Math.imul(31, h) + str.charCodeAt(i) | 0; }
       return h >>> 0;
     }
+    // Gera números pseudoaleatórios reproduzíveis para compor históricos ilustrativos.
     function mulberry32(seed) {
       return function () {
         seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
@@ -152,6 +176,7 @@
       };
     }
     // Distribui um total acumulado em N meses de forma estável (mesma chave = mesmo gráfico)
+    // Distribui um total em uma série ilustrativa quando o indicador não fornece histórico próprio.
     function distributeHistory(total, seedKey, labels) {
       const rand = mulberry32(seedFromString(seedKey));
       const n = labels.length;
@@ -165,6 +190,7 @@
     // ─── Modal de estatística ───
     let statModalChart = null;
 
+    // Preenche a explicação do indicador e monta o gráfico no modal compartilhado.
     function openStatModal(info, sourceIcon) {
       const modalIcon = document.getElementById('statModalIcon');
       modalIcon.className = 'modal-icon';
@@ -198,6 +224,7 @@
 
       chartWrap.style.display = 'block';
       const color = info.color || '#15803d';
+      // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
       statModalChart = new Chart(document.getElementById('statModalChart'), {
         type: info.chartType || 'line',
         data: {
@@ -222,16 +249,19 @@
       });
     }
 
+    // Fecha o modal e devolve a rolagem à página principal.
     function closeStatModal(e) {
       if (e && e.target !== e.currentTarget) return;
       document.getElementById('statModalOverlay').classList.remove('active');
       document.body.style.overflow = '';
     }
 
+    // Permite controlar a interface pelo teclado.
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') closeStatModal();
     });
   </script>
+
 
 
 </body>

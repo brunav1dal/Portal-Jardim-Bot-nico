@@ -1,6 +1,9 @@
+{# Objetivo: Exibe o formulário de acesso e envia as credenciais para a rota de login. #}
 {% extends 'base.html' %}
+{# Bloco Jinja: define uma área que a estrutura base reserva para o conteúdo desta tela. #}
 {% block title %}Banco Comunitário Jardim Botânico — Entrar{% endblock %}
 
+{# Bloco Jinja: define uma área que a estrutura base reserva para o conteúdo desta tela. #}
 {% block content %}
 <div class="login-page">
   <div class="login-card">
@@ -8,13 +11,16 @@
     <p class="subtitle">Acesse seu painel do Banco Comunitário Jardim Botânico</p>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
+      {# Condição Jinja: exibe o bloco conforme o perfil ou a disponibilidade dos dados. #}
       {% if messages %}
+        {# Repetição Jinja: gera o mesmo bloco visual para cada registro da coleção informada. #}
         {% for category, message in messages %}
           <div class="flash-error">{{ message }}</div>
         {% endfor %}
       {% endif %}
     {% endwith %}
 
+    {# Formulário: reúne os campos enviados à rota indicada em action; enctype habilita arquivos quando presente. #}
     <form method="POST" action="{{ url_for('login') }}">
       <div class="form-group">
         <label for="email">E-mail</label>

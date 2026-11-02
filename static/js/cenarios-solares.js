@@ -1,4 +1,7 @@
+/* Objetivo: Exibe explicações dos cenários solares e revela os cartões conforme entram na tela. */
 (() => {
+  // Isola variáveis deste módulo e procura os elementos necessários nesta página.
+  // Relaciona cada data-solar-topic ao título e à explicação exibidos no diálogo.
   const explanations = {
     cota_nao_utilizada: ["Cota solar solid\u00e1ria n\u00e3o utilizada: 120 kWh", "Neste primeiro cen\u00e1rio, a fam\u00edlia consome 70 kWh, e a Tarifa Social cobre esse consumo dentro da faixa de 80 kWh. Por isso, ela n\u00e3o precisa utilizar a cota solar solid\u00e1ria de 120 kWh. O trecho hachurado representa esses 120 kWh n\u00e3o utilizados: n\u00e3o faz parte do consumo e n\u00e3o gera pagamento ao banco pela energia solar neste exemplo."],
     nao_utilizado: ['O que significa o cinza?', 'O cinza mostra um benefício disponível que não foi utilizado. No primeiro cenário: 10 kWh da faixa de isenção e 120 kWh da cota solar solidária. No terceiro: 20 kWh da cota solar solidária. Isenção não utilizada não é crédito solar; o saldo da cota solar solidária segue as regras do programa. Os trechos cinza não entram no consumo indicado no card.'],
@@ -13,6 +16,7 @@
   const dialog = document.getElementById('solarExplanation');
   if (!dialog) return;
   if ('IntersectionObserver' in window) {
+    // Observa a entrada dos cartões na área visível antes de iniciar sua revelação.
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -24,6 +28,7 @@
     document.querySelectorAll('.scenario-card').forEach(card => observer.observe(card));
   }
   document.querySelectorAll('[data-solar-topic]').forEach(button => {
+    // Responde ao clique deste controle e sincroniza sua ação com a interface.
     button.addEventListener('click', () => {
       const [title, description] = explanations[button.dataset.solarTopic];
       document.getElementById('solarExplanationTitle').textContent = title;
@@ -33,7 +38,9 @@
       dialog.showModal();
     });
   });
+  // Responde ao clique deste controle e sincroniza sua ação com a interface.
   dialog.querySelector('button').addEventListener('click', () => dialog.close());
+  // Responde ao clique deste controle e sincroniza sua ação com a interface.
   dialog.addEventListener('click', event => { if (event.target === dialog) {
     const box = dialog.getBoundingClientRect();
     if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) dialog.close();

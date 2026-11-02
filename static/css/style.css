@@ -1,9 +1,11 @@
+/* Objetivo: Define o visual compartilhado do portal e dos painéis, incluindo componentes e responsividade. */
 /* ═══════════════════════════════════════════════════════════════
    BANCO JARDIM BOTÂNICO — Design System
    ═══════════════════════════════════════════════════════════════ */
 
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@300..900&display=swap');
 
+/* Tema global: reúne cores, sombras, medidas e transições reutilizadas nos componentes. */
 :root {
   --bg-primary: #f7f9fc;
   --bg-secondary: #ffffff;
@@ -38,10 +40,13 @@
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Apresentação do componente: desenha uma camada decorativa sem adicionar HTML, ajusta dimensões e espaçamento. */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* Apresentação do componente: ajusta a apresentação dos elementos selecionados. */
 html { scroll-behavior: smooth; }
 
+/* Apresentação do componente: ajusta dimensões e espaçamento, define a leitura dos textos. */
 body {
   font-family: 'Geist', system-ui, sans-serif;
   background: var(--bg-primary);
@@ -52,11 +57,15 @@ body {
 }
 
 /* ─── Scrollbar ─── */
+/* Apresentação do componente: ajusta dimensões e espaçamento. */
 ::-webkit-scrollbar { width: 6px; }
+/* Apresentação do componente: define cores e acabamento. */
 ::-webkit-scrollbar-track { background: var(--bg-primary); }
+/* Apresentação do componente: define cores e acabamento. */
 ::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 3px; }
 
 /* ─── Animated Background ─── */
+/* Apresentação do componente: define cores e acabamento. */
 .bg-grid {
   position: fixed; inset: 0; z-index: 0; pointer-events: none;
   background-image:
@@ -65,6 +74,7 @@ body {
 }
 
 /* ═══ NAVBAR ═══ */
+/* Navegação principal: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .navbar {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
@@ -74,6 +84,7 @@ body {
   border-bottom: 1px solid var(--glass-border);
 }
 
+/* Navegação principal: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .navbar-brand {
   display: flex; align-items: center; gap: 12px;
   text-decoration: none; color: var(--text-primary);
@@ -81,11 +92,13 @@ body {
   text-transform: uppercase; letter-spacing: 0.5px;
 }
 
+/* Navegação principal: ajusta dimensões e espaçamento, define cores e acabamento. */
 .navbar-brand .brand-logo {
   width: 52px; height: 52px; border-radius: 10px;
   object-fit: contain; flex-shrink: 0;
 }
 
+/* Navegação principal: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .navbar-menu {
   display: flex; align-items: center; gap: 2px;
   margin-left: auto; margin-right: 1.5rem;
@@ -93,6 +106,7 @@ body {
   border-radius: 999px; background: rgba(255,255,255,0.72);
 }
 
+/* Navegação principal: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .navbar-menu a {
   color: var(--text-secondary); text-decoration: none;
   padding: 7px 13px; border: 0; border-radius: 999px;
@@ -102,6 +116,7 @@ body {
   transition: var(--transition); white-space: nowrap;
 }
 
+/* Navegação principal: destaca o estado de interação por ponteiro ou teclado. */
 .navbar-menu a:hover, .navbar-menu a:focus-visible {
   color: #fff; background: var(--gradient-warning);
   box-shadow: 0 4px 12px rgba(217,119,6,0.26);
@@ -109,12 +124,14 @@ body {
   animation: menu-nudge 0.32s ease-out;
 }
 
+/* Navegação principal: define cores e acabamento. */
 .navbar-menu a.active {
   color: #fff; background: var(--gradient-warning);
   box-shadow: 0 4px 12px rgba(217,119,6,0.26);
   outline: none;
 }
 
+/* Animação: define os estados intermediários do efeito menu-nudge. */
 @keyframes menu-nudge {
   0% { transform: translateX(0); }
   45% { transform: translateX(4px); }
@@ -122,8 +139,10 @@ body {
   100% { transform: translateX(0); }
 }
 
+/* Navegação principal: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .navbar-actions { display: flex; align-items: center; gap: 12px; }
 
+/* Botões de ação: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .btn {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 10px 22px; border-radius: var(--radius-sm);
@@ -132,40 +151,54 @@ body {
   transition: var(--transition);
 }
 
+/* Botões de ação: define a leitura dos textos, define cores e acabamento. */
 .btn-primary {
   background: var(--gradient-solar); color: #fff;
   box-shadow: 0 4px 15px rgba(22,163,74,0.3);
   text-transform: uppercase; letter-spacing: 0.5px;
 }
+/* Botões de ação: destaca o estado de interação por ponteiro ou teclado. */
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(22,163,74,0.4);
 }
 
+/* Botões de ação: define cores e acabamento. */
 .btn-outline {
   background: transparent; color: var(--text-primary);
   border: 1px solid var(--glass-border);
 }
+/* Botões de ação: destaca o estado de interação por ponteiro ou teclado. */
 .btn-outline:hover { background: var(--glass); border-color: var(--accent-solar); }
 
+/* Botões de ação: define cores e acabamento. */
 .btn-danger { background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; }
 
+/* Botões de ação: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .btn-sm { padding: 6px 14px; font-size: 0.8rem; border-radius: var(--radius-xs); }
 
+/* Sinalização de status: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .status-mark { display: inline-flex; align-items: center; gap: 5px; font-weight: 600; }
+/* Sinalização de status: desenha uma camada decorativa sem adicionar HTML, ajusta dimensões e espaçamento. */
 .status-mark::before { color: var(--accent-solar); font-size: 0.95rem; font-weight: 800; line-height: 1; }
+/* Sinalização de status: desenha uma camada decorativa sem adicionar HTML. */
 .status-mark.is-yes::before { content: '✓'; }
+/* Sinalização de status: desenha uma camada decorativa sem adicionar HTML. */
 .status-mark.is-no::before { content: '×'; }
+/* Sinalização de status: define cores e acabamento. */
 .status-mark.is-yes { color: var(--accent-solar); }
+/* Sinalização de status: desenha uma camada decorativa sem adicionar HTML, define cores e acabamento. */
 .status-mark.is-no, .status-mark.is-no::before { color: var(--accent-red); }
 
 /* ═══ HERO ═══ */
+/* Banner de abertura: ajusta dimensões e espaçamento, define cores e acabamento. */
 .hero {
   position: relative; padding: 120px 2rem 60px;
   text-align: center; overflow: hidden;
   background: var(--gradient-hero);
 }
 
+/* Banner de abertura: desenha uma camada decorativa sem adicionar HTML, ajusta dimensões e espaçamento. */
 .hero::before {
   content: ''; position: absolute; top: -50%; left: -50%;
   width: 200%; height: 200%;
@@ -173,8 +206,10 @@ body {
   animation: rotate-bg 30s linear infinite;
 }
 
+/* Animação: define os estados intermediários do efeito rotate-bg. */
 @keyframes rotate-bg { to { transform: rotate(360deg); } }
 
+/* Banner de abertura: define a leitura dos textos, define cores e acabamento. */
 .hero h1 {
   font-family: 'Geist', sans-serif; font-size: 3rem; font-weight: 800;
   margin-bottom: 1rem; position: relative;
@@ -183,35 +218,42 @@ body {
   background-clip: text;
 }
 
+/* Banner de abertura: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .hero p {
   font-size: 1.15rem; color: var(--text-secondary);
   max-width: 600px; margin: 0 auto; position: relative;
 }
 
 /* ═══ CONTAINER ═══ */
+/* Apresentação do componente: ajusta dimensões e espaçamento. */
 .container {
   max-width: 1320px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1;
 }
 
+/* Apresentação do componente: ajusta dimensões e espaçamento. */
 .section {
   padding: 3rem max(2rem, calc((100vw - 1320px) / 2 + 2rem));
   margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw);
   scroll-margin-top: 82px;
 }
 
+/* Apresentação do componente: define cores e acabamento. */
 .section#dados,
 .section#dados-graficos {
   background: #fbfdfb;
 }
 
+/* Apresentação do componente: define cores e acabamento. */
 .section#historia {
   background: #f6faf7;
 }
 
+/* Apresentação do componente: define cores e acabamento. */
 .section#como-funciona {
   background: #ffffff;
 }
 
+/* Apresentação do componente: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .section-title {
   font-family: 'Geist', sans-serif; font-size: 1.6rem; font-weight: 700;
   margin-bottom: 2rem;
@@ -219,11 +261,13 @@ body {
 }
 
 /* ═══ STAT CARDS GRID ═══ */
+/* Apresentação do componente: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .stats-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1.25rem; margin-bottom: 2rem;
 }
 
+/* Cartões de indicadores: ajusta dimensões e espaçamento, define cores e acabamento. */
 .stat-card {
   position: relative; overflow: hidden;
   background: var(--bg-card);
@@ -233,23 +277,31 @@ body {
   transition: var(--transition);
 }
 
+/* Cartões de indicadores: destaca o estado de interação por ponteiro ou teclado. */
 .stat-card:hover {
   transform: translateY(-4px);
   border-color: rgba(22,163,74,0.3);
   box-shadow: var(--shadow-glow-solar);
 }
 
+/* Cartões de indicadores: desenha uma camada decorativa sem adicionar HTML, ajusta dimensões e espaçamento. */
 .stat-card::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
   border-radius: 3px 3px 0 0;
 }
 
+/* Cartões de indicadores: desenha uma camada decorativa sem adicionar HTML, define cores e acabamento. */
 .stat-card.solar::before { background: var(--gradient-solar); }
+/* Cartões de indicadores: desenha uma camada decorativa sem adicionar HTML, define cores e acabamento. */
 .stat-card.green::before { background: var(--gradient-green); }
+/* Cartões de indicadores: desenha uma camada decorativa sem adicionar HTML, define cores e acabamento. */
 .stat-card.blue::before { background: var(--gradient-blue); }
+/* Cartões de indicadores: desenha uma camada decorativa sem adicionar HTML, define cores e acabamento. */
 .stat-card.purple::before { background: linear-gradient(135deg, #8b5cf6, #ec4899); }
+/* Cartões de indicadores: desenha uma camada decorativa sem adicionar HTML, define cores e acabamento. */
 .stat-card.warning::before { background: var(--gradient-warning); }
 
+/* Cartões de indicadores: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .stat-card .stat-icon {
   width: 48px; height: 48px; border-radius: 12px;
   display: flex; align-items: center; justify-content: center;
@@ -259,44 +311,58 @@ body {
   margin-bottom: 1rem;
 }
 
+/* Cartões de indicadores: define cores e acabamento. */
 .stat-card.solar .stat-icon, .stat-card.green .stat-icon,
 .stat-card.blue .stat-icon, .stat-card.purple .stat-icon,
 .stat-card.warning .stat-icon { background: transparent; }
+/* Cartões de indicadores: define a leitura dos textos. */
 .stat-icon.icon-bolt, .modal-icon.icon-bolt {
   font-weight: 900; -webkit-text-stroke: 0.65px currentColor;
 }
 
+/* Cartões de indicadores: define a leitura dos textos, define cores e acabamento. */
 .stat-card .stat-label {
   font-size: 0.8rem; font-weight: 500; color: var(--text-muted);
   text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.35rem;
 }
 
+/* Cartões de indicadores: define a leitura dos textos. */
 .stat-card .stat-value {
   font-family: 'Geist', sans-serif; font-size: 1.75rem; font-weight: 700;
 }
 
+/* Cartões de indicadores: define cores e acabamento. */
 .stat-card.solar .stat-value { color: var(--accent-solar-light); }
+/* Cartões de indicadores: define cores e acabamento. */
 .stat-card.green .stat-value { color: var(--accent-green-light); }
+/* Cartões de indicadores: define cores e acabamento. */
 .stat-card.blue .stat-value { color: var(--accent-blue); }
+/* Cartões de indicadores: define cores e acabamento. */
 .stat-card.purple .stat-value { color: var(--accent-purple); }
+/* Cartões de indicadores: define cores e acabamento. */
 .stat-card.warning .stat-value { color: var(--accent-warning-light); }
 
 /* ═══ CHART CARDS ═══ */
+/* Área dos gráficos: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .charts-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
   gap: 1.5rem; margin-bottom: 2rem;
 }
 
+/* Área dos gráficos: ajusta a apresentação dos elementos selecionados. */
 .charts-grid-3 { grid-template-columns: repeat(3, 1fr); }
 
+/* Responsividade: aplica os ajustes deste bloco apenas à faixa de tela indicada. */
 @media (max-width: 1100px) {
   .charts-grid-3 { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* Responsividade: aplica os ajustes deste bloco apenas à faixa de tela indicada. */
 @media (max-width: 700px) {
   .charts-grid-3 { grid-template-columns: 1fr; }
 }
 
+/* Área dos gráficos: ajusta dimensões e espaçamento, define cores e acabamento. */
 .chart-card {
   background: var(--bg-card);
   border: 1px solid var(--glass-border);
@@ -304,17 +370,21 @@ body {
   backdrop-filter: blur(10px);
 }
 
+/* Área dos gráficos: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .chart-card h3 {
   font-family: 'Geist', sans-serif; font-size: 1.1rem; font-weight: 600;
   margin-bottom: 1rem; display: flex; align-items: center; gap: 8px;
 }
 
+/* Área dos gráficos: ajusta dimensões e espaçamento. */
 .chart-card canvas { width: 100% !important; max-height: 320px; }
 
+/* Apresentação do componente: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .tarifa-compare {
   display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
 }
 
+/* Apresentação do componente: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .tarifa-box {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   background: var(--glass); border: 1px solid var(--glass-border);
@@ -322,25 +392,31 @@ body {
   text-align: center; min-height: 160px;
 }
 
+/* Apresentação do componente: define a leitura dos textos, define cores e acabamento. */
 .tarifa-box-label {
   font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
   color: var(--text-muted); margin-bottom: 0.75rem;
 }
 
+/* Apresentação do componente: define a leitura dos textos, define cores e acabamento. */
 .tarifa-box-value {
   font-family: 'Geist', sans-serif; font-size: 2.2rem; font-weight: 800;
   color: var(--accent-red);
 }
 
+/* Apresentação do componente: define cores e acabamento. */
 .tarifa-box-solar {
   background: rgba(22,163,74,0.06); border-color: rgba(22,163,74,0.25);
 }
 
+/* Apresentação do componente: define cores e acabamento. */
 .tarifa-box-solar .tarifa-box-value { color: var(--accent-green-light); }
 
+/* Apresentação do componente: define a leitura dos textos, define cores e acabamento. */
 .tarifa-box-unit { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem; }
 
 /* ═══ TABLE ═══ */
+/* Abas e tabelas do painel: ajusta dimensões e espaçamento, define cores e acabamento. */
 .table-card {
   background: var(--bg-card);
   border: 1px solid var(--glass-border);
@@ -349,13 +425,16 @@ body {
   margin-bottom: 2rem;
 }
 
+/* Abas e tabelas do painel: define a leitura dos textos. */
 .table-card h3 {
   font-family: 'Geist', sans-serif; font-size: 1.1rem; font-weight: 600;
   margin-bottom: 1rem;
 }
 
+/* Abas e tabelas do painel: ajusta dimensões e espaçamento, define cores e acabamento. */
 table { width: 100%; border-collapse: collapse; }
 
+/* Apresentação do componente: ajusta dimensões e espaçamento, define a leitura dos textos. */
 thead th {
   text-align: left; padding: 12px 16px;
   font-size: 0.75rem; font-weight: 600;
@@ -364,16 +443,20 @@ thead th {
   border-bottom: 1px solid var(--glass-border);
 }
 
+/* Apresentação do componente: ajusta dimensões e espaçamento, define a leitura dos textos. */
 tbody td {
   padding: 12px 16px; font-size: 0.9rem;
   border-bottom: 1px solid rgba(15,23,42,0.06);
   color: var(--text-secondary);
 }
 
+/* Apresentação do componente: controla movimento ou transição. */
 tbody tr { transition: var(--transition); }
+/* Apresentação do componente: destaca o estado de interação por ponteiro ou teclado. */
 tbody tr:hover { background: var(--glass); }
 
 /* Administrative monthly economy statement */
+/* Demonstrativo de economia: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .admin-economia-intro {
   max-width: 1000px;
   margin: 0 0 1.25rem;
@@ -382,9 +465,13 @@ tbody tr:hover { background: var(--glass); }
   line-height: 1.7;
 }
 
+/* Demonstrativo de economia: ajusta dimensões e espaçamento. */
 .admin-economia-card { padding: 0; overflow: hidden; }
+/* Demonstrativo de economia: ajusta dimensões e espaçamento. */
 .admin-economia-scroll { width: 100%; overflow-x: auto; }
+/* Demonstrativo de economia: ajusta dimensões e espaçamento, define cores e acabamento. */
 .admin-economia-table { min-width: 1080px; border-collapse: separate; border-spacing: 0; }
+/* Demonstrativo de economia: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .admin-economia-table thead th {
   padding: 1rem 0.9rem;
   background: #eff8f1;
@@ -395,8 +482,11 @@ tbody tr:hover { background: var(--glass); }
   vertical-align: bottom;
   border-bottom: 2px solid rgba(22,101,52,0.16);
 }
+/* Demonstrativo de economia: ajusta dimensões e espaçamento. */
 .admin-economia-table thead th:first-child { min-width: 190px; text-align: left; }
+/* Demonstrativo de economia: ajusta a apresentação dos elementos selecionados. */
 .admin-economia-table thead th:not(:first-child) { text-align: center; }
+/* Demonstrativo de economia: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .admin-economia-table thead th:not(:first-child),
 .admin-economia-table tbody td:not(:first-child),
 .admin-economia-table tfoot th:not(:first-child) {
@@ -404,15 +494,21 @@ tbody tr:hover { background: var(--glass); }
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
+/* Demonstrativo de economia: ajusta dimensões e espaçamento, define cores e acabamento. */
 .admin-economia-table tbody td {
   padding: 0.9rem;
   white-space: nowrap;
   border-bottom: 1px solid rgba(15,23,42,0.055);
 }
+/* Demonstrativo de economia: define cores e acabamento. */
 .admin-economia-table tbody tr:nth-child(even) { background: #f8fafc; }
+/* Demonstrativo de economia: define a leitura dos textos, define cores e acabamento. */
 .admin-economia-table tbody td:first-child { color: var(--text-primary); font-weight: 600; }
+/* Demonstrativo de economia: define a leitura dos textos, define cores e acabamento. */
 .admin-economia-table .col-economia-real { color: #047857; font-weight: 700; }
+/* Demonstrativo de economia: define cores e acabamento. */
 .admin-economia-table tbody .col-economia-real { background: rgba(16,185,129,0.08); }
+/* Demonstrativo de economia: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .admin-economia-table tfoot th {
   padding: 1rem 0.9rem;
   background: #14532d;
@@ -422,9 +518,12 @@ tbody tr:hover { background: var(--glass); }
   white-space: nowrap;
   border: 0;
 }
+/* Demonstrativo de economia: ajusta a apresentação dos elementos selecionados. */
 .admin-economia-table tfoot th:first-child { text-align: left; }
+/* Demonstrativo de economia: define cores e acabamento. */
 .admin-economia-table tfoot .col-economia-real { background: #047857; color: #fff; }
 
+/* Demonstrativo de economia: ajusta dimensões e espaçamento, define cores e acabamento. */
 .economia-guia {
   margin-top: 1.5rem;
   padding: 1.4rem;
@@ -432,9 +531,13 @@ tbody tr:hover { background: var(--glass); }
   border-radius: var(--radius);
   background: linear-gradient(145deg, #f6fbf7, #fff);
 }
+/* Demonstrativo de economia: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .economia-guia > h3 { margin: 0 0 0.35rem; color: #14532d; font-size: 1.05rem; }
+/* Demonstrativo de economia: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .economia-guia-intro { margin: 0 0 1rem; color: var(--text-secondary); font-size: 0.86rem; line-height: 1.6; }
+/* Demonstrativo de economia: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .economia-colunas-guia { display: grid; grid-template-columns: repeat(auto-fit, minmax(205px, 1fr)); gap: 0.7rem; }
+/* Demonstrativo de economia: ajusta dimensões e espaçamento, define cores e acabamento. */
 .economia-colunas-guia article,
 .economia-fluxo article {
   padding: 0.9rem;
@@ -442,19 +545,30 @@ tbody tr:hover { background: var(--glass); }
   border-radius: 10px;
   background: #fff;
 }
+/* Demonstrativo de economia: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .economia-colunas-guia h4,
 .economia-fluxo h4 { margin: 0 0 0.35rem; color: #166534; font-size: 0.82rem; }
+/* Demonstrativo de economia: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .economia-colunas-guia p,
 .economia-fluxo p { margin: 0; color: var(--text-secondary); font-size: 0.78rem; line-height: 1.5; }
+/* Demonstrativo de economia: define cores e acabamento. */
 .economia-exemplo { margin-top: 1.1rem; padding-top: 1rem; border-top: 1px solid rgba(22,101,52,0.14); }
+/* Demonstrativo de economia: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .economia-exemplo-heading { display: flex; justify-content: space-between; gap: 0.5rem 1rem; flex-wrap: wrap; margin-bottom: 0.7rem; }
+/* Demonstrativo de economia: define a leitura dos textos, define cores e acabamento. */
 .economia-exemplo-heading strong { color: #14532d; font-size: 0.9rem; }
+/* Demonstrativo de economia: define a leitura dos textos, define cores e acabamento. */
 .economia-exemplo-heading span { color: var(--text-muted); font-size: 0.75rem; }
+/* Demonstrativo de economia: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .economia-fluxo { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.7rem; }
+/* Demonstrativo de economia: define a leitura dos textos, define cores e acabamento. */
 .economia-fluxo article > strong { display: block; margin-top: 0.45rem; color: #166534; font-size: 1.2rem; }
+/* Demonstrativo de economia: define cores e acabamento. */
 .economia-fluxo .economia-resultado { border-color: rgba(4,120,87,0.25); background: #eaf7f1; }
+/* Demonstrativo de economia: define cores e acabamento. */
 .economia-fluxo .economia-resultado > strong { color: #047857; }
 
+/* Responsividade: aplica os ajustes deste bloco apenas à faixa de tela indicada. */
 @media (max-width: 700px) {
   .admin-economia-card { padding: 0; }
   .admin-economia-table thead th,
@@ -464,24 +578,31 @@ tbody tr:hover { background: var(--glass); }
   .economia-fluxo { grid-template-columns: 1fr; }
 }
 
+/* Apresentação do componente: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .badge {
   display: inline-flex; align-items: center; gap: 4px;
   padding: 4px 10px; border-radius: 20px;
   font-size: 0.75rem; font-weight: 600;
 }
 
+/* Apresentação do componente: define cores e acabamento. */
 .badge-success { background: rgba(16,185,129,0.15); color: var(--accent-green-light); }
+/* Apresentação do componente: define cores e acabamento. */
 .badge-danger { background: rgba(239,68,68,0.15); color: #f87171; }
+/* Sinalização de status: ajusta dimensões e espaçamento, define cores e acabamento. */
 .badge-status { padding: 0; border-radius: 0; background: transparent; color: inherit; }
+/* Apresentação do componente: define cores e acabamento. */
 .badge-warning { background: rgba(217,119,6,0.15); color: var(--accent-warning-light); }
 
 /* ═══ LOGIN ═══ */
+/* Formulário de acesso: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .login-page {
   display: flex; align-items: center; justify-content: center;
   min-height: 100vh; padding: 2rem;
   background: var(--gradient-hero);
 }
 
+/* Formulário de acesso: ajusta dimensões e espaçamento, define cores e acabamento. */
 .login-card {
   background: var(--bg-card);
   border: 1px solid var(--glass-border);
@@ -491,24 +612,29 @@ tbody tr:hover { background: var(--glass); }
   box-shadow: var(--shadow-lg);
 }
 
+/* Formulário de acesso: define a leitura dos textos. */
 .login-card h2 {
   font-family: 'Geist', sans-serif; text-align: center;
   margin-bottom: 0.5rem; font-size: 1.6rem;
 }
 
+/* Formulário de acesso: define a leitura dos textos, define cores e acabamento. */
 .login-card .subtitle {
   text-align: center; color: var(--text-muted);
   margin-bottom: 2rem; font-size: 0.9rem;
 }
 
+/* Campos de formulário: ajusta a apresentação dos elementos selecionados. */
 .form-group { margin-bottom: 1.25rem; }
 
+/* Campos de formulário: define a leitura dos textos, define cores e acabamento. */
 .form-group label {
   display: block; font-size: 0.8rem; font-weight: 600;
   color: var(--text-secondary); margin-bottom: 0.4rem;
   text-transform: uppercase; letter-spacing: 0.5px;
 }
 
+/* Campos de formulário: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .form-group input {
   width: 100%; padding: 12px 16px;
   background: rgba(15,23,42,0.05);
@@ -519,55 +645,67 @@ tbody tr:hover { background: var(--glass); }
   transition: var(--transition);
 }
 
+/* Campos de formulário: destaca o estado de interação por ponteiro ou teclado. */
 .form-group input:focus {
   outline: none; border-color: var(--accent-solar);
   box-shadow: 0 0 0 3px rgba(22,163,74,0.1);
 }
 
+/* Campos de formulário: define cores e acabamento. */
 .form-group input::placeholder { color: var(--text-muted); }
 
+/* Formulário de acesso: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .login-btn {
   display: flex; justify-content: center;
   width: auto; min-width: 160px; margin: 0.5rem auto 0;
   padding: 10px 24px; font-size: 0.9rem;
 }
 
+/* Apresentação do componente: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .flash-error {
   background: rgba(220,38,38,0.08); border: 1px solid rgba(220,38,38,0.25);
   color: var(--accent-red); padding: 10px 16px; border-radius: var(--radius-sm);
   font-size: 0.85rem; margin-bottom: 1rem; text-align: center;
 }
 
+/* Apresentação do componente: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .flash-success {
   background: rgba(5,150,105,0.08); border: 1px solid rgba(5,150,105,0.25);
   color: var(--accent-green-light); padding: 10px 16px; border-radius: var(--radius-sm);
   font-size: 0.85rem; margin-bottom: 1rem; text-align: center;
 }
 
+/* Formulário de acesso: define a leitura dos textos, define cores e acabamento. */
 .login-footer {
   text-align: center; margin-top: 1.5rem;
   font-size: 0.85rem; color: var(--text-muted);
 }
 
+/* Formulário de acesso: define cores e acabamento. */
 .login-footer a { color: var(--accent-solar); text-decoration: none; }
 
 /* ═══ DASHBOARD LAYOUT ═══ */
+/* Apresentação do componente: ajusta a apresentação dos elementos selecionados. */
 .dashboard { padding-top: 90px; padding-bottom: 3rem; }
 
+/* Apresentação do componente: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .dashboard-header {
   display: flex; align-items: center; justify-content: space-between;
   margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;
 }
 
+/* Apresentação do componente: define a leitura dos textos. */
 .dashboard-header h1 {
   font-family: 'Geist', sans-serif; font-size: 1.8rem; font-weight: 700;
 }
 
+/* Apresentação do componente: define a leitura dos textos, define cores e acabamento. */
 .dashboard-header .welcome {
   font-size: 0.95rem; color: var(--text-secondary);
 }
 
 /* ═══ TABS ═══ */
+/* Abas e tabelas do painel: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .tabs {
   display: flex; gap: 4px; margin-bottom: 2rem;
   background: var(--bg-card); border: 1px solid var(--glass-border);
@@ -575,6 +713,7 @@ tbody tr:hover { background: var(--glass); }
   overflow-x: auto;
 }
 
+/* Botões de ação: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .tab-btn {
   padding: 10px 20px; border: none; background: transparent;
   color: var(--text-muted); font-family: 'Geist', sans-serif;
@@ -582,44 +721,61 @@ tbody tr:hover { background: var(--glass); }
   cursor: pointer; transition: var(--transition); white-space: nowrap;
 }
 
+/* Botões de ação: define cores e acabamento. */
 .tab-btn.active {
   background: var(--gradient-solar); color: #fff;
 }
 
+/* Botões de ação: destaca o estado de interação por ponteiro ou teclado. */
 .tab-btn:hover:not(.active) { color: var(--text-primary); background: var(--glass); }
 
+/* Abas e tabelas do painel: controla movimento ou transição. */
 .tab-content { display: none; animation: fadeIn 0.4s ease; }
+/* Abas e tabelas do painel: ajusta a apresentação dos elementos selecionados. */
 .tab-content.active { display: block; }
+/* Abas e tabelas do painel: ajusta a apresentação dos elementos selecionados. */
 .tab-content#tab-unificado { display: none !important; }
 
+/* Animação: define os estados intermediários do efeito fadeIn. */
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 /* ═══ PROGRESS BAR ═══ */
+/* Barras de progresso: ajusta a apresentação dos elementos selecionados. */
 .progress-bar-container { margin-bottom: 1rem; }
 
+/* Barras de progresso: organiza a disposição dos elementos, define a leitura dos textos. */
 .progress-label {
   display: flex; justify-content: space-between; align-items: center;
   margin-bottom: 6px; font-size: 0.85rem;
 }
 
+/* Barras de progresso: define cores e acabamento. */
 .progress-label span:first-child { color: var(--text-secondary); }
+/* Barras de progresso: define a leitura dos textos. */
 .progress-label span:last-child { font-weight: 600; }
 
+/* Barras de progresso: ajusta dimensões e espaçamento, define cores e acabamento. */
 .progress-track {
   height: 8px; background: rgba(15,23,42,0.05);
   border-radius: 4px; overflow: hidden;
 }
 
+/* Barras de progresso: ajusta dimensões e espaçamento, define cores e acabamento. */
 .progress-fill {
   height: 100%; border-radius: 4px; transition: width 1s ease;
 }
 
+/* Barras de progresso: define cores e acabamento. */
 .progress-fill.solar { background: var(--gradient-solar); }
+/* Barras de progresso: define cores e acabamento. */
 .progress-fill.green { background: var(--gradient-green); }
+/* Barras de progresso: define cores e acabamento. */
 .progress-fill.blue { background: var(--gradient-blue); }
+/* Barras de progresso: define cores e acabamento. */
 .progress-fill.warning { background: var(--gradient-warning); }
 
 /* ═══ FATURA ATUAL ═══ */
+/* Apresentação do componente: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .invoice-card {
   display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
   background: var(--bg-card); border: 1px solid var(--glass-border);
@@ -627,30 +783,36 @@ tbody tr:hover { background: var(--glass); }
   margin-bottom: 1.5rem; flex-wrap: wrap;
 }
 
+/* Apresentação do componente: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .invoice-card-info { display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; }
 
+/* Apresentação do componente: define a leitura dos textos, define cores e acabamento. */
 .invoice-card-label {
   font-size: 0.8rem; font-weight: 500; color: var(--text-muted);
   text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.35rem;
 }
 
+/* Apresentação do componente: define a leitura dos textos, define cores e acabamento. */
 .invoice-card-value {
   font-family: 'Geist', sans-serif; font-size: 1.6rem; font-weight: 800;
   color: var(--text-primary);
 }
 
 /* ═══ UPLOAD DE ARQUIVOS ═══ */
+/* Envio de documentos: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .upload-form {
   display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
   margin-bottom: 1.5rem;
 }
 
+/* Envio de documentos: representa o estado oculto ou indisponível do controle. */
 .upload-input-hidden {
   position: absolute; width: 1px; height: 1px;
   padding: 0; margin: -1px; overflow: hidden;
   clip: rect(0,0,0,0); white-space: nowrap; border: 0;
 }
 
+/* Botões de ação: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .upload-icon-btn {
   width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
   background: var(--glass); border: 1px solid var(--glass-border);
@@ -659,44 +821,55 @@ tbody tr:hover { background: var(--glass); }
   transition: var(--transition);
 }
 
+/* Botões de ação: destaca o estado de interação por ponteiro ou teclado. */
 .upload-icon-btn:hover {
   background: var(--gradient-solar); border-color: transparent; color: #fff;
 }
 
+/* Envio de documentos: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .upload-filename {
   flex: 1; min-width: 160px;
   font-size: 0.85rem; color: var(--text-muted);
 }
 
 /* ═══ PAINEL DE CONTROLE ═══ */
+/* Apresentação do componente: organiza a disposição dos elementos, define cores e acabamento. */
 .control-panel-toggle-wrap {
   display: flex; justify-content: center;
   margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--glass-border);
 }
 
+/* Apresentação do componente: define cores e acabamento, controla movimento ou transição. */
 .control-panel {
   margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--glass-border);
   animation: fadeUp 0.3s ease;
 }
 
+/* Apresentação do componente: ajusta a apresentação dos elementos selecionados. */
 .control-panel-header { margin-bottom: 1.25rem; }
 
+/* Apresentação do componente: define a leitura dos textos. */
 .control-panel-header h3 {
   font-family: 'Geist', sans-serif; font-size: 1.05rem; font-weight: 700;
 }
 
+/* Apresentação do componente: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .control-panel-body { display: flex; flex-direction: column; gap: 0.25rem; margin-top: 0.5rem; }
 
+/* Apresentação do componente: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .control-row {
   display: flex; align-items: center; justify-content: space-between;
   padding: 12px 0; border-bottom: 1px solid rgba(15,23,42,0.06);
   gap: 1rem; flex-wrap: wrap;
 }
 
+/* Apresentação do componente: define cores e acabamento. */
 .control-row:last-child { border-bottom: none; }
 
+/* Apresentação do componente: define a leitura dos textos, define cores e acabamento. */
 .control-row span { color: var(--text-secondary); font-size: 0.9rem; }
 
+/* Apresentação do componente: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .control-row select {
   padding: 8px 14px; background: var(--bg-card);
   border: 1px solid var(--glass-border); border-radius: var(--radius-xs);
@@ -704,10 +877,13 @@ tbody tr:hover { background: var(--glass); }
   min-width: 220px;
 }
 
+/* Apresentação do componente: destaca o estado de interação por ponteiro ou teclado. */
 .control-row select:focus { outline: none; border-color: var(--accent-solar); }
 
+/* Apresentação do componente: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .control-toggle-group { display: flex; gap: 8px; }
 
+/* Botões de ação: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .toggle-btn {
   padding: 6px 20px; border-radius: 20px; border: 1px solid var(--glass-border);
   background: var(--glass); color: var(--text-secondary);
@@ -715,101 +891,146 @@ tbody tr:hover { background: var(--glass); }
   cursor: pointer; transition: var(--transition);
 }
 
+/* Botões de ação: destaca o estado de interação por ponteiro ou teclado. */
 .toggle-btn:hover { border-color: var(--accent-solar); }
 
+/* Botões de ação: define cores e acabamento. */
 .toggle-btn.active { background: var(--gradient-solar); color: #fff; border-color: transparent; }
 
+/* Apresentação do componente: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .control-panel-actions {
   display: flex; justify-content: flex-end; gap: 12px;
   margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--glass-border);
 }
 
 /* ═══ USER STATUS CARD ═══ */
+/* Sinalização de status: ajusta dimensões e espaçamento, define cores e acabamento. */
 .status-card {
   background: var(--bg-card); border: 1px solid var(--glass-border);
   border-radius: var(--radius); padding: 1.5rem;
   margin-bottom: 1.5rem;
 }
 
+/* Sinalização de status: define a leitura dos textos. */
 .status-card h3 {
   font-family: 'Geist', sans-serif; font-size: 1.1rem;
   margin-bottom: 1rem;
 }
 
+/* Sinalização de status: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .status-row {
   display: flex; align-items: center; justify-content: space-between;
   padding: 10px 0;
   border-bottom: 1px solid rgba(15,23,42,0.06);
 }
 
+/* Sinalização de status: define cores e acabamento. */
 .status-row:last-child { border-bottom: none; }
 
 /* ═══ FILTER BAR ═══ */
+/* Filtros de consulta: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .filter-bar {
   display: flex; gap: 12px; margin-bottom: 1.5rem;
   flex-wrap: wrap; align-items: center;
 }
 
+/* Resumo administrativo da usina: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .solar-overview {
   display: grid; grid-template-columns: minmax(280px, 0.8fr) minmax(420px, 1.7fr);
   gap: 1.25rem; margin: 1.5rem 0 2rem;
 }
+/* Resumo administrativo da usina: ajusta dimensões e espaçamento, define cores e acabamento. */
 .solar-summary-card {
   min-height: 250px; padding: 1.6rem; border-radius: var(--radius);
   color: #fff; background: linear-gradient(135deg, #f59e0b, #d97706);
   box-shadow: 0 12px 24px rgba(217,119,6,0.2);
 }
+/* Resumo administrativo da usina: define a leitura dos textos. */
 .solar-summary-title { font-size: 1.65rem; font-weight: 500; letter-spacing: -0.02em; }
+/* Resumo administrativo da usina: define a leitura dos textos, define cores e acabamento. */
 .solar-summary-mark { color: #fde68a; font-size: 1.35rem; margin-left: 0.25rem; }
+/* Resumo administrativo da usina: define a leitura dos textos. */
 .solar-summary-subtitle { margin-top: 0.45rem; font-size: 0.95rem; opacity: 0.88; }
+/* Resumo administrativo da usina: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .solar-summary-capacity { margin-top: 1.7rem; font-size: 2.25rem; font-weight: 500; line-height: 1; }
+/* Resumo administrativo da usina: define a leitura dos textos. */
 .solar-summary-label { margin-top: 0.45rem; font-size: 0.92rem; opacity: 0.88; }
+/* Sinalização de status: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .solar-summary-status { display: inline-flex; align-items: center; gap: 7px; margin-top: 1.35rem; padding: 7px 12px; border-radius: 999px; background: rgba(180,83,9,0.28); font-size: 0.8rem; }
+/* Sinalização de status: ajusta dimensões e espaçamento, define cores e acabamento. */
 .solar-summary-status span { width: 8px; height: 8px; border-radius: 50%; background: #bbf7d0; box-shadow: 0 0 0 3px rgba(187,247,208,0.18); }
+/* Resumo administrativo da usina: ajusta dimensões e espaçamento, define cores e acabamento. */
 .solar-summary-detail { min-height: 250px; padding: 1.5rem 1.65rem; border: 1px solid var(--glass-border); border-radius: var(--radius); background: var(--bg-secondary); box-shadow: 0 8px 20px rgba(15,23,42,0.06); }
+/* Resumo administrativo da usina: define a leitura dos textos, define cores e acabamento. */
 .solar-summary-detail-heading { font-size: 1.35rem; font-weight: 500; padding-bottom: 0.85rem; border-bottom: 1px solid var(--glass-border); }
+/* Resumo administrativo da usina: define a leitura dos textos, define cores e acabamento. */
 .solar-summary-detail-heading small { display: block; margin-top: 0.25rem; color: var(--text-secondary); font-size: 0.8rem; font-weight: 400; }
+/* Resumo administrativo da usina: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .solar-summary-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2.2rem; }
+/* Resumo administrativo da usina: ajusta a apresentação dos elementos selecionados. */
 .solar-summary-metrics strong, .solar-summary-metrics span { display: block; }
+/* Resumo administrativo da usina: define a leitura dos textos. */
 .solar-summary-metrics strong { font-size: 1.25rem; font-weight: 500; }
+/* Resumo administrativo da usina: define a leitura dos textos, define cores e acabamento. */
 .solar-summary-metrics span { margin-top: 0.35rem; color: var(--text-secondary); font-size: 0.82rem; }
 
+/* Responsividade: aplica os ajustes deste bloco apenas à faixa de tela indicada. */
 @media (max-width: 850px) {
   .solar-overview { grid-template-columns: 1fr; }
 }
+/* Filtros de consulta: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .filter-bar select, .filter-bar input[type="text"] {
   padding: 8px 14px; background: var(--bg-card);
   border: 1px solid var(--glass-border); border-radius: var(--radius-xs);
   color: var(--text-primary); font-family: 'Geist', sans-serif; font-size: 0.85rem;
 }
+/* Filtros de consulta: destaca o estado de interação por ponteiro ou teclado. */
 .filter-bar select:focus, .filter-bar input[type="text"]:focus {
   outline: none; border-color: var(--accent-solar);
 }
 
+/* Filtros de consulta: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .filter-panel {
   display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
   padding: 1rem 1.15rem; margin-bottom: 1.5rem;
   background: var(--bg-card); border: 1px solid var(--glass-border);
   border-radius: var(--radius); box-shadow: 0 8px 24px rgba(15,23,42,0.05);
 }
+/* Filtros de consulta: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .filter-heading { display: flex; align-items: center; gap: 10px; min-width: 220px; }
+/* Filtros de consulta: ajusta a apresentação dos elementos selecionados. */
 .filter-heading strong, .filter-heading span { display: block; }
+/* Filtros de consulta: define a leitura dos textos. */
 .filter-heading strong { font-size: 0.88rem; }
+/* Filtros de consulta: define a leitura dos textos, define cores e acabamento. */
 .filter-heading div span { color: var(--text-muted); font-size: 0.75rem; margin-top: 2px; }
+/* Filtros de consulta: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .filter-controls { display: flex; align-items: end; justify-content: flex-end; gap: 10px; flex-wrap: wrap; }
+/* Filtros de consulta: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .filter-mode-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+/* Apresentação do componente: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .period-range-fields { display: flex; align-items: end; gap: 10px; flex-wrap: wrap; }
+/* Filtros de consulta: define a leitura dos textos, define cores e acabamento. */
 .filter-field label { display: block; color: var(--text-secondary); font-size: 0.72rem; font-weight: 700; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.4px; }
+/* Apresentação do componente: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .period-selects { display: flex; gap: 6px; }
+/* Filtros de consulta: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .filter-panel select { padding: 9px 28px 9px 10px; background: var(--bg-secondary); border: 1px solid var(--glass-border); border-radius: var(--radius-xs); color: var(--text-primary); font-family: 'Geist', sans-serif; font-size: 0.82rem; cursor: pointer; }
+/* Filtros de consulta: destaca o estado de interação por ponteiro ou teclado. */
 .filter-panel select:focus { outline: 2px solid rgba(22,163,74,0.2); border-color: var(--accent-solar); }
+/* Filtros de consulta: define a leitura dos textos, define cores e acabamento. */
 .filter-arrow { color: var(--text-muted); font-weight: 700; padding-bottom: 9px; }
+/* Filtros de consulta: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .filter-reset { padding: 9px 13px; border: 1px solid rgba(22,163,74,0.28); border-radius: var(--radius-xs); background: transparent; color: var(--accent-solar); font-family: 'Geist', sans-serif; font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: var(--transition); }
+/* Filtros de consulta: destaca o estado de interação por ponteiro ou teclado. */
 .filter-reset:hover { background: rgba(22,163,74,0.08); border-color: var(--accent-solar); }
+/* Filtros de consulta: define cores e acabamento. */
 .filter-reset.is-active { background: var(--accent-solar); border-color: var(--accent-solar); color: #fff; box-shadow: 0 3px 10px rgba(22,163,74,0.18); }
+/* Filtros de consulta: destaca o estado de interação por ponteiro ou teclado. */
 .filter-reset.is-active:hover { background: #15803d; border-color: #15803d; }
 
 /* ═══ RESPONSIVE ═══ */
+/* Responsividade: aplica os ajustes deste bloco apenas à faixa de tela indicada. */
 @media (max-width: 768px) {
   .hero h1 { font-size: 2rem; }
   .stats-grid { grid-template-columns: 1fr 1fr; }
@@ -827,53 +1048,71 @@ tbody tr:hover { background: var(--glass); }
   .tabs { flex-wrap: nowrap; }
 }
 
+/* Responsividade: aplica os ajustes deste bloco apenas à faixa de tela indicada. */
 @media (max-width: 480px) {
   .stats-grid { grid-template-columns: 1fr; }
   .hero h1 { font-size: 1.6rem; }
 }
 
 /* ═══ ANIMATIONS ═══ */
+/* Apresentação do componente: controla movimento ou transição. */
 .fade-up {
   opacity: 0; transform: translateY(20px);
   animation: none;
 }
 
+/* Apresentação do componente: controla movimento ou transição. */
 .fade-up.is-visible { animation: fadeUp 0.6s ease forwards; }
 
+/* Animação: define os estados intermediários do efeito fadeUp. */
 @keyframes fadeUp {
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* Acessibilidade: adapta as animações à preferência de movimento do visitante. */
 @media (prefers-reduced-motion: reduce) {
   .fade-up, .fade-up.is-visible { opacity: 1; transform: none; animation: none; }
 }
 
+/* Apresentação do componente: ajusta a apresentação dos elementos selecionados. */
 .fade-up:nth-child(1) { animation-delay: 0.05s; }
+/* Apresentação do componente: ajusta a apresentação dos elementos selecionados. */
 .fade-up:nth-child(2) { animation-delay: 0.1s; }
+/* Apresentação do componente: ajusta a apresentação dos elementos selecionados. */
 .fade-up:nth-child(3) { animation-delay: 0.15s; }
+/* Apresentação do componente: ajusta a apresentação dos elementos selecionados. */
 .fade-up:nth-child(4) { animation-delay: 0.2s; }
+/* Apresentação do componente: ajusta a apresentação dos elementos selecionados. */
 .fade-up:nth-child(5) { animation-delay: 0.25s; }
+/* Apresentação do componente: ajusta a apresentação dos elementos selecionados. */
 .fade-up:nth-child(6) { animation-delay: 0.3s; }
+/* Apresentação do componente: ajusta a apresentação dos elementos selecionados. */
 .fade-up:nth-child(7) { animation-delay: 0.35s; }
 
 /* ═══ COUNTER ANIMATION ═══ */
+/* Apresentação do componente: ajusta a apresentação dos elementos selecionados. */
 .count-up { display: inline-block; }
 
 /* ═══ HISTÓRIA / MOEDA SOCIAL ═══ */
+/* Galeria e história do projeto: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .history-grid {
   display: grid; grid-template-columns: 1.3fr 1fr; gap: 2rem;
   align-items: start;
 }
 
+/* Galeria e história do projeto: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .history-text p {
   color: var(--text-secondary); font-size: 0.95rem; line-height: 1.75;
   margin-bottom: 1rem;
 }
 
+/* Galeria e história do projeto: ajusta a apresentação dos elementos selecionados. */
 .history-text p:last-child { margin-bottom: 0; }
 
+/* Galeria e história do projeto: define cores e acabamento. */
 .history-text strong { color: var(--accent-solar-light); }
 
+/* Galeria e história do projeto: ajusta dimensões e espaçamento, define cores e acabamento. */
 .history-coins {
   background: var(--bg-card);
   border: 1px solid var(--glass-border);
@@ -881,15 +1120,18 @@ tbody tr:hover { background: var(--glass); }
   backdrop-filter: blur(10px);
 }
 
+/* Galeria e história do projeto: define a leitura dos textos, define cores e acabamento. */
 .history-coins-caption {
   font-size: 0.8rem; font-weight: 600; color: var(--text-muted);
   text-align: center; margin-bottom: 1rem;
 }
 
+/* Apresentação do componente: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .coins-grid {
   display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem;
 }
 
+/* Apresentação do componente: ajusta dimensões e espaçamento, define cores e acabamento. */
 .coins-grid img {
   width: 100%; height: auto; border-radius: var(--radius-sm);
   border: 1px solid var(--glass-border);
@@ -898,6 +1140,7 @@ tbody tr:hover { background: var(--glass); }
   transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.45s ease, filter 0.45s ease;
 }
 
+/* Apresentação do componente: destaca o estado de interação por ponteiro ou teclado. */
 .coins-grid img:hover {
   position: relative;
   transform: translateY(-12px) scale(1.08) rotate(2deg);
@@ -906,28 +1149,42 @@ tbody tr:hover { background: var(--glass); }
   z-index: 2;
 }
 
+/* Apresentação do componente: ajusta dimensões e espaçamento. */
 .coins-grid > .coin-preview:last-child { grid-column: span 2; max-width: 60%; margin: 0 auto; }
+/* Apresentação do componente: ajusta dimensões e espaçamento, define cores e acabamento. */
 .coin-preview { display: block; min-width: 0; padding: 0; border: 0; border-radius: var(--radius-sm); background: transparent; cursor: zoom-in; }
+/* Apresentação do componente: ajusta a apresentação dos elementos selecionados. */
 .coin-preview img { display: block; cursor: zoom-in; }
+/* Apresentação do componente: destaca o estado de interação por ponteiro ou teclado. */
 .coin-preview:focus-visible { outline: 3px solid var(--accent-warning); outline-offset: 5px; }
+/* Galeria e história do projeto: ajusta dimensões e espaçamento, define cores e acabamento. */
 .history-image-dialog { position: fixed; inset: 0; margin: auto; width: min(1080px, calc(100% - 2rem)); max-height: calc(100dvh - 2rem); overflow-y: auto; padding: 3.5rem 1.25rem 1.25rem; border: 1px solid var(--glass-border); border-radius: 16px; background: #f8faf9; color: var(--text-primary); box-shadow: 0 24px 80px rgba(0,0,0,.25); }
+/* Galeria e história do projeto: define cores e acabamento. */
 .history-image-dialog::backdrop { background: rgba(10,24,20,.8); backdrop-filter: blur(6px); }
+/* Galeria e história do projeto: ajusta dimensões e espaçamento. */
 .history-image-dialog figure { margin: 0; }
+/* Galeria e história do projeto: ajusta dimensões e espaçamento. */
 .history-image-dialog img { display: block; width: 100%; max-height: calc(100dvh - 10rem); object-fit: contain; }
+/* Galeria e história do projeto: define a leitura dos textos. */
 .history-image-dialog figcaption { margin-top: 1rem; text-align: center; font-size: .85rem; }
+/* Galeria e história do projeto: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .history-image-close { position: absolute; top: .5rem; right: .5rem; display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--glass-border); border-radius: 50%; background: #fff; color: #203e3b; font: 1.6rem/1 sans-serif; cursor: pointer; }
+/* Galeria e história do projeto: destaca o estado de interação por ponteiro ou teclado. */
 .history-image-close:focus-visible { outline: 2px solid var(--accent-warning); outline-offset: 2px; }
 
+/* Responsividade: aplica os ajustes deste bloco apenas à faixa de tela indicada. */
 @media (max-width: 900px) {
   .history-grid { grid-template-columns: 1fr; }
 }
 
 /* ═══ COMO FUNCIONA ═══ */
+/* Apresentação do componente: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .how-steps {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1.25rem; margin-bottom: 1rem;
 }
 
+/* Apresentação do componente: ajusta dimensões e espaçamento, define cores e acabamento. */
 .how-step {
   background: var(--bg-card);
   border: 1px solid var(--glass-border);
@@ -936,6 +1193,7 @@ tbody tr:hover { background: var(--glass); }
   cursor: pointer; transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Apresentação do componente: destaca o estado de interação por ponteiro ou teclado. */
 .how-step:hover, .how-step:focus-visible {
   transform: translateY(-5px);
   border-color: rgba(217,119,6,0.45);
@@ -943,17 +1201,20 @@ tbody tr:hover { background: var(--glass); }
   outline: none;
 }
 
+/* Apresentação do componente: define cores e acabamento, controla movimento ou transição. */
 .how-step.active {
   transform: translateY(-8px) scale(1.015);
   border-color: var(--accent-warning);
   box-shadow: 0 16px 30px rgba(217,119,6,0.2);
 }
 
+/* Apresentação do componente: define cores e acabamento, controla movimento ou transição. */
 .how-step.active .how-step-num {
   transform: scale(1.12) rotate(-6deg);
   background: var(--gradient-warning);
 }
 
+/* Apresentação do componente: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .how-step-num {
   width: 32px; height: 32px; border-radius: 50%;
   background: var(--gradient-solar); color: #fff;
@@ -962,20 +1223,24 @@ tbody tr:hover { background: var(--glass); }
   margin-bottom: 0.85rem; transition: transform 0.3s ease, background 0.3s ease;
 }
 
+/* Apresentação do componente: define a leitura dos textos. */
 .how-step h4 {
   font-family: 'Geist', sans-serif; font-size: 0.95rem; font-weight: 700;
   margin-bottom: 0.4rem;
 }
 
+/* Apresentação do componente: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .how-step p {
   font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;
 }
 
+/* Apresentação do componente: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .how-readout {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.25rem; margin-top: 1.5rem;
 }
 
+/* Apresentação do componente: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .how-readout-item {
   background: var(--bg-card);
   border: 1px solid var(--glass-border);
@@ -984,75 +1249,96 @@ tbody tr:hover { background: var(--glass); }
   font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;
 }
 
+/* Apresentação do componente: define a leitura dos textos, define cores e acabamento. */
 .how-readout-name {
   display: block; font-family: 'Geist', sans-serif; font-weight: 700;
   color: var(--text-primary); margin-bottom: 0.3rem; font-size: 0.9rem;
 }
 
 /* ═══ INTERPRETAÇÃO / COMPARAÇÃO DO USUÁRIO ═══ */
+/* Apresentação do componente: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .compare-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.25rem; margin-bottom: 1.5rem;
 }
 
+/* Apresentação do componente: ajusta dimensões e espaçamento, define cores e acabamento. */
 .compare-card {
   background: var(--bg-card); border: 1px solid var(--glass-border);
   border-radius: var(--radius); padding: 1.25rem 1.5rem;
   backdrop-filter: blur(10px);
 }
 
+/* Apresentação do componente: organiza a disposição dos elementos. */
 .compare-card-header {
   display: flex; align-items: center; justify-content: space-between;
   margin-bottom: 0.9rem;
 }
 
+/* Apresentação do componente: define a leitura dos textos. */
 .compare-card-header h4 {
   font-family: 'Geist', sans-serif; font-size: 0.9rem; font-weight: 700;
 }
 
+/* Apresentação do componente: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .compare-delta {
   font-size: 0.75rem; font-weight: 700; padding: 3px 9px; border-radius: 20px;
 }
 
+/* Apresentação do componente: define cores e acabamento. */
 .compare-delta.up { background: rgba(16,185,129,0.15); color: var(--accent-green-light); }
+/* Apresentação do componente: define cores e acabamento. */
 .compare-delta.down { background: rgba(217,119,6,0.15); color: var(--accent-warning-light); }
 
+/* Apresentação do componente: ajusta a apresentação dos elementos selecionados. */
 .compare-row { margin-bottom: 0.6rem; }
+/* Apresentação do componente: ajusta a apresentação dos elementos selecionados. */
 .compare-row:last-child { margin-bottom: 0; }
 
+/* Apresentação do componente: organiza a disposição dos elementos, define a leitura dos textos. */
 .compare-row-label {
   display: flex; justify-content: space-between;
   font-size: 0.78rem; color: var(--text-muted); margin-bottom: 4px;
 }
 
+/* Apresentação do componente: define a leitura dos textos, define cores e acabamento. */
 .compare-row-label strong { color: var(--text-secondary); font-weight: 600; }
 
+/* Apresentação do componente: ajusta dimensões e espaçamento, define cores e acabamento. */
 .compare-track {
   height: 8px; background: rgba(15,23,42,0.06); border-radius: 4px; overflow: hidden;
 }
 
+/* Apresentação do componente: ajusta dimensões e espaçamento, define cores e acabamento. */
 .compare-fill { height: 100%; border-radius: 4px; }
+/* Apresentação do componente: define cores e acabamento. */
 .compare-fill.you { background: var(--gradient-solar); }
+/* Apresentação do componente: define cores e acabamento. */
 .compare-fill.media { background: var(--text-muted); opacity: 0.5; }
 
 /* ═══ RANKING ═══ */
+/* Apresentação do componente: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .rank-grid {
   display: grid; grid-template-columns: repeat(5, 1fr);
   gap: 1rem; margin-top: 1rem;
 }
 
+/* Responsividade: aplica os ajustes deste bloco apenas à faixa de tela indicada. */
 @media (max-width: 1200px) {
   .rank-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
+/* Responsividade: aplica os ajustes deste bloco apenas à faixa de tela indicada. */
 @media (max-width: 700px) {
   .rank-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* Responsividade: aplica os ajustes deste bloco apenas à faixa de tela indicada. */
 @media (max-width: 480px) {
   .rank-grid { grid-template-columns: 1fr; }
 }
 
+/* Apresentação do componente: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .rank-card {
   display: flex; gap: 1rem; align-items: flex-start;
   background: var(--bg-card); border: 1px solid var(--glass-border);
@@ -1060,31 +1346,41 @@ tbody tr:hover { background: var(--glass); }
   transition: var(--transition);
 }
 
+/* Apresentação do componente: destaca o estado de interação por ponteiro ou teclado. */
 .rank-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-glow-solar); }
 
+/* Apresentação do componente: ajusta dimensões e espaçamento. */
 .rank-card-body { flex: 1; min-width: 0; }
 
+/* Apresentação do componente: define a leitura dos textos, define cores e acabamento. */
 .rank-card-name {
   font-family: 'Geist', sans-serif; font-weight: 700; font-size: 0.92rem;
   color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   margin-bottom: 0.75rem;
 }
 
+/* Apresentação do componente: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .rank-card-months { display: flex; gap: 4px; margin-bottom: 0.5rem; flex-wrap: wrap; }
 
+/* Apresentação do componente: ajusta dimensões e espaçamento, define cores e acabamento. */
 .month-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(15,23,42,0.08); }
+/* Apresentação do componente: define cores e acabamento. */
 .month-dot.filled { background: var(--gradient-solar); }
 
+/* Apresentação do componente: define a leitura dos textos, define cores e acabamento. */
 .rank-card-caption { font-size: 0.78rem; color: var(--text-muted); }
 
+/* Apresentação do componente: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .insight-trend {
   background: var(--bg-card); border: 1px solid var(--glass-border);
   border-radius: var(--radius); padding: 1.25rem 1.5rem;
   margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;
 }
 
+/* Apresentação do componente: define cores e acabamento. */
 .insight-trend strong { color: var(--text-primary); }
 
+/* Apresentação do componente: ajusta dimensões e espaçamento, define cores e acabamento. */
 .goal-card {
   background: var(--bg-card);
   border: 1px solid rgba(217,119,6,0.35);
@@ -1092,19 +1388,23 @@ tbody tr:hover { background: var(--glass); }
   position: relative; overflow: hidden;
 }
 
+/* Apresentação do componente: desenha uma camada decorativa sem adicionar HTML, ajusta dimensões e espaçamento. */
 .goal-card::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
   background: var(--gradient-warning);
 }
 
+/* Apresentação do componente: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .goal-card h4 {
   font-family: 'Geist', sans-serif; font-size: 1rem; font-weight: 700;
   margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px;
 }
 
+/* Apresentação do componente: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .goal-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
 
 /* ═══ FOOTER ═══ */
+/* Rodapé compartilhado: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .footer {
   text-align: center; padding: 2rem;
   color: var(--text-muted); font-size: 0.8rem;
@@ -1113,6 +1413,7 @@ tbody tr:hover { background: var(--glass); }
 }
 
 /* ═══ STAT CARD AS BUTTON ═══ */
+/* Cartões de indicadores: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .stat-card .stat-hint {
   margin-top: 0.6rem; font-size: 0; font-weight: 600;
   color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;
@@ -1120,26 +1421,32 @@ tbody tr:hover { background: var(--glass); }
   opacity: 0; transition: var(--transition);
 }
 
+/* Cartões de indicadores: desenha uma camada decorativa sem adicionar HTML, ajusta dimensões e espaçamento. */
 .stat-card .stat-hint::before {
   content: '⌕'; color: var(--accent-solar); font-size: 1rem;
   line-height: 1; filter: none;
 }
 
+/* Cartões de indicadores: desenha uma camada decorativa sem adicionar HTML, define a leitura dos textos. */
 .stat-card .stat-hint::after {
   content: 'Ver histórico e detalhes'; font-size: 0.72rem;
 }
 
+/* Cartões de indicadores: destaca o estado de interação por ponteiro ou teclado. */
 button.stat-card:hover .stat-hint,
 button.stat-card:focus-visible .stat-hint { opacity: 1; }
 
+/* Cartões de indicadores: ajusta dimensões e espaçamento, define a leitura dos textos. */
 button.stat-card {
   display: block; width: 100%; text-align: left;
   font-family: inherit; color: inherit; cursor: pointer;
 }
 
+/* Cartões de indicadores: destaca o estado de interação por ponteiro ou teclado. */
 button.stat-card:hover { transform: translateY(-4px); }
 
 /* ═══ STAT MODAL ═══ */
+/* Janelas de detalhes: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .modal-overlay {
   position: fixed; inset: 0; z-index: 1000;
   background: rgba(15,23,42,0.45);
@@ -1150,8 +1457,10 @@ button.stat-card:hover { transform: translateY(-4px); }
   transition: opacity 0.25s ease;
 }
 
+/* Janelas de detalhes: ajusta a apresentação dos elementos selecionados. */
 .modal-overlay.active { opacity: 1; pointer-events: auto; }
 
+/* Janelas de detalhes: ajusta dimensões e espaçamento, define cores e acabamento. */
 .modal-box {
   background: var(--bg-secondary);
   border: 1px solid var(--glass-border);
@@ -1165,8 +1474,10 @@ button.stat-card:hover { transform: translateY(-4px); }
   max-height: 85vh; overflow-y: auto;
 }
 
+/* Janelas de detalhes: controla movimento ou transição. */
 .modal-overlay.active .modal-box { transform: translateY(0) scale(1); }
 
+/* Janelas de detalhes: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .modal-close {
   position: absolute; top: 1rem; right: 1rem;
   width: 32px; height: 32px; border-radius: 50%;
@@ -1176,8 +1487,10 @@ button.stat-card:hover { transform: translateY(-4px); }
   transition: var(--transition);
 }
 
+/* Janelas de detalhes: destaca o estado de interação por ponteiro ou teclado. */
 .modal-close:hover { background: var(--accent-red); color: #fff; border-color: var(--accent-red); }
 
+/* Janelas de detalhes: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .modal-icon {
   width: 52px; height: 52px; border-radius: 14px;
   display: flex; align-items: center; justify-content: center;
@@ -1186,56 +1499,80 @@ button.stat-card:hover { transform: translateY(-4px); }
   filter: grayscale(1) sepia(1) saturate(2.2) hue-rotate(65deg) brightness(0.78);
 }
 
+/* Janelas de detalhes: define a leitura dos textos. */
 .modal-box h3 {
   font-family: 'Geist', sans-serif; font-size: 1.25rem; font-weight: 700;
   margin-bottom: 0.6rem; padding-right: 2rem;
 }
 
+/* Janelas de detalhes: ajusta dimensões e espaçamento. */
 .modal-desc p { margin: 0; }
+/* Janelas de detalhes: ajusta a apresentação dos elementos selecionados. */
 .modal-desc p + p { margin-top: .85rem; }
+/* Janelas de detalhes: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .modal-desc {
   color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;
   margin-bottom: 1.25rem;
 }
 
+/* Área dos gráficos: define a leitura dos textos, define cores e acabamento. */
 .modal-chart-wrap h4 {
   font-size: 0.78rem; font-weight: 600; text-transform: uppercase;
   letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 0.75rem;
 }
 
+/* Área dos gráficos: ajusta dimensões e espaçamento. */
 .modal-chart-wrap canvas { width: 100% !important; max-height: 220px; }
 
 /* Public indicators: complete rows with equally sized cards. */
+/* Apresentação do componente: ajusta a apresentação dos elementos selecionados. */
 #dados .stats-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   grid-auto-rows: 1fr;
 }
+/* Cartões de indicadores: ajusta dimensões e espaçamento. */
 #dados .stats-grid .stat-card { min-width: 0; }
+/* Responsividade: aplica os ajustes deste bloco apenas à faixa de tela indicada. */
 @media (max-width: 900px) {
   #dados .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+/* Responsividade: aplica os ajustes deste bloco apenas à faixa de tela indicada. */
 @media (max-width: 480px) {
   #dados .stats-grid { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* The community rooftop film fills the opening banner. */
+/* Banner de abertura: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .hero-video-banner { isolation: isolate; display: grid; align-content: center; justify-items: center; gap: 0; width: 100%; min-height: clamp(380px, 56vh, 600px); padding: 150px 2rem 100px; background: #132d25 url('../img/painel-voz-popular-novo.jpg') center 20% / cover no-repeat; }
+/* Banner de abertura: desenha uma camada decorativa sem adicionar HTML, controla movimento ou transição. */
 .hero-video-banner::before { content: none; display: none; animation: none; }
+/* Banner de abertura: ajusta dimensões e espaçamento. */
 .hero-background-video { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; object-fit: cover; object-position: center 20%; opacity: 1; pointer-events: none; }
+/* Banner de abertura: desenha uma camada decorativa sem adicionar HTML, define cores e acabamento. */
 .hero-video-banner::after { content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: rgba(0,0,0,.72); }
+/* Banner de abertura: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .hero-video-banner h1 { z-index: 3; max-width: 1100px; margin: 0 0 1.2rem; font-size: clamp(2.1rem, 4.5vw, 3.7rem); line-height: 1.15; letter-spacing: -.045em; background: none; color: #f7fcf9; -webkit-text-fill-color: #f7fcf9; text-shadow: 0 3px 24px rgba(0,0,0,.55); }
+/* Banner de abertura: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .hero-video-banner p { z-index: 3; max-width: 780px; font-size: clamp(.95rem, 1.5vw, 1.15rem); line-height: 1.8; color: #edf5f0; }
+/* Banner de abertura: desenha uma camada decorativa sem adicionar HTML. */
 .hero-video-banner.is-paused::before { animation-play-state: paused; }
+/* Responsividade: aplica os ajustes deste bloco apenas à faixa de tela indicada. */
 @media (max-width: 768px) {
   .hero-video-banner { min-height: 430px; padding: 165px 1.25rem 100px; }
 }
+/* Acessibilidade: adapta as animações à preferência de movimento do visitante. */
 @media (prefers-reduced-motion: reduce) { .hero-video-banner::before { animation: none; } }
 
 /* Account actions stay separate from the public navigation. */
+/* Botões de ação: define cores e acabamento. */
 .btn-signout { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+/* Botões de ação: destaca o estado de interação por ponteiro ou teclado. */
 .btn-signout:hover { background: #fecaca; border-color: #fca5a5; color: #7f1d1d; }
+/* Botões de ação: destaca o estado de interação por ponteiro ou teclado. */
 .btn-signout:focus-visible { outline: 2px solid #b91c1c; outline-offset: 3px; }
+/* Navegação principal: ajusta a apresentação dos elementos selecionados. */
 .navbar-actions > a { white-space: nowrap; }
+/* Responsividade: aplica os ajustes deste bloco apenas à faixa de tela indicada. */
 @media (max-width: 1400px) {
   .navbar { height: auto; min-height: 70px; flex-wrap: wrap; gap: .5rem; padding: .6rem 1.25rem; }
   .navbar-brand { flex: 1; font-size: .9rem; }
@@ -1244,6 +1581,7 @@ button.stat-card:hover { transform: translateY(-4px); }
   .dashboard { padding-top: 155px; }
   .section { scroll-margin-top: 150px; }
 }
+/* Responsividade: aplica os ajustes deste bloco apenas à faixa de tela indicada. */
 @media (max-width: 640px) {
   .navbar-brand { flex-basis: 100%; justify-content: center; font-size: .7rem; }
   .navbar-brand .brand-logo { width: 30px; height: 30px; }
@@ -1254,28 +1592,49 @@ button.stat-card:hover { transform: translateY(-4px); }
 }
 
 /* The fixed header changes glass tone when it leaves the video. */
+/* Navegação principal: define cores e acabamento, controla movimento ou transição. */
 .navbar { background: rgba(255,255,255,.78); -webkit-backdrop-filter: blur(18px) saturate(140%); backdrop-filter: blur(18px) saturate(140%); box-shadow: 0 1px 14px rgba(15,23,42,.04); transition: background-color .25s ease, border-color .25s ease, box-shadow .25s ease; }
+/* Navegação principal: define cores e acabamento. */
 .navbar.is-over-video { --text-secondary: #e4ece8; background: rgba(8,22,18,.12); border-bottom-color: rgba(255,255,255,.14); box-shadow: none; }
+/* Navegação principal: define cores e acabamento. */
 .navbar.is-over-video .navbar-brand { color: #f7fcf9; }
+/* Navegação principal: define cores e acabamento. */
 .navbar.is-over-video .navbar-menu { background: rgba(8,22,18,.16); border-color: rgba(255,255,255,.2); }
+/* Navegação principal: define cores e acabamento. */
 .navbar.is-over-video .navbar-menu a { color: #f2f7f4; }
+/* Navegação principal: define cores e acabamento. */
 .navbar.is-over-video .navbar-actions .btn-outline { color: #f2f7f4; border-color: rgba(255,255,255,.4); background: rgba(255,255,255,.06); }
+/* Navegação principal: destaca o estado de interação por ponteiro ou teclado. */
 .navbar.is-over-video .navbar-actions .btn-outline:hover { background: rgba(255,255,255,.16); }
+/* Navegação principal: destaca o estado de interação por ponteiro ou teclado. */
 .navbar.is-over-video .navbar-menu a:focus-visible { outline: 2px solid white; outline-offset: 2px; }
+/* Banner de abertura: define a leitura dos textos, define cores e acabamento. */
 .hero-video-banner p.hero-demo-note { font-size: .7rem; margin-top: 1rem; color: #d6e0da; }
+/* Acessibilidade: adapta as animações à preferência de movimento do visitante. */
 @media (prefers-reduced-motion: reduce) { .navbar { transition: none; } }
 
 /* Keep navigation on one line; compact screens use a single disclosure. */
+/* Navegação principal: ajusta dimensões e espaçamento. */
 .navbar { flex-wrap: nowrap; height: 70px; min-height: 70px; gap: 1rem; padding: 0 clamp(1rem, 2vw, 2rem); }
+/* Navegação principal: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .navbar-brand { flex: 0 1 auto; flex-basis: auto; min-width: 0; justify-content: flex-start; gap: .6rem; font-size: clamp(.8rem, 1.15vw, 1.15rem); white-space: nowrap; }
+/* Navegação principal: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .navbar-content { display: flex; align-items: center; justify-content: flex-end; flex: 1; min-width: 0; gap: .8rem; }
+/* Navegação principal: ajusta dimensões e espaçamento. */
 .navbar-menu { flex-shrink: 0; order: 0; width: auto; margin: 0; overflow: visible; }
+/* Navegação principal: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .navbar-menu a { font-size: clamp(.65rem, .8vw, .76rem); padding: .45rem clamp(.45rem, .8vw, .8rem); letter-spacing: .02em; }
+/* Navegação principal: ajusta dimensões e espaçamento. */
 .navbar-actions { width: auto; gap: .5rem; }
+/* Navegação principal: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .navbar-actions .btn { padding: .6rem .8rem; font-size: .76rem; }
+/* Navegação principal: ajusta a apresentação dos elementos selecionados. */
 .navbar-toggle { display: none; }
+/* Apresentação do componente: ajusta a apresentação dos elementos selecionados. */
 .dashboard { padding-top: 100px; }
+/* Apresentação do componente: ajusta a apresentação dos elementos selecionados. */
 .section { scroll-margin-top: 90px; }
+/* Responsividade: aplica os ajustes deste bloco apenas à faixa de tela indicada. */
 @media (max-width: 1100px) {
   .navbar { justify-content: space-between; gap: .7rem; }
   .navbar-brand { flex: 0 1 auto; font-size: clamp(.7rem, 1.6vw, .95rem); }
@@ -1293,18 +1652,26 @@ button.stat-card:hover { transform: translateY(-4px); }
   .navbar.is-over-video .navbar-toggle { color: #f2f7f4; border-color: rgba(255,255,255,.3); background: rgba(8,22,18,.25); }
   .navbar.is-over-video .navbar-content { background: rgba(20,39,33,.97); }
 }
+/* Responsividade: aplica os ajustes deste bloco apenas à faixa de tela indicada. */
 @media (max-width: 480px) {
   .navbar { padding: 0 .75rem; gap: .4rem; }
   .navbar-brand { gap: .4rem; font-size: clamp(.64rem, 2.65vw, .8rem); letter-spacing: 0; text-transform: none; }
   .navbar-brand .brand-logo { width: 32px; height: 32px; }
   .navbar-toggle { padding: .5rem; font-size: .75rem; gap: .25rem; }
 }
+/* Acessibilidade: adapta as animações à preferência de movimento do visitante. */
 @media (prefers-reduced-motion: reduce) { .navbar-toggle svg { transition: none; } }
 
 /* A faint transit-map network sits between the dimmed film and the text. */
+/* Banner de abertura: ajusta dimensões e espaçamento. */
 .hero-light-network { position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%; opacity: .32; pointer-events: none; -webkit-mask-image: radial-gradient(ellipse at 50% 48%, rgba(0,0,0,.2), #000 70%); mask-image: radial-gradient(ellipse at 50% 48%, rgba(0,0,0,.2), #000 70%); }
+/* Banner de abertura: ajusta dimensões e espaçamento. */
 .hero-light-lines { stroke: #bcebd8; stroke-opacity: .2; stroke-width: 1.15; stroke-linecap: round; stroke-linejoin: round; }
+/* Banner de abertura: ajusta dimensões e espaçamento. */
 .hero-light-stations { fill: #122b22; fill-opacity: .5; stroke: #bcebd8; stroke-opacity: .4; stroke-width: 1; }
+/* Banner de abertura: define cores e acabamento. */
 .hero-light-travelers { fill: #d0f9e7; filter: drop-shadow(0 0 4px rgba(173,245,209,.7)); }
+/* Banner de abertura: ajusta a apresentação dos elementos selecionados. */
 .hero-video-banner h1, .hero-video-banner p { z-index: 4; }
+/* Acessibilidade: adapta as animações à preferência de movimento do visitante. */
 @media (prefers-reduced-motion: reduce) { .hero-light-travelers { display: none; } }

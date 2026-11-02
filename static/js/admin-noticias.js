@@ -1,4 +1,6 @@
+/* Objetivo: Controla o editor de notícias, a importação de links, as prévias e as operações de publicação. */
 (() => {
+  // Isola variáveis deste módulo e procura os elementos necessários nesta página.
   const form = document.getElementById('adminNewsForm');
   if (!form) return;
   const title = document.getElementById('newsTitle');
@@ -21,7 +23,9 @@
   const external = () => type.value === 'external';
   const importedCover = () => external() && imported && imported.url === link.value.trim() && imported.images.length > 0;
   const savedCover = () => editing && editing.images && editing.images.length > 0;
+  // Apresenta retorno ao editor e sinaliza visualmente quando há erro.
   function message(text, error = false) { status.textContent = text; status.dataset.error = String(error); }
+  // Cancela a busca pendente e invalida respostas antigas para evitar substituir um novo link.
   function cancelImport() {
     clearTimeout(importTimer); importTimer = null; version++;
     if (controller) controller.abort();
@@ -29,6 +33,7 @@
     importButton.disabled = Boolean(form.dataset.staticDemo);
     publishButton.disabled = Boolean(form.dataset.staticDemo);
   }
+  // Atualiza os textos da prévia conforme o título, o resumo e o tipo escolhidos.
   function updateText() {
     document.getElementById('newsPreviewTitle').textContent = title.value.trim() || 'O título da sua notícia aparece aqui';
     document.getElementById('newsPreviewSummary').textContent = summary.value.trim() || 'Escolha as fotos e escreva o resumo para visualizar a capa.';
@@ -36,6 +41,7 @@
     document.getElementById('newsPreviewRead').textContent = external() ? 'Ler matéria completa ↗' : 'Ler notícia →';
     document.getElementById('newsPreviewHelp').textContent = external() ? 'Ao clicar, o visitante abre a matéria completa no site de origem.' : 'O visitante verá o texto completo e as fotos ao abrir a notícia.';
   }
+  // Libera URLs temporárias e mostra a capa selecionada, importada ou já salva.
   function updatePhotos() {
     urls.forEach(url => URL.revokeObjectURL(url)); urls = [];
     thumbnails.replaceChildren(); cover.hidden = true; cover.removeAttribute('src');
@@ -51,6 +57,7 @@
     photos.required = !importedCover() && !savedCover();
     document.getElementById('newsPhotosLabel').textContent = importedCover() || savedCover() ? 'Trocar fotos (opcional; mantém as atuais se não enviar)' : 'Fotos';
   }
+  // Alterna os campos e as exigências de notícia própria ou matéria externa.
   function updateType() {
     cancelImport(); lastAttempt = ''; importActions.hidden = true; summary.required = false;
     const isExternal = external();
@@ -61,6 +68,7 @@
     body.disabled = isExternal; body.required = !isExternal;
     updateText(); updatePhotos();
   }
+  // Busca metadados do link e só aplica a resposta se ela ainda pertencer à edição atual.
   async function importLink(force = false) {
     const requestedUrl = link.value.trim();
     if (form.dataset.staticDemo || !external() || !requestedUrl || !link.checkValidity() || (!force && requestedUrl === lastAttempt)) return;
@@ -95,10 +103,12 @@
       }
     }
   }
+  // Aguarda uma pausa na digitação para evitar uma busca a cada tecla.
   function scheduleImport(delay = 850) {
     clearTimeout(importTimer);
     if (external() && link.value.trim() && link.checkValidity()) importTimer = setTimeout(() => importLink(), delay);
   }
+  // Responde ao clique deste controle e sincroniza sua ação com a interface.
   document.getElementById('openNewsEditor').addEventListener('click', () => {
     editing = null; imported = null; form.reset(); updateType(); message('');
     document.getElementById('adminNewsEditorTitle').textContent = 'Nova notícia no portal público';
@@ -107,20 +117,28 @@
     form.querySelector('[data-news-kind]').focus();
     if (external()) scheduleImport(0);
   });
+  // Responde ao clique deste controle e sincroniza sua ação com a interface.
   document.getElementById('closeNewsEditor').addEventListener('click', () => editor.close());
+  // Limpa o estado temporário ao encerrar o diálogo.
   editor.addEventListener('close', cancelImport);
+  // Atualiza a prévia ou o filtro enquanto o usuário modifica o campo.
   title.addEventListener('input', updateText); summary.addEventListener('input', updateText);
+  // Sincroniza a interface após a mudança de seleção ou de preferência.
   photos.addEventListener('change', updatePhotos); type.addEventListener('change', updateType);
+  // Responde ao clique deste controle e sincroniza sua ação com a interface.
   form.querySelectorAll('[data-news-kind]').forEach(button => button.addEventListener('click', () => {
     type.value = button.dataset.newsKind; updateType(); message('');
     if (external()) scheduleImport(0);
   }));
+  // Responde ao clique deste controle e sincroniza sua ação com a interface.
   importButton.addEventListener('click', () => importLink(true));
+  // Responde ao clique deste controle e sincroniza sua ação com a interface.
   document.getElementById('newsManualButton').addEventListener('click', () => {
     cancelImport(); lastAttempt = link.value.trim(); importActions.hidden = true; summary.required = true;
     message('Preencha o título e o resumo e envie a foto de capa. O link será usado para abrir a matéria original.');
     title.focus();
   });
+  // Atualiza a prévia ou o filtro enquanto o usuário modifica o campo.
   link.addEventListener('input', () => {
     if (imported) {
       if (title.value === imported.title) title.value = '';
@@ -129,8 +147,11 @@
     cancelImport(); lastAttempt = ''; imported = null; importToken.value = ''; importActions.hidden = true;
     summary.required = false; updateText(); updatePhotos(); scheduleImport();
   });
+  // Agenda a busca depois que o navegador inserir o link colado.
   link.addEventListener('paste', () => { setTimeout(() => scheduleImport(0), 0); });
+  // Sincroniza a interface após a mudança de seleção ou de preferência.
   link.addEventListener('change', () => scheduleImport(0));
+  // Cria a linha de publicação e seus botões usando textContent para os textos recebidos.
   function rowFor(article) {
     const item = document.createElement('li'); item.dataset.newsId = article.id;
     const name = document.createElement('strong'); name.textContent = article.title;
@@ -143,6 +164,7 @@
     });
     item.append(name, detail, actions); return item;
   }
+  // Delega os botões da lista para carregar a edição ou excluir uma notícia com confirmação.
   list.addEventListener('click', async event => {
     const button = event.target.closest('[data-news-action]');
     if (!button || form.dataset.staticDemo) return;
@@ -174,6 +196,7 @@
     } catch (error) { notice.textContent = error.message || 'Não foi possível concluir. Tente novamente.'; notice.dataset.error = 'true'; }
     finally { button.disabled = false; }
   });
+  // Valida o envio e apresenta a resposta da operação sem recarregar a tela.
   form.addEventListener('submit', async event => {
     event.preventDefault();
     if (form.dataset.staticDemo || importing) return;

@@ -1,5 +1,7 @@
 # Cadastro de notícias
 
+Objetivo: Explicar o cadastro, a importação e o armazenamento persistente das notícias.
+
 No aplicativo Flask, entre com perfil de administrador, abra **Notícias** e clique em **Publicar nova notícia no portal público**. O editor abre em uma janela; a prévia e a lista de publicações ficam recolhidas para simplificar a aba. Informe título, resumo opcional, texto e de uma a cinco fotos. A primeira foto será a capa. A publicação aparece imediatamente no carrossel de Nossa História; ao clicar, o visitante abre o texto completo e as fotos.
 
 O envio completo aceita até 5 MB. As imagens JPG, PNG e WebP são verificadas, orientadas e convertidas em JPEG com até 2.400 pixels no maior lado, sem metadados. O cadastro não altera as planilhas de energia ou os dados dos beneficiários.

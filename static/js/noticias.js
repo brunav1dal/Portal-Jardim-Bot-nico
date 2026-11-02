@@ -1,4 +1,6 @@
+/* Objetivo: Carrega as notícias, controla o carrossel e abre matérias próprias em uma janela de leitura. */
 (() => {
+  // Isola variáveis deste módulo e procura os elementos necessários nesta página.
   const carousel = document.querySelector('[data-news-carousel]');
   if (!carousel) return;
   const track = carousel.querySelector('.news-track');
@@ -11,7 +13,9 @@
   const status = carousel.querySelector('.news-sr-status');
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let slides = [], articleStarts = [], index = 0, timer = null, paused = motion.matches, reading = false, swiped = false;
+  // Interrompe o temporizador de avanço automático do carrossel.
   function stop() { clearTimeout(timer); timer = null; }
+  // Agenda o próximo avanço respeitando foco, visibilidade, leitura e redução de movimento.
   function schedule() {
     stop();
     const keyboardFocus = viewport.contains(document.activeElement) && document.activeElement.matches(':focus-visible');
@@ -19,6 +23,7 @@
       timer = setTimeout(() => go(index + 1), 5000);
     }
   }
+  // Seleciona um slide, atualiza a posição e sincroniza contador e informações de acessibilidade.
   function go(next, manual = false) {
     index = (next + slides.length) % slides.length;
     track.style.transform = `translateX(-${index * 100}%)`;
@@ -32,12 +37,14 @@
     if (manual) status.textContent = `${current.article.title}. ${count.textContent}.`;
     schedule();
   }
+  // Confere protocolo e, quando exigido, origem antes de usar links e imagens recebidos.
   function safeUrl(value, base, sameOrigin = false) {
     const url = new URL(value, base);
     if (url.protocol !== 'https:' && url.origin !== window.location.origin) throw new Error('Unsupported news URL');
     if (sameOrigin && url.origin !== window.location.origin) throw new Error('News asset must be local');
     return url.href;
   }
+  // Abre o texto e as fotos da notícia própria em um diálogo e pausa o carrossel.
   function ownStory(article) {
     reading = true;
     stop();
@@ -45,6 +52,7 @@
     dialog.className = 'news-dialog';
     const close = document.createElement('button');
     close.type = 'button'; close.textContent = '×'; close.setAttribute('aria-label', 'Fechar notícia');
+    // Responde ao clique deste controle e sincroniza sua ação com a interface.
     close.addEventListener('click', () => dialog.close());
     const title = document.createElement('h3'); title.textContent = article.title; title.id = 'ownNewsTitle';
     dialog.setAttribute('aria-labelledby', title.id);
@@ -59,9 +67,11 @@
     const paragraphs = Array.isArray(article.body) ? article.body : [article.body || article.summary];
     paragraphs.forEach(text => { const p = document.createElement('p'); p.textContent = text; dialog.append(p); });
     dialog.append(gallery);
+    // Limpa o estado temporário ao encerrar o diálogo.
     dialog.addEventListener('close', () => { dialog.remove(); reading = false; schedule(); });
     document.body.append(dialog); dialog.showModal();
   }
+  // Carrega o feed e monta os slides; mantém o conteúdo inicial se a requisição falhar.
   async function init() {
     try {
       const dataUrl = new URL(carousel.dataset.newsSource, window.location.href);
@@ -80,6 +90,7 @@
             slide.href = safeUrl(article.url, dataUrl); slide.target = '_blank'; slide.rel = 'noopener noreferrer';
           } else {
             slide.type = 'button'; slide.setAttribute('aria-haspopup', 'dialog');
+            // Responde ao clique deste controle e sincroniza sua ação com a interface.
             slide.addEventListener('click', () => ownStory(article));
           }
           const image = document.createElement('img');
@@ -106,34 +117,46 @@
       previousButton.disabled = articleStarts.length < 2;
       go(0);
     } catch {
-      // Keep the initial article readable and linked when the feed cannot load.
+      // Mantém a matéria inicial legível e com link caso o feed não possa ser carregado.
       controls.hidden = true;
     }
   }
+  // Navega entre matérias usando o primeiro slide de cada publicação.
   function changeArticle(direction) {
     if (articleStarts.length < 2) return;
     const currentArticle = slides[index].articleNumber - 1;
     const target = (currentArticle + direction + articleStarts.length) % articleStarts.length;
     go(articleStarts[target], true);
   }
+  // Responde ao clique deste controle e sincroniza sua ação com a interface.
   nextButton.addEventListener('click', () => changeArticle(1));
+  // Responde ao clique deste controle e sincroniza sua ação com a interface.
   previousButton.addEventListener('click', () => changeArticle(-1));
+  // Ajusta o avanço automático quando o visitante navega pelos controles.
   carousel.addEventListener('focusin', event => { if (viewport.contains(event.target) && event.target.matches(':focus-visible')) stop(); else schedule(); });
+  // Reavalia o avanço depois que o foco deixa o conteúdo.
   carousel.addEventListener('focusout', () => setTimeout(schedule, 0));
+  // Permite controlar a interface pelo teclado.
   carousel.addEventListener('keydown', event => {
     if (!slides.length || !['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
     event.preventDefault(); go(index + (event.key === 'ArrowRight' ? 1 : -1), true);
   });
+  // Suspende ou retoma o avanço conforme a visibilidade da página.
   document.addEventListener('visibilitychange', schedule);
+  // Sincroniza a interface após a mudança de seleção ou de preferência.
   motion.addEventListener('change', () => { paused = motion.matches; schedule(); });
   let startX = null;
+  // Registra o início do gesto de toque para navegar no carrossel.
   viewport.addEventListener('pointerdown', event => { if (event.pointerType === 'touch') startX = event.clientX; });
+  // Calcula o deslocamento do toque e decide se deve trocar o slide.
   viewport.addEventListener('pointerup', event => {
     if (startX === null || !slides.length) return;
     const delta = event.clientX - startX; startX = null;
     if (Math.abs(delta) > 45) { swiped = true; go(index + (delta < 0 ? 1 : -1), true); setTimeout(() => { swiped = false; }, 350); }
   });
+  // Responde ao clique deste controle e sincroniza sua ação com a interface.
   viewport.addEventListener('click', event => { if (swiped) { event.preventDefault(); event.stopPropagation(); swiped = false; } }, true);
+  // Descarta o gesto de toque cancelado.
   viewport.addEventListener('pointercancel', () => { startX = null; });
   init();
 })();

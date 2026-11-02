@@ -1,131 +1,259 @@
+/* Objetivo: Estiliza o fluxograma ilustrado das etapas de energia, pagamento e moeda social. */
 /* Local design: original infographic structure, the consumption cards' visual identity. */
+/* Apresentação do componente: ajusta a apresentação dos elementos selecionados. */
 #como-funciona > .section-heading, #historia > .section-heading { margin-bottom: .9rem; }
+/* Apresentação do componente: ajusta dimensões e espaçamento, define a leitura dos textos. */
 #como-funciona > .section-heading .section-title, #historia > .section-heading .section-title { margin-bottom: .55rem; line-height: 1.35; }
+/* Cenários de consumo e distribuição de energia: ajusta dimensões e espaçamento. */
 #como-funciona > .scenario-intro { margin: 0 0 1.5rem; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-flow { width: 100%; margin: 0 0 2rem; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-flow-scroll { width: 100%; overflow-x: auto; padding: .3rem; }
+/* Etapas do fluxo de energia e pagamento: destaca o estado de interação por ponteiro ou teclado. */
 .business-flow-scroll:focus-visible { outline: 2px solid var(--accent-solar); outline-offset: 3px; border-radius: var(--radius); }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-flow-canvas { position: relative; width: 100%; min-width: 1120px; height: 1040px; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define cores e acabamento. */
 .business-panel { position: absolute; z-index: 1; box-sizing: border-box; padding: 1.25rem; border: 1px solid rgba(225,235,246,.16); border-radius: var(--radius); color: #f3f6fa; font: inherit; }
+/* Etapas do fluxo de energia e pagamento: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .business-panel header { display: flex; align-items: flex-start; gap: .7rem; margin-bottom: .7rem; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-number { display: inline-grid; place-items: center; flex: 0 0 31px; width: 31px; height: 31px; border: 1px solid rgba(225,235,246,.27); border-radius: 9px; color: #a7e3d0; font-size: .8rem; font-weight: 600; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-panel h3 { margin: .15rem 0 0; font-size: 1rem; font-weight: 600; line-height: 1.45; letter-spacing: -.025em; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-panel > p { position: relative; margin: 0; color: #d1dbe6; font-size: .81rem; line-height: 1.85; }
+/* Etapas do fluxo de energia e pagamento: define a leitura dos textos, define cores e acabamento. */
 .business-panel > p strong { color: #f3f6fa; font-weight: 600; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define cores e acabamento. */
 .business-generation { left: 0; top: 0; width: 49%; height: 31%; background: #203847; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-generation > p { max-width: 57%; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define cores e acabamento. */
 .business-panel-art { position: absolute; bottom: 1rem; left: 1.5rem; width: 56%; height: 136px; color: #f8d98a; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define cores e acabamento. */
 .business-grid { right: 0; top: 0; width: 49%; height: 39%; background: #293a56; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-grid header { max-width: 75%; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-grid > p { margin-left: 2.6rem; max-width: 60%; font-size: .77rem; line-height: 1.8; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define cores e acabamento. */
 .business-grid-art { position: absolute; left: 1.2rem; bottom: 1.2rem; width: 62%; height: 100px; color: #bfdbfe; }
+/* Etapas do fluxo de energia e pagamento: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .business-bill { position: absolute; right: 1rem; top: 5.2rem; width: 24%; display: flex; flex-direction: column; gap: .7rem; padding: .75rem; border: 1px solid #8ca7c9; border-radius: 9px; background: #e6edf6; color: #243b5a; transform: rotate(-3deg); }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-bill > span { font-size: .58rem; font-weight: 650; line-height: 1.6; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-bill small { font-size: .56rem; line-height: 1.65; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-bill strong { padding: .1rem; border-radius: 5px; background: #f8e7b8; font-size: 1.7rem; font-weight: 600; text-align: center; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define cores e acabamento. */
 .business-bill i { height: 20px; background: repeating-linear-gradient(90deg, #334155, #334155 1px, transparent 1px, transparent 3px, #334155 3px, #334155 5px, transparent 5px, transparent 7px); }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define cores e acabamento. */
 .business-payment { left: 0; top: 34%; width: 28%; height: 31%; background: #203e3b; }
+/* Etapas do fluxo de energia e pagamento: define a leitura dos textos. */
 .business-payment h3 { font-size: .91rem; }
+/* Etapas do fluxo de energia e pagamento: define a leitura dos textos. */
 .business-payment > p { font-size: .79rem; }
+/* Etapas do fluxo de energia e pagamento: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .business-formula { display: flex; justify-content: space-between; align-items: center; gap: .8rem; margin-top: .8rem; padding: .65rem .9rem; border: 1px solid rgba(167,227,208,.24); border-radius: 9px; background: rgba(167,227,208,.07); }
+/* Etapas do fluxo de energia e pagamento: define a leitura dos textos, define cores e acabamento. */
 .business-formula span { font-size: .72rem; color: #c6ded4; }
+/* Etapas do fluxo de energia e pagamento: define a leitura dos textos, define cores e acabamento. */
 .business-formula strong { font-size: 1.7rem; font-weight: 600; letter-spacing: -.03em; color: #a7e3d0; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-community { position: absolute; z-index: 3; left: 28.5%; top: 24%; width: 33%; text-align: center; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-community svg { display: block; width: 100%; height: auto; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define cores e acabamento. */
 .business-community > div { position: relative; width: 65%; margin: -2.5rem auto 0; padding: .5rem .6rem; border: 1px solid #83b7a0; border-radius: 30px; background: #203e3b; }
+/* Etapas do fluxo de energia e pagamento: define a leitura dos textos, define cores e acabamento. */
 .business-community strong { display: block; color: #edf8f0; font-size: 1.1rem; font-weight: 600; letter-spacing: -.025em; }
+/* Etapas do fluxo de energia e pagamento: define a leitura dos textos, define cores e acabamento. */
 .business-community span { color: #b9d3c6; font-size: .75rem; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define cores e acabamento. */
 .business-bank { position: absolute; z-index: 2; left: 36%; top: 60%; width: 25%; color: #376c4b; text-align: center; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define cores e acabamento. */
 .business-bank svg { display: block; width: 88%; height: 133px; margin: 0 auto; background: #fff; border-radius: 12px; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-bank strong { display: block; margin-top: .4rem; font-size: .77rem; font-weight: 600; line-height: 1.6; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define cores e acabamento. */
 .business-split { right: 0; top: 42%; width: 37%; height: 57%; background: #42354c; }
+/* Etapas do fluxo de energia e pagamento: define a leitura dos textos. */
 .business-split > p { font-size: .77rem; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-split-total { width: 55%; margin: .65rem auto 0; padding: .35rem; border: 1px solid rgba(225,235,246,.2); border-radius: 8px; font-size: 1.6rem; font-weight: 600; text-align: center; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-branches { display: block; width: 100%; height: 32px; }
+/* Etapas do fluxo de energia e pagamento: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .business-split-destinations { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; }
+/* Etapas do fluxo de energia e pagamento: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .business-split-destinations > div { display: flex; flex-direction: column; padding: .85rem .7rem; border: 1px solid rgba(225,235,246,.17); border-radius: 10px; }
+/* Etapas do fluxo de energia e pagamento: define cores e acabamento. */
 .business-fund { background: rgba(167,227,208,.06); color: #a7e3d0; }
+/* Etapas do fluxo de energia e pagamento: define cores e acabamento. */
 .business-operation { background: rgba(252,215,139,.06); color: #fcd78b; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-split-destinations h4 { font-size: .84rem; font-weight: 600; line-height: 1.6; text-align: center; }
+/* Etapas do fluxo de energia e pagamento: define a leitura dos textos. */
 .business-split-destinations h4 span { font-size: .7rem; font-weight: 400; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-split-destinations svg { width: 70px; height: 58px; margin: .55rem auto; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-split-destinations p { margin: 0; min-height: 7rem; color: #d1dbe6; font-size: .73rem; line-height: 1.85; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-split-destinations > div > strong { display: block; margin-top: .5rem; padding: .35rem; border-radius: 6px; background: rgba(255,255,255,.06); font-size: 1.6rem; font-weight: 600; text-align: center; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-split-destinations small { margin-top: .65rem; font-size: .54rem; line-height: 1.8; text-align: center; letter-spacing: .025em; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define cores e acabamento. */
 .business-commerce { left: 0; top: 68%; width: 50%; height: 31%; background: #203e3b; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-commerce > p { max-width: 66%; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define cores e acabamento. */
 .business-commerce-art { position: absolute; bottom: 1.1rem; left: 1.1rem; width: 69%; height: 110px; color: #a7e3d0; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-label { position: absolute; z-index: 4; padding: .6rem .8rem; border: 1px solid #e4d7b4; border-radius: 10px; background: #fbf4e3; color: #866523; font-size: .75rem; font-weight: 500; line-height: 1.5; text-align: center; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-energy-label { left: 34%; top: 8%; width: 15%; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define cores e acabamento. */
 .business-reference-label { left: 66%; top: 33%; width: 17%; border-color: #ccdbeb; background: #eaf1f9; color: #40648b; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define cores e acabamento. */
 .business-cashback-label { left: 43%; top: 82%; width: 17%; border-color: #cbdecf; background: #edf5ee; color: #376c4b; }
+/* Etapas do fluxo de energia e pagamento: define a leitura dos textos. */
 .business-cashback-label strong { display: block; font-size: .95rem; font-weight: 600; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-flow-links { position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-link { stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+/* Etapas do fluxo de energia e pagamento: ajusta a apresentação dos elementos selecionados. */
 .business-link-energy { stroke: #c39440; }
+/* Etapas do fluxo de energia e pagamento: ajusta a apresentação dos elementos selecionados. */
 .business-link-grid { stroke: #648bb1; }
+/* Etapas do fluxo de energia e pagamento: ajusta a apresentação dos elementos selecionados. */
 .business-link-money { stroke: #4a9165; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define cores e acabamento. */
 .business-flow-particles circle { stroke: white; stroke-width: .65; filter: drop-shadow(0 0 3px rgba(255,255,255,.7)); }
+/* Etapas do fluxo de energia e pagamento: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .business-flow-legend { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; padding: 1rem 1.2rem; margin-top: .5rem; border: 1px solid var(--glass-border); border-radius: 12px; background: #f8faf9; }
+/* Etapas do fluxo de energia e pagamento: organiza a disposição dos elementos, ajusta dimensões e espaçamento. */
 .business-flow-legend > span { display: grid; grid-template-columns: 27px 1fr; gap: .2rem .55rem; align-content: start; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define cores e acabamento. */
 .business-flow-legend i { grid-row: 1 / 3; width: 25px; height: 3px; margin-top: .5rem; border-radius: 4px; }
+/* Etapas do fluxo de energia e pagamento: define cores e acabamento. */
 .business-legend-energy { background: #c39440; }
+/* Etapas do fluxo de energia e pagamento: define cores e acabamento. */
 .business-legend-grid { background: #648bb1; }
+/* Etapas do fluxo de energia e pagamento: define cores e acabamento. */
 .business-legend-money { background: #4a9165; }
+/* Etapas do fluxo de energia e pagamento: define a leitura dos textos, define cores e acabamento. */
 .business-flow-legend strong { font-size: .71rem; font-weight: 550; color: var(--text-secondary); }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-flow-legend small { font-size: .65rem; color: var(--text-muted); line-height: 1.7; }
+/* Cenários de consumo e distribuição de energia: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .project-scenarios-heading h3 { margin: .2rem 0 .4rem; font-size: 1.2rem; font-weight: 600; letter-spacing: -.025em; }
+/* Cenários de consumo e distribuição de energia: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .project-scenarios-heading p { color: var(--text-secondary); font-size: .82rem; line-height: 1.8; }
+/* Responsividade: aplica os ajustes deste bloco apenas à faixa de tela indicada. */
 @media (max-width: 640px) { .business-flow-legend { grid-template-columns: minmax(0, 1fr); } }
+/* Acessibilidade: adapta as animações à preferência de movimento do visitante. */
 @media (prefers-reduced-motion: reduce) { .business-flow-particles { display: none; } }
 
 /* Compact revision: larger copy and reserved space for every illustration. */
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-flow-canvas { height: 980px; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-panel { padding: 1.1rem; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-panel h3 { font-size: 1.04rem; line-height: 1.4; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-panel > p { font-size: .86rem; line-height: 1.7; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-generation { height: 275px; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-panel-art { height: 118px; bottom: .9rem; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-grid { height: 355px; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-grid > p { max-width: 59%; font-size: .84rem; line-height: 1.65; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-grid-art { left: 24%; bottom: .8rem; width: 47%; height: 94px; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-bill { top: 4.7rem; right: .9rem; padding: .7rem; gap: .5rem; }
+/* Etapas do fluxo de energia e pagamento: define a leitura dos textos. */
 .business-bill > span { font-size: .65rem; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-bill small { font-size: .62rem; line-height: 1.6; }
+/* Etapas do fluxo de energia e pagamento: define a leitura dos textos. */
 .business-bill strong { font-size: 1.5rem; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-reference-label { top: 365px; left: 65%; width: 24%; padding: .5rem .7rem; font-size: .78rem; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-payment { top: 310px; height: 300px; }
+/* Etapas do fluxo de energia e pagamento: define a leitura dos textos. */
 .business-payment h3 { font-size: .96rem; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-payment > p { font-size: .83rem; line-height: 1.65; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-formula { margin-top: .65rem; padding: .5rem .75rem; }
+/* Etapas do fluxo de energia e pagamento: define a leitura dos textos. */
 .business-formula strong { font-size: 1.45rem; }
+/* Etapas do fluxo de energia e pagamento: ajusta a apresentação dos elementos selecionados. */
 .business-community { top: 230px; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define cores e acabamento. */
 .business-bank { left: 34%; top: 565px; width: 27%; padding: .75rem; border: 1px solid rgba(167,227,208,.3); border-radius: 14px; background: #243e38; color: #cee5d9; box-shadow: 0 8px 24px rgba(15,23,42,.08); }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define cores e acabamento. */
 .business-bank svg { width: 100%; height: 143px; background: transparent; border-radius: 0; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define cores e acabamento. */
 .business-bank-caption { padding: .65rem .35rem .2rem; border-top: 1px solid rgba(167,227,208,.2); }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-bank-caption strong { margin: 0; font-size: .9rem; font-weight: 600; color: #f1f8f3; line-height: 1.5; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-bank-caption span { display: block; margin-top: .3rem; color: #c0d8cc; font-size: .64rem; line-height: 1.7; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-split { top: 420px; height: 550px; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-split > p { font-size: .82rem; line-height: 1.65; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-split-total { margin-top: .5rem; font-size: 1.4rem; padding: .3rem; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-branches { height: 24px; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-split-destinations { gap: .6rem; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-split-destinations > div { padding: .7rem .6rem; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-split-destinations h4 { font-size: .86rem; line-height: 1.5; }
+/* Etapas do fluxo de energia e pagamento: define a leitura dos textos. */
 .business-split-destinations h4 span { font-size: .74rem; }
+/* Etapas do fluxo de energia e pagamento: ajusta a apresentação dos elementos selecionados. */
 .business-split-destinations .business-money-unit { font: inherit; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-split-destinations svg { height: 42px; margin: .45rem auto; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-split-destinations p { flex: 1; min-height: 0; font-size: .8rem; line-height: 1.65; }
+/* Etapas do fluxo de energia e pagamento: define a leitura dos textos. */
 .business-split-destinations > div > strong { font-size: 1.3rem; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-split-destinations small { font-size: .6rem; line-height: 1.7; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-commerce { top: 620px; width: 32%; height: 350px; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-commerce > p { max-width: 100%; font-size: .86rem; line-height: 1.7; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento. */
 .business-commerce-art { left: 1rem; bottom: 1.1rem; width: calc(100% - 2rem); height: 108px; }
+/* Etapas do fluxo de energia e pagamento: ajusta dimensões e espaçamento, define a leitura dos textos. */
 .business-cashback-label { top: 850px; left: 37%; width: 23%; font-size: .85rem; border: 2px solid #d97706; background: #fbe1a5; color: #663e0c; box-shadow: 0 5px 18px rgba(180,83,9,.16); }
+/* Etapas do fluxo de energia e pagamento: define a leitura dos textos, define cores e acabamento. */
 .business-cashback-label strong { margin-top: .2rem; font-size: 1.1rem; color: #663e0c; }
+/* Etapas do fluxo de energia e pagamento: define a leitura dos textos. */
 .business-energy-label { font-size: .8rem; }
 
+/* Ilustração da circulação da moeda social: ajusta dimensões e espaçamento. */
 .community-currency-connections { fill: none; stroke: #a7e3d0; stroke-width: 1.6; stroke-opacity: .55; stroke-dasharray: 3 5; stroke-linecap: round; }
+/* Ilustração da circulação da moeda social: define cores e acabamento. */
 .community-currency-moving { filter: drop-shadow(0 1px 2px rgba(0,0,0,.2)); }
+/* Ilustração da circulação da moeda social: ajusta a apresentação dos elementos selecionados. */
 .community-currency-still { display: none; }
+/* Acessibilidade: adapta as animações à preferência de movimento do visitante. */
 @media (prefers-reduced-motion: reduce) { .community-currency-moving { display: none; } .community-currency-still { display: inline; } }

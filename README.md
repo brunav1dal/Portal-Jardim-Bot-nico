@@ -1,5 +1,7 @@
 # Banco Solar — Plataforma de Gestão de Energia Compartilhada
 
+Objetivo: Apresentar o portal, sua estrutura e os comandos de execução e verificação.
+
 <p align="center">
   <a href="https://brunav1dal.github.io/Portal-Jardim-Bot-nico/" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/badge/▶_Acessar_demonstração_online-007A33?style=for-the-badge" alt="Acessar demonstração online do Banco Solar">
@@ -21,7 +23,7 @@ Aplicação web para organizações que administram programas de energia solar c
 
 O Banco Solar centraliza a consulta de créditos de energia, economia estimada, indicadores de impacto e informações de atendimento em uma única plataforma. A solução foi concebida como um protótipo funcional, com fluxos demonstráveis e uma base técnica preparada para evoluir para uma operação integrada.
 
-> **Ambiente demonstrativo:** os cadastros, indicadores, credenciais e valores exibidos são fictícios. Não representam faturamento, medição, contratos ou operação de uma distribuidora.
+> **Dados:** os registros de beneficiários e as medições de julho/agosto de 2026 foram importados das planilhas fornecidas. As linhas antigas de geração de demonstração foram removidas. Os campos cadastrais da usina que não constam na planilha permanecem vazios; as credenciais dos novos beneficiários são fictícias e usam o domínio reservado `.invalid`.
 
 ## Proposta de valor
 
@@ -37,12 +39,12 @@ Para uma empresa que opera ou estrutura programas de energia compartilhada, a pl
 | Módulo | Recursos principais | Público |
 | --- | --- | --- |
 | Portal público | Indicadores de transparência, dados de geração, impacto ambiental e mapa de unidades parceiras | Comunidade, parceiros e visitantes |
-| Área do cliente | Créditos disponíveis, economia estimada, histórico ilustrativo, fatura e envio de boleto da concessionária | Beneficiários cadastrados |
+| Área do cliente | Créditos disponíveis, economia estimada, histórico mensal importado, fatura e envio de boleto da concessionária | Beneficiários cadastrados |
 | Painel administrativo | Acompanhamento de unidades, geração, tarifas, residências e situação dos beneficiários | Equipe gestora |
 
-O painel administrativo inicia com um resumo visual do **Meu Solar**, reunindo
-potência instalada, usinas disponíveis, geração mensal, CO₂ evitado e eficiência
-média antes das abas detalhadas.
+O painel administrativo inicia com um resumo visual do **Meu Solar**. Campos sem
+informação cadastral importada aparecem como “Não informado”; geração e CO₂ usam
+os meses disponíveis nas planilhas.
 | API de transparência | Exposição dos indicadores públicos em JSON | Integrações e interfaces futuras |
 
 A home possui navegação por seções no menu superior: **Dados**, **Nossa
@@ -78,26 +80,39 @@ O projeto utiliza uma arquitetura web monolítica simples, adequada para demonst
 | Camada | Tecnologia | Responsabilidade |
 | --- | --- | --- |
 | Backend | Python 3 + Flask 3.1.1 | Rotas, autenticação demonstrativa, regras de apresentação e API |
-| Dados | Pandas 2.2.3 + CSV | Leitura e atualização dos dados do protótipo |
+| Dados | Pandas 2.2.3 + CSV e SQLite | Dados operacionais em CSV; notícias cadastradas em SQLite |
 | Frontend | HTML, CSS e JavaScript | Interfaces públicas, do cliente e administrativas |
 | Visualização | Chart.js e Leaflet | Gráficos de indicadores e mapa |
 
 ### Estrutura do repositório
 
+O código usa um **monólito modular**, com rotas, serviços e persistência separados.
+Comece pelo [mapa da arquitetura](documentation/ARQUITETURA.md) e pelo
+[guia de manutenção e diagnóstico](documentation/MANUTENCAO.md).
+
 ```text
-Eng_soc/
-├── app.py                 # Rotas, regras de negócio e API
-├── requirements.txt       # Dependências Python
-├── data/                  # Dados demonstrativos em CSV
-│   ├── usuarios.csv
-│   ├── usinas.csv
-│   ├── residencias.csv
-│   ├── geracao_mensal.csv
-│   └── boletos.csv
-├── templates/             # Telas renderizadas pelo Flask
-├── static/                # Estilos, imagens e uploads demonstrativos
-└── docs/                  # Versão estática para publicação demonstrativa
+Orquídea Solar/
+├── app.py                 # Entrada: python app.py / gunicorn app:app
+├── banco_solar/
+│   ├── __init__.py        # Fábrica create_app()
+│   ├── config.py          # Configurações centrais
+│   ├── routes/            # URLs, sessão e respostas HTTP
+│   ├── services/          # Cálculos e preparação dos dados
+│   └── repositories/      # Leitura e gravação em CSV e SQLite
+├── templates/             # Telas por área: public, auth, cliente e admin
+├── static/                # CSS, JavaScript, imagens e vídeos
+├── data/                  # CSVs operacionais
+├── runtime/               # Notícias persistidas e temporários locais
+├── scripts/               # Dados fictícios e exportação estática
+├── tests/                 # Testes de aplicação, notícias e importação
+├── documentation/         # Arquitetura, manutenção e dicionário de dados
+├── references/            # PDFs e imagens de apoio
+├── docs/                  # Demonstração estática do GitHub Pages
+└── requirements.txt       # Dependências Python
 ```
+
+`docs/` mantém esse nome porque o workflow existente publica essa pasta.
+O código de origem das páginas fica em `templates/` e `static/`.
 
 ## Rotas principais
 
@@ -116,7 +131,7 @@ Eng_soc/
 **Pré-requisito:** Python 3.10 ou superior.
 
 ```powershell
-cd Eng_soc
+# Abra o terminal na pasta raiz deste projeto
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
@@ -124,6 +139,21 @@ python app.py
 ```
 
 Abra `http://127.0.0.1:5000` no navegador.
+
+### Verificar alterações
+
+```powershell
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+```
+
+Para atualizar a demonstração estática com dados fictícios:
+
+```powershell
+.\.venv\Scripts\python.exe scripts/export_demo.py
+```
+
+Veja também o [dicionário de dados](documentation/DICIONARIO_DE_DADOS.md) e as
+[instruções de notícias](documentation/NOTICIAS.md).
 
 ### Acessos de demonstração
 
@@ -153,23 +183,3 @@ O repositório entrega uma prova de conceito funcional. Para uma contratação v
 ## Licença
 
 Não há licença declarada. Antes de reutilizar, publicar ou comercializar o código, defina a licença aplicável e realize a revisão jurídica, técnica e de proteção de dados necessária.
-
-
-## Interface e dados locais
-
-A interface inclui filtros por periodo, demonstrativo de economia em reais,
-acompanhamento de cotas e indicadores de familias beneficiadas. Os templates
-Flask e a demonstracao estatica em `docs/` compartilham o mesmo visual.
-
-Os CSVs publicados continuam sendo os exemplos ficticios do repositorio.
-Nenhuma planilha privada e necessaria para iniciar a demonstracao. Na ausencia
-de `beneficios_mensais.csv`, a aplicacao ativa um modo de demonstracao
-identificado na tela, com pessoas e valores inteiramente ficticios definidos
-em `scripts/demo_data.py`. Os logins publicados continuam disponiveis.
-Alteracoes nesse modo ficam apenas na memoria e podem ser perdidas ao reiniciar.
-
-Nao inclua CSVs locais, credenciais, faturas ou exportacoes com dados pessoais
-em commits. As paginas estaticas usam pessoas e valores inteiramente ficticios gerados
-em memoria. Para atualizar a interface em `docs/`, execute
-`python scripts/export_demo.py`. O exportador bloqueia a leitura de CSVs e
-nao utiliza a pasta de dados privados.

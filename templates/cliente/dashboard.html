@@ -1,6 +1,9 @@
+{# Objetivo: Exibe benefícios, histórico, situação da residência, fatura e envio de boletos do cliente. #}
 {% extends 'base.html' %}
+{# Bloco Jinja: define uma área que a estrutura base reserva para o conteúdo desta tela. #}
 {% block title %}Banco Comunitário Jardim Botânico — Meu Painel{% endblock %}
 
+{# Bloco Jinja: define uma área que a estrutura base reserva para o conteúdo desta tela. #}
 {% block content %}
 <div class="container dashboard">
   <div class="dashboard-header">
@@ -11,7 +14,9 @@
   </div>
 
   {% with messages = get_flashed_messages(with_categories=true) %}
+    {# Condição Jinja: exibe o bloco conforme o perfil ou a disponibilidade dos dados. #}
     {% if messages %}
+      {# Repetição Jinja: gera o mesmo bloco visual para cada registro da coleção informada. #}
       {% for category, message in messages %}
         <div class="flash-{{ 'success' if category == 'success' else 'error' }}">{{ message }}</div>
       {% endfor %}
@@ -19,6 +24,7 @@
   {% endwith %}
 
   <!-- Fatura Atual -->
+  {# Condição Jinja: exibe o bloco conforme o perfil ou a disponibilidade dos dados. #}
   {% if fatura %}
   <div class="invoice-card fade-up">
     <div class="invoice-card-info">
@@ -37,6 +43,7 @@
     <label for="selectPeriodoCliente" style="color:var(--text-secondary);font-size:0.9rem;font-weight:600;">Ver dados de:</label>
     <select id="selectPeriodoCliente" onchange="atualizarCardsCliente()">
       <option value="todos" selected>Todo o período</option>
+      {# Repetição Jinja: gera o mesmo bloco visual para cada registro da coleção informada. #}
       {% for mes in historico.meses %}
       <option value="{{ mes }}">{{ mes[5:7] }}/{{ mes[:4] }}</option>
       {% endfor %}
@@ -72,6 +79,7 @@
   </div>
 
   <!-- Status da Residência -->
+  {# Condição Jinja: exibe o bloco conforme o perfil ou a disponibilidade dos dados. #}
   {% if residencia %}
   <div class="status-card fade-up">
     <h3>Status da Minha Residência</h3>
@@ -105,14 +113,17 @@
   <div class="charts-grid charts-grid-3">
     <div class="chart-card fade-up">
       <h3>Minha Economia ao Longo do Tempo (R$)</h3>
+      {# Área de desenho: o JavaScript preenche este elemento com o gráfico correspondente. #}
       <canvas id="chartEconomia"></canvas>
     </div>
     <div class="chart-card fade-up">
       <h3>Energia Recebida (kWh) por Mês</h3>
+      {# Área de desenho: o JavaScript preenche este elemento com o gráfico correspondente. #}
       <canvas id="chartKW"></canvas>
     </div>
     <div class="chart-card fade-up">
       <h3>Evolução dos Créditos</h3>
+      {# Área de desenho: o JavaScript preenche este elemento com o gráfico correspondente. #}
       <canvas id="chartCreditos"></canvas>
     </div>
   </div>
@@ -138,8 +149,10 @@
       Envie o boleto da concessionária de energia todo mês para manter seu cadastro em dia no banco.
     </p>
 
+    {# Formulário: reúne os campos enviados à rota indicada em action; enctype habilita arquivos quando presente. #}
     <form action="{{ url_for('anexar_boleto') }}" method="POST" enctype="multipart/form-data" class="upload-form">
       <label for="boletoInput" class="upload-icon-btn" title="Selecionar arquivo">
+        {# Ilustração vetorial: os grupos e caminhos abaixo compõem o desenho sem arquivo de imagem externo. #}
         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
           <polyline points="17 8 12 3 7 8"/>
@@ -152,6 +165,7 @@
     </form>
 
     <div class="table-card">
+      {# Tabela: apresenta registros recebidos do servidor; filtros alteram a exibição no navegador. #}
       <table>
         <thead>
           <tr>
@@ -161,6 +175,7 @@
           </tr>
         </thead>
         <tbody>
+          {# Repetição Jinja: gera o mesmo bloco visual para cada registro da coleção informada. #}
           {% for b in boletos_historico %}
           <tr>
             <td style="color:var(--text-primary)">{{ b.nome_arquivo }}</td>
@@ -183,9 +198,12 @@
 </div>
 {% endblock %}
 
+{# Bloco Jinja: define uma área que a estrutura base reserva para o conteúdo desta tela. #}
 {% block scripts %}
+{# Comportamento: carrega o módulo indicado ou executa as interações específicas desta tela. #}
 <script>
   // Counter animation
+  // Anima os indicadores numéricos até seus valores finais sem alterar os dados de origem.
   function animateCounters() {
     document.querySelectorAll('.count-up').forEach(el => {
       const target = parseFloat(el.dataset.target);
@@ -193,6 +211,7 @@
       const isCurrency = prefix.trim() === 'R$';
       const duration = 2000;
       const start = performance.now();
+      // Avança o valor exibido conforme o tempo da animação.
       function update(now) {
         const elapsed = now - start;
         const progress = Math.min(elapsed / duration, 1);
@@ -212,8 +231,11 @@
   Chart.defaults.borderColor = 'rgba(15,23,42,0.08)';
   Chart.defaults.font.family = "'Geist', sans-serif";
 
+  // Recebe dados serializados pelo Flask; os filtros abaixo atuam nessa cópia no navegador.
   const historico = {{ historico | tojson }};
+  // Recebe dados serializados pelo Flask; os filtros abaixo atuam nessa cópia no navegador.
   const kpisPorPeriodoCliente = {{ kpis_por_periodo | tojson }};
+  // Troca os indicadores individuais pelos valores do período selecionado.
   function atualizarCardsCliente() {
     const periodo = document.getElementById('selectPeriodoCliente').value;
     const dados = kpisPorPeriodoCliente[periodo];
@@ -265,6 +287,7 @@
   atualizarCardsCliente();
 
   // Economia line chart
+  // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
   new Chart(document.getElementById('chartEconomia'), {
     type: 'line',
     data: {
@@ -286,6 +309,7 @@
   });
 
   // Energia Recebida bar chart
+  // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
   new Chart(document.getElementById('chartKW'), {
     type: 'bar',
     data: {
@@ -305,6 +329,7 @@
   });
 
   // Créditos area chart
+  // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
   new Chart(document.getElementById('chartCreditos'), {
     type: 'line',
     data: {
@@ -351,6 +376,7 @@
   // Exibe o nome do arquivo selecionado para anexar o boleto
   const boletoInput = document.getElementById('boletoInput');
   if (boletoInput) {
+    // Sincroniza a interface após a mudança de seleção ou de preferência.
     boletoInput.addEventListener('change', function () {
       const nomeArquivo = boletoInput.files.length ? boletoInput.files[0].name : 'Nenhum arquivo selecionado';
       document.getElementById('boletoFileName').textContent = nomeArquivo;

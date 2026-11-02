@@ -1,12 +1,17 @@
+{# Objetivo: Apresenta transparência, cenários solares, história e notícias no portal público. #}
 {% extends 'base.html' %}
+{# Bloco Jinja: define uma área que a estrutura base reserva para o conteúdo desta tela. #}
 {% block title %}Banco Comunitário Jardim Botânico — Transparência{% endblock %}
 
+{# Bloco Jinja: define uma área que a estrutura base reserva para o conteúdo desta tela. #}
 {% block content %}
+{# Seção Energia solar comunitária: agrupa as informações e controles apresentados abaixo. #}
 <section class="hero hero-video-banner" aria-label="Energia solar comunitária">
   <video class="hero-background-video" autoplay muted loop playsinline preload="metadata" poster="{{ url_for('static', filename='img/painel-voz-popular-novo.jpg') }}" aria-hidden="true" tabindex="-1" disablepictureinpicture>
     <source src="{{ url_for('static', filename='video/painel-voz-popular-novo-15s.mp4') }}" type="video/mp4">
   </video>
 
+  {# Ilustração vetorial: os grupos e caminhos abaixo compõem o desenho sem arquivo de imagem externo. #}
   <svg class="hero-light-network" viewBox="0 0 1440 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false" fill="none">
     <defs>
       <path id="heroLightRoute1" d="M-60 460H200L320 340H640L760 220H1120L1280 60H1500"/>
@@ -33,10 +38,12 @@
   <h1>Energia Solar Comunitária</h1>
   <p>Energia solar, crédito acessível e a moeda social Orquídea a serviço da comunidade de São Rafael, em João Pessoa (PB).</p>
 </section>
+{# Comportamento: carrega o módulo indicado ou executa as interações específicas desta tela. #}
 <script src="{{ url_for('static', filename='js/hero-video.js', v='light-network-20261028') }}" defer></script>
 
 <div class="container">
   <!-- Indicadores principais -->
+  {# Seção dados: agrupa as informações e controles apresentados abaixo. #}
   <section class="section" id="dados">
     <h2 class="section-title">Indicadores de Transparência</h2>
 
@@ -123,19 +130,23 @@
   </section>
 
   <!-- Gráficos -->
+  {# Seção dados-graficos: agrupa as informações e controles apresentados abaixo. #}
   <section class="section" id="dados-graficos">
     <h2 class="section-title">Visão Geral da Geração</h2>
     <div class="charts-grid">
       <div class="chart-card fade-up">
         <h3>Geração Mensal (kWh)</h3>
+        {# Área de desenho: o JavaScript preenche este elemento com o gráfico correspondente. #}
         <canvas id="chartGeracaoMensal"></canvas>
       </div>
       <div class="chart-card fade-up">
         <h3>Geração por Usina</h3>
+        {# Área de desenho: o JavaScript preenche este elemento com o gráfico correspondente. #}
         <canvas id="chartGeracaoUsina"></canvas>
       </div>
       <div class="chart-card fade-up">
         <h3>CO₂ Evitado por Mês (kg)</h3>
+        {# Área de desenho: o JavaScript preenche este elemento com o gráfico correspondente. #}
         <canvas id="chartCO2"></canvas>
       </div>
       <div class="chart-card fade-up">
@@ -145,10 +156,12 @@
     </div>
   </section>
 
+  {# Seção como-funciona: agrupa as informações e controles apresentados abaixo. #}
   <section class="section" id="como-funciona">
     <header class="section-heading"><span class="news-eyebrow">ENTENDA A ENERGIA SOLIDÁRIA</span><h2 class="section-title">Como funciona a energia solar solidária</h2></header>
     <p class="scenario-intro">Da geração de energia ao uso da moeda social, o Orquídea Solar conecta a usina, a concessionária, o banco comunitário e as famílias. Conheça o fluxo do projeto e, depois, veja os exemplos de consumo.</p>
-    {% include 'project_flow.html' %}
+    {# Composição Jinja: reutiliza o trecho de interface definido no arquivo indicado. #}
+    {% include 'components/project_flow.html' %}
     <div class="project-scenarios-heading"><span class="news-eyebrow">NA CONTA DE CADA FAMÍLIA</span><h3>Quatro cenários de consumo</h3><p>Veja como a cota solar solidária, a Tarifa Social e a energia da concessionária participam de cada exemplo.</p></div>
     <div class="scenario-legend" role="group" aria-label="Entenda os conceitos"><button type="button" class="scenario-legend-item" data-solar-topic="social" aria-haspopup="dialog" aria-controls="solarExplanation" ><span class="scenario-dot scenario-social"></span>Tarifa social<span aria-hidden="true">↗</span></button><button type="button" class="scenario-legend-item" data-solar-topic="cota" aria-haspopup="dialog" aria-controls="solarExplanation" ><span class="scenario-dot scenario-solar"></span>Cota solar solidária<span aria-hidden="true">↗</span></button><button type="button" class="scenario-legend-item" data-solar-topic="excedente" aria-haspopup="dialog" aria-controls="solarExplanation" ><span class="scenario-dot scenario-excess"></span>Excedente<span aria-hidden="true">↗</span></button><button type="button" class="scenario-legend-item" data-solar-topic="nao_utilizado" aria-haspopup="dialog" aria-controls="solarExplanation" ><span class="scenario-dot scenario-unused"></span>Não utilizado<span aria-hidden="true">↗</span></button></div>
     <p class="scenario-scale-note">Cada barra ocupa 100% da largura e representa o total de energia e benefícios mostrado no seu exemplo. As cores indicam a energia utilizada; o cinza indica a parte disponível que não foi utilizada e não faz parte do consumo. Compare os valores em kWh, pois cada cenário tem seu próprio total.</p>
@@ -156,6 +169,7 @@
       <div class="scenario-visual"><header class="scenario-card-header"><span class="scenario-number">01</span><span class="scenario-category">Com tarifa social</span></header>
       <h4 id="scenarioTitle1">Consumo na faixa social</h4>
       <div class="scenario-house-scene" data-consumption="70" data-usage-level="1" data-grid-kwh="70" data-solar-kwh="0">
+      {# Ilustração vetorial: os grupos e caminhos abaixo compõem o desenho sem arquivo de imagem externo. #}
       <svg class="scenario-art" viewBox="0 0 340 200" fill="none" role="img" aria-label="Consumo de 70 kWh. Poste da concessionária: 70 kWh. Painel solar comunitário: 0 kWh. Fontes sem uso aparecem em cinza com X.">
         <path d="M14 175H326" stroke="currentColor" stroke-opacity=".16" stroke-linecap="round"/>
         <ellipse cx="160" cy="172" rx="67" ry="8" fill="currentColor" opacity=".04"/>
@@ -194,6 +208,7 @@
       <div class="scenario-visual"><header class="scenario-card-header"><span class="scenario-number">02</span><span class="scenario-category">Com tarifa social</span></header>
       <h4 id="scenarioTitle2">Consumo acima dos benefícios</h4>
       <div class="scenario-house-scene" data-consumption="250" data-usage-level="4" data-grid-kwh="130" data-solar-kwh="120">
+      {# Ilustração vetorial: os grupos e caminhos abaixo compõem o desenho sem arquivo de imagem externo. #}
       <svg class="scenario-art" viewBox="0 0 340 200" fill="none" role="img" aria-label="Consumo de 250 kWh. Poste da concessionária: 130 kWh. Painel solar comunitário: 120 kWh. Fontes sem uso aparecem em cinza com X.">
         <path d="M14 175H326" stroke="currentColor" stroke-opacity=".16" stroke-linecap="round"/>
         <ellipse cx="160" cy="172" rx="67" ry="8" fill="currentColor" opacity=".04"/>
@@ -232,6 +247,7 @@
       <div class="scenario-visual"><header class="scenario-card-header"><span class="scenario-number">03</span><span class="scenario-category">Sem tarifa social</span></header>
       <h4 id="scenarioTitle3">Consumo dentro da cota</h4>
       <div class="scenario-house-scene" data-consumption="100" data-usage-level="2" data-grid-kwh="0" data-solar-kwh="100">
+      {# Ilustração vetorial: os grupos e caminhos abaixo compõem o desenho sem arquivo de imagem externo. #}
       <svg class="scenario-art" viewBox="0 0 340 200" fill="none" role="img" aria-label="Consumo de 100 kWh. Poste da concessionária: 0 kWh. Painel solar comunitário: 100 kWh. Fontes sem uso aparecem em cinza com X.">
         <path d="M14 175H326" stroke="currentColor" stroke-opacity=".16" stroke-linecap="round"/>
         <ellipse cx="160" cy="172" rx="67" ry="8" fill="currentColor" opacity=".04"/>
@@ -270,6 +286,7 @@
       <div class="scenario-visual"><header class="scenario-card-header"><span class="scenario-number">04</span><span class="scenario-category">Sem tarifa social</span></header>
       <h4 id="scenarioTitle4">Consumo acima da cota</h4>
       <div class="scenario-house-scene" data-consumption="180" data-usage-level="3" data-grid-kwh="60" data-solar-kwh="120">
+      {# Ilustração vetorial: os grupos e caminhos abaixo compõem o desenho sem arquivo de imagem externo. #}
       <svg class="scenario-art" viewBox="0 0 340 200" fill="none" role="img" aria-label="Consumo de 180 kWh. Poste da concessionária: 60 kWh. Painel solar comunitário: 120 kWh. Fontes sem uso aparecem em cinza com X.">
         <path d="M14 175H326" stroke="currentColor" stroke-opacity=".16" stroke-linecap="round"/>
         <ellipse cx="160" cy="172" rx="67" ry="8" fill="currentColor" opacity=".04"/>
@@ -307,6 +324,7 @@
     </article></div>
     <p class="scenario-legal-note"><strong>Tarifa Social de Energia Elétrica:</strong> benefício governamental para famílias de baixa renda que atendem aos requisitos legais, com desconto de 100% na tarifa da parcela de consumo de até 80 kWh/mês. Base legal: art. 1º, I e II, da Lei nº 12.212/2010, alterado pelo art. 3º da <a href="https://planalto.gov.br/ccivil_03/_ato2023-2026/2025/lei/l15235.htm" target="_blank" rel="noopener noreferrer">Lei nº 15.235/2025</a>. Impostos e outros encargos podem permanecer na fatura.</p>
     <p class="scenario-footnote">Exemplos ilustrativos, não são faturas reais. A faixa social de 80 kWh e a cota de 120 kWh são as referências destes exemplos. A conta da concessionária de energia elétrica pode incluir impostos e outros encargos. Crédito de energia é medido em kWh, não em reais.</p>
+    {# Diálogo: conteúdo aberto pelos controles JavaScript associados a este identificador. #}
     <dialog id="solarExplanation" class="solar-dialog" aria-labelledby="solarExplanationTitle" aria-describedby="solarExplanationText">
       <button type="button" class="solar-close" aria-label="Fechar explicação">×</button>
       <span class="scenario-eyebrow">ENTENDA A ENERGIA SOLIDÁRIA</span>
@@ -314,9 +332,11 @@
       <p id="solarExplanationText"></p>
       <p id="solarExplanationSource" class="scenario-legal-source" hidden><a href="https://planalto.gov.br/ccivil_03/_ato2023-2026/2025/lei/l15235.htm" target="_blank" rel="noopener noreferrer">Consultar a Lei nº 15.235/2025, art. 3º ↗</a></p>
     </dialog>
+    {# Comportamento: carrega o módulo indicado ou executa as interações específicas desta tela. #}
     <script src="{{ url_for('static', filename='js/cenarios-solares.js', v='unused-quota-20261028') }}" defer></script>
   </section>
 
+  {# Seção historia: agrupa as informações e controles apresentados abaixo. #}
   <section class="section" id="historia">
     <header class="section-heading"><span class="news-eyebrow">RAÍZES NA COMUNIDADE</span><h2 class="section-title">Nossa História</h2></header>
     <div class="history-grid">
@@ -356,12 +376,15 @@
     </div>
   </section>
 
+  {# Diálogo: conteúdo aberto pelos controles JavaScript associados a este identificador. #}
   <dialog id="historyImageDialog" class="history-image-dialog" aria-labelledby="historyImageCaption">
     <button type="button" class="history-image-close" data-close-image aria-label="Fechar imagem ampliada">&#215;</button>
     <figure><img alt=""><figcaption id="historyImageCaption" data-image-caption></figcaption></figure>
   </dialog>
+  {# Comportamento: carrega o módulo indicado ou executa as interações específicas desta tela. #}
   <script src="{{ url_for('static', filename='js/history-gallery.js', v='20261028') }}" defer></script>
 
+  {# Seção noticias: agrupa as informações e controles apresentados abaixo. #}
   <section class="section" id="noticias" aria-labelledby="newsHeading">
     <div class="history-news" data-news-carousel data-news-source="{{ url_for('api_noticias') }}" role="region" aria-roledescription="carrossel" aria-labelledby="newsHeading">
       <div class="news-header"><div><span class="news-eyebrow">O PROJETO EM MOVIMENTO</span><h2 class="section-title" id="newsHeading">Notícias</h2><p>Formação, energia solidária e histórias do nosso território.</p></div>
@@ -376,14 +399,18 @@
       <div class="news-footer"><span class="news-credit">Fonte e fotos: Sistema Voz Popular</span><div class="news-pagination"><span class="news-count"></span></div></div>
       <p class="news-sr-status" aria-live="polite" aria-atomic="true"></p>
     </div>
+    {# Comportamento: carrega o módulo indicado ou executa as interações específicas desta tela. #}
     <script src="{{ url_for('static', filename='js/noticias.js', v='news-prev-next-20261028') }}" defer></script>
   </section>
 </div>
 {% endblock %}
 
+{# Bloco Jinja: define uma área que a estrutura base reserva para o conteúdo desta tela. #}
 {% block scripts %}
+{# Comportamento: carrega o módulo indicado ou executa as interações específicas desta tela. #}
 <script>
   // ─── Counter Animation ───
+  // Anima os indicadores numéricos até seus valores finais sem alterar os dados de origem.
   function animateCounters() {
     document.querySelectorAll('.count-up').forEach(el => {
       const target = parseFloat(el.dataset.target);
@@ -391,6 +418,7 @@
       const duration = 2000;
       const start = performance.now();
 
+      // Avança o valor exibido conforme o tempo da animação.
       function update(now) {
         const elapsed = now - start;
         const progress = Math.min(elapsed / duration, 1);
@@ -411,12 +439,16 @@
   Chart.defaults.borderColor = 'rgba(15,23,42,0.08)';
   Chart.defaults.font.family = "'Geist', sans-serif";
 
+  // Recebe dados serializados pelo Flask; os filtros abaixo atuam nessa cópia no navegador.
   const geracaoMes = {{ geracao_por_mes | tojson }};
+  // Recebe dados serializados pelo Flask; os filtros abaixo atuam nessa cópia no navegador.
   const geracaoUsina = {{ geracao_por_usina | tojson }};
+  // Recebe dados serializados pelo Flask; os filtros abaixo atuam nessa cópia no navegador.
   const beneficiosMes = {{ beneficios_por_mes | tojson }};
 
   // ─── Filtro temporal ───
   const MESES_PT = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+  // Converte o mês de referência em um rótulo legível para os filtros e gráficos.
   function formatMes(m) {
     const [ano, mes] = m.split('-');
     return MESES_PT[parseInt(mes, 10) - 1] + '/' + ano;
@@ -429,6 +461,7 @@
   const ultimoMes = mesesDisponiveis[mesesDisponiveis.length - 1] || '';
   let periodoTodos = true;
 
+  // Preenche o seletor com os meses disponíveis na série recebida do servidor.
   function popularSelectMes(select) {
     MESES_PT.forEach((nome, i) => {
       const opt = document.createElement('option');
@@ -438,6 +471,7 @@
     });
   }
 
+  // Preenche o seletor com os anos disponíveis no histórico.
   function popularSelectAno(select) {
     anosDisponiveis.forEach(ano => {
       const opt = document.createElement('option');
@@ -447,6 +481,7 @@
     });
   }
 
+  // Inicializa os controles de período a partir dos meses disponíveis.
   function popularFiltroPeriodo() {
     const mesInicio = document.getElementById('mesInicio');
     const anoInicio = document.getElementById('anoInicio');
@@ -465,6 +500,7 @@
     anoFim.value = anoUltimo;
   }
 
+  // Alterna entre os modos de filtro e ajusta quais controles ficam disponíveis.
   function definirModoPeriodo(modo) {
     periodoTodos = modo === 'todos';
     const botaoTodos = document.getElementById('filtroTodoPeriodo');
@@ -478,6 +514,7 @@
     aplicarFiltroPeriodo();
   }
 
+  // Atualiza o valor apresentado por um indicador e trata dados não informados.
   function setStatDisplay(key, value, prefix) {
     const el = document.querySelector('.stat-value[data-stat="' + key + '"]');
     if (!el) return;
@@ -492,6 +529,7 @@
     });
   }
 
+  // Filtra as séries do portal e atualiza cartões e gráficos para o período escolhido.
   function aplicarFiltroPeriodo() {
     const inicio = periodoTodos ? primeiroMes : document.getElementById('anoInicio').value + '-' + document.getElementById('mesInicio').value;
     const fim = periodoTodos ? ultimoMes : document.getElementById('anoFim').value + '-' + document.getElementById('mesFim').value;
@@ -549,6 +587,7 @@
     statInfo.cashback_orquideas.total = cashback;
   }
 
+  // Restaura o período padrão e reaplica o filtro dos indicadores públicos.
   function limparFiltroPeriodo() {
     definirModoPeriodo('todos');
   }
@@ -600,6 +639,7 @@
   };
 
   // Geração Mensal - Line Chart
+  // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
   const chartGeracaoMensal = new Chart(document.getElementById('chartGeracaoMensal'), {
     type: 'line',
     data: {
@@ -625,6 +665,7 @@
   });
 
   // Geração por Usina - Doughnut
+  // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
   new Chart(document.getElementById('chartGeracaoUsina'), {
     type: 'doughnut',
     data: {
@@ -647,6 +688,7 @@
   });
 
   // CO2 - Bar Chart
+  // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
   const chartCO2 = new Chart(document.getElementById('chartCO2'), {
     type: 'bar',
     data: {
@@ -669,6 +711,7 @@
   });
 
   // Mapa - Localização das Usinas
+  // Recebe dados serializados pelo Flask; os filtros abaixo atuam nessa cópia no navegador.
   const usinasMapa = {{ usinas_mapa | tojson }};
   const mapaEl = document.getElementById('mapaUsinas');
   const usinasComCoordenadas = usinasMapa.filter(u => u.lat !== null && u.lng !== null);

@@ -1,4 +1,9 @@
+# Objetivo: declarar as bibliotecas necessárias para executar o portal e processar seus dados.
+# Servidor web e renderização das páginas HTML.
 flask==3.1.1
+# Leitura, cruzamento e consolidação das tabelas operacionais.
 pandas==2.2.3
+# Servidor de aplicação utilizado na hospedagem em ambientes compatíveis.
 gunicorn
+# Validação, orientação e conversão das fotos publicadas nas notícias.
 Pillow>=12.0,<13

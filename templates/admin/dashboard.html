@@ -1,6 +1,9 @@
+{# Objetivo: Apresenta indicadores de gestão, usinas, economia, residências e controles administrativos. #}
 {% extends 'base.html' %}
+{# Bloco Jinja: define uma área que a estrutura base reserva para o conteúdo desta tela. #}
 {% block title %}Banco Comunitário Jardim Botânico — Administração{% endblock %}
 
+{# Bloco Jinja: define uma área que a estrutura base reserva para o conteúdo desta tela. #}
 {% block content %}
 <div class="container dashboard">
   <div class="dashboard-header">
@@ -10,6 +13,7 @@
     </div>
   </div>
 
+  {# Seção Resumo do Meu Solar: agrupa as informações e controles apresentados abaixo. #}
   <section class="solar-overview" aria-label="Resumo do Meu Solar">
     <div class="solar-summary-card">
       <div class="solar-summary-title">Meu Solar <span class="solar-summary-mark" aria-hidden="true">✦</span></div>
@@ -41,6 +45,7 @@
     <h2 class="section-title">Dados Individuais das Usinas</h2>
 
     <div class="stats-grid">
+      {# Repetição Jinja: gera o mesmo bloco visual para cada registro da coleção informada. #}
       {% for u in usinas %}
       <button type="button" class="stat-card {{ 'green' if u.status == 'ativa' else 'solar' }} fade-up" onclick="openUsinaModal('{{ u.nome_exibicao }}')">
         <div class="stat-icon">☀️</div>
@@ -58,6 +63,7 @@
             </div>
           </div>
           <p style="font-size:0.78rem;color:var(--text-muted);margin-top:4px;">
+            {# Condição Jinja: exibe o bloco conforme o perfil ou a disponibilidade dos dados. #}
             {% if u.localizacao %}📍 {{ u.localizacao }} · {% endif %}{% if u.capacidade_kw is not none %}{{ u.capacidade_kw }} kW cap. · {% endif %}
             <span>{% if u.status %}{{ u.status }}{% else %}Cadastro da usina não informado{% endif %}</span>
           </p>
@@ -71,6 +77,7 @@
     <div class="filter-bar">
       <label style="color:var(--text-secondary);font-size:0.85rem;font-weight:600;">Selecionar usina:</label>
       <select id="selectUsina" onchange="updateUsinaChart()">
+        {# Repetição Jinja: gera o mesmo bloco visual para cada registro da coleção informada. #}
         {% for nome in geracao_individual %}
         <option value="{{ nome }}">{{ nome }}</option>
         {% endfor %}
@@ -80,10 +87,12 @@
     <div class="charts-grid">
       <div class="chart-card">
         <h3>Geração Individual (kWh/mês)</h3>
+        {# Área de desenho: o JavaScript preenche este elemento com o gráfico correspondente. #}
         <canvas id="chartUsinaIndividual"></canvas>
       </div>
       <div class="chart-card">
       <h3>Pagamento ao projeto por mes (R$)</h3>
+        {# Área de desenho: o JavaScript preenche este elemento com o gráfico correspondente. #}
         <canvas id="chartUsinaReceita"></canvas>
         <p style="font-size:0.78rem;color:var(--text-muted);margin-top:0.75rem;">As barras mostram metade do valor do beneficio em cada mes. Receita da usina nao informada.</p>
       </div>
@@ -136,18 +145,22 @@
     <div class="charts-grid">
       <div class="chart-card">
         <h3>Geração Total Mensal (kWh)</h3>
+        {# Área de desenho: o JavaScript preenche este elemento com o gráfico correspondente. #}
         <canvas id="chartGeracaoTotal"></canvas>
       </div>
       <div class="chart-card">
         <h3>Receita Total Mensal (R$)</h3>
+        {# Área de desenho: o JavaScript preenche este elemento com o gráfico correspondente. #}
         <canvas id="chartReceitaTotal"></canvas>
       </div>
       <div class="chart-card">
         <h3>CO₂ Evitado Mensal (kg)</h3>
+        {# Área de desenho: o JavaScript preenche este elemento com o gráfico correspondente. #}
         <canvas id="chartCO2Total"></canvas>
       </div>
       <div class="chart-card">
         <h3>Comparativo por Usina (kWh acumulado)</h3>
+        {# Área de desenho: o JavaScript preenche este elemento com o gráfico correspondente. #}
         <canvas id="chartComparativo"></canvas>
       </div>
     </div>
@@ -160,6 +173,7 @@
       <label for="selectMesEconomia" style="color:var(--text-secondary);font-size:0.85rem;font-weight:600;">Mês de referência:</label>
       <select id="selectMesEconomia" onchange="filtrarDemonstrativoEconomia()">
         <option value="todos">Todo o período</option>
+        {# Repetição Jinja: gera o mesmo bloco visual para cada registro da coleção informada. #}
         {% for mes in meses_economia %}
         <option value="{{ mes.valor }}" {{ 'selected' if loop.last else '' }}>{{ mes.label }}</option>
         {% endfor %}
@@ -170,6 +184,7 @@
     </p>
     <div class="table-card admin-economia-card">
       <div class="admin-economia-scroll">
+      {# Tabela: apresenta registros recebidos do servidor; filtros alteram a exibição no navegador. #}
       <table class="admin-economia-table" aria-label="Demonstrativo mensal da economia dos beneficiários">
         <thead>
           <tr>
@@ -185,6 +200,7 @@
           </tr>
         </thead>
         <tbody>
+          {# Repetição Jinja: gera o mesmo bloco visual para cada registro da coleção informada. #}
           {% for linha in demonstrativo_economia_todos %}
           <tr class="linha-economia" data-mes="{{ linha.mes }}">
             <td>{{ linha.mes[5:7] }}/{{ linha.mes[:4] }}</td>
@@ -204,8 +220,10 @@
         <tfoot>
           <tr class="total-economia" data-mes="todos">
             <th colspan="2">Total do período</th>
+            {# Repetição Jinja: gera o mesmo bloco visual para cada registro da coleção informada. #}
             {% for campo in ['valor_energisa_rs','valor_beneficio_rs','valor_doado_banco_rs','sem_economia_rs','com_economia_sem_cashback_rs','com_economia_com_cashback_rs','economia_real_rs'] %}<th>{{ totais_economia_todos[campo] }}</th>{% endfor %}
           </tr>
+          {# Repetição Jinja: gera o mesmo bloco visual para cada registro da coleção informada. #}
           {% for total in totais_economia %}
           <tr class="total-economia" data-mes="{{ total.mes }}">
             <th colspan="2">Total {{ total.mes_label }}</th>
@@ -222,6 +240,7 @@
       </table>
       </div>
     </div>
+    {# Seção Exemplo ilustrativo de economia: agrupa as informações e controles apresentados abaixo. #}
     <section class="economia-guia" aria-label="Exemplo ilustrativo de economia">
       <div class="economia-exemplo">
         <div class="economia-exemplo-heading"><strong>Exemplo ilustrativo</strong><span>Valores arredondados; n&atilde;o s&atilde;o dados reais de um benefici&aacute;rio.</span></div>
@@ -242,6 +261,7 @@
       <button type="button" class="btn btn-outline" onclick="selecionarPeriodoBeneficiarios('todos')">Todo o período</button>
       <label for="selectProjetoBeneficiarios" style="color:var(--text-secondary);font-size:0.85rem;font-weight:600;">Projeto:</label>
       <select id="selectProjetoBeneficiarios" onchange="atualizarCardsBeneficiarios()">
+        {# Repetição Jinja: gera o mesmo bloco visual para cada registro da coleção informada. #}
         {% for projeto in projetos_beneficiarios %}
         <option value="{{ projeto.id }}">{{ projeto.nome }}</option>
         {% endfor %}
@@ -249,6 +269,7 @@
       <label for="selectMesBeneficiarios" style="color:var(--text-secondary);font-size:0.85rem;font-weight:600;">Mês ou período:</label>
       <select id="selectMesBeneficiarios" onchange="atualizarCardsBeneficiarios()">
         <option value="todos" selected>Todo o período</option>
+        {# Repetição Jinja: gera o mesmo bloco visual para cada registro da coleção informada. #}
         {% for mes in meses_economia %}
         <option value="{{ mes.valor }}">{{ mes.label }}</option>
         {% endfor %}
@@ -304,6 +325,7 @@
 
     <!-- Tabela de Residências -->
     <div class="table-card">
+      {# Tabela: apresenta registros recebidos do servidor; filtros alteram a exibição no navegador. #}
       <table id="tabelaResidencias">
         <thead>
           <tr>
@@ -317,6 +339,7 @@
           </tr>
         </thead>
         <tbody>
+          {# Repetição Jinja: gera o mesmo bloco visual para cada registro da coleção informada. #}
           {% for r in residencias %}
           <tr data-id="{{ r.id }}" data-usuario-id="{{ r.usuario_id }}" data-nome="{{ r.nome|lower }}" data-endereco="{{ r.endereco|lower }}"
               data-status="{{ 'ok' if r.em_dia_banco == 'sim' and r.em_dia_concessionaria == 'sim' and r.cashback_em_dia == 'sim' else 'pendente' }}">
@@ -345,6 +368,7 @@
         <div class="control-row">
           <span>Residência</span>
           <select id="painelSelectResidencia" onchange="carregarResidenciaNoPainel()">
+            {# Repetição Jinja: gera o mesmo bloco visual para cada registro da coleção informada. #}
             {% for r in residencias %}
             <option value="{{ r.id }}">{{ r.nome }}</option>
             {% endfor %}
@@ -386,10 +410,12 @@
       <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:1rem;">
         Para classificar um mês como dentro da cota, o consumo elegível deve ser igual ou menor que a cota e não pode haver excedente informado para a concessionária de energia elétrica. Para tarifa social, os primeiros 80 kWh não entram no consumo elegível. A conta da concessionária de energia elétrica também inclui impostos e encargos, por isso o valor total da fatura não é usado para inferir excedente.
       </p>
+      {# Condição Jinja: exibe o bloco conforme o perfil ou a disponibilidade dos dados. #}
       {% if historico_cotas %}
       <div class="filter-bar">
         <label for="selectBeneficiarioCota" style="color:var(--text-secondary);font-size:0.85rem;font-weight:600;">Beneficiário:</label>
         <select id="selectBeneficiarioCota" onchange="atualizarGraficoCotas()">
+          {# Repetição Jinja: gera o mesmo bloco visual para cada registro da coleção informada. #}
           {% for beneficiario in historico_cotas %}
           <option value="{{ beneficiario.usuario_id }}">{{ beneficiario.nome }}</option>
           {% endfor %}
@@ -397,6 +423,7 @@
       </div>
       <div class="chart-card" style="margin-bottom:1.5rem;">
         <h3>Histórico mensal: cota e energia recebida (kWh)</h3>
+        {# Área de desenho: o JavaScript preenche este elemento com o gráfico correspondente. #}
         <canvas id="chartHistoricoCotas"></canvas>
       </div>
       {% else %}
@@ -408,11 +435,13 @@
         Cada ponto representa um mês importado. Verde indica consumo elegível dentro da cota e nenhum excedente informado à concessionária de energia elétrica; cinza indica dados insuficientes.
       </p>
       <div class="rank-grid">
+        {# Repetição Jinja: gera o mesmo bloco visual para cada registro da coleção informada. #}
         {% for r in residencias_dentro_cota %}
         <div class="rank-card">
           <div class="rank-card-body">
             <div class="rank-card-name">{{ r.nome }}</div>
             <div class="rank-card-months">
+              {# Repetição Jinja: gera o mesmo bloco visual para cada registro da coleção informada. #}
               {% for item in r.historico_meses %}
               <span class="month-dot {{ 'filled' if item.dentro_cota else '' }}" title="{{ item.mes_label }}: {% if item.dentro_cota is none %}sem dados{% elif item.dentro_cota %}dentro da cota{% else %}acima da cota{% endif %}"></span>
               {% endfor %}
@@ -429,22 +458,29 @@
     <div class="charts-grid">
       <div class="chart-card">
         <h3>Status das Residências</h3>
+        {# Área de desenho: o JavaScript preenche este elemento com o gráfico correspondente. #}
         <canvas id="chartStatusResidencias"></canvas>
       </div>
       <div class="chart-card">
         <h3>Consumo por Residência (kWh)</h3>
+        {# Área de desenho: o JavaScript preenche este elemento com o gráfico correspondente. #}
         <canvas id="chartConsumoResidencias"></canvas>
       </div>
     </div>
   </div>
-{% include 'admin_noticias.html' %}
+{# Composição Jinja: reutiliza o trecho de interface definido no arquivo indicado. #}
+{% include 'admin/noticias.html' %}
 </div>
 {% endblock %}
 
+{# Bloco Jinja: define uma área que a estrutura base reserva para o conteúdo desta tela. #}
 {% block scripts %}
+{# Comportamento: carrega o módulo indicado ou executa as interações específicas desta tela. #}
 <script src="{{ url_for('static', filename='js/admin-noticias.js', v='news-manage-20261028') }}" defer></script>
+{# Comportamento: carrega o módulo indicado ou executa as interações específicas desta tela. #}
 <script>
   // ─── Tab Navigation ───
+  // Alterna a aba visível e destaca o botão correspondente no painel administrativo.
   function showTab(tabName) {
     document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -455,6 +491,7 @@
     setTimeout(() => Object.values(Chart.instances).forEach(chart => chart.resize()), 50);
   }
 
+  // Mostra as linhas e os totais correspondentes ao mês escolhido no demonstrativo.
   function filtrarDemonstrativoEconomia() {
     const seletor = document.getElementById('selectMesEconomia');
     if (!seletor) return;
@@ -465,17 +502,21 @@
   }
   filtrarDemonstrativoEconomia();
 
+  // Recebe dados serializados pelo Flask; os filtros abaixo atuam nessa cópia no navegador.
   const beneficiosPorMesCards = {{ beneficios_por_mes_cards | tojson }};
+  // Atualiza o projeto selecionado e recalcula os cartões de beneficiários.
   function selecionarProjetoBeneficiarios(projetoId) {
     const seletor = document.getElementById('selectProjetoBeneficiarios');
     if (seletor) seletor.value = projetoId;
     atualizarCardsBeneficiarios();
   }
+  // Atualiza o período selecionado e recalcula os cartões de beneficiários.
   function selecionarPeriodoBeneficiarios(periodo) {
     const seletor = document.getElementById('selectMesBeneficiarios');
     if (seletor) seletor.value = periodo;
     atualizarCardsBeneficiarios();
   }
+  // Aplica os filtros atuais aos indicadores e exibe os valores correspondentes.
   function atualizarCardsBeneficiarios() {
     const mes = document.getElementById('selectMesBeneficiarios')?.value;
     const dados = beneficiosPorMesCards[mes];
@@ -492,10 +533,12 @@
   atualizarCardsBeneficiarios();
 
   // ─── Filter Residências ───
+  // Filtra as linhas de residências conforme os critérios escolhidos no painel.
   function filterResidencias() {
     const status = document.getElementById('filterStatus').value;
     const search = document.getElementById('filterSearch').value.toLowerCase();
     const periodo = document.getElementById('selectMesBeneficiarios').value;
+    // Recebe dados serializados pelo Flask; os filtros abaixo atuam nessa cópia no navegador.
     const historico = {{ historico_residencias | tojson }};
     document.getElementById('thConsumoResidencias').textContent = periodo === 'todos' ? 'Consumo acumulado (kWh)' : 'Consumo no mês (kWh)';
     document.getElementById('thEconomiaResidencias').textContent = periodo === 'todos' ? 'Economia acumulada (R$)' : 'Economia no mês (R$)';
@@ -518,12 +561,14 @@
   }
 
   // ─── Counter Animation ───
+  // Anima os indicadores numéricos até seus valores finais sem alterar os dados de origem.
   function animateCounters() {
     document.querySelectorAll('.count-up').forEach(el => {
       const target = parseFloat(el.dataset.target);
       const prefix = el.dataset.prefix || '';
       const duration = 2000;
       const start = performance.now();
+      // Avança o valor exibido conforme o tempo da animação.
       function update(now) {
         const elapsed = now - start;
         const progress = Math.min(elapsed / duration, 1);
@@ -543,11 +588,15 @@
   Chart.defaults.borderColor = 'rgba(15,23,42,0.08)';
   Chart.defaults.font.family = "'Geist', sans-serif";
 
+  // Recebe dados serializados pelo Flask; os filtros abaixo atuam nessa cópia no navegador.
   const geracaoMes = {{ geracao_por_mes | tojson }};
+  // Recebe dados serializados pelo Flask; os filtros abaixo atuam nessa cópia no navegador.
   const geracaoInd = {{ geracao_individual | tojson }};
+  // Recebe dados serializados pelo Flask; os filtros abaixo atuam nessa cópia no navegador.
   const residencias = {{ residencias | tojson }};
 
   // ─── Modal de uma usina específica (usa o histórico real dela) ───
+  // Abre os detalhes da usina escolhida e prepara seus gráficos de geração e impacto.
   function openUsinaModal(nome) {
     const data = geracaoInd[nome];
     openStatModal({
@@ -618,6 +667,7 @@
   let chartUsinaInd = null;
   let chartUsinaRec = null;
 
+  // Atualiza o gráfico individual da usina conforme a seleção do filtro.
   function updateUsinaChart() {
     const nome = document.getElementById('selectUsina').value;
     const data = geracaoInd[nome];
@@ -625,6 +675,7 @@
     if (chartUsinaInd) chartUsinaInd.destroy();
     if (chartUsinaRec) chartUsinaRec.destroy();
 
+    // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
     chartUsinaInd = new Chart(document.getElementById('chartUsinaIndividual'), {
       type: 'line',
       data: {
@@ -641,6 +692,7 @@
       }
     });
 
+    // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
     chartUsinaRec = new Chart(document.getElementById('chartUsinaReceita'), {
       type: 'bar',
       data: {
@@ -660,6 +712,7 @@
   updateUsinaChart();
 
   // ═══ UNIFIED TAB CHARTS ═══
+  // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
   new Chart(document.getElementById('chartGeracaoTotal'), {
     type: 'line',
     data: {
@@ -675,6 +728,7 @@
     }
   });
 
+  // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
   new Chart(document.getElementById('chartReceitaTotal'), {
     type: 'bar',
     data: {
@@ -690,6 +744,7 @@
     }
   });
 
+  // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
   new Chart(document.getElementById('chartCO2Total'), {
     type: 'line',
     data: {
@@ -708,6 +763,7 @@
   // Comparativo horizontal bar
   const usinaNames = Object.keys(geracaoInd);
   const usinaTotals = usinaNames.map(n => geracaoInd[n].geracao.reduce((a, b) => a + b, 0));
+  // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
   new Chart(document.getElementById('chartComparativo'), {
     type: 'bar',
     data: {
@@ -730,6 +786,7 @@
   const emDiaConc = {{ stats_residencias.em_dia_concessionaria }};
   const cashOk = {{ stats_residencias.cashback_em_dia }};
 
+  // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
   new Chart(document.getElementById('chartStatusResidencias'), {
     type: 'doughnut',
     data: {
@@ -750,6 +807,7 @@
     }
   });
 
+  // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
   new Chart(document.getElementById('chartConsumoResidencias'), {
     type: 'bar',
     data: {
@@ -764,8 +822,10 @@
     }
   });
 
+  // Recebe dados serializados pelo Flask; os filtros abaixo atuam nessa cópia no navegador.
   const historicoCotas = {{ historico_cotas | tojson }};
   let gráficoHistoricoCotas = null;
+  // Recalcula as séries do gráfico de cotas a partir dos filtros do painel.
   function atualizarGraficoCotas() {
     const seletor = document.getElementById('selectBeneficiarioCota');
     if (!seletor) return;
@@ -797,6 +857,7 @@
       gráficoHistoricoCotas.update();
       return;
     }
+    // Monta a visualização Chart.js com as séries e opções definidas neste bloco.
     gráficoHistoricoCotas = new Chart(document.getElementById('chartHistoricoCotas'), {
       type: 'bar',
       data: dados,
@@ -822,6 +883,7 @@
   };
 
   const residenciasMap = {};
+  {# Repetição Jinja: gera o mesmo bloco visual para cada registro da coleção informada. #}
   {% for r in residencias %}
   residenciasMap[{{ r.id }}] = {
     em_dia_banco: {{ r.em_dia_banco | tojson }},
@@ -833,6 +895,7 @@
   let painelResidenciaId = null;
   let painelValoresAtuais = {};
 
+  // Expande ou recolhe o editor de status e prepara a residência selecionada.
   function togglePainelControle() {
     const painel = document.getElementById('painelControle');
     const expandido = painel.style.display === 'block';
@@ -848,6 +911,7 @@
     painel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
+  // Carrega os status atuais da residência nos controles de edição.
   function carregarResidenciaNoPainel() {
     const select = document.getElementById('painelSelectResidencia');
     painelResidenciaId = parseInt(select.value, 10);
@@ -855,6 +919,7 @@
     atualizarBotoesToggle();
   }
 
+  // Sincroniza os botões de status com os valores mantidos na edição local.
   function atualizarBotoesToggle() {
     document.querySelectorAll('#painelControle .toggle-btn').forEach(btn => {
       const campo = btn.dataset.campo;
@@ -863,6 +928,7 @@
     });
   }
 
+  // Alterna um status somente na edição local, antes da confirmação de gravação.
   function alterarStatus(btn) {
     const campo = btn.dataset.campo;
     const novoValor = btn.dataset.valor;
@@ -876,12 +942,14 @@
     atualizarBotoesToggle();
   }
 
+  // Descarta a edição local e retorna os controles ao estado cadastrado.
   function cancelarPainelControle() {
     document.getElementById('painelControle').style.display = 'none';
     document.getElementById('botaoPainelControle').textContent = 'Painel de Controle';
     painelResidenciaId = null;
   }
 
+  // Envia os status ao servidor e atualiza a interface somente após a resposta.
   function salvarPainelControle() {
     if (!painelResidenciaId) return;
 
@@ -903,6 +971,7 @@
       .catch(() => alert('Não foi possível salvar as alterações.'));
   }
 
+  // Reflete os status salvos na linha correspondente da tabela de residências.
   function atualizarLinhaTabela(id, valores) {
     const row = document.querySelector('#tabelaResidencias tbody tr[data-id="' + id + '"]');
     if (!row) return;
